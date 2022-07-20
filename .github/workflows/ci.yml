@@ -1,0 +1,118 @@
+name: CI
+on: [ push ]
+
+env:
+  PROVIDER: heroku
+
+jobs:
+  build_provider:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17.x
+          cache: true
+          cache-dependency-path: provider/go.sum
+
+      - name: Install Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v2.0.0
+
+      - name: Install pulumictl
+        env:
+          VERSION: 0.0.32
+        run: |
+          curl -fsSLO https://github.com/pulumi/pulumictl/releases/download/v$VERSION/pulumictl-v$VERSION-linux-amd64.tar.gz
+          tar -xzf pulumictl-v$VERSION-linux-amd64.tar.gz --directory /usr/local/bin --no-same-owner pulumictl
+          rm -f pulumictl-v$VERSION-linux-amd64.tar.gz
+          pulumictl version
+
+      - name: Build provider binary
+        run: make provider
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pulumi-${{ env.PROVIDER }}
+          path: ${{ github.workspace }}/bin/pulumi-resource-${{ env.PROVIDER }}
+
+  build_sdks:
+    runs-on: ubuntu-latest
+
+    needs:
+      - build_provider
+
+    strategy:
+      fail-fast: true
+      matrix:
+        dotnet_version:
+          - 3.1.301
+        go_version:
+          - 1.17.x
+        language:
+          - nodejs
+          - python
+          - dotnet
+          - go
+        node_version:
+          - 14.x
+        python_version:
+          - "3.9"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go_version }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Setup DotNet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ matrix.dotnet_verson }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python_version }}
+
+      - name: Install Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v2.0.0
+
+      - name: Install pulumictl
+        env:
+          VERSION: 0.0.32
+        run: |
+          curl -fsSLO https://github.com/pulumi/pulumictl/releases/download/v$VERSION/pulumictl-v$VERSION-linux-amd64.tar.gz
+          tar -xzf pulumictl-v$VERSION-linux-amd64.tar.gz --directory /usr/local/bin --no-same-owner pulumictl
+          rm -f pulumictl-v$VERSION-linux-amd64.tar.gz
+          pulumictl version
+
+      - name: Download provider
+        uses: actions/download-artifact@v3
+        with:
+          name: pulumi-${{ env.PROVIDER }}
+          path: ${{ github.workspace }}/bin
+
+      - name: Build SDK
+        run: make build_${{ matrix.language }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.language }}-sdk.tar.gz
+          path: |
+            ${{ github.workspace}}/sdk/${{ matrix.language }}/
+            !${{ github.workspace}}/sdk/${{ matrix.language }}/node_modules
