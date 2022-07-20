@@ -1,0 +1,214 @@
+{
+    "name": "heroku",
+    "description": "A Pulumi package for creating and managing heroku cloud resources.",
+    "keywords": [
+        "pulumi",
+        "heroku",
+        "category/cloud"
+    ],
+    "homepage": "https://www.pulumi.com",
+    "license": "Apache-2.0",
+    "attribution": "This Pulumi package is based on the [`heroku` Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku).",
+    "repository": "https://github.com/pulumiverse/pulumi-heroku",
+    "publisher": "Pulumi",
+    "meta": {
+        "moduleFormat": "(.*)(?:/[^/]*)"
+    },
+    "config": {
+        "variables": {
+            "apiKey": {
+                "type": "string"
+            },
+            "customizations": {
+                "$ref": "#/types/heroku:config/customizations:customizations"
+            },
+            "delays": {
+                "$ref": "#/types/heroku:config/delays:delays"
+            },
+            "email": {
+                "type": "string"
+            },
+            "headers": {
+                "type": "string"
+            },
+            "timeouts": {
+                "$ref": "#/types/heroku:config/timeouts:timeouts"
+            },
+            "url": {
+                "type": "string"
+            }
+        }
+    },
+    "types": {
+        "heroku:config/customizations:customizations": {
+            "properties": {
+                "setAppAllConfigVarsInState": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "heroku:config/delays:delays": {
+            "properties": {
+                "postAppCreateDelay": {
+                    "type": "integer"
+                },
+                "postDomainCreateDelay": {
+                    "type": "integer"
+                },
+                "postSpaceCreateDelay": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "heroku:config/timeouts:timeouts": {
+            "properties": {
+                "addonCreateTimeout": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "heroku:index/ProviderCustomizations:ProviderCustomizations": {
+            "properties": {
+                "setAppAllConfigVarsInState": {
+                    "type": "boolean",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "heroku:index/ProviderDelays:ProviderDelays": {
+            "properties": {
+                "postAppCreateDelay": {
+                    "type": "integer",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "postDomainCreateDelay": {
+                    "type": "integer",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "postSpaceCreateDelay": {
+                    "type": "integer",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "heroku:index/ProviderTimeouts:ProviderTimeouts": {
+            "properties": {
+                "addonCreateTimeout": {
+                    "type": "integer",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        }
+    },
+    "provider": {
+        "description": "The provider type for the heroku package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "properties": {
+            "apiKey": {
+                "type": "string"
+            },
+            "customizations": {
+                "$ref": "#/types/heroku:index/ProviderCustomizations:ProviderCustomizations"
+            },
+            "delays": {
+                "$ref": "#/types/heroku:index/ProviderDelays:ProviderDelays"
+            },
+            "email": {
+                "type": "string"
+            },
+            "headers": {
+                "type": "string"
+            },
+            "timeouts": {
+                "$ref": "#/types/heroku:index/ProviderTimeouts:ProviderTimeouts"
+            },
+            "url": {
+                "type": "string"
+            }
+        },
+        "inputProperties": {
+            "apiKey": {
+                "type": "string"
+            },
+            "customizations": {
+                "$ref": "#/types/heroku:index/ProviderCustomizations:ProviderCustomizations"
+            },
+            "delays": {
+                "$ref": "#/types/heroku:index/ProviderDelays:ProviderDelays"
+            },
+            "email": {
+                "type": "string"
+            },
+            "headers": {
+                "type": "string"
+            },
+            "timeouts": {
+                "$ref": "#/types/heroku:index/ProviderTimeouts:ProviderTimeouts"
+            },
+            "url": {
+                "type": "string"
+            }
+        }
+    },
+    "language": {
+        "csharp": {
+            "compatibility": "tfbridge20",
+            "namespaces": null,
+            "packageReferences": {
+                "Pulumi": "3.*"
+            }
+        },
+        "go": {
+            "generateExtraInputTypes": true,
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/pulumi/pulumi-heroku/sdk/go/heroku"
+        },
+        "nodejs": {
+            "compatibility": "tfbridge20",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
+            "disableUnionOutputTypes": true,
+            "packageDescription": "A Pulumi package for creating and managing heroku cloud resources.",
+            "packageName": "",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi/pulumi-heroku` repo](https://github.com/pulumi/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-providers/terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
+            "typescriptVersion": ""
+        },
+        "python": {
+            "compatibility": "tfbridge20",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi/pulumi-heroku` repo](https://github.com/pulumi/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-providers/terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
+            "requires": {
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            }
+        }
+    }
+}
