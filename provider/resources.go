@@ -18,12 +18,12 @@ import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/heroku/terraform-provider-heroku/v4/heroku"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumiverse/pulumi-heroku/provider/pkg/version"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/heroku/terraform-provider-heroku/v4/heroku"
+	"github.com/pulumiverse/pulumi-heroku/provider/pkg/version"
 )
 
 // all of the token components used below.
@@ -59,7 +59,7 @@ func Provider() tfbridge.ProviderInfo {
 		// Change this to your personal name (or a company name) that you
 		// would like to be shown in the Pulumi Registry if this package is published
 		// there.
-		Publisher: "Pulumi",
+		Publisher: "pulumiverse - Marcel Arns",
 		// LogoURL is optional but useful to help identify your package in the Pulumi Registry
 		// if this package is published there.
 		//
@@ -69,7 +69,7 @@ func Provider() tfbridge.ProviderInfo {
 		// PluginDownloadURL is an optional URL used to download the Provider
 		// for use in Pulumi programs
 		// e.g https://github.com/org/pulumi-provider-name/releases/
-		PluginDownloadURL: "",
+		PluginDownloadURL: "github://api.github.com/pulumiverse",
 		Description:       "A Pulumi package for creating and managing heroku cloud resources.",
 		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
 		// For all available categories, see `Keywords` in
@@ -80,8 +80,9 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/pulumiverse/pulumi-heroku",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "",
-		Config:    map[string]*tfbridge.SchemaInfo{
+		GitHubOrg:               "",
+		TFProviderModuleVersion: "v2",
+		Config:                  map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
 			// "region": {
@@ -92,26 +93,47 @@ func Provider() tfbridge.ProviderInfo {
 			// },
 		},
 		PreConfigureCallback: preConfigureCallback,
-		Resources:            map[string]*tfbridge.ResourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi type. Two examples
-			// are below - the single line form is the common case. The multi-line form is
-			// needed only if you wish to override types or other default options.
-			//
-			// "aws_iam_role": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "IamRole")}
-			//
-			// "aws_acm_certificate": {
-			// 	Tok: tfbridge.MakeResource(mainPkg, mainMod, "Certificate"),
-			// 	Fields: map[string]*tfbridge.SchemaInfo{
-			// 		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
-			// 	},
-			// },
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"heroku_account_feature":                   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAccountFeature")},
+			"heroku_addon":                             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAddon")},
+			"heroku_addon_attachment":                  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAddonAttachment")},
+			"heroku_app":                               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuApp")},
+			"heroku_app_config_association":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAppConfigAssociation")},
+			"heroku_app_feature":                       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAppFeature")},
+			"heroku_app_release":                       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAppRelease")},
+			"heroku_app_webhook":                       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuAppWebhook")},
+			"heroku_build":                             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuBuild")},
+			"heroku_cert":                              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuCert")},
+			"heroku_collaborator":                      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuCollaborator")},
+			"heroku_config":                            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuConfig")},
+			"heroku_domain":                            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuDomain")},
+			"heroku_drain":                             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuDrain")},
+			"heroku_formation":                         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuFormation")},
+			"heroku_pipeline":                          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuPipeline")},
+			"heroku_pipeline_config_var":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuPipelineConfigVar")},
+			"heroku_pipeline_coupling":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuPipelineCoupling")},
+			"heroku_review_app_config":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuReviewAppConfig")},
+			"heroku_slug":                              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSlug")},
+			"heroku_space":                             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSpace")},
+			"heroku_space_app_access":                  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSpaceAppAccess")},
+			"heroku_space_inbound_ruleset":             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSpaceInboundRuleset")},
+			"heroku_space_peering_connection_accepter": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSpacePeeringConnectionAccepter")},
+			"heroku_space_vpn_connection":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSpaceVpnConnection")},
+			"heroku_ssl":                               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuSsl")},
+			"heroku_team_collaborator":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuTeamCollaborator")},
+			"heroku_team_member":                       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "HerokuTeamMember")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi function. An example
-			// is below.
-			// "aws_ami": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getAmi")},
+			"heroku_addon":              {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuAddon")},
+			"heroku_app":                {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuApp")},
+			"heroku_pipeline":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuPipeline")},
+			"heroku_space":              {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuSpace")},
+			"heroku_space_peering_info": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuSpacePeeringInfo")},
+			"heroku_team":               {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuTeam")},
+			"heroku_team_members":       {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getHerokuTeamMembers")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
+			PackageName: "@pulumiverse/heroku",
 			// List any npm dependencies and their versions
 			Dependencies: map[string]string{
 				"@pulumi/pulumi": "^3.0.0",
@@ -126,6 +148,7 @@ func Provider() tfbridge.ProviderInfo {
 			//Overlay: &tfbridge.OverlayInfo{},
 		},
 		Python: &tfbridge.PythonInfo{
+			PackageName: "pulumiverse_heroku",
 			// List any Python dependencies and their version ranges
 			Requires: map[string]string{
 				"pulumi": ">=3.0.0,<4.0.0",
@@ -133,7 +156,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
-				fmt.Sprintf("github.com/pulumi/pulumi-%[1]s/sdk/", mainPkg),
+				fmt.Sprintf("github.com/pulumiverse/pulumi-%[1]s/sdk/", mainPkg),
 				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,
@@ -141,6 +164,7 @@ func Provider() tfbridge.ProviderInfo {
 			GenerateResourceContainerTypes: true,
 		},
 		CSharp: &tfbridge.CSharpInfo{
+			RootNamespace: "Pulumiverse",
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
 			},
