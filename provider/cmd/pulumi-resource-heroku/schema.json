@@ -41,37 +41,7 @@
         }
     },
     "types": {
-        "heroku:config/customizations:customizations": {
-            "properties": {
-                "setAppAllConfigVarsInState": {
-                    "type": "boolean"
-                }
-            },
-            "type": "object"
-        },
-        "heroku:config/delays:delays": {
-            "properties": {
-                "postAppCreateDelay": {
-                    "type": "integer"
-                },
-                "postDomainCreateDelay": {
-                    "type": "integer"
-                },
-                "postSpaceCreateDelay": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "heroku:config/timeouts:timeouts": {
-            "properties": {
-                "addonCreateTimeout": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "heroku:index/HerokuAppOrganization:HerokuAppOrganization": {
+        "heroku:app/AppOrganization:AppOrganization": {
             "properties": {
                 "locked": {
                     "type": "boolean",
@@ -114,7 +84,46 @@
                 }
             }
         },
-        "heroku:index/HerokuBuildSource:HerokuBuildSource": {
+        "heroku:app/getAppOrganization:getAppOrganization": {
+            "properties": {
+                "locked": {
+                    "type": "boolean",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "personal": {
+                    "type": "boolean",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "locked",
+                "name",
+                "personal"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "heroku:build/BuildSource:BuildSource": {
             "properties": {
                 "checksum": {
                     "type": "string",
@@ -162,7 +171,7 @@
                 }
             }
         },
-        "heroku:index/HerokuBuildUser:HerokuBuildUser": {
+        "heroku:build/BuildUser:BuildUser": {
             "properties": {
                 "email": {
                     "type": "string",
@@ -191,140 +200,35 @@
                 }
             }
         },
-        "heroku:index/HerokuPipelineOwner:HerokuPipelineOwner": {
+        "heroku:config/customizations:customizations": {
             "properties": {
-                "id": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
-                    "willReplaceOnChanges": true
-                },
-                "type": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
-                    "willReplaceOnChanges": true
+                "setAppAllConfigVarsInState": {
+                    "type": "boolean"
                 }
             },
-            "type": "object",
-            "required": [
-                "id",
-                "type"
-            ]
+            "type": "object"
         },
-        "heroku:index/HerokuReviewAppConfigDeployTarget:HerokuReviewAppConfigDeployTarget": {
+        "heroku:config/delays:delays": {
             "properties": {
-                "id": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                "postAppCreateDelay": {
+                    "type": "integer"
                 },
-                "type": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                "postDomainCreateDelay": {
+                    "type": "integer"
+                },
+                "postSpaceCreateDelay": {
+                    "type": "integer"
                 }
             },
-            "type": "object",
-            "required": [
-                "id",
-                "type"
-            ]
+            "type": "object"
         },
-        "heroku:index/HerokuSlugBlob:HerokuSlugBlob": {
+        "heroku:config/timeouts:timeouts": {
             "properties": {
-                "method": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
-                },
-                "url": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                "addonCreateTimeout": {
+                    "type": "integer"
                 }
             },
-            "type": "object",
-            "language": {
-                "nodejs": {
-                    "requiredOutputs": [
-                        "method",
-                        "url"
-                    ]
-                }
-            }
-        },
-        "heroku:index/HerokuSpaceInboundRulesetRule:HerokuSpaceInboundRulesetRule": {
-            "properties": {
-                "action": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
-                },
-                "source": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
-                }
-            },
-            "type": "object",
-            "required": [
-                "action",
-                "source"
-            ]
-        },
-        "heroku:index/HerokuSpaceVpnConnectionTunnel:HerokuSpaceVpnConnectionTunnel": {
-            "properties": {
-                "ip": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
-                },
-                "preSharedKey": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
-                }
-            },
-            "type": "object",
-            "language": {
-                "nodejs": {
-                    "requiredOutputs": [
-                        "ip",
-                        "preSharedKey"
-                    ]
-                }
-            }
+            "type": "object"
         },
         "heroku:index/ProviderCustomizations:ProviderCustomizations": {
             "properties": {
@@ -381,17 +285,36 @@
             },
             "type": "object"
         },
-        "heroku:index/getHerokuAppOrganization:getHerokuAppOrganization": {
+        "heroku:pipeline/PipelineOwner:PipelineOwner": {
             "properties": {
-                "locked": {
-                    "type": "boolean",
+                "id": {
+                    "type": "string",
                     "language": {
                         "python": {
                             "mapCase": false
                         }
-                    }
+                    },
+                    "willReplaceOnChanges": true
                 },
-                "name": {
+                "type": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    },
+                    "willReplaceOnChanges": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "heroku:review/AppConfigDeployTarget:AppConfigDeployTarget": {
+            "properties": {
+                "id": {
                     "type": "string",
                     "language": {
                         "python": {
@@ -399,8 +322,8 @@
                         }
                     }
                 },
-                "personal": {
-                    "type": "boolean",
+                "type": {
+                    "type": "string",
                     "language": {
                         "python": {
                             "mapCase": false
@@ -410,17 +333,94 @@
             },
             "type": "object",
             "required": [
-                "locked",
-                "name",
-                "personal"
-            ],
+                "id",
+                "type"
+            ]
+        },
+        "heroku:slug/SlugBlob:SlugBlob": {
+            "properties": {
+                "method": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "url": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
             "language": {
                 "nodejs": {
-                    "requiredInputs": []
+                    "requiredOutputs": [
+                        "method",
+                        "url"
+                    ]
                 }
             }
         },
-        "heroku:index/getHerokuTeamMembersMember:getHerokuTeamMembersMember": {
+        "heroku:space/InboundRulesetRule:InboundRulesetRule": {
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "source": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "action",
+                "source"
+            ]
+        },
+        "heroku:space/VpnConnectionTunnel:VpnConnectionTunnel": {
+            "properties": {
+                "ip": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "preSharedKey": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "ip",
+                        "preSharedKey"
+                    ]
+                }
+            }
+        },
+        "heroku:team/getMembersMember:getMembersMember": {
             "properties": {
                 "email": {
                     "type": "string",
@@ -537,7 +537,7 @@
         }
     },
     "resources": {
-        "heroku:index/herokuAccountFeature:HerokuAccountFeature": {
+        "heroku:account/feature:Feature": {
             "properties": {
                 "description": {
                     "type": "string"
@@ -571,7 +571,7 @@
                 "enabled"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAccountFeature resources.\n",
+                "description": "Input properties used for looking up and filtering Feature resources.\n",
                 "properties": {
                     "description": {
                         "type": "string"
@@ -590,7 +590,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuAddon:HerokuAddon": {
+        "heroku:addon/addon:Addon": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -661,7 +661,7 @@
                 "plan"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAddon resources.\n",
+                "description": "Input properties used for looking up and filtering Addon resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -699,7 +699,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuAddonAttachment:HerokuAddonAttachment": {
+        "heroku:addon/attachment:Attachment": {
             "properties": {
                 "addonId": {
                     "type": "string"
@@ -743,7 +743,7 @@
                 "appId"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAddonAttachment resources.\n",
+                "description": "Input properties used for looking up and filtering Attachment resources.\n",
                 "properties": {
                     "addonId": {
                         "type": "string",
@@ -765,7 +765,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuApp:HerokuApp": {
+        "heroku:app/app:App": {
             "properties": {
                 "acm": {
                     "type": "boolean"
@@ -801,7 +801,7 @@
                     "type": "string"
                 },
                 "organization": {
-                    "$ref": "#/types/heroku:index/HerokuAppOrganization:HerokuAppOrganization"
+                    "$ref": "#/types/heroku:app/AppOrganization:AppOrganization"
                 },
                 "region": {
                     "type": "string"
@@ -864,7 +864,7 @@
                     "type": "string"
                 },
                 "organization": {
-                    "$ref": "#/types/heroku:index/HerokuAppOrganization:HerokuAppOrganization"
+                    "$ref": "#/types/heroku:app/AppOrganization:AppOrganization"
                 },
                 "region": {
                     "type": "string",
@@ -888,7 +888,7 @@
                 "region"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuApp resources.\n",
+                "description": "Input properties used for looking up and filtering App resources.\n",
                 "properties": {
                     "acm": {
                         "type": "boolean"
@@ -925,7 +925,7 @@
                         "type": "string"
                     },
                     "organization": {
-                        "$ref": "#/types/heroku:index/HerokuAppOrganization:HerokuAppOrganization"
+                        "$ref": "#/types/heroku:app/AppOrganization:AppOrganization"
                     },
                     "region": {
                         "type": "string",
@@ -954,7 +954,55 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuAppConfigAssociation:HerokuAppConfigAssociation": {
+        "heroku:app/config:Config": {
+            "properties": {
+                "sensitiveVars": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "vars": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "inputProperties": {
+                "sensitiveVars": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "vars": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Config resources.\n",
+                "properties": {
+                    "sensitiveVars": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "vars": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "heroku:app/configAssociation:ConfigAssociation": {
             "properties": {
                 "appId": {
                     "type": "string"
@@ -996,7 +1044,7 @@
                 "appId"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAppConfigAssociation resources.\n",
+                "description": "Input properties used for looking up and filtering ConfigAssociation resources.\n",
                 "properties": {
                     "appId": {
                         "type": "string"
@@ -1017,7 +1065,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuAppFeature:HerokuAppFeature": {
+        "heroku:app/feature:Feature": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1050,7 +1098,7 @@
                 "app"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAppFeature resources.\n",
+                "description": "Input properties used for looking up and filtering Feature resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1067,7 +1115,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuAppRelease:HerokuAppRelease": {
+        "heroku:app/release:Release": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1102,7 +1150,7 @@
                 "slugId"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAppRelease resources.\n",
+                "description": "Input properties used for looking up and filtering Release resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1119,7 +1167,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuAppWebhook:HerokuAppWebhook": {
+        "heroku:app/webhook:Webhook": {
             "properties": {
                 "appId": {
                     "type": "string"
@@ -1180,7 +1228,7 @@
                 "url"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuAppWebhook resources.\n",
+                "description": "Input properties used for looking up and filtering Webhook resources.\n",
                 "properties": {
                     "appId": {
                         "type": "string",
@@ -1208,7 +1256,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuBuild:HerokuBuild": {
+        "heroku:build/build:Build": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1232,7 +1280,7 @@
                     "type": "string"
                 },
                 "source": {
-                    "$ref": "#/types/heroku:index/HerokuBuildSource:HerokuBuildSource"
+                    "$ref": "#/types/heroku:build/BuildSource:BuildSource"
                 },
                 "stack": {
                     "type": "string"
@@ -1243,7 +1291,7 @@
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/heroku:index/HerokuBuildUser:HerokuBuildUser"
+                        "$ref": "#/types/heroku:build/BuildUser:BuildUser"
                     }
                 },
                 "uuid": {
@@ -1276,7 +1324,7 @@
                     "willReplaceOnChanges": true
                 },
                 "source": {
-                    "$ref": "#/types/heroku:index/HerokuBuildSource:HerokuBuildSource",
+                    "$ref": "#/types/heroku:build/BuildSource:BuildSource",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1285,7 +1333,7 @@
                 "source"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuBuild resources.\n",
+                "description": "Input properties used for looking up and filtering Build resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1311,7 +1359,7 @@
                         "type": "string"
                     },
                     "source": {
-                        "$ref": "#/types/heroku:index/HerokuBuildSource:HerokuBuildSource",
+                        "$ref": "#/types/heroku:build/BuildSource:BuildSource",
                         "willReplaceOnChanges": true
                     },
                     "stack": {
@@ -1323,7 +1371,7 @@
                     "users": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/types/heroku:index/HerokuBuildUser:HerokuBuildUser"
+                            "$ref": "#/types/heroku:build/BuildUser:BuildUser"
                         }
                     },
                     "uuid": {
@@ -1333,7 +1381,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuCert:HerokuCert": {
+        "heroku:cert/cert:Cert": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1376,7 +1424,7 @@
                 "privateKey"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuCert resources.\n",
+                "description": "Input properties used for looking up and filtering Cert resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1398,7 +1446,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuCollaborator:HerokuCollaborator": {
+        "heroku:collaborator/collaborator:Collaborator": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1426,7 +1474,7 @@
                 "email"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuCollaborator resources.\n",
+                "description": "Input properties used for looking up and filtering Collaborator resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1440,55 +1488,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuConfig:HerokuConfig": {
-            "properties": {
-                "sensitiveVars": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "vars": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                }
-            },
-            "inputProperties": {
-                "sensitiveVars": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "vars": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                }
-            },
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuConfig resources.\n",
-                "properties": {
-                    "sensitiveVars": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "vars": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "heroku:index/herokuDomain:HerokuDomain": {
+        "heroku:domain/domain:Domain": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1527,7 +1527,7 @@
                 "hostname"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuDomain resources.\n",
+                "description": "Input properties used for looking up and filtering Domain resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1547,7 +1547,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuDrain:HerokuDrain": {
+        "heroku:drain/drain:Drain": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1584,7 +1584,7 @@
                 "app"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuDrain resources.\n",
+                "description": "Input properties used for looking up and filtering Drain resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1605,7 +1605,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuFormation:HerokuFormation": {
+        "heroku:formation/formation:Formation": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1648,7 +1648,7 @@
                 "type"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuFormation resources.\n",
+                "description": "Input properties used for looking up and filtering Formation resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1667,41 +1667,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuPipeline:HerokuPipeline": {
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "owner": {
-                    "$ref": "#/types/heroku:index/HerokuPipelineOwner:HerokuPipelineOwner"
-                }
-            },
-            "required": [
-                "name",
-                "owner"
-            ],
-            "inputProperties": {
-                "name": {
-                    "type": "string"
-                },
-                "owner": {
-                    "$ref": "#/types/heroku:index/HerokuPipelineOwner:HerokuPipelineOwner"
-                }
-            },
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuPipeline resources.\n",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "owner": {
-                        "$ref": "#/types/heroku:index/HerokuPipelineOwner:HerokuPipelineOwner"
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "heroku:index/herokuPipelineConfigVar:HerokuPipelineConfigVar": {
+        "heroku:pipeline/configVar:ConfigVar": {
             "properties": {
                 "allVars": {
                     "type": "object",
@@ -1760,7 +1726,7 @@
                 "pipelineStage"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuPipelineConfigVar resources.\n",
+                "description": "Input properties used for looking up and filtering ConfigVar resources.\n",
                 "properties": {
                     "allVars": {
                         "type": "object",
@@ -1792,7 +1758,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuPipelineCoupling:HerokuPipelineCoupling": {
+        "heroku:pipeline/coupling:Coupling": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1833,7 +1799,7 @@
                 "stage"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuPipelineCoupling resources.\n",
+                "description": "Input properties used for looking up and filtering Coupling resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -1854,7 +1820,41 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuReviewAppConfig:HerokuReviewAppConfig": {
+        "heroku:pipeline/pipeline:Pipeline": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner"
+                }
+            },
+            "required": [
+                "name",
+                "owner"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Pipeline resources.\n",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "owner": {
+                        "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "heroku:review/appConfig:AppConfig": {
             "properties": {
                 "automaticReviewApps": {
                     "type": "boolean"
@@ -1863,7 +1863,7 @@
                     "type": "string"
                 },
                 "deployTarget": {
-                    "$ref": "#/types/heroku:index/HerokuReviewAppConfigDeployTarget:HerokuReviewAppConfigDeployTarget"
+                    "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget"
                 },
                 "destroyStaleApps": {
                     "type": "boolean"
@@ -1900,7 +1900,7 @@
                     "type": "string"
                 },
                 "deployTarget": {
-                    "$ref": "#/types/heroku:index/HerokuReviewAppConfigDeployTarget:HerokuReviewAppConfigDeployTarget"
+                    "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget"
                 },
                 "destroyStaleApps": {
                     "type": "boolean"
@@ -1926,7 +1926,7 @@
                 "pipelineId"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuReviewAppConfig resources.\n",
+                "description": "Input properties used for looking up and filtering AppConfig resources.\n",
                 "properties": {
                     "automaticReviewApps": {
                         "type": "boolean"
@@ -1935,7 +1935,7 @@
                         "type": "string"
                     },
                     "deployTarget": {
-                        "$ref": "#/types/heroku:index/HerokuReviewAppConfigDeployTarget:HerokuReviewAppConfigDeployTarget"
+                        "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget"
                     },
                     "destroyStaleApps": {
                         "type": "boolean"
@@ -1961,7 +1961,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuSlug:HerokuSlug": {
+        "heroku:slug/slug:Slug": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -1969,7 +1969,7 @@
                 "blobs": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/heroku:index/HerokuSlugBlob:HerokuSlugBlob"
+                        "$ref": "#/types/heroku:slug/SlugBlob:SlugBlob"
                     }
                 },
                 "buildpackProvidedDescription": {
@@ -2061,7 +2061,7 @@
                 "processTypes"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSlug resources.\n",
+                "description": "Input properties used for looking up and filtering Slug resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -2070,7 +2070,7 @@
                     "blobs": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/types/heroku:index/HerokuSlugBlob:HerokuSlugBlob"
+                            "$ref": "#/types/heroku:slug/SlugBlob:SlugBlob"
                         }
                     },
                     "buildpackProvidedDescription": {
@@ -2118,7 +2118,174 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuSpace:HerokuSpace": {
+        "heroku:space/appAccess:AppAccess": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "space": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "permissions",
+                "space"
+            ],
+            "inputProperties": {
+                "email": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "space": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "email",
+                "permissions",
+                "space"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering AppAccess resources.\n",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "space": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "heroku:space/inboundRuleset:InboundRuleset": {
+            "properties": {
+                "rules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/heroku:space/InboundRulesetRule:InboundRulesetRule"
+                    }
+                },
+                "space": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "rules",
+                "space"
+            ],
+            "inputProperties": {
+                "rules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/heroku:space/InboundRulesetRule:InboundRulesetRule"
+                    }
+                },
+                "space": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "rules",
+                "space"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering InboundRuleset resources.\n",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/heroku:space/InboundRulesetRule:InboundRulesetRule"
+                        }
+                    },
+                    "space": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "heroku:space/peeringConnectionAccepter:PeeringConnectionAccepter": {
+            "properties": {
+                "space": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "vpcPeeringConnectionId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "space",
+                "status",
+                "type",
+                "vpcPeeringConnectionId"
+            ],
+            "inputProperties": {
+                "space": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "vpcPeeringConnectionId": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "space",
+                "vpcPeeringConnectionId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering PeeringConnectionAccepter resources.\n",
+                "properties": {
+                    "space": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "vpcPeeringConnectionId": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "heroku:space/space:Space": {
             "properties": {
                 "cidr": {
                     "type": "string"
@@ -2179,7 +2346,7 @@
                 "organization"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSpace resources.\n",
+                "description": "Input properties used for looking up and filtering Space resources.\n",
                 "properties": {
                     "cidr": {
                         "type": "string",
@@ -2214,174 +2381,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuSpaceAppAccess:HerokuSpaceAppAccess": {
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "permissions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "space": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "email",
-                "permissions",
-                "space"
-            ],
-            "inputProperties": {
-                "email": {
-                    "type": "string",
-                    "willReplaceOnChanges": true
-                },
-                "permissions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "space": {
-                    "type": "string",
-                    "willReplaceOnChanges": true
-                }
-            },
-            "requiredInputs": [
-                "email",
-                "permissions",
-                "space"
-            ],
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSpaceAppAccess resources.\n",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "willReplaceOnChanges": true
-                    },
-                    "permissions": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "space": {
-                        "type": "string",
-                        "willReplaceOnChanges": true
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "heroku:index/herokuSpaceInboundRuleset:HerokuSpaceInboundRuleset": {
-            "properties": {
-                "rules": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/types/heroku:index/HerokuSpaceInboundRulesetRule:HerokuSpaceInboundRulesetRule"
-                    }
-                },
-                "space": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "rules",
-                "space"
-            ],
-            "inputProperties": {
-                "rules": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/types/heroku:index/HerokuSpaceInboundRulesetRule:HerokuSpaceInboundRulesetRule"
-                    }
-                },
-                "space": {
-                    "type": "string",
-                    "willReplaceOnChanges": true
-                }
-            },
-            "requiredInputs": [
-                "rules",
-                "space"
-            ],
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSpaceInboundRuleset resources.\n",
-                "properties": {
-                    "rules": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/types/heroku:index/HerokuSpaceInboundRulesetRule:HerokuSpaceInboundRulesetRule"
-                        }
-                    },
-                    "space": {
-                        "type": "string",
-                        "willReplaceOnChanges": true
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "heroku:index/herokuSpacePeeringConnectionAccepter:HerokuSpacePeeringConnectionAccepter": {
-            "properties": {
-                "space": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "vpcPeeringConnectionId": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "space",
-                "status",
-                "type",
-                "vpcPeeringConnectionId"
-            ],
-            "inputProperties": {
-                "space": {
-                    "type": "string",
-                    "willReplaceOnChanges": true
-                },
-                "vpcPeeringConnectionId": {
-                    "type": "string",
-                    "willReplaceOnChanges": true
-                }
-            },
-            "requiredInputs": [
-                "space",
-                "vpcPeeringConnectionId"
-            ],
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSpacePeeringConnectionAccepter resources.\n",
-                "properties": {
-                    "space": {
-                        "type": "string",
-                        "willReplaceOnChanges": true
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "vpcPeeringConnectionId": {
-                        "type": "string",
-                        "willReplaceOnChanges": true
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "heroku:index/herokuSpaceVpnConnection:HerokuSpaceVpnConnection": {
+        "heroku:space/vpnConnection:VpnConnection": {
             "properties": {
                 "ikeVersion": {
                     "type": "integer"
@@ -2407,7 +2407,7 @@
                 "tunnels": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/heroku:index/HerokuSpaceVpnConnectionTunnel:HerokuSpaceVpnConnectionTunnel"
+                        "$ref": "#/types/heroku:space/VpnConnectionTunnel:VpnConnectionTunnel"
                     }
                 }
             },
@@ -2443,7 +2443,7 @@
                 "tunnels": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/types/heroku:index/HerokuSpaceVpnConnectionTunnel:HerokuSpaceVpnConnectionTunnel"
+                        "$ref": "#/types/heroku:space/VpnConnectionTunnel:VpnConnectionTunnel"
                     }
                 }
             },
@@ -2453,7 +2453,7 @@
                 "space"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSpaceVpnConnection resources.\n",
+                "description": "Input properties used for looking up and filtering VpnConnection resources.\n",
                 "properties": {
                     "ikeVersion": {
                         "type": "integer"
@@ -2483,14 +2483,14 @@
                     "tunnels": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/types/heroku:index/HerokuSpaceVpnConnectionTunnel:HerokuSpaceVpnConnectionTunnel"
+                            "$ref": "#/types/heroku:space/VpnConnectionTunnel:VpnConnectionTunnel"
                         }
                     }
                 },
                 "type": "object"
             }
         },
-        "heroku:index/herokuSsl:HerokuSsl": {
+        "heroku:ssl/ssl:Ssl": {
             "properties": {
                 "appId": {
                     "type": "string"
@@ -2527,7 +2527,7 @@
                 "certificateChain"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuSsl resources.\n",
+                "description": "Input properties used for looking up and filtering Ssl resources.\n",
                 "properties": {
                     "appId": {
                         "type": "string",
@@ -2546,7 +2546,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuTeamCollaborator:HerokuTeamCollaborator": {
+        "heroku:team/collaborator:Collaborator": {
             "properties": {
                 "app": {
                     "type": "string"
@@ -2588,7 +2588,7 @@
                 "permissions"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuTeamCollaborator resources.\n",
+                "description": "Input properties used for looking up and filtering Collaborator resources.\n",
                 "properties": {
                     "app": {
                         "type": "string",
@@ -2608,7 +2608,7 @@
                 "type": "object"
             }
         },
-        "heroku:index/herokuTeamMember:HerokuTeamMember": {
+        "heroku:team/member:Member": {
             "properties": {
                 "email": {
                     "type": "string"
@@ -2650,7 +2650,7 @@
                 "team"
             ],
             "stateInputs": {
-                "description": "Input properties used for looking up and filtering HerokuTeamMember resources.\n",
+                "description": "Input properties used for looking up and filtering Member resources.\n",
                 "properties": {
                     "email": {
                         "type": "string",
@@ -2672,9 +2672,9 @@
         }
     },
     "functions": {
-        "heroku:index/getHerokuAddon:getHerokuAddon": {
+        "heroku:addon/getAddon:getAddon": {
             "inputs": {
-                "description": "A collection of arguments for invoking getHerokuAddon.\n",
+                "description": "A collection of arguments for invoking getAddon.\n",
                 "properties": {
                     "name": {
                         "type": "string"
@@ -2686,7 +2686,7 @@
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getHerokuAddon.\n",
+                "description": "A collection of values returned by getAddon.\n",
                 "properties": {
                     "app": {
                         "type": "string"
@@ -2721,9 +2721,9 @@
                 ]
             }
         },
-        "heroku:index/getHerokuApp:getHerokuApp": {
+        "heroku:app/getApp:getApp": {
             "inputs": {
-                "description": "A collection of arguments for invoking getHerokuApp.\n",
+                "description": "A collection of arguments for invoking getApp.\n",
                 "properties": {
                     "name": {
                         "type": "string"
@@ -2735,7 +2735,7 @@
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getHerokuApp.\n",
+                "description": "A collection of values returned by getApp.\n",
                 "properties": {
                     "acm": {
                         "type": "boolean"
@@ -2771,7 +2771,7 @@
                     "organizations": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/types/heroku:index/getHerokuAppOrganization:getHerokuAppOrganization"
+                            "$ref": "#/types/heroku:app/getAppOrganization:getAppOrganization"
                         }
                     },
                     "region": {
@@ -2809,9 +2809,9 @@
                 ]
             }
         },
-        "heroku:index/getHerokuPipeline:getHerokuPipeline": {
+        "heroku:pipeline/getPipeline:getPipeline": {
             "inputs": {
-                "description": "A collection of arguments for invoking getHerokuPipeline.\n",
+                "description": "A collection of arguments for invoking getPipeline.\n",
                 "properties": {
                     "name": {
                         "type": "string"
@@ -2823,7 +2823,7 @@
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getHerokuPipeline.\n",
+                "description": "A collection of values returned by getPipeline.\n",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -2848,9 +2848,70 @@
                 ]
             }
         },
-        "heroku:index/getHerokuSpace:getHerokuSpace": {
+        "heroku:space/getPeeringInfo:getPeeringInfo": {
             "inputs": {
-                "description": "A collection of arguments for invoking getHerokuSpace.\n",
+                "description": "A collection of arguments for invoking getPeeringInfo.\n",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getPeeringInfo.\n",
+                "properties": {
+                    "awsAccountId": {
+                        "type": "string"
+                    },
+                    "awsRegion": {
+                        "type": "string"
+                    },
+                    "dynoCidrBlocks": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "unavailableCidrBlocks": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "vpcCidr": {
+                        "type": "string"
+                    },
+                    "vpcId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "awsAccountId",
+                    "awsRegion",
+                    "dynoCidrBlocks",
+                    "name",
+                    "unavailableCidrBlocks",
+                    "vpcCidr",
+                    "vpcId",
+                    "id"
+                ]
+            }
+        },
+        "heroku:space/getSpace:getSpace": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getSpace.\n",
                 "properties": {
                     "cidr": {
                         "type": "string"
@@ -2868,7 +2929,7 @@
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getHerokuSpace.\n",
+                "description": "A collection of values returned by getSpace.\n",
                 "properties": {
                     "cidr": {
                         "type": "string"
@@ -2916,70 +2977,61 @@
                 ]
             }
         },
-        "heroku:index/getHerokuSpacePeeringInfo:getHerokuSpacePeeringInfo": {
+        "heroku:team/getMembers:getMembers": {
             "inputs": {
-                "description": "A collection of arguments for invoking getHerokuSpacePeeringInfo.\n",
+                "description": "A collection of arguments for invoking getMembers.\n",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "name"
-                ]
-            },
-            "outputs": {
-                "description": "A collection of values returned by getHerokuSpacePeeringInfo.\n",
-                "properties": {
-                    "awsAccountId": {
-                        "type": "string"
-                    },
-                    "awsRegion": {
-                        "type": "string"
-                    },
-                    "dynoCidrBlocks": {
+                    "roles": {
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     },
+                    "team": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "roles",
+                    "team"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getMembers.\n",
+                "properties": {
                     "id": {
                         "type": "string",
                         "description": "The provider-assigned unique ID for this managed resource.\n"
                     },
-                    "name": {
-                        "type": "string"
+                    "members": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/heroku:team/getMembersMember:getMembersMember"
+                        }
                     },
-                    "unavailableCidrBlocks": {
+                    "roles": {
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     },
-                    "vpcCidr": {
-                        "type": "string"
-                    },
-                    "vpcId": {
+                    "team": {
                         "type": "string"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "awsAccountId",
-                    "awsRegion",
-                    "dynoCidrBlocks",
-                    "name",
-                    "unavailableCidrBlocks",
-                    "vpcCidr",
-                    "vpcId",
+                    "members",
+                    "roles",
+                    "team",
                     "id"
                 ]
             }
         },
-        "heroku:index/getHerokuTeam:getHerokuTeam": {
+        "heroku:team/getTeam:getTeam": {
             "inputs": {
-                "description": "A collection of arguments for invoking getHerokuTeam.\n",
+                "description": "A collection of arguments for invoking getTeam.\n",
                 "properties": {
                     "name": {
                         "type": "string"
@@ -2991,7 +3043,7 @@
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getHerokuTeam.\n",
+                "description": "A collection of values returned by getTeam.\n",
                 "properties": {
                     "default": {
                         "type": "boolean"
@@ -3020,58 +3072,6 @@
                     "name",
                     "provisionedLicenses",
                     "type",
-                    "id"
-                ]
-            }
-        },
-        "heroku:index/getHerokuTeamMembers:getHerokuTeamMembers": {
-            "inputs": {
-                "description": "A collection of arguments for invoking getHerokuTeamMembers.\n",
-                "properties": {
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "team": {
-                        "type": "string"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "roles",
-                    "team"
-                ]
-            },
-            "outputs": {
-                "description": "A collection of values returned by getHerokuTeamMembers.\n",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
-                    },
-                    "members": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/types/heroku:index/getHerokuTeamMembersMember:getHerokuTeamMembersMember"
-                        }
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "team": {
-                        "type": "string"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "members",
-                    "roles",
-                    "team",
                     "id"
                 ]
             }
