@@ -1,6 +1,6 @@
 # Heroku Resource Provider
 
-The Foo Resource Provider lets you manage [Heroku](http://heroku.com) resources.
+The Heroku Resource Provider lets you manage [Heroku](http://heroku.com) resources.
 
 ## Installing
 
