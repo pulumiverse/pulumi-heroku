@@ -15,6 +15,44 @@
     "meta": {
         "moduleFormat": "(.*)(?:/[^/]*)"
     },
+    "language": {
+        "csharp": {
+            "compatibility": "tfbridge20",
+            "namespaces": null,
+            "packageReferences": {
+                "Pulumi": "3.*"
+            },
+            "rootNamespace": "Pulumiverse"
+        },
+        "go": {
+            "generateExtraInputTypes": true,
+            "generateResourceContainerTypes": true,
+            "importBasePath": "github.com/pulumiverse/pulumi-heroku/sdk/go/heroku"
+        },
+        "nodejs": {
+            "compatibility": "tfbridge20",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
+            "disableUnionOutputTypes": true,
+            "packageDescription": "A Pulumi package for creating and managing heroku cloud resources.",
+            "packageName": "@pulumiverse/heroku",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
+            "typescriptVersion": ""
+        },
+        "python": {
+            "compatibility": "tfbridge20",
+            "packageName": "pulumiverse_heroku",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
+            "requires": {
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            }
+        }
+    },
     "config": {
         "variables": {
             "apiKey": {
@@ -605,7 +643,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "configVars": {
                     "type": "array",
@@ -647,7 +686,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "name": {
                     "type": "string"
@@ -678,7 +718,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "secret": true
                     },
                     "configVars": {
                         "type": "array",
@@ -774,7 +815,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Any"
-                    }
+                    },
+                    "secret": true
                 },
                 "buildpacks": {
                     "type": "array",
@@ -810,7 +852,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "space": {
                     "type": "string"
@@ -874,7 +917,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "space": {
                     "type": "string",
@@ -897,7 +941,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "$ref": "pulumi.json#/Any"
-                        }
+                        },
+                        "secret": true
                     },
                     "buildpacks": {
                         "type": "array",
@@ -935,7 +980,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "secret": true
                     },
                     "space": {
                         "type": "string",
@@ -960,7 +1006,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "vars": {
                     "type": "object",
@@ -974,7 +1021,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "vars": {
                     "type": "object",
@@ -990,7 +1038,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "secret": true
                     },
                     "vars": {
                         "type": "object",
@@ -1011,7 +1060,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "vars": {
                     "type": "object",
@@ -1031,7 +1081,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "vars": {
                     "type": "object",
@@ -1053,7 +1104,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "secret": true
                     },
                     "vars": {
                         "type": "object",
@@ -1173,7 +1225,8 @@
                     "type": "string"
                 },
                 "authorization": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 },
                 "includes": {
                     "type": "array",
@@ -1185,7 +1238,8 @@
                     "type": "string"
                 },
                 "secret": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 },
                 "url": {
                     "type": "string"
@@ -1203,7 +1257,8 @@
                     "willReplaceOnChanges": true
                 },
                 "authorization": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 },
                 "includes": {
                     "type": "array",
@@ -1215,7 +1270,8 @@
                     "type": "string"
                 },
                 "secret": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 },
                 "url": {
                     "type": "string"
@@ -1235,7 +1291,8 @@
                         "willReplaceOnChanges": true
                     },
                     "authorization": {
-                        "type": "string"
+                        "type": "string",
+                        "secret": true
                     },
                     "includes": {
                         "type": "array",
@@ -1247,7 +1304,8 @@
                         "type": "string"
                     },
                     "secret": {
-                        "type": "string"
+                        "type": "string",
+                        "secret": true
                     },
                     "url": {
                         "type": "string"
@@ -1396,7 +1454,8 @@
                     "type": "string"
                 },
                 "privateKey": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 }
             },
             "required": [
@@ -1415,7 +1474,8 @@
                     "type": "string"
                 },
                 "privateKey": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 }
             },
             "requiredInputs": [
@@ -1440,7 +1500,8 @@
                         "type": "string"
                     },
                     "privateKey": {
-                        "type": "string"
+                        "type": "string",
+                        "secret": true
                     }
                 },
                 "type": "object"
@@ -1553,7 +1614,8 @@
                     "type": "string"
                 },
                 "sensitiveUrl": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 },
                 "token": {
                     "type": "string"
@@ -1573,6 +1635,7 @@
                 },
                 "sensitiveUrl": {
                     "type": "string",
+                    "secret": true,
                     "willReplaceOnChanges": true
                 },
                 "url": {
@@ -1592,6 +1655,7 @@
                     },
                     "sensitiveUrl": {
                         "type": "string",
+                        "secret": true,
                         "willReplaceOnChanges": true
                     },
                     "token": {
@@ -1673,7 +1737,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Any"
-                    }
+                    },
+                    "secret": true
                 },
                 "pipelineId": {
                     "type": "string"
@@ -1685,7 +1750,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "vars": {
                     "type": "object",
@@ -1712,7 +1778,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "secret": true
                 },
                 "vars": {
                     "type": "object",
@@ -1732,7 +1799,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "$ref": "pulumi.json#/Any"
-                        }
+                        },
+                        "secret": true
                     },
                     "pipelineId": {
                         "type": "string",
@@ -1746,7 +1814,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "secret": true
                     },
                     "vars": {
                         "type": "object",
@@ -2502,7 +2571,8 @@
                     "type": "string"
                 },
                 "privateKey": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 }
             },
             "required": [
@@ -2519,7 +2589,8 @@
                     "type": "string"
                 },
                 "privateKey": {
-                    "type": "string"
+                    "type": "string",
+                    "secret": true
                 }
             },
             "requiredInputs": [
@@ -2540,7 +2611,8 @@
                         "type": "string"
                     },
                     "privateKey": {
-                        "type": "string"
+                        "type": "string",
+                        "secret": true
                     }
                 },
                 "type": "object"
@@ -3074,44 +3146,6 @@
                     "type",
                     "id"
                 ]
-            }
-        }
-    },
-    "language": {
-        "csharp": {
-            "compatibility": "tfbridge20",
-            "namespaces": null,
-            "packageReferences": {
-                "Pulumi": "3.*"
-            },
-            "rootNamespace": "Pulumiverse"
-        },
-        "go": {
-            "generateExtraInputTypes": true,
-            "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/pulumiverse/pulumi-heroku/sdk/go/heroku"
-        },
-        "nodejs": {
-            "compatibility": "tfbridge20",
-            "dependencies": {
-                "@pulumi/pulumi": "^3.0.0"
-            },
-            "devDependencies": {
-                "@types/mime": "^2.0.0",
-                "@types/node": "^10.0.0"
-            },
-            "disableUnionOutputTypes": true,
-            "packageDescription": "A Pulumi package for creating and managing heroku cloud resources.",
-            "packageName": "@pulumiverse/heroku",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi/pulumi-heroku` repo](https://github.com/pulumi/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-providers/terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
-            "typescriptVersion": ""
-        },
-        "python": {
-            "compatibility": "tfbridge20",
-            "packageName": "pulumiverse_heroku",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi/pulumi-heroku` repo](https://github.com/pulumi/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-providers/terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
-            "requires": {
-                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
             }
         }
     }
