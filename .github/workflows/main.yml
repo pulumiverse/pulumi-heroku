@@ -2,8 +2,11 @@ name: main
 
 on:
   push:
-#    branches:
-#      - main
+    branches:
+      - main
+      - 'feature/**'
+    tags-ignore:
+      - v*
   workflow_dispatch:
 
 jobs:
