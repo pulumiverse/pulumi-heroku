@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 'feature/**'
+      - 'dependabot/**'
     tags-ignore:
       - v*
   workflow_dispatch:
