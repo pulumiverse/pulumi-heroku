@@ -9,7 +9,7 @@ replace (
 
 require (
 	github.com/heroku/terraform-provider-heroku/v4 v4.9.0
-	github.com/pulumi/pulumi-terraform-bridge/v3 v3.31.0
+	github.com/pulumi/pulumi-terraform-bridge/v3 v3.32.0
 	github.com/pulumi/pulumi/sdk/v3 v3.42.0
 )
 
@@ -163,6 +163,7 @@ require (
 	github.com/pulumi/pulumi-java/pkg v0.6.0 // indirect
 	github.com/pulumi/pulumi-yaml v0.5.8 // indirect
 	github.com/pulumi/pulumi/pkg/v3 v3.40.2 // indirect
+	github.com/pulumi/schema-tools v0.1.0 // indirect
 	github.com/pulumi/terraform-diff-reader v0.0.0-20201211191010-ad4715e9285e // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
