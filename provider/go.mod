@@ -10,7 +10,7 @@ replace (
 require (
 	github.com/heroku/terraform-provider-heroku/v4 v4.9.0
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.33.0
-	github.com/pulumi/pulumi/sdk/v3 v3.44.2
+	github.com/pulumi/pulumi/sdk/v3 v3.45.0
 )
 
 require (
