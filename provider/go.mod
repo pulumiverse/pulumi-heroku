@@ -8,7 +8,7 @@ replace (
 )
 
 require (
-	github.com/heroku/terraform-provider-heroku/v4 v4.9.0
+	github.com/heroku/terraform-provider-heroku/v5 v5.1.6
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.33.0
 	github.com/pulumi/pulumi/sdk/v3 v3.46.0
 )
@@ -133,7 +133,7 @@ require (
 	github.com/hashicorp/vault/api v1.1.1 // indirect
 	github.com/hashicorp/vault/sdk v0.2.1 // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
-	github.com/heroku/heroku-go/v5 v5.4.0 // indirect
+	github.com/heroku/heroku-go/v5 v5.4.1 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/ijc/Gotty v0.0.0-20170406111628-a8b993ba6abd // indirect
