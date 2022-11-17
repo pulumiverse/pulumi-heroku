@@ -10,6 +10,7 @@
     "license": "Apache-2.0",
     "attribution": "This Pulumi package is based on the [`heroku` Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku).",
     "repository": "https://github.com/pulumiverse/pulumi-heroku",
+    "logoUrl": "https://raw.githubusercontent.com/pulumiverse/pulumi-heroku/main/heroku-logo.svg",
     "pluginDownloadURL": "github://api.github.com/pulumiverse",
     "publisher": "pulumiverse - Marcel Arns",
     "meta": {
@@ -630,7 +631,7 @@
         },
         "heroku:addon/addon:Addon": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "config": {
@@ -663,7 +664,7 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "configVarValues",
                 "configVars",
                 "name",
@@ -671,7 +672,7 @@
                 "providerId"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -682,13 +683,6 @@
                     },
                     "willReplaceOnChanges": true
                 },
-                "configVarValues": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "secret": true
-                },
                 "name": {
                     "type": "string"
                 },
@@ -697,13 +691,13 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "plan"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Addon resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1119,7 +1113,7 @@
         },
         "heroku:app/feature:Feature": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "enabled": {
@@ -1130,11 +1124,11 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "name"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1147,12 +1141,12 @@
                 }
             },
             "requiredInputs": [
-                "app"
+                "appId"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Feature resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1169,7 +1163,7 @@
         },
         "heroku:app/release:Release": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "description": {
@@ -1180,12 +1174,12 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "description",
                 "slugId"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1198,13 +1192,13 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "slugId"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Release resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1316,7 +1310,7 @@
         },
         "heroku:build/build:Build": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "buildpacks": {
@@ -1357,7 +1351,7 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "buildpacks",
                 "localChecksum",
                 "outputStreamUrl",
@@ -1370,7 +1364,7 @@
                 "uuid"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1387,13 +1381,13 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "source"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Build resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1509,7 +1503,7 @@
         },
         "heroku:collaborator/collaborator:Collaborator": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "email": {
@@ -1517,11 +1511,11 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "email"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1531,13 +1525,13 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "email"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Collaborator resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1551,7 +1545,7 @@
         },
         "heroku:domain/domain:Domain": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "cname": {
@@ -1565,13 +1559,13 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "cname",
                 "hostname",
                 "sniEndpointId"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1584,13 +1578,13 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "hostname"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Domain resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1610,7 +1604,7 @@
         },
         "heroku:drain/drain:Drain": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "sensitiveUrl": {
@@ -1625,11 +1619,11 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "token"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1644,12 +1638,12 @@
                 }
             },
             "requiredInputs": [
-                "app"
+                "appId"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Drain resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1671,7 +1665,7 @@
         },
         "heroku:formation/formation:Formation": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "quantity": {
@@ -1685,13 +1679,13 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "quantity",
                 "size",
                 "type"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1706,7 +1700,7 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "quantity",
                 "size",
                 "type"
@@ -1714,7 +1708,7 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Formation resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -1829,9 +1823,6 @@
         },
         "heroku:pipeline/coupling:Coupling": {
             "properties": {
-                "app": {
-                    "type": "string"
-                },
                 "appId": {
                     "type": "string"
                 },
@@ -1843,13 +1834,12 @@
                 }
             },
             "required": [
-                "app",
                 "appId",
                 "pipeline",
                 "stage"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -1863,19 +1853,16 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "pipeline",
                 "stage"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Coupling resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
-                    },
-                    "appId": {
-                        "type": "string"
                     },
                     "pipeline": {
                         "type": "string",
@@ -2032,7 +2019,7 @@
         },
         "heroku:slug/slug:Slug": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "blobs": {
@@ -2076,7 +2063,7 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "blobs",
                 "checksum",
                 "processTypes",
@@ -2085,7 +2072,7 @@
                 "stackId"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -2126,13 +2113,13 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "processTypes"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Slug resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -2620,7 +2607,7 @@
         },
         "heroku:team/collaborator:Collaborator": {
             "properties": {
-                "app": {
+                "appId": {
                     "type": "string"
                 },
                 "email": {
@@ -2634,12 +2621,12 @@
                 }
             },
             "required": [
-                "app",
+                "appId",
                 "email",
                 "permissions"
             ],
             "inputProperties": {
-                "app": {
+                "appId": {
                     "type": "string",
                     "willReplaceOnChanges": true
                 },
@@ -2655,14 +2642,14 @@
                 }
             },
             "requiredInputs": [
-                "app",
+                "appId",
                 "email",
                 "permissions"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Collaborator resources.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string",
                         "willReplaceOnChanges": true
                     },
@@ -2760,7 +2747,7 @@
             "outputs": {
                 "description": "A collection of values returned by getAddon.\n",
                 "properties": {
-                    "app": {
+                    "appId": {
                         "type": "string"
                     },
                     "configVars": {
@@ -2784,7 +2771,7 @@
                 },
                 "type": "object",
                 "required": [
-                    "app",
+                    "appId",
                     "configVars",
                     "id",
                     "name",
