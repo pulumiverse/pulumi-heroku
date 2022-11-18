@@ -10,7 +10,6 @@
     "license": "Apache-2.0",
     "attribution": "This Pulumi package is based on the [`heroku` Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku).",
     "repository": "https://github.com/pulumiverse/pulumi-heroku",
-    "logoUrl": "https://raw.githubusercontent.com/pulumiverse/pulumi-heroku/main/heroku-logo.svg",
     "pluginDownloadURL": "github://api.github.com/pulumiverse",
     "publisher": "pulumiverse - Marcel Arns",
     "meta": {
