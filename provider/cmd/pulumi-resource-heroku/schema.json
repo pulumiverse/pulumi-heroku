@@ -1,5 +1,6 @@
 {
     "name": "heroku",
+    "displayName": "Heroku",
     "description": "A Pulumi package for creating and managing heroku cloud resources.",
     "keywords": [
         "pulumi",
