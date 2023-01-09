@@ -25,7 +25,7 @@ func NewConfig(ctx *pulumi.Context,
 	}
 
 	if args.SensitiveVars != nil {
-		args.SensitiveVars = pulumi.ToSecret(args.SensitiveVars).(pulumi.StringMapOutput)
+		args.SensitiveVars = pulumi.ToSecret(args.SensitiveVars).(pulumi.StringMapInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"sensitiveVars",

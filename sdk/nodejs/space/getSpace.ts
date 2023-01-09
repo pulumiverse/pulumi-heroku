@@ -5,11 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 export function getSpace(args: GetSpaceArgs, opts?: pulumi.InvokeOptions): Promise<GetSpaceResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:space/getSpace:getSpace", {
         "cidr": args.cidr,
         "dataCidr": args.dataCidr,
@@ -43,9 +40,8 @@ export interface GetSpaceResult {
     readonly shield: boolean;
     readonly state: string;
 }
-
 export function getSpaceOutput(args: GetSpaceOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSpaceResult> {
-    return pulumi.output(args).apply(a => getSpace(a, opts))
+    return pulumi.output(args).apply((a: any) => getSpace(a, opts))
 }
 
 /**

@@ -7,11 +7,8 @@ import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
 export function getApp(args: GetAppArgs, opts?: pulumi.InvokeOptions): Promise<GetAppResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:app/getApp:getApp", {
         "name": args.name,
     }, opts);
@@ -46,9 +43,8 @@ export interface GetAppResult {
     readonly uuid: string;
     readonly webUrl: string;
 }
-
 export function getAppOutput(args: GetAppOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAppResult> {
-    return pulumi.output(args).apply(a => getApp(a, opts))
+    return pulumi.output(args).apply((a: any) => getApp(a, opts))
 }
 
 /**

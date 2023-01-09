@@ -5,11 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 export function getAddon(args: GetAddonArgs, opts?: pulumi.InvokeOptions): Promise<GetAddonResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:addon/getAddon:getAddon", {
         "name": args.name,
     }, opts);
@@ -33,9 +30,8 @@ export interface GetAddonResult {
     readonly plan: string;
     readonly providerId: string;
 }
-
 export function getAddonOutput(args: GetAddonOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAddonResult> {
-    return pulumi.output(args).apply(a => getAddon(a, opts))
+    return pulumi.output(args).apply((a: any) => getAddon(a, opts))
 }
 
 /**

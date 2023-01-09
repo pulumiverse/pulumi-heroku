@@ -5,11 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 export function getPipeline(args: GetPipelineArgs, opts?: pulumi.InvokeOptions): Promise<GetPipelineResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:pipeline/getPipeline:getPipeline", {
         "name": args.name,
     }, opts);
@@ -34,9 +31,8 @@ export interface GetPipelineResult {
     readonly ownerId: string;
     readonly ownerType: string;
 }
-
 export function getPipelineOutput(args: GetPipelineOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetPipelineResult> {
-    return pulumi.output(args).apply(a => getPipeline(a, opts))
+    return pulumi.output(args).apply((a: any) => getPipeline(a, opts))
 }
 
 /**
