@@ -34,7 +34,7 @@ func NewSsl(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'CertificateChain'")
 	}
 	if args.PrivateKey != nil {
-		args.PrivateKey = pulumi.ToSecret(args.PrivateKey).(pulumi.StringPtrOutput)
+		args.PrivateKey = pulumi.ToSecret(args.PrivateKey).(pulumi.StringPtrInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"privateKey",

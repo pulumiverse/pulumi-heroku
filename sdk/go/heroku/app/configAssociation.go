@@ -30,7 +30,7 @@ func NewConfigAssociation(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'AppId'")
 	}
 	if args.SensitiveVars != nil {
-		args.SensitiveVars = pulumi.ToSecret(args.SensitiveVars).(pulumi.StringMapOutput)
+		args.SensitiveVars = pulumi.ToSecret(args.SensitiveVars).(pulumi.StringMapInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"sensitiveVars",
