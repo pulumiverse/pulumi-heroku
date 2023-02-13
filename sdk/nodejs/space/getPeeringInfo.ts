@@ -5,11 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 export function getPeeringInfo(args: GetPeeringInfoArgs, opts?: pulumi.InvokeOptions): Promise<GetPeeringInfoResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:space/getPeeringInfo:getPeeringInfo", {
         "name": args.name,
     }, opts);
@@ -38,9 +35,8 @@ export interface GetPeeringInfoResult {
     readonly vpcCidr: string;
     readonly vpcId: string;
 }
-
 export function getPeeringInfoOutput(args: GetPeeringInfoOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetPeeringInfoResult> {
-    return pulumi.output(args).apply(a => getPeeringInfo(a, opts))
+    return pulumi.output(args).apply((a: any) => getPeeringInfo(a, opts))
 }
 
 /**

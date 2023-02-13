@@ -31,7 +31,7 @@ func NewDrain(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'AppId'")
 	}
 	if args.SensitiveUrl != nil {
-		args.SensitiveUrl = pulumi.ToSecret(args.SensitiveUrl).(pulumi.StringPtrOutput)
+		args.SensitiveUrl = pulumi.ToSecret(args.SensitiveUrl).(pulumi.StringPtrInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"sensitiveUrl",
