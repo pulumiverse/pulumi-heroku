@@ -5,11 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 export function getTeam(args: GetTeamArgs, opts?: pulumi.InvokeOptions): Promise<GetTeamResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:team/getTeam:getTeam", {
         "name": args.name,
     }, opts);
@@ -36,9 +33,8 @@ export interface GetTeamResult {
     readonly provisionedLicenses: boolean;
     readonly type: string;
 }
-
 export function getTeamOutput(args: GetTeamOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetTeamResult> {
-    return pulumi.output(args).apply(a => getTeam(a, opts))
+    return pulumi.output(args).apply((a: any) => getTeam(a, opts))
 }
 
 /**

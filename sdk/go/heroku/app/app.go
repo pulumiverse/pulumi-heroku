@@ -42,7 +42,7 @@ func NewApp(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Region'")
 	}
 	if args.SensitiveConfigVars != nil {
-		args.SensitiveConfigVars = pulumi.ToSecret(args.SensitiveConfigVars).(pulumi.StringMapOutput)
+		args.SensitiveConfigVars = pulumi.ToSecret(args.SensitiveConfigVars).(pulumi.StringMapInput)
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"allConfigVars",
