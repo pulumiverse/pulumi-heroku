@@ -23,7 +23,7 @@ namespace Pulumiverse.Heroku.Domain
         public Output<string> Hostname { get; private set; } = null!;
 
         [Output("sniEndpointId")]
-        public Output<string> SniEndpointId { get; private set; } = null!;
+        public Output<string?> SniEndpointId { get; private set; } = null!;
 
 
         /// <summary>

@@ -17,10 +17,10 @@ Object.defineProperty(exports, "apiKey", {
     enumerable: true,
 });
 
-export declare const customizations: outputs.config.Customizations | undefined;
+export declare const customizations: outputs.config.Customizations[] | undefined;
 Object.defineProperty(exports, "customizations", {
     get() {
-        return __config.getObject<outputs.config.Customizations>("customizations");
+        return __config.getObject<outputs.config.Customizations[]>("customizations");
     },
     enumerable: true,
 });

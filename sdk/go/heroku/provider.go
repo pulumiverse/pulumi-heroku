@@ -41,7 +41,7 @@ func NewProvider(ctx *pulumi.Context,
 
 type providerArgs struct {
 	ApiKey         *string                 `pulumi:"apiKey"`
-	Customizations *ProviderCustomizations `pulumi:"customizations"`
+	Customizations []ProviderCustomization `pulumi:"customizations"`
 	Delays         *ProviderDelays         `pulumi:"delays"`
 	Email          *string                 `pulumi:"email"`
 	Headers        *string                 `pulumi:"headers"`
@@ -52,7 +52,7 @@ type providerArgs struct {
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
 	ApiKey         pulumi.StringPtrInput
-	Customizations ProviderCustomizationsPtrInput
+	Customizations ProviderCustomizationArrayInput
 	Delays         ProviderDelaysPtrInput
 	Email          pulumi.StringPtrInput
 	Headers        pulumi.StringPtrInput

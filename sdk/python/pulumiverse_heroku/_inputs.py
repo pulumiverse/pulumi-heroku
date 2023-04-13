@@ -10,17 +10,29 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = [
-    'ProviderCustomizationsArgs',
+    'ProviderCustomizationArgs',
     'ProviderDelaysArgs',
     'ProviderTimeoutsArgs',
 ]
 
 @pulumi.input_type
-class ProviderCustomizationsArgs:
+class ProviderCustomizationArgs:
     def __init__(__self__, *,
+                 set_addon_config_vars_in_state: Optional[pulumi.Input[bool]] = None,
                  set_app_all_config_vars_in_state: Optional[pulumi.Input[bool]] = None):
+        if set_addon_config_vars_in_state is not None:
+            pulumi.set(__self__, "set_addon_config_vars_in_state", set_addon_config_vars_in_state)
         if set_app_all_config_vars_in_state is not None:
             pulumi.set(__self__, "set_app_all_config_vars_in_state", set_app_all_config_vars_in_state)
+
+    @property
+    @pulumi.getter(name="setAddonConfigVarsInState")
+    def set_addon_config_vars_in_state(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "set_addon_config_vars_in_state")
+
+    @set_addon_config_vars_in_state.setter
+    def set_addon_config_vars_in_state(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "set_addon_config_vars_in_state", value)
 
     @property
     @pulumi.getter(name="setAppAllConfigVarsInState")
