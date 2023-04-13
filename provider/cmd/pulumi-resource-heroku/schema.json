@@ -60,7 +60,10 @@
                 "type": "string"
             },
             "customizations": {
-                "$ref": "#/types/heroku:config/customizations:customizations"
+                "type": "array",
+                "items": {
+                    "$ref": "#/types/heroku:config/customizations:customizations"
+                }
             },
             "delays": {
                 "$ref": "#/types/heroku:config/delays:delays"
@@ -241,6 +244,9 @@
         },
         "heroku:config/customizations:customizations": {
             "properties": {
+                "setAddonConfigVarsInState": {
+                    "type": "boolean"
+                },
                 "setAppAllConfigVarsInState": {
                     "type": "boolean"
                 }
@@ -269,8 +275,16 @@
             },
             "type": "object"
         },
-        "heroku:index/ProviderCustomizations:ProviderCustomizations": {
+        "heroku:index/ProviderCustomization:ProviderCustomization": {
             "properties": {
+                "setAddonConfigVarsInState": {
+                    "type": "boolean",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
                 "setAppAllConfigVarsInState": {
                     "type": "boolean",
                     "language": {
@@ -533,7 +547,10 @@
                 "type": "string"
             },
             "customizations": {
-                "$ref": "#/types/heroku:index/ProviderCustomizations:ProviderCustomizations"
+                "type": "array",
+                "items": {
+                    "$ref": "#/types/heroku:index/ProviderCustomization:ProviderCustomization"
+                }
             },
             "delays": {
                 "$ref": "#/types/heroku:index/ProviderDelays:ProviderDelays"
@@ -556,7 +573,10 @@
                 "type": "string"
             },
             "customizations": {
-                "$ref": "#/types/heroku:index/ProviderCustomizations:ProviderCustomizations"
+                "type": "array",
+                "items": {
+                    "$ref": "#/types/heroku:index/ProviderCustomization:ProviderCustomization"
+                }
             },
             "delays": {
                 "$ref": "#/types/heroku:index/ProviderDelays:ProviderDelays"
@@ -1561,8 +1581,7 @@
             "required": [
                 "appId",
                 "cname",
-                "hostname",
-                "sniEndpointId"
+                "hostname"
             ],
             "inputProperties": {
                 "appId": {
