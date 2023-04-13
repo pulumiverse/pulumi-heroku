@@ -64,7 +64,12 @@ namespace Pulumiverse.Heroku
         public Input<string>? ApiKey { get; set; }
 
         [Input("customizations", json: true)]
-        public Input<Inputs.ProviderCustomizationsArgs>? Customizations { get; set; }
+        private InputList<Inputs.ProviderCustomizationArgs>? _customizations;
+        public InputList<Inputs.ProviderCustomizationArgs> Customizations
+        {
+            get => _customizations ?? (_customizations = new InputList<Inputs.ProviderCustomizationArgs>());
+            set => _customizations = value;
+        }
 
         [Input("delays", json: true)]
         public Input<Inputs.ProviderDelaysArgs>? Delays { get; set; }

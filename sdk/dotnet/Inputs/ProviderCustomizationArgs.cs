@@ -11,14 +11,17 @@ using Pulumi;
 namespace Pulumiverse.Heroku.Inputs
 {
 
-    public sealed class ProviderCustomizationsArgs : global::Pulumi.ResourceArgs
+    public sealed class ProviderCustomizationArgs : global::Pulumi.ResourceArgs
     {
+        [Input("setAddonConfigVarsInState")]
+        public Input<bool>? SetAddonConfigVarsInState { get; set; }
+
         [Input("setAppAllConfigVarsInState")]
         public Input<bool>? SetAppAllConfigVarsInState { get; set; }
 
-        public ProviderCustomizationsArgs()
+        public ProviderCustomizationArgs()
         {
         }
-        public static new ProviderCustomizationsArgs Empty => new ProviderCustomizationsArgs();
+        public static new ProviderCustomizationArgs Empty => new ProviderCustomizationArgs();
     }
 }

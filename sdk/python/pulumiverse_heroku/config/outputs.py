@@ -18,9 +18,17 @@ __all__ = [
 @pulumi.output_type
 class Customizations(dict):
     def __init__(__self__, *,
+                 set_addon_config_vars_in_state: Optional[bool] = None,
                  set_app_all_config_vars_in_state: Optional[bool] = None):
+        if set_addon_config_vars_in_state is not None:
+            pulumi.set(__self__, "set_addon_config_vars_in_state", set_addon_config_vars_in_state)
         if set_app_all_config_vars_in_state is not None:
             pulumi.set(__self__, "set_app_all_config_vars_in_state", set_app_all_config_vars_in_state)
+
+    @property
+    @pulumi.getter(name="setAddonConfigVarsInState")
+    def set_addon_config_vars_in_state(self) -> Optional[bool]:
+        return pulumi.get(self, "set_addon_config_vars_in_state")
 
     @property
     @pulumi.getter(name="setAppAllConfigVarsInState")
