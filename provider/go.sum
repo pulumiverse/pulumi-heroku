@@ -1068,8 +1068,8 @@ github.com/hashicorp/yamux v0.1.1 h1:yrQxtgseBDrq9Y652vSRDvsKCJKOUD+GzTS4Y0Y8pvE
 github.com/hashicorp/yamux v0.1.1/go.mod h1:CtWFDAQgb7dxtzFs4tWbplKIe2jSi3+5vKbgIO0SLnQ=
 github.com/heroku/heroku-go/v5 v5.4.1 h1:J1nNnR3/571b2iUDHl+y1B3VkhKm6YOXIq9GGzQUv5s=
 github.com/heroku/heroku-go/v5 v5.4.1/go.mod h1:Uo3XhGPwaTpniR4X1e50BDjg4SzdFk2Bd2mgYZVkfHo=
-github.com/heroku/terraform-provider-heroku/v5 v5.1.10 h1:3ZABiHXPOsbZpVtTK49PT88t+R9GW0rg9BqMKM/95r0=
-github.com/heroku/terraform-provider-heroku/v5 v5.1.10/go.mod h1:SY6gmh+JVdnqMY2s4WbTlF8tbUQS1qAqCpV7HydHHzM=
+github.com/heroku/terraform-provider-heroku/v5 v5.2.1 h1:LtzPHdhdvhnX43UJDkGNQG130n5jKE1KjOCGOwuHZKM=
+github.com/heroku/terraform-provider-heroku/v5 v5.2.1/go.mod h1:SY6gmh+JVdnqMY2s4WbTlF8tbUQS1qAqCpV7HydHHzM=
 github.com/hetznercloud/hcloud-go v1.33.1/go.mod h1:XX/TQub3ge0yWR2yHWmnDVIrB+MQbda1pHxkUmDlUME=
 github.com/hetznercloud/hcloud-go v1.35.0/go.mod h1:mepQwR6va27S3UQthaEPGS86jtzSY9xWL1e9dyxXpgA=
 github.com/hexops/autogold v1.3.0 h1:IEtGNPxBeBu8RMn8eKWh/Ll9dVNgSnJ7bp/qHgMQ14o=
