@@ -5,7 +5,8 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
-export interface ProviderCustomizations {
+export interface ProviderCustomization {
+    setAddonConfigVarsInState?: pulumi.Input<boolean>;
     setAppAllConfigVarsInState?: pulumi.Input<boolean>;
 }
 

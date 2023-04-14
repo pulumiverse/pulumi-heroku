@@ -16,7 +16,7 @@ __all__ = ['ProviderArgs', 'Provider']
 class ProviderArgs:
     def __init__(__self__, *,
                  api_key: Optional[pulumi.Input[str]] = None,
-                 customizations: Optional[pulumi.Input['ProviderCustomizationsArgs']] = None,
+                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input['ProviderCustomizationArgs']]]] = None,
                  delays: Optional[pulumi.Input['ProviderDelaysArgs']] = None,
                  email: Optional[pulumi.Input[str]] = None,
                  headers: Optional[pulumi.Input[str]] = None,
@@ -51,11 +51,11 @@ class ProviderArgs:
 
     @property
     @pulumi.getter
-    def customizations(self) -> Optional[pulumi.Input['ProviderCustomizationsArgs']]:
+    def customizations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['ProviderCustomizationArgs']]]]:
         return pulumi.get(self, "customizations")
 
     @customizations.setter
-    def customizations(self, value: Optional[pulumi.Input['ProviderCustomizationsArgs']]):
+    def customizations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['ProviderCustomizationArgs']]]]):
         pulumi.set(self, "customizations", value)
 
     @property
@@ -110,7 +110,7 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_key: Optional[pulumi.Input[str]] = None,
-                 customizations: Optional[pulumi.Input[pulumi.InputType['ProviderCustomizationsArgs']]] = None,
+                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ProviderCustomizationArgs']]]]] = None,
                  delays: Optional[pulumi.Input[pulumi.InputType['ProviderDelaysArgs']]] = None,
                  email: Optional[pulumi.Input[str]] = None,
                  headers: Optional[pulumi.Input[str]] = None,
@@ -154,7 +154,7 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_key: Optional[pulumi.Input[str]] = None,
-                 customizations: Optional[pulumi.Input[pulumi.InputType['ProviderCustomizationsArgs']]] = None,
+                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ProviderCustomizationArgs']]]]] = None,
                  delays: Optional[pulumi.Input[pulumi.InputType['ProviderDelaysArgs']]] = None,
                  email: Optional[pulumi.Input[str]] = None,
                  headers: Optional[pulumi.Input[str]] = None,

@@ -14,10 +14,10 @@ import (
 type Domain struct {
 	pulumi.CustomResourceState
 
-	AppId         pulumi.StringOutput `pulumi:"appId"`
-	Cname         pulumi.StringOutput `pulumi:"cname"`
-	Hostname      pulumi.StringOutput `pulumi:"hostname"`
-	SniEndpointId pulumi.StringOutput `pulumi:"sniEndpointId"`
+	AppId         pulumi.StringOutput    `pulumi:"appId"`
+	Cname         pulumi.StringOutput    `pulumi:"cname"`
+	Hostname      pulumi.StringOutput    `pulumi:"hostname"`
+	SniEndpointId pulumi.StringPtrOutput `pulumi:"sniEndpointId"`
 }
 
 // NewDomain registers a new resource with the given unique name, arguments, and options.
@@ -185,8 +185,8 @@ func (o DomainOutput) Hostname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.Hostname }).(pulumi.StringOutput)
 }
 
-func (o DomainOutput) SniEndpointId() pulumi.StringOutput {
-	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.SniEndpointId }).(pulumi.StringOutput)
+func (o DomainOutput) SniEndpointId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Domain) pulumi.StringPtrOutput { return v.SniEndpointId }).(pulumi.StringPtrOutput)
 }
 
 type DomainArrayOutput struct{ *pulumi.OutputState }

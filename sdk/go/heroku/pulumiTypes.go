@@ -10,137 +10,104 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-type ProviderCustomizations struct {
+type ProviderCustomization struct {
+	SetAddonConfigVarsInState  *bool `pulumi:"setAddonConfigVarsInState"`
 	SetAppAllConfigVarsInState *bool `pulumi:"setAppAllConfigVarsInState"`
 }
 
-// ProviderCustomizationsInput is an input type that accepts ProviderCustomizationsArgs and ProviderCustomizationsOutput values.
-// You can construct a concrete instance of `ProviderCustomizationsInput` via:
+// ProviderCustomizationInput is an input type that accepts ProviderCustomizationArgs and ProviderCustomizationOutput values.
+// You can construct a concrete instance of `ProviderCustomizationInput` via:
 //
-//          ProviderCustomizationsArgs{...}
-type ProviderCustomizationsInput interface {
+//          ProviderCustomizationArgs{...}
+type ProviderCustomizationInput interface {
 	pulumi.Input
 
-	ToProviderCustomizationsOutput() ProviderCustomizationsOutput
-	ToProviderCustomizationsOutputWithContext(context.Context) ProviderCustomizationsOutput
+	ToProviderCustomizationOutput() ProviderCustomizationOutput
+	ToProviderCustomizationOutputWithContext(context.Context) ProviderCustomizationOutput
 }
 
-type ProviderCustomizationsArgs struct {
+type ProviderCustomizationArgs struct {
+	SetAddonConfigVarsInState  pulumi.BoolPtrInput `pulumi:"setAddonConfigVarsInState"`
 	SetAppAllConfigVarsInState pulumi.BoolPtrInput `pulumi:"setAppAllConfigVarsInState"`
 }
 
-func (ProviderCustomizationsArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*ProviderCustomizations)(nil)).Elem()
+func (ProviderCustomizationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*ProviderCustomization)(nil)).Elem()
 }
 
-func (i ProviderCustomizationsArgs) ToProviderCustomizationsOutput() ProviderCustomizationsOutput {
-	return i.ToProviderCustomizationsOutputWithContext(context.Background())
+func (i ProviderCustomizationArgs) ToProviderCustomizationOutput() ProviderCustomizationOutput {
+	return i.ToProviderCustomizationOutputWithContext(context.Background())
 }
 
-func (i ProviderCustomizationsArgs) ToProviderCustomizationsOutputWithContext(ctx context.Context) ProviderCustomizationsOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ProviderCustomizationsOutput)
+func (i ProviderCustomizationArgs) ToProviderCustomizationOutputWithContext(ctx context.Context) ProviderCustomizationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ProviderCustomizationOutput)
 }
 
-func (i ProviderCustomizationsArgs) ToProviderCustomizationsPtrOutput() ProviderCustomizationsPtrOutput {
-	return i.ToProviderCustomizationsPtrOutputWithContext(context.Background())
-}
-
-func (i ProviderCustomizationsArgs) ToProviderCustomizationsPtrOutputWithContext(ctx context.Context) ProviderCustomizationsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ProviderCustomizationsOutput).ToProviderCustomizationsPtrOutputWithContext(ctx)
-}
-
-// ProviderCustomizationsPtrInput is an input type that accepts ProviderCustomizationsArgs, ProviderCustomizationsPtr and ProviderCustomizationsPtrOutput values.
-// You can construct a concrete instance of `ProviderCustomizationsPtrInput` via:
+// ProviderCustomizationArrayInput is an input type that accepts ProviderCustomizationArray and ProviderCustomizationArrayOutput values.
+// You can construct a concrete instance of `ProviderCustomizationArrayInput` via:
 //
-//          ProviderCustomizationsArgs{...}
-//
-//  or:
-//
-//          nil
-type ProviderCustomizationsPtrInput interface {
+//          ProviderCustomizationArray{ ProviderCustomizationArgs{...} }
+type ProviderCustomizationArrayInput interface {
 	pulumi.Input
 
-	ToProviderCustomizationsPtrOutput() ProviderCustomizationsPtrOutput
-	ToProviderCustomizationsPtrOutputWithContext(context.Context) ProviderCustomizationsPtrOutput
+	ToProviderCustomizationArrayOutput() ProviderCustomizationArrayOutput
+	ToProviderCustomizationArrayOutputWithContext(context.Context) ProviderCustomizationArrayOutput
 }
 
-type providerCustomizationsPtrType ProviderCustomizationsArgs
+type ProviderCustomizationArray []ProviderCustomizationInput
 
-func ProviderCustomizationsPtr(v *ProviderCustomizationsArgs) ProviderCustomizationsPtrInput {
-	return (*providerCustomizationsPtrType)(v)
+func (ProviderCustomizationArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ProviderCustomization)(nil)).Elem()
 }
 
-func (*providerCustomizationsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**ProviderCustomizations)(nil)).Elem()
+func (i ProviderCustomizationArray) ToProviderCustomizationArrayOutput() ProviderCustomizationArrayOutput {
+	return i.ToProviderCustomizationArrayOutputWithContext(context.Background())
 }
 
-func (i *providerCustomizationsPtrType) ToProviderCustomizationsPtrOutput() ProviderCustomizationsPtrOutput {
-	return i.ToProviderCustomizationsPtrOutputWithContext(context.Background())
+func (i ProviderCustomizationArray) ToProviderCustomizationArrayOutputWithContext(ctx context.Context) ProviderCustomizationArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(ProviderCustomizationArrayOutput)
 }
 
-func (i *providerCustomizationsPtrType) ToProviderCustomizationsPtrOutputWithContext(ctx context.Context) ProviderCustomizationsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(ProviderCustomizationsPtrOutput)
+type ProviderCustomizationOutput struct{ *pulumi.OutputState }
+
+func (ProviderCustomizationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*ProviderCustomization)(nil)).Elem()
 }
 
-type ProviderCustomizationsOutput struct{ *pulumi.OutputState }
-
-func (ProviderCustomizationsOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*ProviderCustomizations)(nil)).Elem()
-}
-
-func (o ProviderCustomizationsOutput) ToProviderCustomizationsOutput() ProviderCustomizationsOutput {
+func (o ProviderCustomizationOutput) ToProviderCustomizationOutput() ProviderCustomizationOutput {
 	return o
 }
 
-func (o ProviderCustomizationsOutput) ToProviderCustomizationsOutputWithContext(ctx context.Context) ProviderCustomizationsOutput {
+func (o ProviderCustomizationOutput) ToProviderCustomizationOutputWithContext(ctx context.Context) ProviderCustomizationOutput {
 	return o
 }
 
-func (o ProviderCustomizationsOutput) ToProviderCustomizationsPtrOutput() ProviderCustomizationsPtrOutput {
-	return o.ToProviderCustomizationsPtrOutputWithContext(context.Background())
+func (o ProviderCustomizationOutput) SetAddonConfigVarsInState() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ProviderCustomization) *bool { return v.SetAddonConfigVarsInState }).(pulumi.BoolPtrOutput)
 }
 
-func (o ProviderCustomizationsOutput) ToProviderCustomizationsPtrOutputWithContext(ctx context.Context) ProviderCustomizationsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v ProviderCustomizations) *ProviderCustomizations {
-		return &v
-	}).(ProviderCustomizationsPtrOutput)
+func (o ProviderCustomizationOutput) SetAppAllConfigVarsInState() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ProviderCustomization) *bool { return v.SetAppAllConfigVarsInState }).(pulumi.BoolPtrOutput)
 }
 
-func (o ProviderCustomizationsOutput) SetAppAllConfigVarsInState() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v ProviderCustomizations) *bool { return v.SetAppAllConfigVarsInState }).(pulumi.BoolPtrOutput)
+type ProviderCustomizationArrayOutput struct{ *pulumi.OutputState }
+
+func (ProviderCustomizationArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]ProviderCustomization)(nil)).Elem()
 }
 
-type ProviderCustomizationsPtrOutput struct{ *pulumi.OutputState }
-
-func (ProviderCustomizationsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**ProviderCustomizations)(nil)).Elem()
-}
-
-func (o ProviderCustomizationsPtrOutput) ToProviderCustomizationsPtrOutput() ProviderCustomizationsPtrOutput {
+func (o ProviderCustomizationArrayOutput) ToProviderCustomizationArrayOutput() ProviderCustomizationArrayOutput {
 	return o
 }
 
-func (o ProviderCustomizationsPtrOutput) ToProviderCustomizationsPtrOutputWithContext(ctx context.Context) ProviderCustomizationsPtrOutput {
+func (o ProviderCustomizationArrayOutput) ToProviderCustomizationArrayOutputWithContext(ctx context.Context) ProviderCustomizationArrayOutput {
 	return o
 }
 
-func (o ProviderCustomizationsPtrOutput) Elem() ProviderCustomizationsOutput {
-	return o.ApplyT(func(v *ProviderCustomizations) ProviderCustomizations {
-		if v != nil {
-			return *v
-		}
-		var ret ProviderCustomizations
-		return ret
-	}).(ProviderCustomizationsOutput)
-}
-
-func (o ProviderCustomizationsPtrOutput) SetAppAllConfigVarsInState() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *ProviderCustomizations) *bool {
-		if v == nil {
-			return nil
-		}
-		return v.SetAppAllConfigVarsInState
-	}).(pulumi.BoolPtrOutput)
+func (o ProviderCustomizationArrayOutput) Index(i pulumi.IntInput) ProviderCustomizationOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) ProviderCustomization {
+		return vs[0].([]ProviderCustomization)[vs[1].(int)]
+	}).(ProviderCustomizationOutput)
 }
 
 type ProviderDelays struct {
@@ -440,14 +407,14 @@ func (o ProviderTimeoutsPtrOutput) AddonCreateTimeout() pulumi.IntPtrOutput {
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*ProviderCustomizationsInput)(nil)).Elem(), ProviderCustomizationsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*ProviderCustomizationsPtrInput)(nil)).Elem(), ProviderCustomizationsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ProviderCustomizationInput)(nil)).Elem(), ProviderCustomizationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*ProviderCustomizationArrayInput)(nil)).Elem(), ProviderCustomizationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ProviderDelaysInput)(nil)).Elem(), ProviderDelaysArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ProviderDelaysPtrInput)(nil)).Elem(), ProviderDelaysArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ProviderTimeoutsInput)(nil)).Elem(), ProviderTimeoutsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ProviderTimeoutsPtrInput)(nil)).Elem(), ProviderTimeoutsArgs{})
-	pulumi.RegisterOutputType(ProviderCustomizationsOutput{})
-	pulumi.RegisterOutputType(ProviderCustomizationsPtrOutput{})
+	pulumi.RegisterOutputType(ProviderCustomizationOutput{})
+	pulumi.RegisterOutputType(ProviderCustomizationArrayOutput{})
 	pulumi.RegisterOutputType(ProviderDelaysOutput{})
 	pulumi.RegisterOutputType(ProviderDelaysPtrOutput{})
 	pulumi.RegisterOutputType(ProviderTimeoutsOutput{})

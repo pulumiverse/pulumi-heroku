@@ -35,7 +35,7 @@ export class Domain extends pulumi.CustomResource {
     public readonly appId!: pulumi.Output<string>;
     public /*out*/ readonly cname!: pulumi.Output<string>;
     public readonly hostname!: pulumi.Output<string>;
-    public readonly sniEndpointId!: pulumi.Output<string>;
+    public readonly sniEndpointId!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Domain resource with the given unique name, arguments, and options.

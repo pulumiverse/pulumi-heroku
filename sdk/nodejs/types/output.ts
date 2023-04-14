@@ -37,6 +37,7 @@ export namespace build {
 
 export namespace config {
     export interface Customizations {
+        setAddonConfigVarsInState?: boolean;
         setAppAllConfigVarsInState?: boolean;
     }
 
