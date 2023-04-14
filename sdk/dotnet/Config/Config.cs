@@ -39,8 +39,8 @@ namespace Pulumiverse.Heroku
             set => _apiKey.Set(value);
         }
 
-        private static readonly __Value<Pulumiverse.Heroku.Config.Types.Customizations?> _customizations = new __Value<Pulumiverse.Heroku.Config.Types.Customizations?>(() => __config.GetObject<Pulumiverse.Heroku.Config.Types.Customizations>("customizations"));
-        public static Pulumiverse.Heroku.Config.Types.Customizations? Customizations
+        private static readonly __Value<ImmutableArray<Pulumiverse.Heroku.Config.Types.Customizations>> _customizations = new __Value<ImmutableArray<Pulumiverse.Heroku.Config.Types.Customizations>>(() => __config.GetObject<ImmutableArray<Pulumiverse.Heroku.Config.Types.Customizations>>("customizations"));
+        public static ImmutableArray<Pulumiverse.Heroku.Config.Types.Customizations> Customizations
         {
             get => _customizations.Get();
             set => _customizations.Set(value);
@@ -86,6 +86,7 @@ namespace Pulumiverse.Heroku
 
              public class Customizations
              {
+                public bool? SetAddonConfigVarsInState { get; set; }
                 public bool? SetAppAllConfigVarsInState { get; set; }
             }
 

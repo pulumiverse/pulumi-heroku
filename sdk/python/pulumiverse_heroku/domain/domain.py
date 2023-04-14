@@ -215,6 +215,6 @@ class Domain(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="sniEndpointId")
-    def sni_endpoint_id(self) -> pulumi.Output[str]:
+    def sni_endpoint_id(self) -> pulumi.Output[Optional[str]]:
         return pulumi.get(self, "sni_endpoint_id")
 

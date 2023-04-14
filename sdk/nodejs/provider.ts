@@ -61,7 +61,7 @@ export class Provider extends pulumi.ProviderResource {
  */
 export interface ProviderArgs {
     apiKey?: pulumi.Input<string>;
-    customizations?: pulumi.Input<inputs.ProviderCustomizations>;
+    customizations?: pulumi.Input<pulumi.Input<inputs.ProviderCustomization>[]>;
     delays?: pulumi.Input<inputs.ProviderDelays>;
     email?: pulumi.Input<string>;
     headers?: pulumi.Input<string>;

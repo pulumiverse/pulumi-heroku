@@ -11,6 +11,7 @@ import (
 )
 
 type Customizations struct {
+	SetAddonConfigVarsInState  *bool `pulumi:"setAddonConfigVarsInState"`
 	SetAppAllConfigVarsInState *bool `pulumi:"setAppAllConfigVarsInState"`
 }
 
@@ -26,6 +27,7 @@ type CustomizationsInput interface {
 }
 
 type CustomizationsArgs struct {
+	SetAddonConfigVarsInState  pulumi.BoolPtrInput `pulumi:"setAddonConfigVarsInState"`
 	SetAppAllConfigVarsInState pulumi.BoolPtrInput `pulumi:"setAppAllConfigVarsInState"`
 }
 
@@ -39,6 +41,31 @@ func (i CustomizationsArgs) ToCustomizationsOutput() CustomizationsOutput {
 
 func (i CustomizationsArgs) ToCustomizationsOutputWithContext(ctx context.Context) CustomizationsOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(CustomizationsOutput)
+}
+
+// CustomizationsArrayInput is an input type that accepts CustomizationsArray and CustomizationsArrayOutput values.
+// You can construct a concrete instance of `CustomizationsArrayInput` via:
+//
+//          CustomizationsArray{ CustomizationsArgs{...} }
+type CustomizationsArrayInput interface {
+	pulumi.Input
+
+	ToCustomizationsArrayOutput() CustomizationsArrayOutput
+	ToCustomizationsArrayOutputWithContext(context.Context) CustomizationsArrayOutput
+}
+
+type CustomizationsArray []CustomizationsInput
+
+func (CustomizationsArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Customizations)(nil)).Elem()
+}
+
+func (i CustomizationsArray) ToCustomizationsArrayOutput() CustomizationsArrayOutput {
+	return i.ToCustomizationsArrayOutputWithContext(context.Background())
+}
+
+func (i CustomizationsArray) ToCustomizationsArrayOutputWithContext(ctx context.Context) CustomizationsArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CustomizationsArrayOutput)
 }
 
 type CustomizationsOutput struct{ *pulumi.OutputState }
@@ -55,8 +82,32 @@ func (o CustomizationsOutput) ToCustomizationsOutputWithContext(ctx context.Cont
 	return o
 }
 
+func (o CustomizationsOutput) SetAddonConfigVarsInState() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Customizations) *bool { return v.SetAddonConfigVarsInState }).(pulumi.BoolPtrOutput)
+}
+
 func (o CustomizationsOutput) SetAppAllConfigVarsInState() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Customizations) *bool { return v.SetAppAllConfigVarsInState }).(pulumi.BoolPtrOutput)
+}
+
+type CustomizationsArrayOutput struct{ *pulumi.OutputState }
+
+func (CustomizationsArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Customizations)(nil)).Elem()
+}
+
+func (o CustomizationsArrayOutput) ToCustomizationsArrayOutput() CustomizationsArrayOutput {
+	return o
+}
+
+func (o CustomizationsArrayOutput) ToCustomizationsArrayOutputWithContext(ctx context.Context) CustomizationsArrayOutput {
+	return o
+}
+
+func (o CustomizationsArrayOutput) Index(i pulumi.IntInput) CustomizationsOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Customizations {
+		return vs[0].([]Customizations)[vs[1].(int)]
+	}).(CustomizationsOutput)
 }
 
 type Delays struct {
@@ -171,9 +222,11 @@ func (o TimeoutsOutput) AddonCreateTimeout() pulumi.IntPtrOutput {
 
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CustomizationsInput)(nil)).Elem(), CustomizationsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CustomizationsArrayInput)(nil)).Elem(), CustomizationsArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DelaysInput)(nil)).Elem(), DelaysArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*TimeoutsInput)(nil)).Elem(), TimeoutsArgs{})
 	pulumi.RegisterOutputType(CustomizationsOutput{})
+	pulumi.RegisterOutputType(CustomizationsArrayOutput{})
 	pulumi.RegisterOutputType(DelaysOutput{})
 	pulumi.RegisterOutputType(TimeoutsOutput{})
 }
