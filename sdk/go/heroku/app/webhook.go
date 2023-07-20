@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Webhook struct {
@@ -52,7 +53,7 @@ func NewWebhook(ctx *pulumi.Context,
 		"secret",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Webhook
 	err := ctx.RegisterResource("heroku:app/webhook:Webhook", name, args, &resource, opts...)
 	if err != nil {
@@ -141,7 +142,7 @@ func (i *Webhook) ToWebhookOutputWithContext(ctx context.Context) WebhookOutput 
 // WebhookArrayInput is an input type that accepts WebhookArray and WebhookArrayOutput values.
 // You can construct a concrete instance of `WebhookArrayInput` via:
 //
-//          WebhookArray{ WebhookArgs{...} }
+//	WebhookArray{ WebhookArgs{...} }
 type WebhookArrayInput interface {
 	pulumi.Input
 
@@ -166,7 +167,7 @@ func (i WebhookArray) ToWebhookArrayOutputWithContext(ctx context.Context) Webho
 // WebhookMapInput is an input type that accepts WebhookMap and WebhookMapOutput values.
 // You can construct a concrete instance of `WebhookMapInput` via:
 //
-//          WebhookMap{ "key": WebhookArgs{...} }
+//	WebhookMap{ "key": WebhookArgs{...} }
 type WebhookMapInput interface {
 	pulumi.Input
 

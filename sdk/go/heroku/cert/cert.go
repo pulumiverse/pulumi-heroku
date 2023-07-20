@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Cert struct {
@@ -44,7 +45,7 @@ func NewCert(ctx *pulumi.Context,
 		"privateKey",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Cert
 	err := ctx.RegisterResource("heroku:cert/cert:Cert", name, args, &resource, opts...)
 	if err != nil {
@@ -125,7 +126,7 @@ func (i *Cert) ToCertOutputWithContext(ctx context.Context) CertOutput {
 // CertArrayInput is an input type that accepts CertArray and CertArrayOutput values.
 // You can construct a concrete instance of `CertArrayInput` via:
 //
-//          CertArray{ CertArgs{...} }
+//	CertArray{ CertArgs{...} }
 type CertArrayInput interface {
 	pulumi.Input
 
@@ -150,7 +151,7 @@ func (i CertArray) ToCertArrayOutputWithContext(ctx context.Context) CertArrayOu
 // CertMapInput is an input type that accepts CertMap and CertMapOutput values.
 // You can construct a concrete instance of `CertMapInput` via:
 //
-//          CertMap{ "key": CertArgs{...} }
+//	CertMap{ "key": CertArgs{...} }
 type CertMapInput interface {
 	pulumi.Input
 

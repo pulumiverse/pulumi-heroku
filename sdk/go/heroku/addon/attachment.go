@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Attachment struct {
@@ -33,7 +34,7 @@ func NewAttachment(ctx *pulumi.Context,
 	if args.AppId == nil {
 		return nil, errors.New("invalid value for required argument 'AppId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Attachment
 	err := ctx.RegisterResource("heroku:addon/attachment:Attachment", name, args, &resource, opts...)
 	if err != nil {
@@ -114,7 +115,7 @@ func (i *Attachment) ToAttachmentOutputWithContext(ctx context.Context) Attachme
 // AttachmentArrayInput is an input type that accepts AttachmentArray and AttachmentArrayOutput values.
 // You can construct a concrete instance of `AttachmentArrayInput` via:
 //
-//          AttachmentArray{ AttachmentArgs{...} }
+//	AttachmentArray{ AttachmentArgs{...} }
 type AttachmentArrayInput interface {
 	pulumi.Input
 
@@ -139,7 +140,7 @@ func (i AttachmentArray) ToAttachmentArrayOutputWithContext(ctx context.Context)
 // AttachmentMapInput is an input type that accepts AttachmentMap and AttachmentMapOutput values.
 // You can construct a concrete instance of `AttachmentMapInput` via:
 //
-//          AttachmentMap{ "key": AttachmentArgs{...} }
+//	AttachmentMap{ "key": AttachmentArgs{...} }
 type AttachmentMapInput interface {
 	pulumi.Input
 

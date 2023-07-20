@@ -8,10 +8,11 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 func GetMembers(ctx *pulumi.Context, args *GetMembersArgs, opts ...pulumi.InvokeOption) (*GetMembersResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetMembersResult
 	err := ctx.Invoke("heroku:team/getMembers:getMembers", args, &rv, opts...)
 	if err != nil {

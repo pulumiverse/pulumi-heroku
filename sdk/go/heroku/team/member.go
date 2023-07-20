@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Member struct {
@@ -36,7 +37,7 @@ func NewMember(ctx *pulumi.Context,
 	if args.Team == nil {
 		return nil, errors.New("invalid value for required argument 'Team'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Member
 	err := ctx.RegisterResource("heroku:team/member:Member", name, args, &resource, opts...)
 	if err != nil {
@@ -117,7 +118,7 @@ func (i *Member) ToMemberOutputWithContext(ctx context.Context) MemberOutput {
 // MemberArrayInput is an input type that accepts MemberArray and MemberArrayOutput values.
 // You can construct a concrete instance of `MemberArrayInput` via:
 //
-//          MemberArray{ MemberArgs{...} }
+//	MemberArray{ MemberArgs{...} }
 type MemberArrayInput interface {
 	pulumi.Input
 
@@ -142,7 +143,7 @@ func (i MemberArray) ToMemberArrayOutputWithContext(ctx context.Context) MemberA
 // MemberMapInput is an input type that accepts MemberMap and MemberMapOutput values.
 // You can construct a concrete instance of `MemberMapInput` via:
 //
-//          MemberMap{ "key": MemberArgs{...} }
+//	MemberMap{ "key": MemberArgs{...} }
 type MemberMapInput interface {
 	pulumi.Input
 

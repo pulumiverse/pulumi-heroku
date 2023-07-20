@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Pipeline struct {
@@ -24,7 +25,7 @@ func NewPipeline(ctx *pulumi.Context,
 		args = &PipelineArgs{}
 	}
 
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Pipeline
 	err := ctx.RegisterResource("heroku:pipeline/pipeline:Pipeline", name, args, &resource, opts...)
 	if err != nil {
@@ -97,7 +98,7 @@ func (i *Pipeline) ToPipelineOutputWithContext(ctx context.Context) PipelineOutp
 // PipelineArrayInput is an input type that accepts PipelineArray and PipelineArrayOutput values.
 // You can construct a concrete instance of `PipelineArrayInput` via:
 //
-//          PipelineArray{ PipelineArgs{...} }
+//	PipelineArray{ PipelineArgs{...} }
 type PipelineArrayInput interface {
 	pulumi.Input
 
@@ -122,7 +123,7 @@ func (i PipelineArray) ToPipelineArrayOutputWithContext(ctx context.Context) Pip
 // PipelineMapInput is an input type that accepts PipelineMap and PipelineMapOutput values.
 // You can construct a concrete instance of `PipelineMapInput` via:
 //
-//          PipelineMap{ "key": PipelineArgs{...} }
+//	PipelineMap{ "key": PipelineArgs{...} }
 type PipelineMapInput interface {
 	pulumi.Input
 

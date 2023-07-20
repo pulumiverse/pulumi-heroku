@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type AppConfigDeployTarget struct {
 	Id   string `pulumi:"id"`
@@ -18,7 +21,7 @@ type AppConfigDeployTarget struct {
 // AppConfigDeployTargetInput is an input type that accepts AppConfigDeployTargetArgs and AppConfigDeployTargetOutput values.
 // You can construct a concrete instance of `AppConfigDeployTargetInput` via:
 //
-//          AppConfigDeployTargetArgs{...}
+//	AppConfigDeployTargetArgs{...}
 type AppConfigDeployTargetInput interface {
 	pulumi.Input
 
@@ -54,11 +57,11 @@ func (i AppConfigDeployTargetArgs) ToAppConfigDeployTargetPtrOutputWithContext(c
 // AppConfigDeployTargetPtrInput is an input type that accepts AppConfigDeployTargetArgs, AppConfigDeployTargetPtr and AppConfigDeployTargetPtrOutput values.
 // You can construct a concrete instance of `AppConfigDeployTargetPtrInput` via:
 //
-//          AppConfigDeployTargetArgs{...}
+//	        AppConfigDeployTargetArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type AppConfigDeployTargetPtrInput interface {
 	pulumi.Input
 
