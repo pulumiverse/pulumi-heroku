@@ -7,15 +7,16 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Space struct {
 	pulumi.CustomResourceState
 
 	Cidr         pulumi.StringPtrOutput   `pulumi:"cidr"`
-	DataCidr     pulumi.StringPtrOutput   `pulumi:"dataCidr"`
+	DataCidr     pulumi.StringOutput      `pulumi:"dataCidr"`
 	Name         pulumi.StringOutput      `pulumi:"name"`
 	Organization pulumi.StringOutput      `pulumi:"organization"`
 	OutboundIps  pulumi.StringArrayOutput `pulumi:"outboundIps"`
@@ -33,7 +34,7 @@ func NewSpace(ctx *pulumi.Context,
 	if args.Organization == nil {
 		return nil, errors.New("invalid value for required argument 'Organization'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Space
 	err := ctx.RegisterResource("heroku:space/space:Space", name, args, &resource, opts...)
 	if err != nil {
@@ -124,7 +125,7 @@ func (i *Space) ToSpaceOutputWithContext(ctx context.Context) SpaceOutput {
 // SpaceArrayInput is an input type that accepts SpaceArray and SpaceArrayOutput values.
 // You can construct a concrete instance of `SpaceArrayInput` via:
 //
-//          SpaceArray{ SpaceArgs{...} }
+//	SpaceArray{ SpaceArgs{...} }
 type SpaceArrayInput interface {
 	pulumi.Input
 
@@ -149,7 +150,7 @@ func (i SpaceArray) ToSpaceArrayOutputWithContext(ctx context.Context) SpaceArra
 // SpaceMapInput is an input type that accepts SpaceMap and SpaceMapOutput values.
 // You can construct a concrete instance of `SpaceMapInput` via:
 //
-//          SpaceMap{ "key": SpaceArgs{...} }
+//	SpaceMap{ "key": SpaceArgs{...} }
 type SpaceMapInput interface {
 	pulumi.Input
 
@@ -189,8 +190,8 @@ func (o SpaceOutput) Cidr() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringPtrOutput { return v.Cidr }).(pulumi.StringPtrOutput)
 }
 
-func (o SpaceOutput) DataCidr() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Space) pulumi.StringPtrOutput { return v.DataCidr }).(pulumi.StringPtrOutput)
+func (o SpaceOutput) DataCidr() pulumi.StringOutput {
+	return o.ApplyT(func(v *Space) pulumi.StringOutput { return v.DataCidr }).(pulumi.StringOutput)
 }
 
 func (o SpaceOutput) Name() pulumi.StringOutput {

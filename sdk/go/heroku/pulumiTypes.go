@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type ProviderCustomization struct {
 	SetAddonConfigVarsInState  *bool `pulumi:"setAddonConfigVarsInState"`
@@ -18,7 +21,7 @@ type ProviderCustomization struct {
 // ProviderCustomizationInput is an input type that accepts ProviderCustomizationArgs and ProviderCustomizationOutput values.
 // You can construct a concrete instance of `ProviderCustomizationInput` via:
 //
-//          ProviderCustomizationArgs{...}
+//	ProviderCustomizationArgs{...}
 type ProviderCustomizationInput interface {
 	pulumi.Input
 
@@ -46,7 +49,7 @@ func (i ProviderCustomizationArgs) ToProviderCustomizationOutputWithContext(ctx 
 // ProviderCustomizationArrayInput is an input type that accepts ProviderCustomizationArray and ProviderCustomizationArrayOutput values.
 // You can construct a concrete instance of `ProviderCustomizationArrayInput` via:
 //
-//          ProviderCustomizationArray{ ProviderCustomizationArgs{...} }
+//	ProviderCustomizationArray{ ProviderCustomizationArgs{...} }
 type ProviderCustomizationArrayInput interface {
 	pulumi.Input
 
@@ -119,7 +122,7 @@ type ProviderDelays struct {
 // ProviderDelaysInput is an input type that accepts ProviderDelaysArgs and ProviderDelaysOutput values.
 // You can construct a concrete instance of `ProviderDelaysInput` via:
 //
-//          ProviderDelaysArgs{...}
+//	ProviderDelaysArgs{...}
 type ProviderDelaysInput interface {
 	pulumi.Input
 
@@ -156,11 +159,11 @@ func (i ProviderDelaysArgs) ToProviderDelaysPtrOutputWithContext(ctx context.Con
 // ProviderDelaysPtrInput is an input type that accepts ProviderDelaysArgs, ProviderDelaysPtr and ProviderDelaysPtrOutput values.
 // You can construct a concrete instance of `ProviderDelaysPtrInput` via:
 //
-//          ProviderDelaysArgs{...}
+//	        ProviderDelaysArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type ProviderDelaysPtrInput interface {
 	pulumi.Input
 
@@ -280,7 +283,7 @@ type ProviderTimeouts struct {
 // ProviderTimeoutsInput is an input type that accepts ProviderTimeoutsArgs and ProviderTimeoutsOutput values.
 // You can construct a concrete instance of `ProviderTimeoutsInput` via:
 //
-//          ProviderTimeoutsArgs{...}
+//	ProviderTimeoutsArgs{...}
 type ProviderTimeoutsInput interface {
 	pulumi.Input
 
@@ -315,11 +318,11 @@ func (i ProviderTimeoutsArgs) ToProviderTimeoutsPtrOutputWithContext(ctx context
 // ProviderTimeoutsPtrInput is an input type that accepts ProviderTimeoutsArgs, ProviderTimeoutsPtr and ProviderTimeoutsPtrOutput values.
 // You can construct a concrete instance of `ProviderTimeoutsPtrInput` via:
 //
-//          ProviderTimeoutsArgs{...}
+//	        ProviderTimeoutsArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type ProviderTimeoutsPtrInput interface {
 	pulumi.Input
 

@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Feature struct {
@@ -30,7 +31,7 @@ func NewFeature(ctx *pulumi.Context,
 	if args.Enabled == nil {
 		return nil, errors.New("invalid value for required argument 'Enabled'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Feature
 	err := ctx.RegisterResource("heroku:account/feature:Feature", name, args, &resource, opts...)
 	if err != nil {
@@ -107,7 +108,7 @@ func (i *Feature) ToFeatureOutputWithContext(ctx context.Context) FeatureOutput 
 // FeatureArrayInput is an input type that accepts FeatureArray and FeatureArrayOutput values.
 // You can construct a concrete instance of `FeatureArrayInput` via:
 //
-//          FeatureArray{ FeatureArgs{...} }
+//	FeatureArray{ FeatureArgs{...} }
 type FeatureArrayInput interface {
 	pulumi.Input
 
@@ -132,7 +133,7 @@ func (i FeatureArray) ToFeatureArrayOutputWithContext(ctx context.Context) Featu
 // FeatureMapInput is an input type that accepts FeatureMap and FeatureMapOutput values.
 // You can construct a concrete instance of `FeatureMapInput` via:
 //
-//          FeatureMap{ "key": FeatureArgs{...} }
+//	FeatureMap{ "key": FeatureArgs{...} }
 type FeatureMapInput interface {
 	pulumi.Input
 

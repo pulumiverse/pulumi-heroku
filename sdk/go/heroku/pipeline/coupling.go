@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Coupling struct {
@@ -35,7 +36,7 @@ func NewCoupling(ctx *pulumi.Context,
 	if args.Stage == nil {
 		return nil, errors.New("invalid value for required argument 'Stage'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Coupling
 	err := ctx.RegisterResource("heroku:pipeline/coupling:Coupling", name, args, &resource, opts...)
 	if err != nil {
@@ -112,7 +113,7 @@ func (i *Coupling) ToCouplingOutputWithContext(ctx context.Context) CouplingOutp
 // CouplingArrayInput is an input type that accepts CouplingArray and CouplingArrayOutput values.
 // You can construct a concrete instance of `CouplingArrayInput` via:
 //
-//          CouplingArray{ CouplingArgs{...} }
+//	CouplingArray{ CouplingArgs{...} }
 type CouplingArrayInput interface {
 	pulumi.Input
 
@@ -137,7 +138,7 @@ func (i CouplingArray) ToCouplingArrayOutputWithContext(ctx context.Context) Cou
 // CouplingMapInput is an input type that accepts CouplingMap and CouplingMapOutput values.
 // You can construct a concrete instance of `CouplingMapInput` via:
 //
-//          CouplingMap{ "key": CouplingArgs{...} }
+//	CouplingMap{ "key": CouplingArgs{...} }
 type CouplingMapInput interface {
 	pulumi.Input
 

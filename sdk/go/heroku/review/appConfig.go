@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type AppConfig struct {
@@ -41,7 +42,7 @@ func NewAppConfig(ctx *pulumi.Context,
 	if args.PipelineId == nil {
 		return nil, errors.New("invalid value for required argument 'PipelineId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource AppConfig
 	err := ctx.RegisterResource("heroku:review/appConfig:AppConfig", name, args, &resource, opts...)
 	if err != nil {
@@ -140,7 +141,7 @@ func (i *AppConfig) ToAppConfigOutputWithContext(ctx context.Context) AppConfigO
 // AppConfigArrayInput is an input type that accepts AppConfigArray and AppConfigArrayOutput values.
 // You can construct a concrete instance of `AppConfigArrayInput` via:
 //
-//          AppConfigArray{ AppConfigArgs{...} }
+//	AppConfigArray{ AppConfigArgs{...} }
 type AppConfigArrayInput interface {
 	pulumi.Input
 
@@ -165,7 +166,7 @@ func (i AppConfigArray) ToAppConfigArrayOutputWithContext(ctx context.Context) A
 // AppConfigMapInput is an input type that accepts AppConfigMap and AppConfigMapOutput values.
 // You can construct a concrete instance of `AppConfigMapInput` via:
 //
-//          AppConfigMap{ "key": AppConfigArgs{...} }
+//	AppConfigMap{ "key": AppConfigArgs{...} }
 type AppConfigMapInput interface {
 	pulumi.Input
 

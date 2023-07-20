@@ -100,12 +100,12 @@ def get_team(name: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('heroku:team/getTeam:getTeam', __args__, opts=opts, typ=GetTeamResult).value
 
     return AwaitableGetTeamResult(
-        default=__ret__.default,
-        id=__ret__.id,
-        membership_limit=__ret__.membership_limit,
-        name=__ret__.name,
-        provisioned_licenses=__ret__.provisioned_licenses,
-        type=__ret__.type)
+        default=pulumi.get(__ret__, 'default'),
+        id=pulumi.get(__ret__, 'id'),
+        membership_limit=pulumi.get(__ret__, 'membership_limit'),
+        name=pulumi.get(__ret__, 'name'),
+        provisioned_licenses=pulumi.get(__ret__, 'provisioned_licenses'),
+        type=pulumi.get(__ret__, 'type'))
 
 
 @_utilities.lift_output_func(get_team)

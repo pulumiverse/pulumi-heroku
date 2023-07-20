@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type BuildSource struct {
 	Checksum *string `pulumi:"checksum"`
@@ -20,7 +23,7 @@ type BuildSource struct {
 // BuildSourceInput is an input type that accepts BuildSourceArgs and BuildSourceOutput values.
 // You can construct a concrete instance of `BuildSourceInput` via:
 //
-//          BuildSourceArgs{...}
+//	BuildSourceArgs{...}
 type BuildSourceInput interface {
 	pulumi.Input
 
@@ -58,11 +61,11 @@ func (i BuildSourceArgs) ToBuildSourcePtrOutputWithContext(ctx context.Context) 
 // BuildSourcePtrInput is an input type that accepts BuildSourceArgs, BuildSourcePtr and BuildSourcePtrOutput values.
 // You can construct a concrete instance of `BuildSourcePtrInput` via:
 //
-//          BuildSourceArgs{...}
+//	        BuildSourceArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type BuildSourcePtrInput interface {
 	pulumi.Input
 
@@ -196,7 +199,7 @@ type BuildUser struct {
 // BuildUserInput is an input type that accepts BuildUserArgs and BuildUserOutput values.
 // You can construct a concrete instance of `BuildUserInput` via:
 //
-//          BuildUserArgs{...}
+//	BuildUserArgs{...}
 type BuildUserInput interface {
 	pulumi.Input
 
@@ -224,7 +227,7 @@ func (i BuildUserArgs) ToBuildUserOutputWithContext(ctx context.Context) BuildUs
 // BuildUserArrayInput is an input type that accepts BuildUserArray and BuildUserArrayOutput values.
 // You can construct a concrete instance of `BuildUserArrayInput` via:
 //
-//          BuildUserArray{ BuildUserArgs{...} }
+//	BuildUserArray{ BuildUserArgs{...} }
 type BuildUserArrayInput interface {
 	pulumi.Input
 

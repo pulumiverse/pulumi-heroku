@@ -118,14 +118,14 @@ def get_peering_info(name: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('heroku:space/getPeeringInfo:getPeeringInfo', __args__, opts=opts, typ=GetPeeringInfoResult).value
 
     return AwaitableGetPeeringInfoResult(
-        aws_account_id=__ret__.aws_account_id,
-        aws_region=__ret__.aws_region,
-        dyno_cidr_blocks=__ret__.dyno_cidr_blocks,
-        id=__ret__.id,
-        name=__ret__.name,
-        unavailable_cidr_blocks=__ret__.unavailable_cidr_blocks,
-        vpc_cidr=__ret__.vpc_cidr,
-        vpc_id=__ret__.vpc_id)
+        aws_account_id=pulumi.get(__ret__, 'aws_account_id'),
+        aws_region=pulumi.get(__ret__, 'aws_region'),
+        dyno_cidr_blocks=pulumi.get(__ret__, 'dyno_cidr_blocks'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        unavailable_cidr_blocks=pulumi.get(__ret__, 'unavailable_cidr_blocks'),
+        vpc_cidr=pulumi.get(__ret__, 'vpc_cidr'),
+        vpc_id=pulumi.get(__ret__, 'vpc_id'))
 
 
 @_utilities.lift_output_func(get_peering_info)

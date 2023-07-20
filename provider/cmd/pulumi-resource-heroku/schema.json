@@ -42,6 +42,8 @@
             "disableUnionOutputTypes": true,
             "packageDescription": "A Pulumi package for creating and managing heroku cloud resources.",
             "packageName": "@pulumiverse/heroku",
+            "pluginName": "",
+            "pluginVersion": "",
             "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
             "typescriptVersion": ""
         },
@@ -86,29 +88,14 @@
         "heroku:app/AppOrganization:AppOrganization": {
             "properties": {
                 "locked": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 },
                 "personal": {
                     "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 }
             },
@@ -129,28 +116,13 @@
         "heroku:app/getAppOrganization:getAppOrganization": {
             "properties": {
                 "locked": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 },
                 "name": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "personal": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 }
             },
             "type": "object",
@@ -169,38 +141,18 @@
             "properties": {
                 "checksum": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 },
                 "path": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 },
                 "url": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 },
                 "version": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 }
             },
@@ -216,20 +168,10 @@
         "heroku:build/BuildUser:BuildUser": {
             "properties": {
                 "email": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "id": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -278,20 +220,10 @@
         "heroku:index/ProviderCustomization:ProviderCustomization": {
             "properties": {
                 "setAddonConfigVarsInState": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 },
                 "setAppAllConfigVarsInState": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 }
             },
             "type": "object"
@@ -299,28 +231,13 @@
         "heroku:index/ProviderDelays:ProviderDelays": {
             "properties": {
                 "postAppCreateDelay": {
-                    "type": "integer",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "integer"
                 },
                 "postDomainCreateDelay": {
-                    "type": "integer",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "integer"
                 },
                 "postSpaceCreateDelay": {
-                    "type": "integer",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -328,12 +245,7 @@
         "heroku:index/ProviderTimeouts:ProviderTimeouts": {
             "properties": {
                 "addonCreateTimeout": {
-                    "type": "integer",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -342,20 +254,10 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 },
                 "type": {
                     "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    },
                     "willReplaceOnChanges": true
                 }
             },
@@ -368,20 +270,10 @@
         "heroku:review/AppConfigDeployTarget:AppConfigDeployTarget": {
             "properties": {
                 "id": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "type": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -393,20 +285,10 @@
         "heroku:slug/SlugBlob:SlugBlob": {
             "properties": {
                 "method": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "url": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -422,20 +304,10 @@
         "heroku:space/InboundRulesetRule:InboundRulesetRule": {
             "properties": {
                 "action": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "source": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -447,20 +319,10 @@
         "heroku:space/VpnConnectionTunnel:VpnConnectionTunnel": {
             "properties": {
                 "ip": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "preSharedKey": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -476,52 +338,22 @@
         "heroku:team/getMembersMember:getMembersMember": {
             "properties": {
                 "email": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "federated": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 },
                 "role": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "teamMemberId": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 },
                 "twoFactorAuthentication": {
-                    "type": "boolean",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "boolean"
                 },
                 "userId": {
-                    "type": "string",
-                    "language": {
-                        "python": {
-                            "mapCase": false
-                        }
-                    }
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -2388,6 +2220,7 @@
                 }
             },
             "required": [
+                "dataCidr",
                 "name",
                 "organization",
                 "outboundIps"

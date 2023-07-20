@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Formation struct {
@@ -39,7 +40,7 @@ func NewFormation(ctx *pulumi.Context,
 	if args.Type == nil {
 		return nil, errors.New("invalid value for required argument 'Type'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Formation
 	err := ctx.RegisterResource("heroku:formation/formation:Formation", name, args, &resource, opts...)
 	if err != nil {
@@ -120,7 +121,7 @@ func (i *Formation) ToFormationOutputWithContext(ctx context.Context) FormationO
 // FormationArrayInput is an input type that accepts FormationArray and FormationArrayOutput values.
 // You can construct a concrete instance of `FormationArrayInput` via:
 //
-//          FormationArray{ FormationArgs{...} }
+//	FormationArray{ FormationArgs{...} }
 type FormationArrayInput interface {
 	pulumi.Input
 
@@ -145,7 +146,7 @@ func (i FormationArray) ToFormationArrayOutputWithContext(ctx context.Context) F
 // FormationMapInput is an input type that accepts FormationMap and FormationMapOutput values.
 // You can construct a concrete instance of `FormationMapInput` via:
 //
-//          FormationMap{ "key": FormationArgs{...} }
+//	FormationMap{ "key": FormationArgs{...} }
 type FormationMapInput interface {
 	pulumi.Input
 

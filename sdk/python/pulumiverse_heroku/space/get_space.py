@@ -131,15 +131,15 @@ def get_space(cidr: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('heroku:space/getSpace:getSpace', __args__, opts=opts, typ=GetSpaceResult).value
 
     return AwaitableGetSpaceResult(
-        cidr=__ret__.cidr,
-        data_cidr=__ret__.data_cidr,
-        id=__ret__.id,
-        name=__ret__.name,
-        organization=__ret__.organization,
-        outbound_ips=__ret__.outbound_ips,
-        region=__ret__.region,
-        shield=__ret__.shield,
-        state=__ret__.state)
+        cidr=pulumi.get(__ret__, 'cidr'),
+        data_cidr=pulumi.get(__ret__, 'data_cidr'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        organization=pulumi.get(__ret__, 'organization'),
+        outbound_ips=pulumi.get(__ret__, 'outbound_ips'),
+        region=pulumi.get(__ret__, 'region'),
+        shield=pulumi.get(__ret__, 'shield'),
+        state=pulumi.get(__ret__, 'state'))
 
 
 @_utilities.lift_output_func(get_space)

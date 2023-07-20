@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Collaborator struct {
@@ -35,7 +36,7 @@ func NewCollaborator(ctx *pulumi.Context,
 	if args.Permissions == nil {
 		return nil, errors.New("invalid value for required argument 'Permissions'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Collaborator
 	err := ctx.RegisterResource("heroku:team/collaborator:Collaborator", name, args, &resource, opts...)
 	if err != nil {
@@ -112,7 +113,7 @@ func (i *Collaborator) ToCollaboratorOutputWithContext(ctx context.Context) Coll
 // CollaboratorArrayInput is an input type that accepts CollaboratorArray and CollaboratorArrayOutput values.
 // You can construct a concrete instance of `CollaboratorArrayInput` via:
 //
-//          CollaboratorArray{ CollaboratorArgs{...} }
+//	CollaboratorArray{ CollaboratorArgs{...} }
 type CollaboratorArrayInput interface {
 	pulumi.Input
 
@@ -137,7 +138,7 @@ func (i CollaboratorArray) ToCollaboratorArrayOutputWithContext(ctx context.Cont
 // CollaboratorMapInput is an input type that accepts CollaboratorMap and CollaboratorMapOutput values.
 // You can construct a concrete instance of `CollaboratorMapInput` via:
 //
-//          CollaboratorMap{ "key": CollaboratorArgs{...} }
+//	CollaboratorMap{ "key": CollaboratorArgs{...} }
 type CollaboratorMapInput interface {
 	pulumi.Input
 

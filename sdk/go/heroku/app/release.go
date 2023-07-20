@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Release struct {
@@ -32,7 +33,7 @@ func NewRelease(ctx *pulumi.Context,
 	if args.SlugId == nil {
 		return nil, errors.New("invalid value for required argument 'SlugId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Release
 	err := ctx.RegisterResource("heroku:app/release:Release", name, args, &resource, opts...)
 	if err != nil {
@@ -109,7 +110,7 @@ func (i *Release) ToReleaseOutputWithContext(ctx context.Context) ReleaseOutput 
 // ReleaseArrayInput is an input type that accepts ReleaseArray and ReleaseArrayOutput values.
 // You can construct a concrete instance of `ReleaseArrayInput` via:
 //
-//          ReleaseArray{ ReleaseArgs{...} }
+//	ReleaseArray{ ReleaseArgs{...} }
 type ReleaseArrayInput interface {
 	pulumi.Input
 
@@ -134,7 +135,7 @@ func (i ReleaseArray) ToReleaseArrayOutputWithContext(ctx context.Context) Relea
 // ReleaseMapInput is an input type that accepts ReleaseMap and ReleaseMapOutput values.
 // You can construct a concrete instance of `ReleaseMapInput` via:
 //
-//          ReleaseMap{ "key": ReleaseArgs{...} }
+//	ReleaseMap{ "key": ReleaseArgs{...} }
 type ReleaseMapInput interface {
 	pulumi.Input
 

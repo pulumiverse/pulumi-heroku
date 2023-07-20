@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type AppAccess struct {
@@ -35,7 +36,7 @@ func NewAppAccess(ctx *pulumi.Context,
 	if args.Space == nil {
 		return nil, errors.New("invalid value for required argument 'Space'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource AppAccess
 	err := ctx.RegisterResource("heroku:space/appAccess:AppAccess", name, args, &resource, opts...)
 	if err != nil {
@@ -112,7 +113,7 @@ func (i *AppAccess) ToAppAccessOutputWithContext(ctx context.Context) AppAccessO
 // AppAccessArrayInput is an input type that accepts AppAccessArray and AppAccessArrayOutput values.
 // You can construct a concrete instance of `AppAccessArrayInput` via:
 //
-//          AppAccessArray{ AppAccessArgs{...} }
+//	AppAccessArray{ AppAccessArgs{...} }
 type AppAccessArrayInput interface {
 	pulumi.Input
 
@@ -137,7 +138,7 @@ func (i AppAccessArray) ToAppAccessArrayOutputWithContext(ctx context.Context) A
 // AppAccessMapInput is an input type that accepts AppAccessMap and AppAccessMapOutput values.
 // You can construct a concrete instance of `AppAccessMapInput` via:
 //
-//          AppAccessMap{ "key": AppAccessArgs{...} }
+//	AppAccessMap{ "key": AppAccessArgs{...} }
 type AppAccessMapInput interface {
 	pulumi.Input
 

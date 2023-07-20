@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type InboundRuleset struct {
@@ -31,7 +32,7 @@ func NewInboundRuleset(ctx *pulumi.Context,
 	if args.Space == nil {
 		return nil, errors.New("invalid value for required argument 'Space'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource InboundRuleset
 	err := ctx.RegisterResource("heroku:space/inboundRuleset:InboundRuleset", name, args, &resource, opts...)
 	if err != nil {
@@ -104,7 +105,7 @@ func (i *InboundRuleset) ToInboundRulesetOutputWithContext(ctx context.Context) 
 // InboundRulesetArrayInput is an input type that accepts InboundRulesetArray and InboundRulesetArrayOutput values.
 // You can construct a concrete instance of `InboundRulesetArrayInput` via:
 //
-//          InboundRulesetArray{ InboundRulesetArgs{...} }
+//	InboundRulesetArray{ InboundRulesetArgs{...} }
 type InboundRulesetArrayInput interface {
 	pulumi.Input
 
@@ -129,7 +130,7 @@ func (i InboundRulesetArray) ToInboundRulesetArrayOutputWithContext(ctx context.
 // InboundRulesetMapInput is an input type that accepts InboundRulesetMap and InboundRulesetMapOutput values.
 // You can construct a concrete instance of `InboundRulesetMapInput` via:
 //
-//          InboundRulesetMap{ "key": InboundRulesetArgs{...} }
+//	InboundRulesetMap{ "key": InboundRulesetArgs{...} }
 type InboundRulesetMapInput interface {
 	pulumi.Input
 

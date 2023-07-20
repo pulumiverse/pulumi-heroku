@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type ConfigVar struct {
@@ -42,7 +43,7 @@ func NewConfigVar(ctx *pulumi.Context,
 		"sensitiveVars",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource ConfigVar
 	err := ctx.RegisterResource("heroku:pipeline/configVar:ConfigVar", name, args, &resource, opts...)
 	if err != nil {
@@ -125,7 +126,7 @@ func (i *ConfigVar) ToConfigVarOutputWithContext(ctx context.Context) ConfigVarO
 // ConfigVarArrayInput is an input type that accepts ConfigVarArray and ConfigVarArrayOutput values.
 // You can construct a concrete instance of `ConfigVarArrayInput` via:
 //
-//          ConfigVarArray{ ConfigVarArgs{...} }
+//	ConfigVarArray{ ConfigVarArgs{...} }
 type ConfigVarArrayInput interface {
 	pulumi.Input
 
@@ -150,7 +151,7 @@ func (i ConfigVarArray) ToConfigVarArrayOutputWithContext(ctx context.Context) C
 // ConfigVarMapInput is an input type that accepts ConfigVarMap and ConfigVarMapOutput values.
 // You can construct a concrete instance of `ConfigVarMapInput` via:
 //
-//          ConfigVarMap{ "key": ConfigVarArgs{...} }
+//	ConfigVarMap{ "key": ConfigVarArgs{...} }
 type ConfigVarMapInput interface {
 	pulumi.Input
 
