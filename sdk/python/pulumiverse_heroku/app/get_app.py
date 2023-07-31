@@ -173,20 +173,20 @@ def get_app(name: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('heroku:app/getApp:getApp', __args__, opts=opts, typ=GetAppResult).value
 
     return AwaitableGetAppResult(
-        acm=__ret__.acm,
-        buildpacks=__ret__.buildpacks,
-        config_vars=__ret__.config_vars,
-        git_url=__ret__.git_url,
-        heroku_hostname=__ret__.heroku_hostname,
-        id=__ret__.id,
-        internal_routing=__ret__.internal_routing,
-        name=__ret__.name,
-        organizations=__ret__.organizations,
-        region=__ret__.region,
-        space=__ret__.space,
-        stack=__ret__.stack,
-        uuid=__ret__.uuid,
-        web_url=__ret__.web_url)
+        acm=pulumi.get(__ret__, 'acm'),
+        buildpacks=pulumi.get(__ret__, 'buildpacks'),
+        config_vars=pulumi.get(__ret__, 'config_vars'),
+        git_url=pulumi.get(__ret__, 'git_url'),
+        heroku_hostname=pulumi.get(__ret__, 'heroku_hostname'),
+        id=pulumi.get(__ret__, 'id'),
+        internal_routing=pulumi.get(__ret__, 'internal_routing'),
+        name=pulumi.get(__ret__, 'name'),
+        organizations=pulumi.get(__ret__, 'organizations'),
+        region=pulumi.get(__ret__, 'region'),
+        space=pulumi.get(__ret__, 'space'),
+        stack=pulumi.get(__ret__, 'stack'),
+        uuid=pulumi.get(__ret__, 'uuid'),
+        web_url=pulumi.get(__ret__, 'web_url'))
 
 
 @_utilities.lift_output_func(get_app)

@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Drain struct {
@@ -37,7 +38,7 @@ func NewDrain(ctx *pulumi.Context,
 		"sensitiveUrl",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Drain
 	err := ctx.RegisterResource("heroku:drain/drain:Drain", name, args, &resource, opts...)
 	if err != nil {
@@ -116,7 +117,7 @@ func (i *Drain) ToDrainOutputWithContext(ctx context.Context) DrainOutput {
 // DrainArrayInput is an input type that accepts DrainArray and DrainArrayOutput values.
 // You can construct a concrete instance of `DrainArrayInput` via:
 //
-//          DrainArray{ DrainArgs{...} }
+//	DrainArray{ DrainArgs{...} }
 type DrainArrayInput interface {
 	pulumi.Input
 
@@ -141,7 +142,7 @@ func (i DrainArray) ToDrainArrayOutputWithContext(ctx context.Context) DrainArra
 // DrainMapInput is an input type that accepts DrainMap and DrainMapOutput values.
 // You can construct a concrete instance of `DrainMapInput` via:
 //
-//          DrainMap{ "key": DrainArgs{...} }
+//	DrainMap{ "key": DrainArgs{...} }
 type DrainMapInput interface {
 	pulumi.Input
 

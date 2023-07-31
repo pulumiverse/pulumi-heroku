@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Ssl struct {
@@ -40,7 +41,7 @@ func NewSsl(ctx *pulumi.Context,
 		"privateKey",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Ssl
 	err := ctx.RegisterResource("heroku:ssl/ssl:Ssl", name, args, &resource, opts...)
 	if err != nil {
@@ -119,7 +120,7 @@ func (i *Ssl) ToSslOutputWithContext(ctx context.Context) SslOutput {
 // SslArrayInput is an input type that accepts SslArray and SslArrayOutput values.
 // You can construct a concrete instance of `SslArrayInput` via:
 //
-//          SslArray{ SslArgs{...} }
+//	SslArray{ SslArgs{...} }
 type SslArrayInput interface {
 	pulumi.Input
 
@@ -144,7 +145,7 @@ func (i SslArray) ToSslArrayOutputWithContext(ctx context.Context) SslArrayOutpu
 // SslMapInput is an input type that accepts SslMap and SslMapOutput values.
 // You can construct a concrete instance of `SslMapInput` via:
 //
-//          SslMap{ "key": SslArgs{...} }
+//	SslMap{ "key": SslArgs{...} }
 type SslMapInput interface {
 	pulumi.Input
 

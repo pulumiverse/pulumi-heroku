@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type App struct {
@@ -49,7 +50,7 @@ func NewApp(ctx *pulumi.Context,
 		"sensitiveConfigVars",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource App
 	err := ctx.RegisterResource("heroku:app/app:App", name, args, &resource, opts...)
 	if err != nil {
@@ -164,7 +165,7 @@ func (i *App) ToAppOutputWithContext(ctx context.Context) AppOutput {
 // AppArrayInput is an input type that accepts AppArray and AppArrayOutput values.
 // You can construct a concrete instance of `AppArrayInput` via:
 //
-//          AppArray{ AppArgs{...} }
+//	AppArray{ AppArgs{...} }
 type AppArrayInput interface {
 	pulumi.Input
 
@@ -189,7 +190,7 @@ func (i AppArray) ToAppArrayOutputWithContext(ctx context.Context) AppArrayOutpu
 // AppMapInput is an input type that accepts AppMap and AppMapOutput values.
 // You can construct a concrete instance of `AppMapInput` via:
 //
-//          AppMap{ "key": AppArgs{...} }
+//	AppMap{ "key": AppArgs{...} }
 type AppMapInput interface {
 	pulumi.Input
 

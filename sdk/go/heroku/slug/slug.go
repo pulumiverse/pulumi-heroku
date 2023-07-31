@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Slug struct {
@@ -41,7 +42,7 @@ func NewSlug(ctx *pulumi.Context,
 	if args.ProcessTypes == nil {
 		return nil, errors.New("invalid value for required argument 'ProcessTypes'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Slug
 	err := ctx.RegisterResource("heroku:slug/slug:Slug", name, args, &resource, opts...)
 	if err != nil {
@@ -148,7 +149,7 @@ func (i *Slug) ToSlugOutputWithContext(ctx context.Context) SlugOutput {
 // SlugArrayInput is an input type that accepts SlugArray and SlugArrayOutput values.
 // You can construct a concrete instance of `SlugArrayInput` via:
 //
-//          SlugArray{ SlugArgs{...} }
+//	SlugArray{ SlugArgs{...} }
 type SlugArrayInput interface {
 	pulumi.Input
 
@@ -173,7 +174,7 @@ func (i SlugArray) ToSlugArrayOutputWithContext(ctx context.Context) SlugArrayOu
 // SlugMapInput is an input type that accepts SlugMap and SlugMapOutput values.
 // You can construct a concrete instance of `SlugMapInput` via:
 //
-//          SlugMap{ "key": SlugArgs{...} }
+//	SlugMap{ "key": SlugArgs{...} }
 type SlugMapInput interface {
 	pulumi.Input
 

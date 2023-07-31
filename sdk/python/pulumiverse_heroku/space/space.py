@@ -291,7 +291,7 @@ class Space(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="dataCidr")
-    def data_cidr(self) -> pulumi.Output[Optional[str]]:
+    def data_cidr(self) -> pulumi.Output[str]:
         return pulumi.get(self, "data_cidr")
 
     @property

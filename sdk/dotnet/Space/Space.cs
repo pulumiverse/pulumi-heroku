@@ -17,7 +17,7 @@ namespace Pulumiverse.Heroku.Space
         public Output<string?> Cidr { get; private set; } = null!;
 
         [Output("dataCidr")]
-        public Output<string?> DataCidr { get; private set; } = null!;
+        public Output<string> DataCidr { get; private set; } = null!;
 
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;

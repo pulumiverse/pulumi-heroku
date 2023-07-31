@@ -85,10 +85,10 @@ def get_members(roles: Optional[Sequence[str]] = None,
     __ret__ = pulumi.runtime.invoke('heroku:team/getMembers:getMembers', __args__, opts=opts, typ=GetMembersResult).value
 
     return AwaitableGetMembersResult(
-        id=__ret__.id,
-        members=__ret__.members,
-        roles=__ret__.roles,
-        team=__ret__.team)
+        id=pulumi.get(__ret__, 'id'),
+        members=pulumi.get(__ret__, 'members'),
+        roles=pulumi.get(__ret__, 'roles'),
+        team=pulumi.get(__ret__, 'team'))
 
 
 @_utilities.lift_output_func(get_members)

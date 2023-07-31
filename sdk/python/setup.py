@@ -38,6 +38,7 @@ def readme():
 
 
 setup(name='pulumiverse_heroku',
+      python_requires='>=3.7',
       version=VERSION,
       description="A Pulumi package for creating and managing heroku cloud resources.",
       long_description=readme(),
