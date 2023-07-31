@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Addon struct {
@@ -40,7 +41,7 @@ func NewAddon(ctx *pulumi.Context,
 		"configVarValues",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Addon
 	err := ctx.RegisterResource("heroku:addon/addon:Addon", name, args, &resource, opts...)
 	if err != nil {
@@ -127,7 +128,7 @@ func (i *Addon) ToAddonOutputWithContext(ctx context.Context) AddonOutput {
 // AddonArrayInput is an input type that accepts AddonArray and AddonArrayOutput values.
 // You can construct a concrete instance of `AddonArrayInput` via:
 //
-//          AddonArray{ AddonArgs{...} }
+//	AddonArray{ AddonArgs{...} }
 type AddonArrayInput interface {
 	pulumi.Input
 
@@ -152,7 +153,7 @@ func (i AddonArray) ToAddonArrayOutputWithContext(ctx context.Context) AddonArra
 // AddonMapInput is an input type that accepts AddonMap and AddonMapOutput values.
 // You can construct a concrete instance of `AddonMapInput` via:
 //
-//          AddonMap{ "key": AddonArgs{...} }
+//	AddonMap{ "key": AddonArgs{...} }
 type AddonMapInput interface {
 	pulumi.Input
 

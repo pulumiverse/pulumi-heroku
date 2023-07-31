@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type AppOrganization struct {
 	Locked   *bool  `pulumi:"locked"`
@@ -19,7 +22,7 @@ type AppOrganization struct {
 // AppOrganizationInput is an input type that accepts AppOrganizationArgs and AppOrganizationOutput values.
 // You can construct a concrete instance of `AppOrganizationInput` via:
 //
-//          AppOrganizationArgs{...}
+//	AppOrganizationArgs{...}
 type AppOrganizationInput interface {
 	pulumi.Input
 
@@ -56,11 +59,11 @@ func (i AppOrganizationArgs) ToAppOrganizationPtrOutputWithContext(ctx context.C
 // AppOrganizationPtrInput is an input type that accepts AppOrganizationArgs, AppOrganizationPtr and AppOrganizationPtrOutput values.
 // You can construct a concrete instance of `AppOrganizationPtrInput` via:
 //
-//          AppOrganizationArgs{...}
+//	        AppOrganizationArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type AppOrganizationPtrInput interface {
 	pulumi.Input
 
@@ -182,7 +185,7 @@ type GetAppOrganization struct {
 // GetAppOrganizationInput is an input type that accepts GetAppOrganizationArgs and GetAppOrganizationOutput values.
 // You can construct a concrete instance of `GetAppOrganizationInput` via:
 //
-//          GetAppOrganizationArgs{...}
+//	GetAppOrganizationArgs{...}
 type GetAppOrganizationInput interface {
 	pulumi.Input
 
@@ -211,7 +214,7 @@ func (i GetAppOrganizationArgs) ToGetAppOrganizationOutputWithContext(ctx contex
 // GetAppOrganizationArrayInput is an input type that accepts GetAppOrganizationArray and GetAppOrganizationArrayOutput values.
 // You can construct a concrete instance of `GetAppOrganizationArrayInput` via:
 //
-//          GetAppOrganizationArray{ GetAppOrganizationArgs{...} }
+//	GetAppOrganizationArray{ GetAppOrganizationArgs{...} }
 type GetAppOrganizationArrayInput interface {
 	pulumi.Input
 

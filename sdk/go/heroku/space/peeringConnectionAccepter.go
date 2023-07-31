@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type PeeringConnectionAccepter struct {
@@ -33,7 +34,7 @@ func NewPeeringConnectionAccepter(ctx *pulumi.Context,
 	if args.VpcPeeringConnectionId == nil {
 		return nil, errors.New("invalid value for required argument 'VpcPeeringConnectionId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource PeeringConnectionAccepter
 	err := ctx.RegisterResource("heroku:space/peeringConnectionAccepter:PeeringConnectionAccepter", name, args, &resource, opts...)
 	if err != nil {
@@ -110,7 +111,7 @@ func (i *PeeringConnectionAccepter) ToPeeringConnectionAccepterOutputWithContext
 // PeeringConnectionAccepterArrayInput is an input type that accepts PeeringConnectionAccepterArray and PeeringConnectionAccepterArrayOutput values.
 // You can construct a concrete instance of `PeeringConnectionAccepterArrayInput` via:
 //
-//          PeeringConnectionAccepterArray{ PeeringConnectionAccepterArgs{...} }
+//	PeeringConnectionAccepterArray{ PeeringConnectionAccepterArgs{...} }
 type PeeringConnectionAccepterArrayInput interface {
 	pulumi.Input
 
@@ -135,7 +136,7 @@ func (i PeeringConnectionAccepterArray) ToPeeringConnectionAccepterArrayOutputWi
 // PeeringConnectionAccepterMapInput is an input type that accepts PeeringConnectionAccepterMap and PeeringConnectionAccepterMapOutput values.
 // You can construct a concrete instance of `PeeringConnectionAccepterMapInput` via:
 //
-//          PeeringConnectionAccepterMap{ "key": PeeringConnectionAccepterArgs{...} }
+//	PeeringConnectionAccepterMap{ "key": PeeringConnectionAccepterArgs{...} }
 type PeeringConnectionAccepterMapInput interface {
 	pulumi.Input
 

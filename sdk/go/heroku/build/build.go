@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type Build struct {
@@ -40,7 +41,7 @@ func NewBuild(ctx *pulumi.Context,
 	if args.Source == nil {
 		return nil, errors.New("invalid value for required argument 'Source'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Build
 	err := ctx.RegisterResource("heroku:build/build:Build", name, args, &resource, opts...)
 	if err != nil {
@@ -133,7 +134,7 @@ func (i *Build) ToBuildOutputWithContext(ctx context.Context) BuildOutput {
 // BuildArrayInput is an input type that accepts BuildArray and BuildArrayOutput values.
 // You can construct a concrete instance of `BuildArrayInput` via:
 //
-//          BuildArray{ BuildArgs{...} }
+//	BuildArray{ BuildArgs{...} }
 type BuildArrayInput interface {
 	pulumi.Input
 
@@ -158,7 +159,7 @@ func (i BuildArray) ToBuildArrayOutputWithContext(ctx context.Context) BuildArra
 // BuildMapInput is an input type that accepts BuildMap and BuildMapOutput values.
 // You can construct a concrete instance of `BuildMapInput` via:
 //
-//          BuildMap{ "key": BuildArgs{...} }
+//	BuildMap{ "key": BuildArgs{...} }
 type BuildMapInput interface {
 	pulumi.Input
 

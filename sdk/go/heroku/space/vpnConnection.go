@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type VpnConnection struct {
@@ -39,7 +40,7 @@ func NewVpnConnection(ctx *pulumi.Context,
 	if args.Space == nil {
 		return nil, errors.New("invalid value for required argument 'Space'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource VpnConnection
 	err := ctx.RegisterResource("heroku:space/vpnConnection:VpnConnection", name, args, &resource, opts...)
 	if err != nil {
@@ -128,7 +129,7 @@ func (i *VpnConnection) ToVpnConnectionOutputWithContext(ctx context.Context) Vp
 // VpnConnectionArrayInput is an input type that accepts VpnConnectionArray and VpnConnectionArrayOutput values.
 // You can construct a concrete instance of `VpnConnectionArrayInput` via:
 //
-//          VpnConnectionArray{ VpnConnectionArgs{...} }
+//	VpnConnectionArray{ VpnConnectionArgs{...} }
 type VpnConnectionArrayInput interface {
 	pulumi.Input
 
@@ -153,7 +154,7 @@ func (i VpnConnectionArray) ToVpnConnectionArrayOutputWithContext(ctx context.Co
 // VpnConnectionMapInput is an input type that accepts VpnConnectionMap and VpnConnectionMapOutput values.
 // You can construct a concrete instance of `VpnConnectionMapInput` via:
 //
-//          VpnConnectionMap{ "key": VpnConnectionArgs{...} }
+//	VpnConnectionMap{ "key": VpnConnectionArgs{...} }
 type VpnConnectionMapInput interface {
 	pulumi.Input
 

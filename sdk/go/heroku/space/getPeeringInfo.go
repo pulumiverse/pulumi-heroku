@@ -8,10 +8,11 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 func GetPeeringInfo(ctx *pulumi.Context, args *GetPeeringInfoArgs, opts ...pulumi.InvokeOption) (*GetPeeringInfoResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetPeeringInfoResult
 	err := ctx.Invoke("heroku:space/getPeeringInfo:getPeeringInfo", args, &rv, opts...)
 	if err != nil {

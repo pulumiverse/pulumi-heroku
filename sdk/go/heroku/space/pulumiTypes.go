@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type InboundRulesetRule struct {
 	Action string `pulumi:"action"`
@@ -18,7 +21,7 @@ type InboundRulesetRule struct {
 // InboundRulesetRuleInput is an input type that accepts InboundRulesetRuleArgs and InboundRulesetRuleOutput values.
 // You can construct a concrete instance of `InboundRulesetRuleInput` via:
 //
-//          InboundRulesetRuleArgs{...}
+//	InboundRulesetRuleArgs{...}
 type InboundRulesetRuleInput interface {
 	pulumi.Input
 
@@ -46,7 +49,7 @@ func (i InboundRulesetRuleArgs) ToInboundRulesetRuleOutputWithContext(ctx contex
 // InboundRulesetRuleArrayInput is an input type that accepts InboundRulesetRuleArray and InboundRulesetRuleArrayOutput values.
 // You can construct a concrete instance of `InboundRulesetRuleArrayInput` via:
 //
-//          InboundRulesetRuleArray{ InboundRulesetRuleArgs{...} }
+//	InboundRulesetRuleArray{ InboundRulesetRuleArgs{...} }
 type InboundRulesetRuleArrayInput interface {
 	pulumi.Input
 
@@ -118,7 +121,7 @@ type VpnConnectionTunnel struct {
 // VpnConnectionTunnelInput is an input type that accepts VpnConnectionTunnelArgs and VpnConnectionTunnelOutput values.
 // You can construct a concrete instance of `VpnConnectionTunnelInput` via:
 //
-//          VpnConnectionTunnelArgs{...}
+//	VpnConnectionTunnelArgs{...}
 type VpnConnectionTunnelInput interface {
 	pulumi.Input
 
@@ -146,7 +149,7 @@ func (i VpnConnectionTunnelArgs) ToVpnConnectionTunnelOutputWithContext(ctx cont
 // VpnConnectionTunnelArrayInput is an input type that accepts VpnConnectionTunnelArray and VpnConnectionTunnelArrayOutput values.
 // You can construct a concrete instance of `VpnConnectionTunnelArrayInput` via:
 //
-//          VpnConnectionTunnelArray{ VpnConnectionTunnelArgs{...} }
+//	VpnConnectionTunnelArray{ VpnConnectionTunnelArgs{...} }
 type VpnConnectionTunnelArrayInput interface {
 	pulumi.Input
 

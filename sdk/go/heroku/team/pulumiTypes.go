@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type GetMembersMember struct {
 	Email                   string `pulumi:"email"`
@@ -22,7 +25,7 @@ type GetMembersMember struct {
 // GetMembersMemberInput is an input type that accepts GetMembersMemberArgs and GetMembersMemberOutput values.
 // You can construct a concrete instance of `GetMembersMemberInput` via:
 //
-//          GetMembersMemberArgs{...}
+//	GetMembersMemberArgs{...}
 type GetMembersMemberInput interface {
 	pulumi.Input
 
@@ -54,7 +57,7 @@ func (i GetMembersMemberArgs) ToGetMembersMemberOutputWithContext(ctx context.Co
 // GetMembersMemberArrayInput is an input type that accepts GetMembersMemberArray and GetMembersMemberArrayOutput values.
 // You can construct a concrete instance of `GetMembersMemberArrayInput` via:
 //
-//          GetMembersMemberArray{ GetMembersMemberArgs{...} }
+//	GetMembersMemberArray{ GetMembersMemberArgs{...} }
 type GetMembersMemberArrayInput interface {
 	pulumi.Input
 

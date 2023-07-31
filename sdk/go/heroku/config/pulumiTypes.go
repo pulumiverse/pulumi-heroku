@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type Customizations struct {
 	SetAddonConfigVarsInState  *bool `pulumi:"setAddonConfigVarsInState"`
@@ -18,7 +21,7 @@ type Customizations struct {
 // CustomizationsInput is an input type that accepts CustomizationsArgs and CustomizationsOutput values.
 // You can construct a concrete instance of `CustomizationsInput` via:
 //
-//          CustomizationsArgs{...}
+//	CustomizationsArgs{...}
 type CustomizationsInput interface {
 	pulumi.Input
 
@@ -46,7 +49,7 @@ func (i CustomizationsArgs) ToCustomizationsOutputWithContext(ctx context.Contex
 // CustomizationsArrayInput is an input type that accepts CustomizationsArray and CustomizationsArrayOutput values.
 // You can construct a concrete instance of `CustomizationsArrayInput` via:
 //
-//          CustomizationsArray{ CustomizationsArgs{...} }
+//	CustomizationsArray{ CustomizationsArgs{...} }
 type CustomizationsArrayInput interface {
 	pulumi.Input
 
@@ -119,7 +122,7 @@ type Delays struct {
 // DelaysInput is an input type that accepts DelaysArgs and DelaysOutput values.
 // You can construct a concrete instance of `DelaysInput` via:
 //
-//          DelaysArgs{...}
+//	DelaysArgs{...}
 type DelaysInput interface {
 	pulumi.Input
 
@@ -178,7 +181,7 @@ type Timeouts struct {
 // TimeoutsInput is an input type that accepts TimeoutsArgs and TimeoutsOutput values.
 // You can construct a concrete instance of `TimeoutsInput` via:
 //
-//          TimeoutsArgs{...}
+//	TimeoutsArgs{...}
 type TimeoutsInput interface {
 	pulumi.Input
 

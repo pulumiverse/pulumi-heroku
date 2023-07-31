@@ -82,10 +82,10 @@ def get_pipeline(name: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('heroku:pipeline/getPipeline:getPipeline', __args__, opts=opts, typ=GetPipelineResult).value
 
     return AwaitableGetPipelineResult(
-        id=__ret__.id,
-        name=__ret__.name,
-        owner_id=__ret__.owner_id,
-        owner_type=__ret__.owner_type)
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        owner_id=pulumi.get(__ret__, 'owner_id'),
+        owner_type=pulumi.get(__ret__, 'owner_type'))
 
 
 @_utilities.lift_output_func(get_pipeline)

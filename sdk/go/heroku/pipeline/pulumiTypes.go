@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type PipelineOwner struct {
 	Id   string `pulumi:"id"`
@@ -18,7 +21,7 @@ type PipelineOwner struct {
 // PipelineOwnerInput is an input type that accepts PipelineOwnerArgs and PipelineOwnerOutput values.
 // You can construct a concrete instance of `PipelineOwnerInput` via:
 //
-//          PipelineOwnerArgs{...}
+//	PipelineOwnerArgs{...}
 type PipelineOwnerInput interface {
 	pulumi.Input
 
@@ -54,11 +57,11 @@ func (i PipelineOwnerArgs) ToPipelineOwnerPtrOutputWithContext(ctx context.Conte
 // PipelineOwnerPtrInput is an input type that accepts PipelineOwnerArgs, PipelineOwnerPtr and PipelineOwnerPtrOutput values.
 // You can construct a concrete instance of `PipelineOwnerPtrInput` via:
 //
-//          PipelineOwnerArgs{...}
+//	        PipelineOwnerArgs{...}
 //
-//  or:
+//	or:
 //
-//          nil
+//	        nil
 type PipelineOwnerPtrInput interface {
 	pulumi.Input
 

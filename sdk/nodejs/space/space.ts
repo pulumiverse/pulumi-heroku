@@ -33,7 +33,7 @@ export class Space extends pulumi.CustomResource {
     }
 
     public readonly cidr!: pulumi.Output<string | undefined>;
-    public readonly dataCidr!: pulumi.Output<string | undefined>;
+    public readonly dataCidr!: pulumi.Output<string>;
     public readonly name!: pulumi.Output<string>;
     public readonly organization!: pulumi.Output<string>;
     public /*out*/ readonly outboundIps!: pulumi.Output<string[]>;

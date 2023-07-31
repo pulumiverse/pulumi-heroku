@@ -8,7 +8,10 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 type SlugBlob struct {
 	Method *string `pulumi:"method"`
@@ -18,7 +21,7 @@ type SlugBlob struct {
 // SlugBlobInput is an input type that accepts SlugBlobArgs and SlugBlobOutput values.
 // You can construct a concrete instance of `SlugBlobInput` via:
 //
-//          SlugBlobArgs{...}
+//	SlugBlobArgs{...}
 type SlugBlobInput interface {
 	pulumi.Input
 
@@ -46,7 +49,7 @@ func (i SlugBlobArgs) ToSlugBlobOutputWithContext(ctx context.Context) SlugBlobO
 // SlugBlobArrayInput is an input type that accepts SlugBlobArray and SlugBlobArrayOutput values.
 // You can construct a concrete instance of `SlugBlobArrayInput` via:
 //
-//          SlugBlobArray{ SlugBlobArgs{...} }
+//	SlugBlobArray{ SlugBlobArgs{...} }
 type SlugBlobArrayInput interface {
 	pulumi.Input
 

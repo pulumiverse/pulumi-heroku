@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
 type ConfigAssociation struct {
@@ -36,7 +37,7 @@ func NewConfigAssociation(ctx *pulumi.Context,
 		"sensitiveVars",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource ConfigAssociation
 	err := ctx.RegisterResource("heroku:app/configAssociation:ConfigAssociation", name, args, &resource, opts...)
 	if err != nil {
@@ -113,7 +114,7 @@ func (i *ConfigAssociation) ToConfigAssociationOutputWithContext(ctx context.Con
 // ConfigAssociationArrayInput is an input type that accepts ConfigAssociationArray and ConfigAssociationArrayOutput values.
 // You can construct a concrete instance of `ConfigAssociationArrayInput` via:
 //
-//          ConfigAssociationArray{ ConfigAssociationArgs{...} }
+//	ConfigAssociationArray{ ConfigAssociationArgs{...} }
 type ConfigAssociationArrayInput interface {
 	pulumi.Input
 
@@ -138,7 +139,7 @@ func (i ConfigAssociationArray) ToConfigAssociationArrayOutputWithContext(ctx co
 // ConfigAssociationMapInput is an input type that accepts ConfigAssociationMap and ConfigAssociationMapOutput values.
 // You can construct a concrete instance of `ConfigAssociationMapInput` via:
 //
-//          ConfigAssociationMap{ "key": ConfigAssociationArgs{...} }
+//	ConfigAssociationMap{ "key": ConfigAssociationArgs{...} }
 type ConfigAssociationMapInput interface {
 	pulumi.Input
 

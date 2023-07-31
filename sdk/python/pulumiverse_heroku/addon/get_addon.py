@@ -97,12 +97,12 @@ def get_addon(name: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('heroku:addon/getAddon:getAddon', __args__, opts=opts, typ=GetAddonResult).value
 
     return AwaitableGetAddonResult(
-        app_id=__ret__.app_id,
-        config_vars=__ret__.config_vars,
-        id=__ret__.id,
-        name=__ret__.name,
-        plan=__ret__.plan,
-        provider_id=__ret__.provider_id)
+        app_id=pulumi.get(__ret__, 'app_id'),
+        config_vars=pulumi.get(__ret__, 'config_vars'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        plan=pulumi.get(__ret__, 'plan'),
+        provider_id=pulumi.get(__ret__, 'provider_id'))
 
 
 @_utilities.lift_output_func(get_addon)
