@@ -32,9 +32,23 @@ export class Domain extends pulumi.CustomResource {
         return obj['__pulumiType'] === Domain.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     *
+     * For apps with ACM enabled (automated certificate management):
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * The CNAME traffic should route to.
+     */
     public /*out*/ readonly cname!: pulumi.Output<string>;
+    /**
+     * Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sniEndpointId`.
+     */
     public readonly hostname!: pulumi.Output<string>;
+    /**
+     * The ID of the `heroku.ssl.Ssl` resource to associate the domain with.
+     */
     public readonly sniEndpointId!: pulumi.Output<string | undefined>;
 
     /**
@@ -76,9 +90,23 @@ export class Domain extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Domain resources.
  */
 export interface DomainState {
+    /**
+     * Heroku app ID (do not use app name)
+     *
+     * For apps with ACM enabled (automated certificate management):
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * The CNAME traffic should route to.
+     */
     cname?: pulumi.Input<string>;
+    /**
+     * Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sniEndpointId`.
+     */
     hostname?: pulumi.Input<string>;
+    /**
+     * The ID of the `heroku.ssl.Ssl` resource to associate the domain with.
+     */
     sniEndpointId?: pulumi.Input<string>;
 }
 
@@ -86,7 +114,18 @@ export interface DomainState {
  * The set of arguments for constructing a Domain resource.
  */
 export interface DomainArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     *
+     * For apps with ACM enabled (automated certificate management):
+     */
     appId: pulumi.Input<string>;
+    /**
+     * Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sniEndpointId`.
+     */
     hostname: pulumi.Input<string>;
+    /**
+     * The ID of the `heroku.ssl.Ssl` resource to associate the domain with.
+     */
     sniEndpointId?: pulumi.Input<string>;
 }

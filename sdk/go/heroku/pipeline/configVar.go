@@ -12,14 +12,42 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a resource to manage a pipeline's config vars.
+//
+// The pipeline config var API can only retrieve config vars that can be set at the pipeline level.
+// Additionally, these two supported pipeline stages are:
+// - [Heroku CI](https://devcenter.heroku.com/articles/heroku-ci#setting-environment-variables-the-env-key) config vars (test stage)
+// - [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps#configuration) config vars (review stage)
+//
+// The development, staging & production stages do not have stage-level config vars, only those on the apps within each stage.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+//
+// during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+//
+// this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+//
+// this resource.
+//
+// However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+//
+// as the end result is `noop` when the config vars already exist on the remote resource.
 type ConfigVar struct {
 	pulumi.CustomResourceState
 
-	AllVars       pulumi.MapOutput       `pulumi:"allVars"`
-	PipelineId    pulumi.StringOutput    `pulumi:"pipelineId"`
+	// All vars of a pipeline stage. This is marked `sensitive` so that `sensitiveVars` do not leak in the console/logs.
+	AllVars pulumi.StringMapOutput `pulumi:"allVars"`
+	// The UUID of an existing pipeline.
+	PipelineId pulumi.StringOutput `pulumi:"pipelineId"`
+	// The pipeline's stage. Supported values are `test` & `review`.
 	PipelineStage pulumi.StringOutput    `pulumi:"pipelineStage"`
 	SensitiveVars pulumi.StringMapOutput `pulumi:"sensitiveVars"`
-	Vars          pulumi.StringMapOutput `pulumi:"vars"`
+	// Map of config vars that can be output in plaintext.
+	Vars pulumi.StringMapOutput `pulumi:"vars"`
 }
 
 // NewConfigVar registers a new resource with the given unique name, arguments, and options.
@@ -66,19 +94,27 @@ func GetConfigVar(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering ConfigVar resources.
 type configVarState struct {
-	AllVars       map[string]interface{} `pulumi:"allVars"`
-	PipelineId    *string                `pulumi:"pipelineId"`
-	PipelineStage *string                `pulumi:"pipelineStage"`
-	SensitiveVars map[string]string      `pulumi:"sensitiveVars"`
-	Vars          map[string]string      `pulumi:"vars"`
+	// All vars of a pipeline stage. This is marked `sensitive` so that `sensitiveVars` do not leak in the console/logs.
+	AllVars map[string]string `pulumi:"allVars"`
+	// The UUID of an existing pipeline.
+	PipelineId *string `pulumi:"pipelineId"`
+	// The pipeline's stage. Supported values are `test` & `review`.
+	PipelineStage *string           `pulumi:"pipelineStage"`
+	SensitiveVars map[string]string `pulumi:"sensitiveVars"`
+	// Map of config vars that can be output in plaintext.
+	Vars map[string]string `pulumi:"vars"`
 }
 
 type ConfigVarState struct {
-	AllVars       pulumi.MapInput
-	PipelineId    pulumi.StringPtrInput
+	// All vars of a pipeline stage. This is marked `sensitive` so that `sensitiveVars` do not leak in the console/logs.
+	AllVars pulumi.StringMapInput
+	// The UUID of an existing pipeline.
+	PipelineId pulumi.StringPtrInput
+	// The pipeline's stage. Supported values are `test` & `review`.
 	PipelineStage pulumi.StringPtrInput
 	SensitiveVars pulumi.StringMapInput
-	Vars          pulumi.StringMapInput
+	// Map of config vars that can be output in plaintext.
+	Vars pulumi.StringMapInput
 }
 
 func (ConfigVarState) ElementType() reflect.Type {
@@ -86,18 +122,24 @@ func (ConfigVarState) ElementType() reflect.Type {
 }
 
 type configVarArgs struct {
-	PipelineId    string            `pulumi:"pipelineId"`
+	// The UUID of an existing pipeline.
+	PipelineId string `pulumi:"pipelineId"`
+	// The pipeline's stage. Supported values are `test` & `review`.
 	PipelineStage string            `pulumi:"pipelineStage"`
 	SensitiveVars map[string]string `pulumi:"sensitiveVars"`
-	Vars          map[string]string `pulumi:"vars"`
+	// Map of config vars that can be output in plaintext.
+	Vars map[string]string `pulumi:"vars"`
 }
 
 // The set of arguments for constructing a ConfigVar resource.
 type ConfigVarArgs struct {
-	PipelineId    pulumi.StringInput
+	// The UUID of an existing pipeline.
+	PipelineId pulumi.StringInput
+	// The pipeline's stage. Supported values are `test` & `review`.
 	PipelineStage pulumi.StringInput
 	SensitiveVars pulumi.StringMapInput
-	Vars          pulumi.StringMapInput
+	// Map of config vars that can be output in plaintext.
+	Vars pulumi.StringMapInput
 }
 
 func (ConfigVarArgs) ElementType() reflect.Type {
@@ -187,14 +229,17 @@ func (o ConfigVarOutput) ToConfigVarOutputWithContext(ctx context.Context) Confi
 	return o
 }
 
-func (o ConfigVarOutput) AllVars() pulumi.MapOutput {
-	return o.ApplyT(func(v *ConfigVar) pulumi.MapOutput { return v.AllVars }).(pulumi.MapOutput)
+// All vars of a pipeline stage. This is marked `sensitive` so that `sensitiveVars` do not leak in the console/logs.
+func (o ConfigVarOutput) AllVars() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *ConfigVar) pulumi.StringMapOutput { return v.AllVars }).(pulumi.StringMapOutput)
 }
 
+// The UUID of an existing pipeline.
 func (o ConfigVarOutput) PipelineId() pulumi.StringOutput {
 	return o.ApplyT(func(v *ConfigVar) pulumi.StringOutput { return v.PipelineId }).(pulumi.StringOutput)
 }
 
+// The pipeline's stage. Supported values are `test` & `review`.
 func (o ConfigVarOutput) PipelineStage() pulumi.StringOutput {
 	return o.ApplyT(func(v *ConfigVar) pulumi.StringOutput { return v.PipelineStage }).(pulumi.StringOutput)
 }
@@ -203,6 +248,7 @@ func (o ConfigVarOutput) SensitiveVars() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ConfigVar) pulumi.StringMapOutput { return v.SensitiveVars }).(pulumi.StringMapOutput)
 }
 
+// Map of config vars that can be output in plaintext.
 func (o ConfigVarOutput) Vars() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ConfigVar) pulumi.StringMapOutput { return v.Vars }).(pulumi.StringMapOutput)
 }

@@ -14,7 +14,13 @@ namespace Pulumiverse.Heroku.Review.Outputs
     [OutputType]
     public sealed class AppConfigDeployTarget
     {
+        /// <summary>
+        /// Unique identifier of deploy target.
+        /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// Type of deploy target. Must be either `space` or `region`.
+        /// </summary>
         public readonly string Type;
 
         [OutputConstructor]

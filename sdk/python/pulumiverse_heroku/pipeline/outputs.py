@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -18,17 +23,27 @@ class PipelineOwner(dict):
     def __init__(__self__, *,
                  id: str,
                  type: str):
+        """
+        :param str id: The unique identifier (UUID) of a pipeline owner.
+        :param str type: The type of pipeline owner. Can be either `user` or `team`.
+        """
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
     def id(self) -> str:
+        """
+        The unique identifier (UUID) of a pipeline owner.
+        """
         return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
     def type(self) -> str:
+        """
+        The type of pipeline owner. Can be either `user` or `team`.
+        """
         return pulumi.get(self, "type")
 
 

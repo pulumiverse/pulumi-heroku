@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -26,6 +31,18 @@ class AppConfigArgs:
                  wait_for_ci: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a AppConfig resource.
+        :param pulumi.Input['AppConfigDeployTargetArgs'] deploy_target: Provides a key/value pair to specify whether to use a common runtime or a private space.
+        :param pulumi.Input[str] org_repo: The full_name of the repository that you want to enable review-apps from.
+               Example `heroku/homebrew-brew`.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[bool] automatic_review_apps: If true, this will trigger the creation of review apps when pull-requests
+               are opened in the repo. Defaults to `false`.
+        :param pulumi.Input[str] base_name: A unique prefix that will be used to create review app names.
+        :param pulumi.Input[bool] destroy_stale_apps: If `true`, this will trigger automatic deletion of review apps when they’re stale.
+               Defaults to `false`.
+        :param pulumi.Input[int] stale_days: Destroy stale review apps automatically after these many days without any deploys.
+               Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        :param pulumi.Input[bool] wait_for_ci: If true, review apps will only be created when CI passes. Defaults to `false`.
         """
         pulumi.set(__self__, "deploy_target", deploy_target)
         pulumi.set(__self__, "org_repo", org_repo)
@@ -44,6 +61,9 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="deployTarget")
     def deploy_target(self) -> pulumi.Input['AppConfigDeployTargetArgs']:
+        """
+        Provides a key/value pair to specify whether to use a common runtime or a private space.
+        """
         return pulumi.get(self, "deploy_target")
 
     @deploy_target.setter
@@ -53,6 +73,10 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="orgRepo")
     def org_repo(self) -> pulumi.Input[str]:
+        """
+        The full_name of the repository that you want to enable review-apps from.
+        Example `heroku/homebrew-brew`.
+        """
         return pulumi.get(self, "org_repo")
 
     @org_repo.setter
@@ -62,6 +86,9 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="pipelineId")
     def pipeline_id(self) -> pulumi.Input[str]:
+        """
+        The UUID of an existing pipeline.
+        """
         return pulumi.get(self, "pipeline_id")
 
     @pipeline_id.setter
@@ -71,6 +98,10 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="automaticReviewApps")
     def automatic_review_apps(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, this will trigger the creation of review apps when pull-requests
+        are opened in the repo. Defaults to `false`.
+        """
         return pulumi.get(self, "automatic_review_apps")
 
     @automatic_review_apps.setter
@@ -80,6 +111,9 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="baseName")
     def base_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        A unique prefix that will be used to create review app names.
+        """
         return pulumi.get(self, "base_name")
 
     @base_name.setter
@@ -89,6 +123,10 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="destroyStaleApps")
     def destroy_stale_apps(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If `true`, this will trigger automatic deletion of review apps when they’re stale.
+        Defaults to `false`.
+        """
         return pulumi.get(self, "destroy_stale_apps")
 
     @destroy_stale_apps.setter
@@ -98,6 +136,10 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="staleDays")
     def stale_days(self) -> Optional[pulumi.Input[int]]:
+        """
+        Destroy stale review apps automatically after these many days without any deploys.
+        Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        """
         return pulumi.get(self, "stale_days")
 
     @stale_days.setter
@@ -107,6 +149,9 @@ class AppConfigArgs:
     @property
     @pulumi.getter(name="waitForCi")
     def wait_for_ci(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, review apps will only be created when CI passes. Defaults to `false`.
+        """
         return pulumi.get(self, "wait_for_ci")
 
     @wait_for_ci.setter
@@ -128,6 +173,18 @@ class _AppConfigState:
                  wait_for_ci: Optional[pulumi.Input[bool]] = None):
         """
         Input properties used for looking up and filtering AppConfig resources.
+        :param pulumi.Input[bool] automatic_review_apps: If true, this will trigger the creation of review apps when pull-requests
+               are opened in the repo. Defaults to `false`.
+        :param pulumi.Input[str] base_name: A unique prefix that will be used to create review app names.
+        :param pulumi.Input['AppConfigDeployTargetArgs'] deploy_target: Provides a key/value pair to specify whether to use a common runtime or a private space.
+        :param pulumi.Input[bool] destroy_stale_apps: If `true`, this will trigger automatic deletion of review apps when they’re stale.
+               Defaults to `false`.
+        :param pulumi.Input[str] org_repo: The full_name of the repository that you want to enable review-apps from.
+               Example `heroku/homebrew-brew`.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[int] stale_days: Destroy stale review apps automatically after these many days without any deploys.
+               Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        :param pulumi.Input[bool] wait_for_ci: If true, review apps will only be created when CI passes. Defaults to `false`.
         """
         if automatic_review_apps is not None:
             pulumi.set(__self__, "automatic_review_apps", automatic_review_apps)
@@ -151,6 +208,10 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="automaticReviewApps")
     def automatic_review_apps(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, this will trigger the creation of review apps when pull-requests
+        are opened in the repo. Defaults to `false`.
+        """
         return pulumi.get(self, "automatic_review_apps")
 
     @automatic_review_apps.setter
@@ -160,6 +221,9 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="baseName")
     def base_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        A unique prefix that will be used to create review app names.
+        """
         return pulumi.get(self, "base_name")
 
     @base_name.setter
@@ -169,6 +233,9 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="deployTarget")
     def deploy_target(self) -> Optional[pulumi.Input['AppConfigDeployTargetArgs']]:
+        """
+        Provides a key/value pair to specify whether to use a common runtime or a private space.
+        """
         return pulumi.get(self, "deploy_target")
 
     @deploy_target.setter
@@ -178,6 +245,10 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="destroyStaleApps")
     def destroy_stale_apps(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If `true`, this will trigger automatic deletion of review apps when they’re stale.
+        Defaults to `false`.
+        """
         return pulumi.get(self, "destroy_stale_apps")
 
     @destroy_stale_apps.setter
@@ -187,6 +258,10 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="orgRepo")
     def org_repo(self) -> Optional[pulumi.Input[str]]:
+        """
+        The full_name of the repository that you want to enable review-apps from.
+        Example `heroku/homebrew-brew`.
+        """
         return pulumi.get(self, "org_repo")
 
     @org_repo.setter
@@ -196,6 +271,9 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="pipelineId")
     def pipeline_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of an existing pipeline.
+        """
         return pulumi.get(self, "pipeline_id")
 
     @pipeline_id.setter
@@ -214,6 +292,10 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="staleDays")
     def stale_days(self) -> Optional[pulumi.Input[int]]:
+        """
+        Destroy stale review apps automatically after these many days without any deploys.
+        Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        """
         return pulumi.get(self, "stale_days")
 
     @stale_days.setter
@@ -223,6 +305,9 @@ class _AppConfigState:
     @property
     @pulumi.getter(name="waitForCi")
     def wait_for_ci(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, review apps will only be created when CI passes. Defaults to `false`.
+        """
         return pulumi.get(self, "wait_for_ci")
 
     @wait_for_ci.setter
@@ -237,7 +322,7 @@ class AppConfig(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  automatic_review_apps: Optional[pulumi.Input[bool]] = None,
                  base_name: Optional[pulumi.Input[str]] = None,
-                 deploy_target: Optional[pulumi.Input[pulumi.InputType['AppConfigDeployTargetArgs']]] = None,
+                 deploy_target: Optional[pulumi.Input[Union['AppConfigDeployTargetArgs', 'AppConfigDeployTargetArgsDict']]] = None,
                  destroy_stale_apps: Optional[pulumi.Input[bool]] = None,
                  org_repo: Optional[pulumi.Input[str]] = None,
                  pipeline_id: Optional[pulumi.Input[str]] = None,
@@ -245,9 +330,39 @@ class AppConfig(pulumi.CustomResource):
                  wait_for_ci: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         """
-        Create a AppConfig resource with the given unique name, props, and options.
+        Provides a resource for configuring review apps. Using this resource also enables review apps for a pipeline.
+
+        > **IMPORTANT!**
+        This resource can only be used after you create a pipeline, and the pipeline has been connected to a Github repository.
+        Please visit this [help article](https://devcenter.heroku.com/articles/github-integration-review-apps#setup)
+        for more information.
+
+        ## Example Usage
+
+        ## Import
+
+        An Existing review app config using the combination of the pipeline UUID and the Github organization/repository
+
+        separated by a colon.
+
+        ```sh
+        $ pulumi import heroku:review/appConfig:AppConfig foobar afd193fb-7c5a-4d8f-afad-2388f4e6049d:heroku/homebrew-brew
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] automatic_review_apps: If true, this will trigger the creation of review apps when pull-requests
+               are opened in the repo. Defaults to `false`.
+        :param pulumi.Input[str] base_name: A unique prefix that will be used to create review app names.
+        :param pulumi.Input[Union['AppConfigDeployTargetArgs', 'AppConfigDeployTargetArgsDict']] deploy_target: Provides a key/value pair to specify whether to use a common runtime or a private space.
+        :param pulumi.Input[bool] destroy_stale_apps: If `true`, this will trigger automatic deletion of review apps when they’re stale.
+               Defaults to `false`.
+        :param pulumi.Input[str] org_repo: The full_name of the repository that you want to enable review-apps from.
+               Example `heroku/homebrew-brew`.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[int] stale_days: Destroy stale review apps automatically after these many days without any deploys.
+               Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        :param pulumi.Input[bool] wait_for_ci: If true, review apps will only be created when CI passes. Defaults to `false`.
         """
         ...
     @overload
@@ -256,7 +371,25 @@ class AppConfig(pulumi.CustomResource):
                  args: AppConfigArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a AppConfig resource with the given unique name, props, and options.
+        Provides a resource for configuring review apps. Using this resource also enables review apps for a pipeline.
+
+        > **IMPORTANT!**
+        This resource can only be used after you create a pipeline, and the pipeline has been connected to a Github repository.
+        Please visit this [help article](https://devcenter.heroku.com/articles/github-integration-review-apps#setup)
+        for more information.
+
+        ## Example Usage
+
+        ## Import
+
+        An Existing review app config using the combination of the pipeline UUID and the Github organization/repository
+
+        separated by a colon.
+
+        ```sh
+        $ pulumi import heroku:review/appConfig:AppConfig foobar afd193fb-7c5a-4d8f-afad-2388f4e6049d:heroku/homebrew-brew
+        ```
+
         :param str resource_name: The name of the resource.
         :param AppConfigArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -274,7 +407,7 @@ class AppConfig(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  automatic_review_apps: Optional[pulumi.Input[bool]] = None,
                  base_name: Optional[pulumi.Input[str]] = None,
-                 deploy_target: Optional[pulumi.Input[pulumi.InputType['AppConfigDeployTargetArgs']]] = None,
+                 deploy_target: Optional[pulumi.Input[Union['AppConfigDeployTargetArgs', 'AppConfigDeployTargetArgsDict']]] = None,
                  destroy_stale_apps: Optional[pulumi.Input[bool]] = None,
                  org_repo: Optional[pulumi.Input[str]] = None,
                  pipeline_id: Optional[pulumi.Input[str]] = None,
@@ -316,7 +449,7 @@ class AppConfig(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             automatic_review_apps: Optional[pulumi.Input[bool]] = None,
             base_name: Optional[pulumi.Input[str]] = None,
-            deploy_target: Optional[pulumi.Input[pulumi.InputType['AppConfigDeployTargetArgs']]] = None,
+            deploy_target: Optional[pulumi.Input[Union['AppConfigDeployTargetArgs', 'AppConfigDeployTargetArgsDict']]] = None,
             destroy_stale_apps: Optional[pulumi.Input[bool]] = None,
             org_repo: Optional[pulumi.Input[str]] = None,
             pipeline_id: Optional[pulumi.Input[str]] = None,
@@ -330,6 +463,18 @@ class AppConfig(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] automatic_review_apps: If true, this will trigger the creation of review apps when pull-requests
+               are opened in the repo. Defaults to `false`.
+        :param pulumi.Input[str] base_name: A unique prefix that will be used to create review app names.
+        :param pulumi.Input[Union['AppConfigDeployTargetArgs', 'AppConfigDeployTargetArgsDict']] deploy_target: Provides a key/value pair to specify whether to use a common runtime or a private space.
+        :param pulumi.Input[bool] destroy_stale_apps: If `true`, this will trigger automatic deletion of review apps when they’re stale.
+               Defaults to `false`.
+        :param pulumi.Input[str] org_repo: The full_name of the repository that you want to enable review-apps from.
+               Example `heroku/homebrew-brew`.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[int] stale_days: Destroy stale review apps automatically after these many days without any deploys.
+               Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        :param pulumi.Input[bool] wait_for_ci: If true, review apps will only be created when CI passes. Defaults to `false`.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -349,31 +494,52 @@ class AppConfig(pulumi.CustomResource):
     @property
     @pulumi.getter(name="automaticReviewApps")
     def automatic_review_apps(self) -> pulumi.Output[Optional[bool]]:
+        """
+        If true, this will trigger the creation of review apps when pull-requests
+        are opened in the repo. Defaults to `false`.
+        """
         return pulumi.get(self, "automatic_review_apps")
 
     @property
     @pulumi.getter(name="baseName")
     def base_name(self) -> pulumi.Output[str]:
+        """
+        A unique prefix that will be used to create review app names.
+        """
         return pulumi.get(self, "base_name")
 
     @property
     @pulumi.getter(name="deployTarget")
     def deploy_target(self) -> pulumi.Output['outputs.AppConfigDeployTarget']:
+        """
+        Provides a key/value pair to specify whether to use a common runtime or a private space.
+        """
         return pulumi.get(self, "deploy_target")
 
     @property
     @pulumi.getter(name="destroyStaleApps")
     def destroy_stale_apps(self) -> pulumi.Output[Optional[bool]]:
+        """
+        If `true`, this will trigger automatic deletion of review apps when they’re stale.
+        Defaults to `false`.
+        """
         return pulumi.get(self, "destroy_stale_apps")
 
     @property
     @pulumi.getter(name="orgRepo")
     def org_repo(self) -> pulumi.Output[str]:
+        """
+        The full_name of the repository that you want to enable review-apps from.
+        Example `heroku/homebrew-brew`.
+        """
         return pulumi.get(self, "org_repo")
 
     @property
     @pulumi.getter(name="pipelineId")
     def pipeline_id(self) -> pulumi.Output[str]:
+        """
+        The UUID of an existing pipeline.
+        """
         return pulumi.get(self, "pipeline_id")
 
     @property
@@ -384,10 +550,17 @@ class AppConfig(pulumi.CustomResource):
     @property
     @pulumi.getter(name="staleDays")
     def stale_days(self) -> pulumi.Output[int]:
+        """
+        Destroy stale review apps automatically after these many days without any deploys.
+        Must be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.
+        """
         return pulumi.get(self, "stale_days")
 
     @property
     @pulumi.getter(name="waitForCi")
     def wait_for_ci(self) -> pulumi.Output[Optional[bool]]:
+        """
+        If true, review apps will only be created when CI passes. Defaults to `false`.
+        """
         return pulumi.get(self, "wait_for_ci")
 

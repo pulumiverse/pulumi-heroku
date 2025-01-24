@@ -10,51 +10,119 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.App
 {
+    /// <summary>
+    /// ## Example Usage
+    /// 
+    /// ### A Team
+    /// 
+    /// A Heroku "team" was originally called an "organization", and that is still the identifier used in this resource.
+    /// 
+    /// ## Import
+    /// 
+    /// Apps can be imported using an existing app's `UUID` or name.
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:app/app:App foobar MyApp
+    /// ```
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:app/app:App foobar e74ac056-7d00-4a7e-aa80-df4bc413a825
+    /// ```
+    /// 
+    /// Please note: `config_vars` &amp; `sensitive_config_vars` will not be imported due to limitations of Terraform's import process (see issue). All vars will appear to be added on the next plan/apply. The diff may be manually reconciled using the outputs of `heroku config` &amp; `pulumi preview`.
+    /// </summary>
     [HerokuResourceType("heroku:app/app:App")]
     public partial class App : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The flag representing Automated Certificate Management for the app.
+        /// </summary>
         [Output("acm")]
         public Output<bool> Acm { get; private set; } = null!;
 
         [Output("allConfigVars")]
-        public Output<ImmutableDictionary<string, object>> AllConfigVars { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> AllConfigVars { get; private set; } = null!;
 
+        /// <summary>
+        /// Buildpack names or URLs for the application.
+        /// Buildpacks configured externally won't be altered if this is not present.
+        /// </summary>
         [Output("buildpacks")]
         public Output<ImmutableArray<string>> Buildpacks { get; private set; } = null!;
 
         [Output("configVars")]
-        public Output<ImmutableDictionary<string, object>> ConfigVars { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> ConfigVars { get; private set; } = null!;
 
+        /// <summary>
+        /// The Git URL for the application. This is used for
+        /// deploying new versions of the app.
+        /// </summary>
         [Output("gitUrl")]
         public Output<string> GitUrl { get; private set; } = null!;
 
+        /// <summary>
+        /// A hostname for the Heroku application, suitable
+        /// for pointing DNS records.
+        /// </summary>
         [Output("herokuHostname")]
         public Output<string> HerokuHostname { get; private set; } = null!;
 
+        /// <summary>
+        /// If true, the application will be routable
+        /// only internally in a private space. This option is only available for apps
+        /// that also specify `space`.
+        /// </summary>
         [Output("internalRouting")]
         public Output<bool> InternalRouting { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the application. In Heroku, this is also the
+        /// unique ID, so it must be unique and have a minimum of 3 characters.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// A block that can be specified once to define
+        /// Heroku Team settings for this app. The fields for this block are
+        /// documented below.
+        /// </summary>
         [Output("organization")]
         public Output<Outputs.AppOrganization?> Organization { get; private set; } = null!;
 
+        /// <summary>
+        /// The region that the app should be deployed in.
+        /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
 
         [Output("sensitiveConfigVars")]
         public Output<ImmutableDictionary<string, string>> SensitiveConfigVars { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of a private space to create the app in.
+        /// </summary>
         [Output("space")]
         public Output<string?> Space { get; private set; } = null!;
 
+        /// <summary>
+        /// The application stack is what platform to run the application in.
+        /// </summary>
         [Output("stack")]
         public Output<string> Stack { get; private set; } = null!;
 
+        /// <summary>
+        /// The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.
+        /// </summary>
         [Output("uuid")]
         public Output<string> Uuid { get; private set; } = null!;
 
+        /// <summary>
+        /// The web (HTTP) URL that the application can be accessed
+        /// at by default.
+        /// </summary>
         [Output("webUrl")]
         public Output<string> WebUrl { get; private set; } = null!;
 
@@ -110,11 +178,19 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class AppArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The flag representing Automated Certificate Management for the app.
+        /// </summary>
         [Input("acm")]
         public Input<bool>? Acm { get; set; }
 
         [Input("buildpacks")]
         private InputList<string>? _buildpacks;
+
+        /// <summary>
+        /// Buildpack names or URLs for the application.
+        /// Buildpacks configured externally won't be altered if this is not present.
+        /// </summary>
         public InputList<string> Buildpacks
         {
             get => _buildpacks ?? (_buildpacks = new InputList<string>());
@@ -122,22 +198,39 @@ namespace Pulumiverse.Heroku.App
         }
 
         [Input("configVars")]
-        private InputMap<object>? _configVars;
-        public InputMap<object> ConfigVars
+        private InputMap<string>? _configVars;
+        public InputMap<string> ConfigVars
         {
-            get => _configVars ?? (_configVars = new InputMap<object>());
+            get => _configVars ?? (_configVars = new InputMap<string>());
             set => _configVars = value;
         }
 
+        /// <summary>
+        /// If true, the application will be routable
+        /// only internally in a private space. This option is only available for apps
+        /// that also specify `space`.
+        /// </summary>
         [Input("internalRouting")]
         public Input<bool>? InternalRouting { get; set; }
 
+        /// <summary>
+        /// The name of the application. In Heroku, this is also the
+        /// unique ID, so it must be unique and have a minimum of 3 characters.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// A block that can be specified once to define
+        /// Heroku Team settings for this app. The fields for this block are
+        /// documented below.
+        /// </summary>
         [Input("organization")]
         public Input<Inputs.AppOrganizationArgs>? Organization { get; set; }
 
+        /// <summary>
+        /// The region that the app should be deployed in.
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 
@@ -153,9 +246,15 @@ namespace Pulumiverse.Heroku.App
             }
         }
 
+        /// <summary>
+        /// The name of a private space to create the app in.
+        /// </summary>
         [Input("space")]
         public Input<string>? Space { get; set; }
 
+        /// <summary>
+        /// The application stack is what platform to run the application in.
+        /// </summary>
         [Input("stack")]
         public Input<string>? Stack { get; set; }
 
@@ -167,23 +266,31 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class AppState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The flag representing Automated Certificate Management for the app.
+        /// </summary>
         [Input("acm")]
         public Input<bool>? Acm { get; set; }
 
         [Input("allConfigVars")]
-        private InputMap<object>? _allConfigVars;
-        public InputMap<object> AllConfigVars
+        private InputMap<string>? _allConfigVars;
+        public InputMap<string> AllConfigVars
         {
-            get => _allConfigVars ?? (_allConfigVars = new InputMap<object>());
+            get => _allConfigVars ?? (_allConfigVars = new InputMap<string>());
             set
             {
-                var emptySecret = Output.CreateSecret(ImmutableDictionary.Create<string, object>());
+                var emptySecret = Output.CreateSecret(ImmutableDictionary.Create<string, string>());
                 _allConfigVars = Output.All(value, emptySecret).Apply(v => v[0]);
             }
         }
 
         [Input("buildpacks")]
         private InputList<string>? _buildpacks;
+
+        /// <summary>
+        /// Buildpack names or URLs for the application.
+        /// Buildpacks configured externally won't be altered if this is not present.
+        /// </summary>
         public InputList<string> Buildpacks
         {
             get => _buildpacks ?? (_buildpacks = new InputList<string>());
@@ -191,28 +298,53 @@ namespace Pulumiverse.Heroku.App
         }
 
         [Input("configVars")]
-        private InputMap<object>? _configVars;
-        public InputMap<object> ConfigVars
+        private InputMap<string>? _configVars;
+        public InputMap<string> ConfigVars
         {
-            get => _configVars ?? (_configVars = new InputMap<object>());
+            get => _configVars ?? (_configVars = new InputMap<string>());
             set => _configVars = value;
         }
 
+        /// <summary>
+        /// The Git URL for the application. This is used for
+        /// deploying new versions of the app.
+        /// </summary>
         [Input("gitUrl")]
         public Input<string>? GitUrl { get; set; }
 
+        /// <summary>
+        /// A hostname for the Heroku application, suitable
+        /// for pointing DNS records.
+        /// </summary>
         [Input("herokuHostname")]
         public Input<string>? HerokuHostname { get; set; }
 
+        /// <summary>
+        /// If true, the application will be routable
+        /// only internally in a private space. This option is only available for apps
+        /// that also specify `space`.
+        /// </summary>
         [Input("internalRouting")]
         public Input<bool>? InternalRouting { get; set; }
 
+        /// <summary>
+        /// The name of the application. In Heroku, this is also the
+        /// unique ID, so it must be unique and have a minimum of 3 characters.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// A block that can be specified once to define
+        /// Heroku Team settings for this app. The fields for this block are
+        /// documented below.
+        /// </summary>
         [Input("organization")]
         public Input<Inputs.AppOrganizationGetArgs>? Organization { get; set; }
 
+        /// <summary>
+        /// The region that the app should be deployed in.
+        /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 
@@ -228,15 +360,28 @@ namespace Pulumiverse.Heroku.App
             }
         }
 
+        /// <summary>
+        /// The name of a private space to create the app in.
+        /// </summary>
         [Input("space")]
         public Input<string>? Space { get; set; }
 
+        /// <summary>
+        /// The application stack is what platform to run the application in.
+        /// </summary>
         [Input("stack")]
         public Input<string>? Stack { get; set; }
 
+        /// <summary>
+        /// The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.
+        /// </summary>
         [Input("uuid")]
         public Input<string>? Uuid { get; set; }
 
+        /// <summary>
+        /// The web (HTTP) URL that the application can be accessed
+        /// at by default.
+        /// </summary>
         [Input("webUrl")]
         public Input<string>? WebUrl { get; set; }
 

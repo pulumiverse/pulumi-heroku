@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['FormationArgs', 'Formation']
@@ -20,6 +25,10 @@ class FormationArgs:
                  type: pulumi.Input[str]):
         """
         The set of arguments for constructing a Formation resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[int] quantity: number of processes to maintain
+        :param pulumi.Input[str] size: dyno size (Example: “standard-1X”). Capitalization does not matter.
+        :param pulumi.Input[str] type: type of process such as "web"
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "quantity", quantity)
@@ -29,6 +38,9 @@ class FormationArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -38,6 +50,9 @@ class FormationArgs:
     @property
     @pulumi.getter
     def quantity(self) -> pulumi.Input[int]:
+        """
+        number of processes to maintain
+        """
         return pulumi.get(self, "quantity")
 
     @quantity.setter
@@ -47,6 +62,9 @@ class FormationArgs:
     @property
     @pulumi.getter
     def size(self) -> pulumi.Input[str]:
+        """
+        dyno size (Example: “standard-1X”). Capitalization does not matter.
+        """
         return pulumi.get(self, "size")
 
     @size.setter
@@ -56,6 +74,9 @@ class FormationArgs:
     @property
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
+        """
+        type of process such as "web"
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -72,6 +93,10 @@ class _FormationState:
                  type: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Formation resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[int] quantity: number of processes to maintain
+        :param pulumi.Input[str] size: dyno size (Example: “standard-1X”). Capitalization does not matter.
+        :param pulumi.Input[str] type: type of process such as "web"
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -85,6 +110,9 @@ class _FormationState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -94,6 +122,9 @@ class _FormationState:
     @property
     @pulumi.getter
     def quantity(self) -> Optional[pulumi.Input[int]]:
+        """
+        number of processes to maintain
+        """
         return pulumi.get(self, "quantity")
 
     @quantity.setter
@@ -103,6 +134,9 @@ class _FormationState:
     @property
     @pulumi.getter
     def size(self) -> Optional[pulumi.Input[str]]:
+        """
+        dyno size (Example: “standard-1X”). Capitalization does not matter.
+        """
         return pulumi.get(self, "size")
 
     @size.setter
@@ -112,6 +146,9 @@ class _FormationState:
     @property
     @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        type of process such as "web"
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -130,9 +167,36 @@ class Formation(pulumi.CustomResource):
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Formation resource with the given unique name, props, and options.
+        Provides a [Heroku Formation](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+        resource.
+
+        A formation represents the formation of processes that should be set for an application.
+
+        Please note the following:
+        * The application must have a dyno in order to update its formation.
+        * If the heroku formation resource is removed and deleted, this will be a no-op action in Heroku.
+          The Heroku Platform does not have a `DELETE` endpoint for `formation`.
+        * This resource works well with the `app.Release` resource, which allows you to deploy a slug/release to an application
+          before the formation can be updated.
+
+        ## Example Usage
+
+        ## Import
+
+        Existing formations can be imported using the combination of the application name, a colon, and the formation's type.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:formation/formation:Formation foobar-web foobar:web
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[int] quantity: number of processes to maintain
+        :param pulumi.Input[str] size: dyno size (Example: “standard-1X”). Capitalization does not matter.
+        :param pulumi.Input[str] type: type of process such as "web"
         """
         ...
     @overload
@@ -141,7 +205,30 @@ class Formation(pulumi.CustomResource):
                  args: FormationArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Formation resource with the given unique name, props, and options.
+        Provides a [Heroku Formation](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+        resource.
+
+        A formation represents the formation of processes that should be set for an application.
+
+        Please note the following:
+        * The application must have a dyno in order to update its formation.
+        * If the heroku formation resource is removed and deleted, this will be a no-op action in Heroku.
+          The Heroku Platform does not have a `DELETE` endpoint for `formation`.
+        * This resource works well with the `app.Release` resource, which allows you to deploy a slug/release to an application
+          before the formation can be updated.
+
+        ## Example Usage
+
+        ## Import
+
+        Existing formations can be imported using the combination of the application name, a colon, and the formation's type.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:formation/formation:Formation foobar-web foobar:web
+        ```
+
         :param str resource_name: The name of the resource.
         :param FormationArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -203,6 +290,10 @@ class Formation(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[int] quantity: number of processes to maintain
+        :param pulumi.Input[str] size: dyno size (Example: “standard-1X”). Capitalization does not matter.
+        :param pulumi.Input[str] type: type of process such as "web"
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -217,20 +308,32 @@ class Formation(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def quantity(self) -> pulumi.Output[int]:
+        """
+        number of processes to maintain
+        """
         return pulumi.get(self, "quantity")
 
     @property
     @pulumi.getter
     def size(self) -> pulumi.Output[str]:
+        """
+        dyno size (Example: “standard-1X”). Capitalization does not matter.
+        """
         return pulumi.get(self, "size")
 
     @property
     @pulumi.getter
     def type(self) -> pulumi.Output[str]:
+        """
+        type of process such as "web"
+        """
         return pulumi.get(self, "type")
 

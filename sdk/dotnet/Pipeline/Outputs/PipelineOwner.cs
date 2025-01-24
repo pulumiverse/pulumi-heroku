@@ -14,7 +14,13 @@ namespace Pulumiverse.Heroku.Pipeline.Outputs
     [OutputType]
     public sealed class PipelineOwner
     {
+        /// <summary>
+        /// The unique identifier (UUID) of a pipeline owner.
+        /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// The type of pipeline owner. Can be either `user` or `team`.
+        /// </summary>
         public readonly string Type;
 
         [OutputConstructor]

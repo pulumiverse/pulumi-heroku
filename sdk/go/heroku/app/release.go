@@ -12,12 +12,26 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// ## Example Usage
+//
+// ## Import
+//
+// The most recent app release can be imported using the application name.
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:app/release:Release foobar-release foobar
+// ```
 type Release struct {
 	pulumi.CustomResourceState
 
-	AppId       pulumi.StringOutput `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// description of changes in this release
 	Description pulumi.StringOutput `pulumi:"description"`
-	SlugId      pulumi.StringOutput `pulumi:"slugId"`
+	// unique identifier of slug
+	SlugId pulumi.StringOutput `pulumi:"slugId"`
 }
 
 // NewRelease registers a new resource with the given unique name, arguments, and options.
@@ -56,15 +70,21 @@ func GetRelease(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Release resources.
 type releaseState struct {
-	AppId       *string `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// description of changes in this release
 	Description *string `pulumi:"description"`
-	SlugId      *string `pulumi:"slugId"`
+	// unique identifier of slug
+	SlugId *string `pulumi:"slugId"`
 }
 
 type ReleaseState struct {
-	AppId       pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// description of changes in this release
 	Description pulumi.StringPtrInput
-	SlugId      pulumi.StringPtrInput
+	// unique identifier of slug
+	SlugId pulumi.StringPtrInput
 }
 
 func (ReleaseState) ElementType() reflect.Type {
@@ -72,16 +92,22 @@ func (ReleaseState) ElementType() reflect.Type {
 }
 
 type releaseArgs struct {
-	AppId       string  `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// description of changes in this release
 	Description *string `pulumi:"description"`
-	SlugId      string  `pulumi:"slugId"`
+	// unique identifier of slug
+	SlugId string `pulumi:"slugId"`
 }
 
 // The set of arguments for constructing a Release resource.
 type ReleaseArgs struct {
-	AppId       pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// description of changes in this release
 	Description pulumi.StringPtrInput
-	SlugId      pulumi.StringInput
+	// unique identifier of slug
+	SlugId pulumi.StringInput
 }
 
 func (ReleaseArgs) ElementType() reflect.Type {
@@ -171,14 +197,17 @@ func (o ReleaseOutput) ToReleaseOutputWithContext(ctx context.Context) ReleaseOu
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o ReleaseOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Release) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// description of changes in this release
 func (o ReleaseOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Release) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
+// unique identifier of slug
 func (o ReleaseOutput) SlugId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Release) pulumi.StringOutput { return v.SlugId }).(pulumi.StringOutput)
 }

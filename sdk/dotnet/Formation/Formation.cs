@@ -10,18 +10,55 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Formation
 {
+    /// <summary>
+    /// Provides a [Heroku Formation](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+    /// resource.
+    /// 
+    /// A formation represents the formation of processes that should be set for an application.
+    /// 
+    /// Please note the following:
+    /// * The application must have a dyno in order to update its formation.
+    /// * If the heroku formation resource is removed and deleted, this will be a no-op action in Heroku.
+    ///   The Heroku Platform does not have a `DELETE` endpoint for `formation`.
+    /// * This resource works well with the `heroku.app.Release` resource, which allows you to deploy a slug/release to an application
+    ///   before the formation can be updated.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Existing formations can be imported using the combination of the application name, a colon, and the formation's type.
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:formation/formation:Formation foobar-web foobar:web
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:formation/formation:Formation")]
     public partial class Formation : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// number of processes to maintain
+        /// </summary>
         [Output("quantity")]
         public Output<int> Quantity { get; private set; } = null!;
 
+        /// <summary>
+        /// dyno size (Example: “standard-1X”). Capitalization does not matter.
+        /// </summary>
         [Output("size")]
         public Output<string> Size { get; private set; } = null!;
 
+        /// <summary>
+        /// type of process such as "web"
+        /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
 
@@ -72,15 +109,27 @@ namespace Pulumiverse.Heroku.Formation
 
     public sealed class FormationArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// number of processes to maintain
+        /// </summary>
         [Input("quantity", required: true)]
         public Input<int> Quantity { get; set; } = null!;
 
+        /// <summary>
+        /// dyno size (Example: “standard-1X”). Capitalization does not matter.
+        /// </summary>
         [Input("size", required: true)]
         public Input<string> Size { get; set; } = null!;
 
+        /// <summary>
+        /// type of process such as "web"
+        /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
 
@@ -92,15 +141,27 @@ namespace Pulumiverse.Heroku.Formation
 
     public sealed class FormationState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// number of processes to maintain
+        /// </summary>
         [Input("quantity")]
         public Input<int>? Quantity { get; set; }
 
+        /// <summary>
+        /// dyno size (Example: “standard-1X”). Capitalization does not matter.
+        /// </summary>
         [Input("size")]
         public Input<string>? Size { get; set; }
 
+        /// <summary>
+        /// type of process such as "web"
+        /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }
 

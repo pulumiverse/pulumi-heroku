@@ -12,13 +12,40 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a [Heroku Formation](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+// resource.
+//
+// A formation represents the formation of processes that should be set for an application.
+//
+// Please note the following:
+//   - The application must have a dyno in order to update its formation.
+//   - If the heroku formation resource is removed and deleted, this will be a no-op action in Heroku.
+//     The Heroku Platform does not have a `DELETE` endpoint for `formation`.
+//   - This resource works well with the `app.Release` resource, which allows you to deploy a slug/release to an application
+//     before the formation can be updated.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// Existing formations can be imported using the combination of the application name, a colon, and the formation's type.
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:formation/formation:Formation foobar-web foobar:web
+// ```
 type Formation struct {
 	pulumi.CustomResourceState
 
-	AppId    pulumi.StringOutput `pulumi:"appId"`
-	Quantity pulumi.IntOutput    `pulumi:"quantity"`
-	Size     pulumi.StringOutput `pulumi:"size"`
-	Type     pulumi.StringOutput `pulumi:"type"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// number of processes to maintain
+	Quantity pulumi.IntOutput `pulumi:"quantity"`
+	// dyno size (Example: “standard-1X”). Capitalization does not matter.
+	Size pulumi.StringOutput `pulumi:"size"`
+	// type of process such as "web"
+	Type pulumi.StringOutput `pulumi:"type"`
 }
 
 // NewFormation registers a new resource with the given unique name, arguments, and options.
@@ -63,17 +90,25 @@ func GetFormation(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Formation resources.
 type formationState struct {
-	AppId    *string `pulumi:"appId"`
-	Quantity *int    `pulumi:"quantity"`
-	Size     *string `pulumi:"size"`
-	Type     *string `pulumi:"type"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// number of processes to maintain
+	Quantity *int `pulumi:"quantity"`
+	// dyno size (Example: “standard-1X”). Capitalization does not matter.
+	Size *string `pulumi:"size"`
+	// type of process such as "web"
+	Type *string `pulumi:"type"`
 }
 
 type FormationState struct {
-	AppId    pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// number of processes to maintain
 	Quantity pulumi.IntPtrInput
-	Size     pulumi.StringPtrInput
-	Type     pulumi.StringPtrInput
+	// dyno size (Example: “standard-1X”). Capitalization does not matter.
+	Size pulumi.StringPtrInput
+	// type of process such as "web"
+	Type pulumi.StringPtrInput
 }
 
 func (FormationState) ElementType() reflect.Type {
@@ -81,18 +116,26 @@ func (FormationState) ElementType() reflect.Type {
 }
 
 type formationArgs struct {
-	AppId    string `pulumi:"appId"`
-	Quantity int    `pulumi:"quantity"`
-	Size     string `pulumi:"size"`
-	Type     string `pulumi:"type"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// number of processes to maintain
+	Quantity int `pulumi:"quantity"`
+	// dyno size (Example: “standard-1X”). Capitalization does not matter.
+	Size string `pulumi:"size"`
+	// type of process such as "web"
+	Type string `pulumi:"type"`
 }
 
 // The set of arguments for constructing a Formation resource.
 type FormationArgs struct {
-	AppId    pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// number of processes to maintain
 	Quantity pulumi.IntInput
-	Size     pulumi.StringInput
-	Type     pulumi.StringInput
+	// dyno size (Example: “standard-1X”). Capitalization does not matter.
+	Size pulumi.StringInput
+	// type of process such as "web"
+	Type pulumi.StringInput
 }
 
 func (FormationArgs) ElementType() reflect.Type {
@@ -182,18 +225,22 @@ func (o FormationOutput) ToFormationOutputWithContext(ctx context.Context) Forma
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o FormationOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Formation) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// number of processes to maintain
 func (o FormationOutput) Quantity() pulumi.IntOutput {
 	return o.ApplyT(func(v *Formation) pulumi.IntOutput { return v.Quantity }).(pulumi.IntOutput)
 }
 
+// dyno size (Example: “standard-1X”). Capitalization does not matter.
 func (o FormationOutput) Size() pulumi.StringOutput {
 	return o.ApplyT(func(v *Formation) pulumi.StringOutput { return v.Size }).(pulumi.StringOutput)
 }
 
+// type of process such as "web"
 func (o FormationOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *Formation) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
 }

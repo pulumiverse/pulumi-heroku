@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['AttachmentArgs', 'Attachment']
@@ -20,6 +25,10 @@ class AttachmentArgs:
                  namespace: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Attachment resource.
+        :param pulumi.Input[str] addon_id: The ID of the existing Heroku Addon to attach.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] name: A friendly name for the Heroku Addon Attachment.
+        :param pulumi.Input[str] namespace: The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
         """
         pulumi.set(__self__, "addon_id", addon_id)
         pulumi.set(__self__, "app_id", app_id)
@@ -31,6 +40,9 @@ class AttachmentArgs:
     @property
     @pulumi.getter(name="addonId")
     def addon_id(self) -> pulumi.Input[str]:
+        """
+        The ID of the existing Heroku Addon to attach.
+        """
         return pulumi.get(self, "addon_id")
 
     @addon_id.setter
@@ -40,6 +52,9 @@ class AttachmentArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -49,6 +64,9 @@ class AttachmentArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        A friendly name for the Heroku Addon Attachment.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -58,6 +76,9 @@ class AttachmentArgs:
     @property
     @pulumi.getter
     def namespace(self) -> Optional[pulumi.Input[str]]:
+        """
+        The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+        """
         return pulumi.get(self, "namespace")
 
     @namespace.setter
@@ -74,6 +95,10 @@ class _AttachmentState:
                  namespace: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Attachment resources.
+        :param pulumi.Input[str] addon_id: The ID of the existing Heroku Addon to attach.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] name: A friendly name for the Heroku Addon Attachment.
+        :param pulumi.Input[str] namespace: The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
         """
         if addon_id is not None:
             pulumi.set(__self__, "addon_id", addon_id)
@@ -87,6 +112,9 @@ class _AttachmentState:
     @property
     @pulumi.getter(name="addonId")
     def addon_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the existing Heroku Addon to attach.
+        """
         return pulumi.get(self, "addon_id")
 
     @addon_id.setter
@@ -96,6 +124,9 @@ class _AttachmentState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -105,6 +136,9 @@ class _AttachmentState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        A friendly name for the Heroku Addon Attachment.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -114,6 +148,9 @@ class _AttachmentState:
     @property
     @pulumi.getter
     def namespace(self) -> Optional[pulumi.Input[str]]:
+        """
+        The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+        """
         return pulumi.get(self, "namespace")
 
     @namespace.setter
@@ -132,9 +169,24 @@ class Attachment(pulumi.CustomResource):
                  namespace: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Attachment resource with the given unique name, props, and options.
+        Attaches a Heroku Addon Resource to an additional Heroku App.
+
+        ## Example Usage
+
+        ## Import
+
+        Addons can be imported using the unique Addon Attachment `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] addon_id: The ID of the existing Heroku Addon to attach.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] name: A friendly name for the Heroku Addon Attachment.
+        :param pulumi.Input[str] namespace: The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
         """
         ...
     @overload
@@ -143,7 +195,18 @@ class Attachment(pulumi.CustomResource):
                  args: AttachmentArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Attachment resource with the given unique name, props, and options.
+        Attaches a Heroku Addon Resource to an additional Heroku App.
+
+        ## Example Usage
+
+        ## Import
+
+        Addons can be imported using the unique Addon Attachment `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef
+        ```
+
         :param str resource_name: The name of the resource.
         :param AttachmentArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -201,6 +264,10 @@ class Attachment(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] addon_id: The ID of the existing Heroku Addon to attach.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] name: A friendly name for the Heroku Addon Attachment.
+        :param pulumi.Input[str] namespace: The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -215,20 +282,32 @@ class Attachment(pulumi.CustomResource):
     @property
     @pulumi.getter(name="addonId")
     def addon_id(self) -> pulumi.Output[str]:
+        """
+        The ID of the existing Heroku Addon to attach.
+        """
         return pulumi.get(self, "addon_id")
 
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        A friendly name for the Heroku Addon Attachment.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def namespace(self) -> pulumi.Output[str]:
+        """
+        The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+        """
         return pulumi.get(self, "namespace")
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -20,6 +25,11 @@ class AppOrganization(dict):
                  name: str,
                  locked: Optional[bool] = None,
                  personal: Optional[bool] = None):
+        """
+        :param str name: The name of the Heroku Team.
+        :param bool locked: Are other team members forbidden from joining this app.
+        :param bool personal: Force creation of the app in the user account even if a default team is set.
+        """
         pulumi.set(__self__, "name", name)
         if locked is not None:
             pulumi.set(__self__, "locked", locked)
@@ -29,16 +39,25 @@ class AppOrganization(dict):
     @property
     @pulumi.getter
     def name(self) -> str:
+        """
+        The name of the Heroku Team.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def locked(self) -> Optional[bool]:
+        """
+        Are other team members forbidden from joining this app.
+        """
         return pulumi.get(self, "locked")
 
     @property
     @pulumi.getter
     def personal(self) -> Optional[bool]:
+        """
+        Force creation of the app in the user account even if a default team is set.
+        """
         return pulumi.get(self, "personal")
 
 
@@ -48,6 +67,11 @@ class GetAppOrganizationResult(dict):
                  locked: bool,
                  name: str,
                  personal: bool):
+        """
+        :param bool locked: True if the app access is locked
+        :param str name: The name of the application. In Heroku, this is also the
+               unique ID, so it must be unique and have a minimum of 3 characters.
+        """
         pulumi.set(__self__, "locked", locked)
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "personal", personal)
@@ -55,11 +79,18 @@ class GetAppOrganizationResult(dict):
     @property
     @pulumi.getter
     def locked(self) -> bool:
+        """
+        True if the app access is locked
+        """
         return pulumi.get(self, "locked")
 
     @property
     @pulumi.getter
     def name(self) -> str:
+        """
+        The name of the application. In Heroku, this is also the
+        unique ID, so it must be unique and have a minimum of 3 characters.
+        """
         return pulumi.get(self, "name")
 
     @property

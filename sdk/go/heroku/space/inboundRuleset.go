@@ -12,11 +12,16 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a resource for managing [inbound rulesets](https://devcenter.heroku.com/articles/platform-api-reference#inbound-ruleset) for Heroku Private Spaces.
+//
+// ## Example Usage
 type InboundRuleset struct {
 	pulumi.CustomResourceState
 
+	// At least one `rule` block. Rules are documented below.
 	Rules InboundRulesetRuleArrayOutput `pulumi:"rules"`
-	Space pulumi.StringOutput           `pulumi:"space"`
+	// The ID of the space.
+	Space pulumi.StringOutput `pulumi:"space"`
 }
 
 // NewInboundRuleset registers a new resource with the given unique name, arguments, and options.
@@ -55,12 +60,16 @@ func GetInboundRuleset(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering InboundRuleset resources.
 type inboundRulesetState struct {
+	// At least one `rule` block. Rules are documented below.
 	Rules []InboundRulesetRule `pulumi:"rules"`
-	Space *string              `pulumi:"space"`
+	// The ID of the space.
+	Space *string `pulumi:"space"`
 }
 
 type InboundRulesetState struct {
+	// At least one `rule` block. Rules are documented below.
 	Rules InboundRulesetRuleArrayInput
+	// The ID of the space.
 	Space pulumi.StringPtrInput
 }
 
@@ -69,13 +78,17 @@ func (InboundRulesetState) ElementType() reflect.Type {
 }
 
 type inboundRulesetArgs struct {
+	// At least one `rule` block. Rules are documented below.
 	Rules []InboundRulesetRule `pulumi:"rules"`
-	Space string               `pulumi:"space"`
+	// The ID of the space.
+	Space string `pulumi:"space"`
 }
 
 // The set of arguments for constructing a InboundRuleset resource.
 type InboundRulesetArgs struct {
+	// At least one `rule` block. Rules are documented below.
 	Rules InboundRulesetRuleArrayInput
+	// The ID of the space.
 	Space pulumi.StringInput
 }
 
@@ -166,10 +179,12 @@ func (o InboundRulesetOutput) ToInboundRulesetOutputWithContext(ctx context.Cont
 	return o
 }
 
+// At least one `rule` block. Rules are documented below.
 func (o InboundRulesetOutput) Rules() InboundRulesetRuleArrayOutput {
 	return o.ApplyT(func(v *InboundRuleset) InboundRulesetRuleArrayOutput { return v.Rules }).(InboundRulesetRuleArrayOutput)
 }
 
+// The ID of the space.
 func (o InboundRulesetOutput) Space() pulumi.StringOutput {
 	return o.ApplyT(func(v *InboundRuleset) pulumi.StringOutput { return v.Space }).(pulumi.StringOutput)
 }

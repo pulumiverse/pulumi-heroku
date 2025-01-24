@@ -4,16 +4,33 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
     'ProviderCustomizationArgs',
+    'ProviderCustomizationArgsDict',
     'ProviderDelaysArgs',
+    'ProviderDelaysArgsDict',
     'ProviderTimeoutsArgs',
+    'ProviderTimeoutsArgsDict',
 ]
+
+MYPY = False
+
+if not MYPY:
+    class ProviderCustomizationArgsDict(TypedDict):
+        set_addon_config_vars_in_state: NotRequired[pulumi.Input[bool]]
+        set_app_all_config_vars_in_state: NotRequired[pulumi.Input[bool]]
+elif False:
+    ProviderCustomizationArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class ProviderCustomizationArgs:
@@ -43,6 +60,14 @@ class ProviderCustomizationArgs:
     def set_app_all_config_vars_in_state(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "set_app_all_config_vars_in_state", value)
 
+
+if not MYPY:
+    class ProviderDelaysArgsDict(TypedDict):
+        post_app_create_delay: NotRequired[pulumi.Input[int]]
+        post_domain_create_delay: NotRequired[pulumi.Input[int]]
+        post_space_create_delay: NotRequired[pulumi.Input[int]]
+elif False:
+    ProviderDelaysArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class ProviderDelaysArgs:
@@ -84,6 +109,12 @@ class ProviderDelaysArgs:
     def post_space_create_delay(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "post_space_create_delay", value)
 
+
+if not MYPY:
+    class ProviderTimeoutsArgsDict(TypedDict):
+        addon_create_timeout: NotRequired[pulumi.Input[int]]
+elif False:
+    ProviderTimeoutsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class ProviderTimeoutsArgs:

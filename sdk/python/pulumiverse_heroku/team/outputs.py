@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -22,6 +27,14 @@ class GetMembersMemberResult(dict):
                  team_member_id: str,
                  two_factor_authentication: bool,
                  user_id: str):
+        """
+        :param str email: Email address of the team member.
+        :param bool federated: Whether the user is federated and belongs to an Identity Provider.
+        :param str role: Role in the team.
+        :param str team_member_id: Unique identifier of the team member on the team.
+        :param bool two_factor_authentication: Whether the Enterprise team member has two-factor authentication enabled.
+        :param str user_id: Unique identifier of the team member. This is the member's user ID in Heroku.
+        """
         pulumi.set(__self__, "email", email)
         pulumi.set(__self__, "federated", federated)
         pulumi.set(__self__, "role", role)
@@ -32,31 +45,49 @@ class GetMembersMemberResult(dict):
     @property
     @pulumi.getter
     def email(self) -> str:
+        """
+        Email address of the team member.
+        """
         return pulumi.get(self, "email")
 
     @property
     @pulumi.getter
     def federated(self) -> bool:
+        """
+        Whether the user is federated and belongs to an Identity Provider.
+        """
         return pulumi.get(self, "federated")
 
     @property
     @pulumi.getter
     def role(self) -> str:
+        """
+        Role in the team.
+        """
         return pulumi.get(self, "role")
 
     @property
     @pulumi.getter(name="teamMemberId")
     def team_member_id(self) -> str:
+        """
+        Unique identifier of the team member on the team.
+        """
         return pulumi.get(self, "team_member_id")
 
     @property
     @pulumi.getter(name="twoFactorAuthentication")
     def two_factor_authentication(self) -> bool:
+        """
+        Whether the Enterprise team member has two-factor authentication enabled.
+        """
         return pulumi.get(self, "two_factor_authentication")
 
     @property
     @pulumi.getter(name="userId")
     def user_id(self) -> str:
+        """
+        Unique identifier of the team member. This is the member's user ID in Heroku.
+        """
         return pulumi.get(self, "user_id")
 
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -51,11 +56,17 @@ class GetPipelineResult:
     @property
     @pulumi.getter(name="ownerId")
     def owner_id(self) -> str:
+        """
+        The pipeline owner's ID
+        """
         return pulumi.get(self, "owner_id")
 
     @property
     @pulumi.getter(name="ownerType")
     def owner_type(self) -> str:
+        """
+        The pipeline owner's type
+        """
         return pulumi.get(self, "owner_type")
 
 
@@ -74,7 +85,16 @@ class AwaitableGetPipelineResult(GetPipelineResult):
 def get_pipeline(name: Optional[str] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetPipelineResult:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku Pipeline.
+
+    > **NOTE:**
+    This data source can only be used to fetch information regarding a pipeline that has apps already associated to it.
+    This is a limitation in the Heroku Platform API where it is not possible to query a pipeline without apps by its name.
+
+    ## Example Usage
+
+
+    :param str name: The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).
     """
     __args__ = dict()
     __args__['name'] = name
@@ -86,12 +106,26 @@ def get_pipeline(name: Optional[str] = None,
         name=pulumi.get(__ret__, 'name'),
         owner_id=pulumi.get(__ret__, 'owner_id'),
         owner_type=pulumi.get(__ret__, 'owner_type'))
-
-
-@_utilities.lift_output_func(get_pipeline)
 def get_pipeline_output(name: Optional[pulumi.Input[str]] = None,
-                        opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetPipelineResult]:
+                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetPipelineResult]:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku Pipeline.
+
+    > **NOTE:**
+    This data source can only be used to fetch information regarding a pipeline that has apps already associated to it.
+    This is a limitation in the Heroku Platform API where it is not possible to query a pipeline without apps by its name.
+
+    ## Example Usage
+
+
+    :param str name: The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('heroku:pipeline/getPipeline:getPipeline', __args__, opts=opts, typ=GetPipelineResult)
+    return __ret__.apply(lambda __response__: GetPipelineResult(
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        owner_id=pulumi.get(__response__, 'owner_id'),
+        owner_type=pulumi.get(__response__, 'owner_type')))

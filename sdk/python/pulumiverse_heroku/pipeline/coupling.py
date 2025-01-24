@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['CouplingArgs', 'Coupling']
@@ -19,6 +24,10 @@ class CouplingArgs:
                  stage: pulumi.Input[str]):
         """
         The set of arguments for constructing a Coupling resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] pipeline: The ID of the pipeline to add this app to.
+        :param pulumi.Input[str] stage: The stage to couple this app to. Must be one of
+               `review`, `development`, `staging`, or `production`.
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "pipeline", pipeline)
@@ -27,6 +36,9 @@ class CouplingArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -36,6 +48,9 @@ class CouplingArgs:
     @property
     @pulumi.getter
     def pipeline(self) -> pulumi.Input[str]:
+        """
+        The ID of the pipeline to add this app to.
+        """
         return pulumi.get(self, "pipeline")
 
     @pipeline.setter
@@ -45,6 +60,10 @@ class CouplingArgs:
     @property
     @pulumi.getter
     def stage(self) -> pulumi.Input[str]:
+        """
+        The stage to couple this app to. Must be one of
+        `review`, `development`, `staging`, or `production`.
+        """
         return pulumi.get(self, "stage")
 
     @stage.setter
@@ -60,6 +79,10 @@ class _CouplingState:
                  stage: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Coupling resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] pipeline: The ID of the pipeline to add this app to.
+        :param pulumi.Input[str] stage: The stage to couple this app to. Must be one of
+               `review`, `development`, `staging`, or `production`.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -71,6 +94,9 @@ class _CouplingState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -80,6 +106,9 @@ class _CouplingState:
     @property
     @pulumi.getter
     def pipeline(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the pipeline to add this app to.
+        """
         return pulumi.get(self, "pipeline")
 
     @pipeline.setter
@@ -89,6 +118,10 @@ class _CouplingState:
     @property
     @pulumi.getter
     def stage(self) -> Optional[pulumi.Input[str]]:
+        """
+        The stage to couple this app to. Must be one of
+        `review`, `development`, `staging`, or `production`.
+        """
         return pulumi.get(self, "stage")
 
     @stage.setter
@@ -106,9 +139,32 @@ class Coupling(pulumi.CustomResource):
                  stage: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Coupling resource with the given unique name, props, and options.
+        Provides a [Heroku Pipeline Coupling](https://devcenter.heroku.com/articles/pipelines)
+        resource.
+
+        A pipeline is a group of Heroku apps that share the same codebase. Once a
+        pipeline is created using `pipeline.Pipeline`, and apps are added
+        to different stages using `pipeline.Coupling`, you can promote app slugs
+        to the downstream stages.
+
+        See `pipeline.Pipeline` for complete usage documentation.
+
+        ## Example Usage
+
+        ## Import
+
+        Pipeline couplings can be imported using the Pipeline coupling `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:pipeline/coupling:Coupling foobar 12345678
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] pipeline: The ID of the pipeline to add this app to.
+        :param pulumi.Input[str] stage: The stage to couple this app to. Must be one of
+               `review`, `development`, `staging`, or `production`.
         """
         ...
     @overload
@@ -117,7 +173,26 @@ class Coupling(pulumi.CustomResource):
                  args: CouplingArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Coupling resource with the given unique name, props, and options.
+        Provides a [Heroku Pipeline Coupling](https://devcenter.heroku.com/articles/pipelines)
+        resource.
+
+        A pipeline is a group of Heroku apps that share the same codebase. Once a
+        pipeline is created using `pipeline.Pipeline`, and apps are added
+        to different stages using `pipeline.Coupling`, you can promote app slugs
+        to the downstream stages.
+
+        See `pipeline.Pipeline` for complete usage documentation.
+
+        ## Example Usage
+
+        ## Import
+
+        Pipeline couplings can be imported using the Pipeline coupling `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:pipeline/coupling:Coupling foobar 12345678
+        ```
+
         :param str resource_name: The name of the resource.
         :param CouplingArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -174,6 +249,10 @@ class Coupling(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] pipeline: The ID of the pipeline to add this app to.
+        :param pulumi.Input[str] stage: The stage to couple this app to. Must be one of
+               `review`, `development`, `staging`, or `production`.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -187,15 +266,25 @@ class Coupling(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def pipeline(self) -> pulumi.Output[str]:
+        """
+        The ID of the pipeline to add this app to.
+        """
         return pulumi.get(self, "pipeline")
 
     @property
     @pulumi.getter
     def stage(self) -> pulumi.Output[str]:
+        """
+        The stage to couple this app to. Must be one of
+        `review`, `development`, `staging`, or `production`.
+        """
         return pulumi.get(self, "stage")
 

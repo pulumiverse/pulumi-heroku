@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -44,6 +49,9 @@ class GetTeamResult:
     @property
     @pulumi.getter
     def default(self) -> bool:
+        """
+        Whether to use this team when none is specified
+        """
         return pulumi.get(self, "default")
 
     @property
@@ -57,6 +65,9 @@ class GetTeamResult:
     @property
     @pulumi.getter(name="membershipLimit")
     def membership_limit(self) -> int:
+        """
+        Upper limit of members allowed in a team
+        """
         return pulumi.get(self, "membership_limit")
 
     @property
@@ -67,11 +78,17 @@ class GetTeamResult:
     @property
     @pulumi.getter(name="provisionedLicenses")
     def provisioned_licenses(self) -> bool:
+        """
+        Whether the team is provisioned licenses by Salesforce
+        """
         return pulumi.get(self, "provisioned_licenses")
 
     @property
     @pulumi.getter
     def type(self) -> str:
+        """
+        type of team Will likely be either "enterprise" or "team"
+        """
         return pulumi.get(self, "type")
 
 
@@ -92,7 +109,12 @@ class AwaitableGetTeamResult(GetTeamResult):
 def get_team(name: Optional[str] = None,
              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetTeamResult:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku Team.
+
+    ## Example Usage
+
+
+    :param str name: The team name
     """
     __args__ = dict()
     __args__['name'] = name
@@ -106,12 +128,24 @@ def get_team(name: Optional[str] = None,
         name=pulumi.get(__ret__, 'name'),
         provisioned_licenses=pulumi.get(__ret__, 'provisioned_licenses'),
         type=pulumi.get(__ret__, 'type'))
-
-
-@_utilities.lift_output_func(get_team)
 def get_team_output(name: Optional[pulumi.Input[str]] = None,
-                    opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetTeamResult]:
+                    opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetTeamResult]:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku Team.
+
+    ## Example Usage
+
+
+    :param str name: The team name
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('heroku:team/getTeam:getTeam', __args__, opts=opts, typ=GetTeamResult)
+    return __ret__.apply(lambda __response__: GetTeamResult(
+        default=pulumi.get(__response__, 'default'),
+        id=pulumi.get(__response__, 'id'),
+        membership_limit=pulumi.get(__response__, 'membership_limit'),
+        name=pulumi.get(__response__, 'name'),
+        provisioned_licenses=pulumi.get(__response__, 'provisioned_licenses'),
+        type=pulumi.get(__response__, 'type')))

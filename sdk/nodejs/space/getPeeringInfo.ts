@@ -4,8 +4,12 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+ *
+ * ## Example Usage
+ */
 export function getPeeringInfo(args: GetPeeringInfoArgs, opts?: pulumi.InvokeOptions): Promise<GetPeeringInfoResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:space/getPeeringInfo:getPeeringInfo", {
         "name": args.name,
@@ -16,6 +20,9 @@ export function getPeeringInfo(args: GetPeeringInfoArgs, opts?: pulumi.InvokeOpt
  * A collection of arguments for invoking getPeeringInfo.
  */
 export interface GetPeeringInfoArgs {
+    /**
+     * The name of the Heroku Private Space.
+     */
     name: string;
 }
 
@@ -23,25 +30,54 @@ export interface GetPeeringInfoArgs {
  * A collection of values returned by getPeeringInfo.
  */
 export interface GetPeeringInfoResult {
+    /**
+     * The AWS account ID that the Heroku Private Space runs in.
+     */
     readonly awsAccountId: string;
+    /**
+     * The AWS region that the Heroku Private Space runs in.
+     */
     readonly awsRegion: string;
+    /**
+     * The CIDR blocks that the Dynos run on.
+     */
     readonly dynoCidrBlocks: string[];
     /**
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
     readonly name: string;
+    /**
+     * A list of unavailable CIDR blocks.
+     */
     readonly unavailableCidrBlocks: string[];
+    /**
+     * The CIDR block of the VPC ID.
+     */
     readonly vpcCidr: string;
+    /**
+     * The VPC ID of the Heroku Private Space.
+     */
     readonly vpcId: string;
 }
-export function getPeeringInfoOutput(args: GetPeeringInfoOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetPeeringInfoResult> {
-    return pulumi.output(args).apply((a: any) => getPeeringInfo(a, opts))
+/**
+ * Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+ *
+ * ## Example Usage
+ */
+export function getPeeringInfoOutput(args: GetPeeringInfoOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetPeeringInfoResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("heroku:space/getPeeringInfo:getPeeringInfo", {
+        "name": args.name,
+    }, opts);
 }
 
 /**
  * A collection of arguments for invoking getPeeringInfo.
  */
 export interface GetPeeringInfoOutputArgs {
+    /**
+     * The name of the Heroku Private Space.
+     */
     name: pulumi.Input<string>;
 }

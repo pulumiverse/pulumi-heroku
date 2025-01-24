@@ -10,15 +10,37 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.App
 {
+    /// <summary>
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// The most recent app release can be imported using the application name.
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:app/release:Release foobar-release foobar
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:app/release:Release")]
     public partial class Release : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// description of changes in this release
+        /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// unique identifier of slug
+        /// </summary>
         [Output("slugId")]
         public Output<string> SlugId { get; private set; } = null!;
 
@@ -69,12 +91,21 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class ReleaseArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// description of changes in this release
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// unique identifier of slug
+        /// </summary>
         [Input("slugId", required: true)]
         public Input<string> SlugId { get; set; } = null!;
 
@@ -86,12 +117,21 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class ReleaseState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// description of changes in this release
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// unique identifier of slug
+        /// </summary>
         [Input("slugId")]
         public Input<string>? SlugId { get; set; }
 

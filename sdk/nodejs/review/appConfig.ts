@@ -6,6 +6,26 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a resource for configuring review apps. Using this resource also enables review apps for a pipeline.
+ *
+ * > **IMPORTANT!**
+ * This resource can only be used after you create a pipeline, and the pipeline has been connected to a Github repository.
+ * Please visit this [help article](https://devcenter.heroku.com/articles/github-integration-review-apps#setup)
+ * for more information.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * An Existing review app config using the combination of the pipeline UUID and the Github organization/repository
+ *
+ * separated by a colon.
+ *
+ * ```sh
+ * $ pulumi import heroku:review/appConfig:AppConfig foobar afd193fb-7c5a-4d8f-afad-2388f4e6049d:heroku/homebrew-brew
+ * ```
+ */
 export class AppConfig extends pulumi.CustomResource {
     /**
      * Get an existing AppConfig resource's state with the given name, ID, and optional extra
@@ -34,14 +54,42 @@ export class AppConfig extends pulumi.CustomResource {
         return obj['__pulumiType'] === AppConfig.__pulumiType;
     }
 
+    /**
+     * If true, this will trigger the creation of review apps when pull-requests
+     * are opened in the repo. Defaults to `false`.
+     */
     public readonly automaticReviewApps!: pulumi.Output<boolean | undefined>;
+    /**
+     * A unique prefix that will be used to create review app names.
+     */
     public readonly baseName!: pulumi.Output<string>;
+    /**
+     * Provides a key/value pair to specify whether to use a common runtime or a private space.
+     */
     public readonly deployTarget!: pulumi.Output<outputs.review.AppConfigDeployTarget>;
+    /**
+     * If `true`, this will trigger automatic deletion of review apps when they’re stale.
+     * Defaults to `false`.
+     */
     public readonly destroyStaleApps!: pulumi.Output<boolean | undefined>;
+    /**
+     * The fullName of the repository that you want to enable review-apps from.
+     * Example `heroku/homebrew-brew`.
+     */
     public readonly orgRepo!: pulumi.Output<string>;
+    /**
+     * The UUID of an existing pipeline.
+     */
     public readonly pipelineId!: pulumi.Output<string>;
     public /*out*/ readonly repoId!: pulumi.Output<number>;
+    /**
+     * Destroy stale review apps automatically after these many days without any deploys.
+     * Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+     */
     public readonly staleDays!: pulumi.Output<number>;
+    /**
+     * If true, review apps will only be created when CI passes. Defaults to `false`.
+     */
     public readonly waitForCi!: pulumi.Output<boolean | undefined>;
 
     /**
@@ -96,14 +144,42 @@ export class AppConfig extends pulumi.CustomResource {
  * Input properties used for looking up and filtering AppConfig resources.
  */
 export interface AppConfigState {
+    /**
+     * If true, this will trigger the creation of review apps when pull-requests
+     * are opened in the repo. Defaults to `false`.
+     */
     automaticReviewApps?: pulumi.Input<boolean>;
+    /**
+     * A unique prefix that will be used to create review app names.
+     */
     baseName?: pulumi.Input<string>;
+    /**
+     * Provides a key/value pair to specify whether to use a common runtime or a private space.
+     */
     deployTarget?: pulumi.Input<inputs.review.AppConfigDeployTarget>;
+    /**
+     * If `true`, this will trigger automatic deletion of review apps when they’re stale.
+     * Defaults to `false`.
+     */
     destroyStaleApps?: pulumi.Input<boolean>;
+    /**
+     * The fullName of the repository that you want to enable review-apps from.
+     * Example `heroku/homebrew-brew`.
+     */
     orgRepo?: pulumi.Input<string>;
+    /**
+     * The UUID of an existing pipeline.
+     */
     pipelineId?: pulumi.Input<string>;
     repoId?: pulumi.Input<number>;
+    /**
+     * Destroy stale review apps automatically after these many days without any deploys.
+     * Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+     */
     staleDays?: pulumi.Input<number>;
+    /**
+     * If true, review apps will only be created when CI passes. Defaults to `false`.
+     */
     waitForCi?: pulumi.Input<boolean>;
 }
 
@@ -111,12 +187,40 @@ export interface AppConfigState {
  * The set of arguments for constructing a AppConfig resource.
  */
 export interface AppConfigArgs {
+    /**
+     * If true, this will trigger the creation of review apps when pull-requests
+     * are opened in the repo. Defaults to `false`.
+     */
     automaticReviewApps?: pulumi.Input<boolean>;
+    /**
+     * A unique prefix that will be used to create review app names.
+     */
     baseName?: pulumi.Input<string>;
+    /**
+     * Provides a key/value pair to specify whether to use a common runtime or a private space.
+     */
     deployTarget: pulumi.Input<inputs.review.AppConfigDeployTarget>;
+    /**
+     * If `true`, this will trigger automatic deletion of review apps when they’re stale.
+     * Defaults to `false`.
+     */
     destroyStaleApps?: pulumi.Input<boolean>;
+    /**
+     * The fullName of the repository that you want to enable review-apps from.
+     * Example `heroku/homebrew-brew`.
+     */
     orgRepo: pulumi.Input<string>;
+    /**
+     * The UUID of an existing pipeline.
+     */
     pipelineId: pulumi.Input<string>;
+    /**
+     * Destroy stale review apps automatically after these many days without any deploys.
+     * Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+     */
     staleDays?: pulumi.Input<number>;
+    /**
+     * If true, review apps will only be created when CI passes. Defaults to `false`.
+     */
     waitForCi?: pulumi.Input<boolean>;
 }

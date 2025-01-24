@@ -12,10 +12,29 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// A [Heroku Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#collaborator)
+// receives access to a specific app that is not owned by a team.
+//
+// > **IMPORTANT!:**
+// This resource only works for apps that are not part of a team.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// # Collaborators can be imported using the combination of the application name, a colon, and the collaborator's email address
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:collaborator/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+// ```
 type Collaborator struct {
 	pulumi.CustomResourceState
 
+	// Heroku app ID (do not use app name)
 	AppId pulumi.StringOutput `pulumi:"appId"`
+	// Email address of the collaborator
 	Email pulumi.StringOutput `pulumi:"email"`
 }
 
@@ -55,12 +74,16 @@ func GetCollaborator(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Collaborator resources.
 type collaboratorState struct {
+	// Heroku app ID (do not use app name)
 	AppId *string `pulumi:"appId"`
+	// Email address of the collaborator
 	Email *string `pulumi:"email"`
 }
 
 type CollaboratorState struct {
+	// Heroku app ID (do not use app name)
 	AppId pulumi.StringPtrInput
+	// Email address of the collaborator
 	Email pulumi.StringPtrInput
 }
 
@@ -69,13 +92,17 @@ func (CollaboratorState) ElementType() reflect.Type {
 }
 
 type collaboratorArgs struct {
+	// Heroku app ID (do not use app name)
 	AppId string `pulumi:"appId"`
+	// Email address of the collaborator
 	Email string `pulumi:"email"`
 }
 
 // The set of arguments for constructing a Collaborator resource.
 type CollaboratorArgs struct {
+	// Heroku app ID (do not use app name)
 	AppId pulumi.StringInput
+	// Email address of the collaborator
 	Email pulumi.StringInput
 }
 
@@ -166,10 +193,12 @@ func (o CollaboratorOutput) ToCollaboratorOutputWithContext(ctx context.Context)
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o CollaboratorOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Collaborator) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// Email address of the collaborator
 func (o CollaboratorOutput) Email() pulumi.StringOutput {
 	return o.ApplyT(func(v *Collaborator) pulumi.StringOutput { return v.Email }).(pulumi.StringOutput)
 }

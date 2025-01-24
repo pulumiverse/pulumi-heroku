@@ -11,10 +11,21 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// ## Example Usage
+//
+// ## Import
+//
+// Pipelines can be imported using the Pipeline `id`, e.g.
+//
+// ```sh
+// $ pulumi import heroku:pipeline/pipeline:Pipeline foobar 12345678
+// ```
 type Pipeline struct {
 	pulumi.CustomResourceState
 
-	Name  pulumi.StringOutput `pulumi:"name"`
+	// The name of the pipeline.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The owner of the pipeline. This block as the following required attributes:
 	Owner PipelineOwnerOutput `pulumi:"owner"`
 }
 
@@ -48,12 +59,16 @@ func GetPipeline(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Pipeline resources.
 type pipelineState struct {
-	Name  *string        `pulumi:"name"`
+	// The name of the pipeline.
+	Name *string `pulumi:"name"`
+	// The owner of the pipeline. This block as the following required attributes:
 	Owner *PipelineOwner `pulumi:"owner"`
 }
 
 type PipelineState struct {
-	Name  pulumi.StringPtrInput
+	// The name of the pipeline.
+	Name pulumi.StringPtrInput
+	// The owner of the pipeline. This block as the following required attributes:
 	Owner PipelineOwnerPtrInput
 }
 
@@ -62,13 +77,17 @@ func (PipelineState) ElementType() reflect.Type {
 }
 
 type pipelineArgs struct {
-	Name  *string        `pulumi:"name"`
+	// The name of the pipeline.
+	Name *string `pulumi:"name"`
+	// The owner of the pipeline. This block as the following required attributes:
 	Owner *PipelineOwner `pulumi:"owner"`
 }
 
 // The set of arguments for constructing a Pipeline resource.
 type PipelineArgs struct {
-	Name  pulumi.StringPtrInput
+	// The name of the pipeline.
+	Name pulumi.StringPtrInput
+	// The owner of the pipeline. This block as the following required attributes:
 	Owner PipelineOwnerPtrInput
 }
 
@@ -159,10 +178,12 @@ func (o PipelineOutput) ToPipelineOutputWithContext(ctx context.Context) Pipelin
 	return o
 }
 
+// The name of the pipeline.
 func (o PipelineOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Pipeline) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The owner of the pipeline. This block as the following required attributes:
 func (o PipelineOutput) Owner() PipelineOwnerOutput {
 	return o.ApplyT(func(v *Pipeline) PipelineOwnerOutput { return v.Owner }).(PipelineOwnerOutput)
 }

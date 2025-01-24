@@ -12,12 +12,27 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// ## Import
+//
+// This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+//
+// during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+//
+// this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+//
+// this resource.
+//
+// However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+//
+// as the end result is `noop` when the config vars already exist on the remote resource.
 type ConfigAssociation struct {
 	pulumi.CustomResourceState
 
+	// Heroku app ID (do not use app name)
 	AppId         pulumi.StringOutput    `pulumi:"appId"`
 	SensitiveVars pulumi.StringMapOutput `pulumi:"sensitiveVars"`
-	Vars          pulumi.StringMapOutput `pulumi:"vars"`
+	// Map of config vars that can be output in plaintext.
+	Vars pulumi.StringMapOutput `pulumi:"vars"`
 }
 
 // NewConfigAssociation registers a new resource with the given unique name, arguments, and options.
@@ -60,15 +75,19 @@ func GetConfigAssociation(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering ConfigAssociation resources.
 type configAssociationState struct {
+	// Heroku app ID (do not use app name)
 	AppId         *string           `pulumi:"appId"`
 	SensitiveVars map[string]string `pulumi:"sensitiveVars"`
-	Vars          map[string]string `pulumi:"vars"`
+	// Map of config vars that can be output in plaintext.
+	Vars map[string]string `pulumi:"vars"`
 }
 
 type ConfigAssociationState struct {
+	// Heroku app ID (do not use app name)
 	AppId         pulumi.StringPtrInput
 	SensitiveVars pulumi.StringMapInput
-	Vars          pulumi.StringMapInput
+	// Map of config vars that can be output in plaintext.
+	Vars pulumi.StringMapInput
 }
 
 func (ConfigAssociationState) ElementType() reflect.Type {
@@ -76,16 +95,20 @@ func (ConfigAssociationState) ElementType() reflect.Type {
 }
 
 type configAssociationArgs struct {
+	// Heroku app ID (do not use app name)
 	AppId         string            `pulumi:"appId"`
 	SensitiveVars map[string]string `pulumi:"sensitiveVars"`
-	Vars          map[string]string `pulumi:"vars"`
+	// Map of config vars that can be output in plaintext.
+	Vars map[string]string `pulumi:"vars"`
 }
 
 // The set of arguments for constructing a ConfigAssociation resource.
 type ConfigAssociationArgs struct {
+	// Heroku app ID (do not use app name)
 	AppId         pulumi.StringInput
 	SensitiveVars pulumi.StringMapInput
-	Vars          pulumi.StringMapInput
+	// Map of config vars that can be output in plaintext.
+	Vars pulumi.StringMapInput
 }
 
 func (ConfigAssociationArgs) ElementType() reflect.Type {
@@ -175,6 +198,7 @@ func (o ConfigAssociationOutput) ToConfigAssociationOutputWithContext(ctx contex
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o ConfigAssociationOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *ConfigAssociation) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
@@ -183,6 +207,7 @@ func (o ConfigAssociationOutput) SensitiveVars() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ConfigAssociation) pulumi.StringMapOutput { return v.SensitiveVars }).(pulumi.StringMapOutput)
 }
 
+// Map of config vars that can be output in plaintext.
 func (o ConfigAssociationOutput) Vars() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ConfigAssociation) pulumi.StringMapOutput { return v.Vars }).(pulumi.StringMapOutput)
 }

@@ -12,13 +12,31 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// A [Heroku Team Member](https://devcenter.heroku.com/articles/platform-api-reference#team-member) receives access to everything owned by the Team.
+//
+// To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard. For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+//
+// A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider. For `app.App` & `space.Space` resources, set the Heroku Team name as the "organization".
+//
+// ## Example Usage
+//
+// ## Import
+//
+// Team members can be imported using the combination of the team application name, a colon, and the member's email address.
+//
+// ```sh
+// $ pulumi import heroku:team/member:Member foobar-member my-team-foobar:some-user@example.com
+// ```
 type Member struct {
 	pulumi.CustomResourceState
 
+	// Email address of the member
 	Email     pulumi.StringOutput  `pulumi:"email"`
 	Federated pulumi.BoolPtrOutput `pulumi:"federated"`
-	Role      pulumi.StringOutput  `pulumi:"role"`
-	Team      pulumi.StringOutput  `pulumi:"team"`
+	// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+	Role pulumi.StringOutput `pulumi:"role"`
+	// The name of the Heroku Team.
+	Team pulumi.StringOutput `pulumi:"team"`
 }
 
 // NewMember registers a new resource with the given unique name, arguments, and options.
@@ -60,17 +78,23 @@ func GetMember(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Member resources.
 type memberState struct {
+	// Email address of the member
 	Email     *string `pulumi:"email"`
 	Federated *bool   `pulumi:"federated"`
-	Role      *string `pulumi:"role"`
-	Team      *string `pulumi:"team"`
+	// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+	Role *string `pulumi:"role"`
+	// The name of the Heroku Team.
+	Team *string `pulumi:"team"`
 }
 
 type MemberState struct {
+	// Email address of the member
 	Email     pulumi.StringPtrInput
 	Federated pulumi.BoolPtrInput
-	Role      pulumi.StringPtrInput
-	Team      pulumi.StringPtrInput
+	// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+	Role pulumi.StringPtrInput
+	// The name of the Heroku Team.
+	Team pulumi.StringPtrInput
 }
 
 func (MemberState) ElementType() reflect.Type {
@@ -78,18 +102,24 @@ func (MemberState) ElementType() reflect.Type {
 }
 
 type memberArgs struct {
+	// Email address of the member
 	Email     string `pulumi:"email"`
 	Federated *bool  `pulumi:"federated"`
-	Role      string `pulumi:"role"`
-	Team      string `pulumi:"team"`
+	// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+	Role string `pulumi:"role"`
+	// The name of the Heroku Team.
+	Team string `pulumi:"team"`
 }
 
 // The set of arguments for constructing a Member resource.
 type MemberArgs struct {
+	// Email address of the member
 	Email     pulumi.StringInput
 	Federated pulumi.BoolPtrInput
-	Role      pulumi.StringInput
-	Team      pulumi.StringInput
+	// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+	Role pulumi.StringInput
+	// The name of the Heroku Team.
+	Team pulumi.StringInput
 }
 
 func (MemberArgs) ElementType() reflect.Type {
@@ -179,6 +209,7 @@ func (o MemberOutput) ToMemberOutputWithContext(ctx context.Context) MemberOutpu
 	return o
 }
 
+// Email address of the member
 func (o MemberOutput) Email() pulumi.StringOutput {
 	return o.ApplyT(func(v *Member) pulumi.StringOutput { return v.Email }).(pulumi.StringOutput)
 }
@@ -187,10 +218,12 @@ func (o MemberOutput) Federated() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Member) pulumi.BoolPtrOutput { return v.Federated }).(pulumi.BoolPtrOutput)
 }
 
+// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
 func (o MemberOutput) Role() pulumi.StringOutput {
 	return o.ApplyT(func(v *Member) pulumi.StringOutput { return v.Role }).(pulumi.StringOutput)
 }
 
+// The name of the Heroku Team.
 func (o MemberOutput) Team() pulumi.StringOutput {
 	return o.ApplyT(func(v *Member) pulumi.StringOutput { return v.Team }).(pulumi.StringOutput)
 }

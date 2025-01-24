@@ -12,22 +12,70 @@ namespace Pulumiverse.Heroku.Space
 {
     public static class GetSpace
     {
+        /// <summary>
+        /// Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Look up a Heroku Private Space
+        /// data "heroku_space" "default" {
+        ///   name   = "my-secret-space"
+        /// }
+        /// ```
+        /// </summary>
         public static Task<GetSpaceResult> InvokeAsync(GetSpaceArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSpaceResult>("heroku:space/getSpace:getSpace", args ?? new GetSpaceArgs(), options.WithDefaults());
 
+        /// <summary>
+        /// Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Look up a Heroku Private Space
+        /// data "heroku_space" "default" {
+        ///   name   = "my-secret-space"
+        /// }
+        /// ```
+        /// </summary>
         public static Output<GetSpaceResult> Invoke(GetSpaceInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetSpaceResult>("heroku:space/getSpace:getSpace", args ?? new GetSpaceInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Look up a Heroku Private Space
+        /// data "heroku_space" "default" {
+        ///   name   = "my-secret-space"
+        /// }
+        /// ```
+        /// </summary>
+        public static Output<GetSpaceResult> Invoke(GetSpaceInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetSpaceResult>("heroku:space/getSpace:getSpace", args ?? new GetSpaceInvokeArgs(), options.WithDefaults());
     }
 
 
     public sealed class GetSpaceArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        /// </summary>
         [Input("cidr")]
         public string? Cidr { get; set; }
 
+        /// <summary>
+        /// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        /// </summary>
         [Input("dataCidr")]
         public string? DataCidr { get; set; }
 
+        /// <summary>
+        /// The name of the Heroku Private Space.
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
@@ -39,12 +87,21 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class GetSpaceInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        /// </summary>
         [Input("cidr")]
         public Input<string>? Cidr { get; set; }
 
+        /// <summary>
+        /// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        /// </summary>
         [Input("dataCidr")]
         public Input<string>? DataCidr { get; set; }
 
+        /// <summary>
+        /// The name of the Heroku Private Space.
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
@@ -58,17 +115,41 @@ namespace Pulumiverse.Heroku.Space
     [OutputType]
     public sealed class GetSpaceResult
     {
+        /// <summary>
+        /// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        /// </summary>
         public readonly string Cidr;
+        /// <summary>
+        /// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        /// </summary>
         public readonly string DataCidr;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// (string) - The name of the Heroku Team.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// The Heroku Team that owns this space. The fields for this block are documented below.
+        /// </summary>
         public readonly string Organization;
+        /// <summary>
+        /// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        /// </summary>
         public readonly ImmutableArray<string> OutboundIps;
+        /// <summary>
+        /// The region in which the Heroku Private Space is deployed.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// Whether or not the space has [Shield](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces) turned on. One of `on` or `off`.
+        /// </summary>
         public readonly bool Shield;
+        /// <summary>
+        /// The state of the Heroku Private Space. Either `allocating` or `allocated`.
+        /// </summary>
         public readonly string State;
 
         [OutputConstructor]

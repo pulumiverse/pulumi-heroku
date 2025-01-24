@@ -4,6 +4,11 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a resource for accepting VPC peering requests to Heroku Private Spaces.
+ *
+ * ## Example Usage
+ */
 export class PeeringConnectionAccepter extends pulumi.CustomResource {
     /**
      * Get an existing PeeringConnectionAccepter resource's state with the given name, ID, and optional extra
@@ -32,9 +37,21 @@ export class PeeringConnectionAccepter extends pulumi.CustomResource {
         return obj['__pulumiType'] === PeeringConnectionAccepter.__pulumiType;
     }
 
+    /**
+     * The ID of the space.
+     */
     public readonly space!: pulumi.Output<string>;
+    /**
+     * The status of the peering connection request.
+     */
     public /*out*/ readonly status!: pulumi.Output<string>;
+    /**
+     * The type of the peering connection.
+     */
     public /*out*/ readonly type!: pulumi.Output<string>;
+    /**
+     * The peering connection request ID.
+     */
     public readonly vpcPeeringConnectionId!: pulumi.Output<string>;
 
     /**
@@ -76,9 +93,21 @@ export class PeeringConnectionAccepter extends pulumi.CustomResource {
  * Input properties used for looking up and filtering PeeringConnectionAccepter resources.
  */
 export interface PeeringConnectionAccepterState {
+    /**
+     * The ID of the space.
+     */
     space?: pulumi.Input<string>;
+    /**
+     * The status of the peering connection request.
+     */
     status?: pulumi.Input<string>;
+    /**
+     * The type of the peering connection.
+     */
     type?: pulumi.Input<string>;
+    /**
+     * The peering connection request ID.
+     */
     vpcPeeringConnectionId?: pulumi.Input<string>;
 }
 
@@ -86,6 +115,12 @@ export interface PeeringConnectionAccepterState {
  * The set of arguments for constructing a PeeringConnectionAccepter resource.
  */
 export interface PeeringConnectionAccepterArgs {
+    /**
+     * The ID of the space.
+     */
     space: pulumi.Input<string>;
+    /**
+     * The peering connection request ID.
+     */
     vpcPeeringConnectionId: pulumi.Input<string>;
 }

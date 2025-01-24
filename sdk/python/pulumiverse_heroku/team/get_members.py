@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 
@@ -47,6 +52,9 @@ class GetMembersResult:
     @property
     @pulumi.getter
     def members(self) -> Sequence['outputs.GetMembersMemberResult']:
+        """
+        All members of the team that have a specified role defined in the `roles` attribute above.
+        """
         return pulumi.get(self, "members")
 
     @property
@@ -76,7 +84,14 @@ def get_members(roles: Optional[Sequence[str]] = None,
                 team: Optional[str] = None,
                 opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMembersResult:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about members for a Heroku Team.
+
+    ## Example Usage
+
+
+    :param Sequence[str] roles: List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+           At least one role must be specified.
+    :param str team: The team name.
     """
     __args__ = dict()
     __args__['roles'] = roles
@@ -89,13 +104,26 @@ def get_members(roles: Optional[Sequence[str]] = None,
         members=pulumi.get(__ret__, 'members'),
         roles=pulumi.get(__ret__, 'roles'),
         team=pulumi.get(__ret__, 'team'))
-
-
-@_utilities.lift_output_func(get_members)
 def get_members_output(roles: Optional[pulumi.Input[Sequence[str]]] = None,
                        team: Optional[pulumi.Input[str]] = None,
-                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetMembersResult]:
+                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMembersResult]:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about members for a Heroku Team.
+
+    ## Example Usage
+
+
+    :param Sequence[str] roles: List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+           At least one role must be specified.
+    :param str team: The team name.
     """
-    ...
+    __args__ = dict()
+    __args__['roles'] = roles
+    __args__['team'] = team
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('heroku:team/getMembers:getMembers', __args__, opts=opts, typ=GetMembersResult)
+    return __ret__.apply(lambda __response__: GetMembersResult(
+        id=pulumi.get(__response__, 'id'),
+        members=pulumi.get(__response__, 'members'),
+        roles=pulumi.get(__response__, 'roles'),
+        team=pulumi.get(__response__, 'team')))

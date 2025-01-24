@@ -13,9 +13,15 @@ namespace Pulumiverse.Heroku.Space.Inputs
 
     public sealed class InboundRulesetRuleArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The action to apply this rule to. Must be one of `allow` or `deny`.
+        /// </summary>
         [Input("action", required: true)]
         public Input<string> Action { get; set; } = null!;
 
+        /// <summary>
+        /// A CIDR block source for the rule.
+        /// </summary>
         [Input("source", required: true)]
         public Input<string> Source { get; set; } = null!;
 

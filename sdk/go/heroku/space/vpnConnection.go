@@ -12,16 +12,26 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a resource for creating a VPN connection between a network and a Heroku Private Space. For more information, see [Private Spaces VPN Connection](https://devcenter.heroku.com/articles/private-space-vpn-connection?preview=1) in the Heroku DevCenter.
+//
+// ## Example Usage
 type VpnConnection struct {
 	pulumi.CustomResourceState
 
-	IkeVersion     pulumi.IntOutput               `pulumi:"ikeVersion"`
-	Name           pulumi.StringOutput            `pulumi:"name"`
-	PublicIp       pulumi.StringOutput            `pulumi:"publicIp"`
-	RoutableCidrs  pulumi.StringArrayOutput       `pulumi:"routableCidrs"`
-	Space          pulumi.StringOutput            `pulumi:"space"`
-	SpaceCidrBlock pulumi.StringOutput            `pulumi:"spaceCidrBlock"`
-	Tunnels        VpnConnectionTunnelArrayOutput `pulumi:"tunnels"`
+	// The IKE version used to setup the IPsec tunnel.
+	IkeVersion pulumi.IntOutput `pulumi:"ikeVersion"`
+	// The name of the VPN connection.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+	PublicIp pulumi.StringOutput `pulumi:"publicIp"`
+	// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+	RoutableCidrs pulumi.StringArrayOutput `pulumi:"routableCidrs"`
+	// The ID of the Heroku Private Space where the VPN connection will be established.
+	Space pulumi.StringOutput `pulumi:"space"`
+	// The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+	SpaceCidrBlock pulumi.StringOutput `pulumi:"spaceCidrBlock"`
+	// Details about each VPN tunnel endpoint.
+	Tunnels VpnConnectionTunnelArrayOutput `pulumi:"tunnels"`
 }
 
 // NewVpnConnection registers a new resource with the given unique name, arguments, and options.
@@ -63,23 +73,37 @@ func GetVpnConnection(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering VpnConnection resources.
 type vpnConnectionState struct {
-	IkeVersion     *int                  `pulumi:"ikeVersion"`
-	Name           *string               `pulumi:"name"`
-	PublicIp       *string               `pulumi:"publicIp"`
-	RoutableCidrs  []string              `pulumi:"routableCidrs"`
-	Space          *string               `pulumi:"space"`
-	SpaceCidrBlock *string               `pulumi:"spaceCidrBlock"`
-	Tunnels        []VpnConnectionTunnel `pulumi:"tunnels"`
+	// The IKE version used to setup the IPsec tunnel.
+	IkeVersion *int `pulumi:"ikeVersion"`
+	// The name of the VPN connection.
+	Name *string `pulumi:"name"`
+	// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+	PublicIp *string `pulumi:"publicIp"`
+	// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+	RoutableCidrs []string `pulumi:"routableCidrs"`
+	// The ID of the Heroku Private Space where the VPN connection will be established.
+	Space *string `pulumi:"space"`
+	// The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+	SpaceCidrBlock *string `pulumi:"spaceCidrBlock"`
+	// Details about each VPN tunnel endpoint.
+	Tunnels []VpnConnectionTunnel `pulumi:"tunnels"`
 }
 
 type VpnConnectionState struct {
-	IkeVersion     pulumi.IntPtrInput
-	Name           pulumi.StringPtrInput
-	PublicIp       pulumi.StringPtrInput
-	RoutableCidrs  pulumi.StringArrayInput
-	Space          pulumi.StringPtrInput
+	// The IKE version used to setup the IPsec tunnel.
+	IkeVersion pulumi.IntPtrInput
+	// The name of the VPN connection.
+	Name pulumi.StringPtrInput
+	// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+	PublicIp pulumi.StringPtrInput
+	// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+	RoutableCidrs pulumi.StringArrayInput
+	// The ID of the Heroku Private Space where the VPN connection will be established.
+	Space pulumi.StringPtrInput
+	// The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
 	SpaceCidrBlock pulumi.StringPtrInput
-	Tunnels        VpnConnectionTunnelArrayInput
+	// Details about each VPN tunnel endpoint.
+	Tunnels VpnConnectionTunnelArrayInput
 }
 
 func (VpnConnectionState) ElementType() reflect.Type {
@@ -87,20 +111,30 @@ func (VpnConnectionState) ElementType() reflect.Type {
 }
 
 type vpnConnectionArgs struct {
-	Name          *string               `pulumi:"name"`
-	PublicIp      string                `pulumi:"publicIp"`
-	RoutableCidrs []string              `pulumi:"routableCidrs"`
-	Space         string                `pulumi:"space"`
-	Tunnels       []VpnConnectionTunnel `pulumi:"tunnels"`
+	// The name of the VPN connection.
+	Name *string `pulumi:"name"`
+	// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+	PublicIp string `pulumi:"publicIp"`
+	// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+	RoutableCidrs []string `pulumi:"routableCidrs"`
+	// The ID of the Heroku Private Space where the VPN connection will be established.
+	Space string `pulumi:"space"`
+	// Details about each VPN tunnel endpoint.
+	Tunnels []VpnConnectionTunnel `pulumi:"tunnels"`
 }
 
 // The set of arguments for constructing a VpnConnection resource.
 type VpnConnectionArgs struct {
-	Name          pulumi.StringPtrInput
-	PublicIp      pulumi.StringInput
+	// The name of the VPN connection.
+	Name pulumi.StringPtrInput
+	// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+	PublicIp pulumi.StringInput
+	// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
 	RoutableCidrs pulumi.StringArrayInput
-	Space         pulumi.StringInput
-	Tunnels       VpnConnectionTunnelArrayInput
+	// The ID of the Heroku Private Space where the VPN connection will be established.
+	Space pulumi.StringInput
+	// Details about each VPN tunnel endpoint.
+	Tunnels VpnConnectionTunnelArrayInput
 }
 
 func (VpnConnectionArgs) ElementType() reflect.Type {
@@ -190,30 +224,37 @@ func (o VpnConnectionOutput) ToVpnConnectionOutputWithContext(ctx context.Contex
 	return o
 }
 
+// The IKE version used to setup the IPsec tunnel.
 func (o VpnConnectionOutput) IkeVersion() pulumi.IntOutput {
 	return o.ApplyT(func(v *VpnConnection) pulumi.IntOutput { return v.IkeVersion }).(pulumi.IntOutput)
 }
 
+// The name of the VPN connection.
 func (o VpnConnectionOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *VpnConnection) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
 func (o VpnConnectionOutput) PublicIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *VpnConnection) pulumi.StringOutput { return v.PublicIp }).(pulumi.StringOutput)
 }
 
+// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
 func (o VpnConnectionOutput) RoutableCidrs() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *VpnConnection) pulumi.StringArrayOutput { return v.RoutableCidrs }).(pulumi.StringArrayOutput)
 }
 
+// The ID of the Heroku Private Space where the VPN connection will be established.
 func (o VpnConnectionOutput) Space() pulumi.StringOutput {
 	return o.ApplyT(func(v *VpnConnection) pulumi.StringOutput { return v.Space }).(pulumi.StringOutput)
 }
 
+// The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
 func (o VpnConnectionOutput) SpaceCidrBlock() pulumi.StringOutput {
 	return o.ApplyT(func(v *VpnConnection) pulumi.StringOutput { return v.SpaceCidrBlock }).(pulumi.StringOutput)
 }
 
+// Details about each VPN tunnel endpoint.
 func (o VpnConnectionOutput) Tunnels() VpnConnectionTunnelArrayOutput {
 	return o.ApplyT(func(v *VpnConnection) VpnConnectionTunnelArrayOutput { return v.Tunnels }).(VpnConnectionTunnelArrayOutput)
 }

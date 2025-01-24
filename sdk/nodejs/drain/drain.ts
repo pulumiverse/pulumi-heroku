@@ -4,6 +4,22 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a Heroku Drain resource. This can be used to
+ * create and manage Log Drains on Heroku.
+ *
+ * ## Example Usage
+ *
+ * ## Importing
+ *
+ * When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+ * For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `url` attribute value
+ * defined for the resource, you would import it as:
+ *
+ * When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+ * For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `sensitiveUrl` attribute value
+ * defined for the resource, you would import it as:
+ */
 export class Drain extends pulumi.CustomResource {
     /**
      * Get an existing Drain resource's state with the given name, ID, and optional extra
@@ -32,9 +48,18 @@ export class Drain extends pulumi.CustomResource {
         return obj['__pulumiType'] === Drain.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
     public readonly sensitiveUrl!: pulumi.Output<string | undefined>;
+    /**
+     * The unique token for your created drain.
+     */
     public /*out*/ readonly token!: pulumi.Output<string>;
+    /**
+     * The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+     */
     public readonly url!: pulumi.Output<string | undefined>;
 
     /**
@@ -75,9 +100,18 @@ export class Drain extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Drain resources.
  */
 export interface DrainState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
     sensitiveUrl?: pulumi.Input<string>;
+    /**
+     * The unique token for your created drain.
+     */
     token?: pulumi.Input<string>;
+    /**
+     * The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+     */
     url?: pulumi.Input<string>;
 }
 
@@ -85,7 +119,13 @@ export interface DrainState {
  * The set of arguments for constructing a Drain resource.
  */
 export interface DrainArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
     sensitiveUrl?: pulumi.Input<string>;
+    /**
+     * The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+     */
     url?: pulumi.Input<string>;
 }

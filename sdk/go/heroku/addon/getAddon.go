@@ -11,6 +11,9 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get information about a Heroku Addon.
+//
+// ## Example Usage
 func LookupAddon(ctx *pulumi.Context, args *LookupAddonArgs, opts ...pulumi.InvokeOption) (*LookupAddonResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupAddonResult
@@ -23,34 +26,38 @@ func LookupAddon(ctx *pulumi.Context, args *LookupAddonArgs, opts ...pulumi.Invo
 
 // A collection of arguments for invoking getAddon.
 type LookupAddonArgs struct {
+	// The add-on name
 	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getAddon.
 type LookupAddonResult struct {
-	AppId      string   `pulumi:"appId"`
+	// Heroku app ID
+	AppId string `pulumi:"appId"`
+	// The Configuration variables of the add-on
 	ConfigVars []string `pulumi:"configVars"`
-	Id         string   `pulumi:"id"`
-	Name       string   `pulumi:"name"`
-	Plan       string   `pulumi:"plan"`
-	ProviderId string   `pulumi:"providerId"`
+	// The ID of the add-on
+	Id string `pulumi:"id"`
+	// The add-on name
+	Name string `pulumi:"name"`
+	// The plan name
+	Plan string `pulumi:"plan"`
+	// The ID of the plan provider
+	ProviderId string `pulumi:"providerId"`
 }
 
 func LookupAddonOutput(ctx *pulumi.Context, args LookupAddonOutputArgs, opts ...pulumi.InvokeOption) LookupAddonResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupAddonResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupAddonResultOutput, error) {
 			args := v.(LookupAddonArgs)
-			r, err := LookupAddon(ctx, &args, opts...)
-			var s LookupAddonResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:addon/getAddon:getAddon", args, LookupAddonResultOutput{}, options).(LookupAddonResultOutput), nil
 		}).(LookupAddonResultOutput)
 }
 
 // A collection of arguments for invoking getAddon.
 type LookupAddonOutputArgs struct {
+	// The add-on name
 	Name pulumi.StringInput `pulumi:"name"`
 }
 
@@ -73,26 +80,32 @@ func (o LookupAddonResultOutput) ToLookupAddonResultOutputWithContext(ctx contex
 	return o
 }
 
+// Heroku app ID
 func (o LookupAddonResultOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAddonResult) string { return v.AppId }).(pulumi.StringOutput)
 }
 
+// The Configuration variables of the add-on
 func (o LookupAddonResultOutput) ConfigVars() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v LookupAddonResult) []string { return v.ConfigVars }).(pulumi.StringArrayOutput)
 }
 
+// The ID of the add-on
 func (o LookupAddonResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAddonResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// The add-on name
 func (o LookupAddonResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAddonResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// The plan name
 func (o LookupAddonResultOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAddonResult) string { return v.Plan }).(pulumi.StringOutput)
 }
 
+// The ID of the plan provider
 func (o LookupAddonResultOutput) ProviderId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAddonResult) string { return v.ProviderId }).(pulumi.StringOutput)
 }

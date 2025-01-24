@@ -6,6 +6,11 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a resource for creating a VPN connection between a network and a Heroku Private Space. For more information, see [Private Spaces VPN Connection](https://devcenter.heroku.com/articles/private-space-vpn-connection?preview=1) in the Heroku DevCenter.
+ *
+ * ## Example Usage
+ */
 export class VpnConnection extends pulumi.CustomResource {
     /**
      * Get an existing VpnConnection resource's state with the given name, ID, and optional extra
@@ -34,12 +39,33 @@ export class VpnConnection extends pulumi.CustomResource {
         return obj['__pulumiType'] === VpnConnection.__pulumiType;
     }
 
+    /**
+     * The IKE version used to setup the IPsec tunnel.
+     */
     public /*out*/ readonly ikeVersion!: pulumi.Output<number>;
+    /**
+     * The name of the VPN connection.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+     */
     public readonly publicIp!: pulumi.Output<string>;
+    /**
+     * A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+     */
     public readonly routableCidrs!: pulumi.Output<string[]>;
+    /**
+     * The ID of the Heroku Private Space where the VPN connection will be established.
+     */
     public readonly space!: pulumi.Output<string>;
+    /**
+     * The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+     */
     public /*out*/ readonly spaceCidrBlock!: pulumi.Output<string>;
+    /**
+     * Details about each VPN tunnel endpoint.
+     */
     public readonly tunnels!: pulumi.Output<outputs.space.VpnConnectionTunnel[]>;
 
     /**
@@ -90,12 +116,33 @@ export class VpnConnection extends pulumi.CustomResource {
  * Input properties used for looking up and filtering VpnConnection resources.
  */
 export interface VpnConnectionState {
+    /**
+     * The IKE version used to setup the IPsec tunnel.
+     */
     ikeVersion?: pulumi.Input<number>;
+    /**
+     * The name of the VPN connection.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+     */
     publicIp?: pulumi.Input<string>;
+    /**
+     * A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+     */
     routableCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The ID of the Heroku Private Space where the VPN connection will be established.
+     */
     space?: pulumi.Input<string>;
+    /**
+     * The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+     */
     spaceCidrBlock?: pulumi.Input<string>;
+    /**
+     * Details about each VPN tunnel endpoint.
+     */
     tunnels?: pulumi.Input<pulumi.Input<inputs.space.VpnConnectionTunnel>[]>;
 }
 
@@ -103,9 +150,24 @@ export interface VpnConnectionState {
  * The set of arguments for constructing a VpnConnection resource.
  */
 export interface VpnConnectionArgs {
+    /**
+     * The name of the VPN connection.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+     */
     publicIp: pulumi.Input<string>;
+    /**
+     * A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+     */
     routableCidrs: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The ID of the Heroku Private Space where the VPN connection will be established.
+     */
     space: pulumi.Input<string>;
+    /**
+     * Details about each VPN tunnel endpoint.
+     */
     tunnels?: pulumi.Input<pulumi.Input<inputs.space.VpnConnectionTunnel>[]>;
 }

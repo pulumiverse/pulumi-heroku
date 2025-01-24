@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['ConfigVarArgs', 'ConfigVar']
@@ -20,6 +25,9 @@ class ConfigVarArgs:
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a ConfigVar resource.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[str] pipeline_stage: The pipeline's stage. Supported values are `test` & `review`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         pulumi.set(__self__, "pipeline_id", pipeline_id)
         pulumi.set(__self__, "pipeline_stage", pipeline_stage)
@@ -31,6 +39,9 @@ class ConfigVarArgs:
     @property
     @pulumi.getter(name="pipelineId")
     def pipeline_id(self) -> pulumi.Input[str]:
+        """
+        The UUID of an existing pipeline.
+        """
         return pulumi.get(self, "pipeline_id")
 
     @pipeline_id.setter
@@ -40,6 +51,9 @@ class ConfigVarArgs:
     @property
     @pulumi.getter(name="pipelineStage")
     def pipeline_stage(self) -> pulumi.Input[str]:
+        """
+        The pipeline's stage. Supported values are `test` & `review`.
+        """
         return pulumi.get(self, "pipeline_stage")
 
     @pipeline_stage.setter
@@ -58,6 +72,9 @@ class ConfigVarArgs:
     @property
     @pulumi.getter
     def vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of config vars that can be output in plaintext.
+        """
         return pulumi.get(self, "vars")
 
     @vars.setter
@@ -68,13 +85,17 @@ class ConfigVarArgs:
 @pulumi.input_type
 class _ConfigVarState:
     def __init__(__self__, *,
-                 all_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 all_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  pipeline_id: Optional[pulumi.Input[str]] = None,
                  pipeline_stage: Optional[pulumi.Input[str]] = None,
                  sensitive_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering ConfigVar resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] all_vars: All vars of a pipeline stage. This is marked `sensitive` so that `sensitive_vars` do not leak in the console/logs.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[str] pipeline_stage: The pipeline's stage. Supported values are `test` & `review`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         if all_vars is not None:
             pulumi.set(__self__, "all_vars", all_vars)
@@ -89,16 +110,22 @@ class _ConfigVarState:
 
     @property
     @pulumi.getter(name="allVars")
-    def all_vars(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def all_vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        All vars of a pipeline stage. This is marked `sensitive` so that `sensitive_vars` do not leak in the console/logs.
+        """
         return pulumi.get(self, "all_vars")
 
     @all_vars.setter
-    def all_vars(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def all_vars(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "all_vars", value)
 
     @property
     @pulumi.getter(name="pipelineId")
     def pipeline_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The UUID of an existing pipeline.
+        """
         return pulumi.get(self, "pipeline_id")
 
     @pipeline_id.setter
@@ -108,6 +135,9 @@ class _ConfigVarState:
     @property
     @pulumi.getter(name="pipelineStage")
     def pipeline_stage(self) -> Optional[pulumi.Input[str]]:
+        """
+        The pipeline's stage. Supported values are `test` & `review`.
+        """
         return pulumi.get(self, "pipeline_stage")
 
     @pipeline_stage.setter
@@ -126,6 +156,9 @@ class _ConfigVarState:
     @property
     @pulumi.getter
     def vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of config vars that can be output in plaintext.
+        """
         return pulumi.get(self, "vars")
 
     @vars.setter
@@ -144,9 +177,36 @@ class ConfigVar(pulumi.CustomResource):
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
-        Create a ConfigVar resource with the given unique name, props, and options.
+        Provides a resource to manage a pipeline's config vars.
+
+        The pipeline config var API can only retrieve config vars that can be set at the pipeline level.
+        Additionally, these two supported pipeline stages are:
+        - [Heroku CI](https://devcenter.heroku.com/articles/heroku-ci#setting-environment-variables-the-env-key) config vars (test stage)
+        - [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps#configuration) config vars (review stage)
+
+        The development, staging & production stages do not have stage-level config vars, only those on the apps within each stage.
+
+        ## Example Usage
+
+        ## Import
+
+        This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+
+        during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+
+        this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+
+        this resource.
+
+        However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+
+        as the end result is `noop` when the config vars already exist on the remote resource.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[str] pipeline_stage: The pipeline's stage. Supported values are `test` & `review`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         ...
     @overload
@@ -155,7 +215,31 @@ class ConfigVar(pulumi.CustomResource):
                  args: ConfigVarArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a ConfigVar resource with the given unique name, props, and options.
+        Provides a resource to manage a pipeline's config vars.
+
+        The pipeline config var API can only retrieve config vars that can be set at the pipeline level.
+        Additionally, these two supported pipeline stages are:
+        - [Heroku CI](https://devcenter.heroku.com/articles/heroku-ci#setting-environment-variables-the-env-key) config vars (test stage)
+        - [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps#configuration) config vars (review stage)
+
+        The development, staging & production stages do not have stage-level config vars, only those on the apps within each stage.
+
+        ## Example Usage
+
+        ## Import
+
+        This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+
+        during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+
+        this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+
+        this resource.
+
+        However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+
+        as the end result is `noop` when the config vars already exist on the remote resource.
+
         :param str resource_name: The name of the resource.
         :param ConfigVarArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -205,7 +289,7 @@ class ConfigVar(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            all_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            all_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             pipeline_id: Optional[pulumi.Input[str]] = None,
             pipeline_stage: Optional[pulumi.Input[str]] = None,
             sensitive_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
@@ -217,6 +301,10 @@ class ConfigVar(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] all_vars: All vars of a pipeline stage. This is marked `sensitive` so that `sensitive_vars` do not leak in the console/logs.
+        :param pulumi.Input[str] pipeline_id: The UUID of an existing pipeline.
+        :param pulumi.Input[str] pipeline_stage: The pipeline's stage. Supported values are `test` & `review`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -231,17 +319,26 @@ class ConfigVar(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="allVars")
-    def all_vars(self) -> pulumi.Output[Mapping[str, Any]]:
+    def all_vars(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        All vars of a pipeline stage. This is marked `sensitive` so that `sensitive_vars` do not leak in the console/logs.
+        """
         return pulumi.get(self, "all_vars")
 
     @property
     @pulumi.getter(name="pipelineId")
     def pipeline_id(self) -> pulumi.Output[str]:
+        """
+        The UUID of an existing pipeline.
+        """
         return pulumi.get(self, "pipeline_id")
 
     @property
     @pulumi.getter(name="pipelineStage")
     def pipeline_stage(self) -> pulumi.Output[str]:
+        """
+        The pipeline's stage. Supported values are `test` & `review`.
+        """
         return pulumi.get(self, "pipeline_stage")
 
     @property
@@ -252,5 +349,8 @@ class ConfigVar(pulumi.CustomResource):
     @property
     @pulumi.getter
     def vars(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Map of config vars that can be output in plaintext.
+        """
         return pulumi.get(self, "vars")
 

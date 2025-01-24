@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['SslArgs', 'Ssl']
@@ -19,6 +24,11 @@ class SslArgs:
                  private_key: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Ssl resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add.
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain. You **must** set this attribute when creating or
+               updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+               SSL resource. The attribute value does not get displayed in logs or regular output.
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "certificate_chain", certificate_chain)
@@ -28,6 +38,9 @@ class SslArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -37,6 +50,9 @@ class SslArgs:
     @property
     @pulumi.getter(name="certificateChain")
     def certificate_chain(self) -> pulumi.Input[str]:
+        """
+        The certificate chain to add.
+        """
         return pulumi.get(self, "certificate_chain")
 
     @certificate_chain.setter
@@ -46,6 +62,11 @@ class SslArgs:
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The private key for a given certificate chain. You **must** set this attribute when creating or
+        updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+        SSL resource. The attribute value does not get displayed in logs or regular output.
+        """
         return pulumi.get(self, "private_key")
 
     @private_key.setter
@@ -62,6 +83,12 @@ class _SslState:
                  private_key: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Ssl resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add.
+        :param pulumi.Input[str] name: The name of the SSL certificate
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain. You **must** set this attribute when creating or
+               updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+               SSL resource. The attribute value does not get displayed in logs or regular output.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -75,6 +102,9 @@ class _SslState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -84,6 +114,9 @@ class _SslState:
     @property
     @pulumi.getter(name="certificateChain")
     def certificate_chain(self) -> Optional[pulumi.Input[str]]:
+        """
+        The certificate chain to add.
+        """
         return pulumi.get(self, "certificate_chain")
 
     @certificate_chain.setter
@@ -93,6 +126,9 @@ class _SslState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the SSL certificate
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -102,6 +138,11 @@ class _SslState:
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The private key for a given certificate chain. You **must** set this attribute when creating or
+        updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+        SSL resource. The attribute value does not get displayed in logs or regular output.
+        """
         return pulumi.get(self, "private_key")
 
     @private_key.setter
@@ -119,9 +160,27 @@ class Ssl(pulumi.CustomResource):
                  private_key: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Ssl resource with the given unique name, props, and options.
+        This resource manages an SSL certificate for a Heroku app.
+
+        > **IMPORTANT!**
+        This resource renders the "private_key" attribute in plain-text in your state file.
+        Please ensure that your state file is properly secured and encrypted at rest.
+
+        ## Example Usage
+
+        ## Importing
+
+        An existing SSL resource can be imported using a composite value of the app name and certificate UUID separated by a colon.
+
+        For example:
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add.
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain. You **must** set this attribute when creating or
+               updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+               SSL resource. The attribute value does not get displayed in logs or regular output.
         """
         ...
     @overload
@@ -130,7 +189,20 @@ class Ssl(pulumi.CustomResource):
                  args: SslArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Ssl resource with the given unique name, props, and options.
+        This resource manages an SSL certificate for a Heroku app.
+
+        > **IMPORTANT!**
+        This resource renders the "private_key" attribute in plain-text in your state file.
+        Please ensure that your state file is properly secured and encrypted at rest.
+
+        ## Example Usage
+
+        ## Importing
+
+        An existing SSL resource can be imported using a composite value of the app name and certificate UUID separated by a colon.
+
+        For example:
+
         :param str resource_name: The name of the resource.
         :param SslArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -189,6 +261,12 @@ class Ssl(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add.
+        :param pulumi.Input[str] name: The name of the SSL certificate
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain. You **must** set this attribute when creating or
+               updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+               SSL resource. The attribute value does not get displayed in logs or regular output.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -203,20 +281,34 @@ class Ssl(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter(name="certificateChain")
     def certificate_chain(self) -> pulumi.Output[str]:
+        """
+        The certificate chain to add.
+        """
         return pulumi.get(self, "certificate_chain")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the SSL certificate
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> pulumi.Output[Optional[str]]:
+        """
+        The private key for a given certificate chain. You **must** set this attribute when creating or
+        updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+        SSL resource. The attribute value does not get displayed in logs or regular output.
+        """
         return pulumi.get(self, "private_key")
 

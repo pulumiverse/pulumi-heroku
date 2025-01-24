@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['CollaboratorArgs', 'Collaborator']
@@ -19,6 +24,11 @@ class CollaboratorArgs:
                  permissions: pulumi.Input[Sequence[pulumi.Input[str]]]):
         """
         The set of arguments for constructing a Collaborator resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the team collaborator
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: List of permissions that will be granted to the team collaborator. The order in which
+               individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+               for more information on available permissions.
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "email", email)
@@ -27,6 +37,9 @@ class CollaboratorArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -36,6 +49,9 @@ class CollaboratorArgs:
     @property
     @pulumi.getter
     def email(self) -> pulumi.Input[str]:
+        """
+        Email address of the team collaborator
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -45,6 +61,11 @@ class CollaboratorArgs:
     @property
     @pulumi.getter
     def permissions(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of permissions that will be granted to the team collaborator. The order in which
+        individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+        for more information on available permissions.
+        """
         return pulumi.get(self, "permissions")
 
     @permissions.setter
@@ -60,6 +81,11 @@ class _CollaboratorState:
                  permissions: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Collaborator resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the team collaborator
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: List of permissions that will be granted to the team collaborator. The order in which
+               individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+               for more information on available permissions.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -71,6 +97,9 @@ class _CollaboratorState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -80,6 +109,9 @@ class _CollaboratorState:
     @property
     @pulumi.getter
     def email(self) -> Optional[pulumi.Input[str]]:
+        """
+        Email address of the team collaborator
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -89,6 +121,11 @@ class _CollaboratorState:
     @property
     @pulumi.getter
     def permissions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of permissions that will be granted to the team collaborator. The order in which
+        individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+        for more information on available permissions.
+        """
         return pulumi.get(self, "permissions")
 
     @permissions.setter
@@ -106,9 +143,37 @@ class Collaborator(pulumi.CustomResource):
                  permissions: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         """
-        Create a Collaborator resource with the given unique name, props, and options.
+        A [Heroku Team Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#team-app-collaborator)
+        receives access to a specific Team-owned app.
+
+        To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard.
+        For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+
+        A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider.
+        For `app.App` & `space.Space` resources, set the Heroku Team name as the "organization".
+
+        > **IMPORTANT:**
+        This resource only works for Team-owned apps.
+
+        ## Example Usage
+
+        ## Import
+
+        Team Collaborators can be imported using the combination of the team application name, a colon, and the collaborator's email address
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:team/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the team collaborator
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: List of permissions that will be granted to the team collaborator. The order in which
+               individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+               for more information on available permissions.
         """
         ...
     @overload
@@ -117,7 +182,30 @@ class Collaborator(pulumi.CustomResource):
                  args: CollaboratorArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Collaborator resource with the given unique name, props, and options.
+        A [Heroku Team Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#team-app-collaborator)
+        receives access to a specific Team-owned app.
+
+        To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard.
+        For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+
+        A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider.
+        For `app.App` & `space.Space` resources, set the Heroku Team name as the "organization".
+
+        > **IMPORTANT:**
+        This resource only works for Team-owned apps.
+
+        ## Example Usage
+
+        ## Import
+
+        Team Collaborators can be imported using the combination of the team application name, a colon, and the collaborator's email address
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:team/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+        ```
+
         :param str resource_name: The name of the resource.
         :param CollaboratorArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -174,6 +262,11 @@ class Collaborator(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the team collaborator
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: List of permissions that will be granted to the team collaborator. The order in which
+               individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+               for more information on available permissions.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -187,15 +280,26 @@ class Collaborator(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def email(self) -> pulumi.Output[str]:
+        """
+        Email address of the team collaborator
+        """
         return pulumi.get(self, "email")
 
     @property
     @pulumi.getter
     def permissions(self) -> pulumi.Output[Sequence[str]]:
+        """
+        List of permissions that will be granted to the team collaborator. The order in which
+        individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+        for more information on available permissions.
+        """
         return pulumi.get(self, "permissions")
 

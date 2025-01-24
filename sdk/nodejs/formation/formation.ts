@@ -4,6 +4,31 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a [Heroku Formation](https://devcenter.heroku.com/articles/platform-api-reference#formation)
+ * resource.
+ *
+ * A formation represents the formation of processes that should be set for an application.
+ *
+ * Please note the following:
+ * * The application must have a dyno in order to update its formation.
+ * * If the heroku formation resource is removed and deleted, this will be a no-op action in Heroku.
+ *   The Heroku Platform does not have a `DELETE` endpoint for `formation`.
+ * * This resource works well with the `heroku.app.Release` resource, which allows you to deploy a slug/release to an application
+ *   before the formation can be updated.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Existing formations can be imported using the combination of the application name, a colon, and the formation's type.
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:formation/formation:Formation foobar-web foobar:web
+ * ```
+ */
 export class Formation extends pulumi.CustomResource {
     /**
      * Get an existing Formation resource's state with the given name, ID, and optional extra
@@ -32,9 +57,21 @@ export class Formation extends pulumi.CustomResource {
         return obj['__pulumiType'] === Formation.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * number of processes to maintain
+     */
     public readonly quantity!: pulumi.Output<number>;
+    /**
+     * dyno size (Example: “standard-1X”). Capitalization does not matter.
+     */
     public readonly size!: pulumi.Output<string>;
+    /**
+     * type of process such as "web"
+     */
     public readonly type!: pulumi.Output<string>;
 
     /**
@@ -82,9 +119,21 @@ export class Formation extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Formation resources.
  */
 export interface FormationState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * number of processes to maintain
+     */
     quantity?: pulumi.Input<number>;
+    /**
+     * dyno size (Example: “standard-1X”). Capitalization does not matter.
+     */
     size?: pulumi.Input<string>;
+    /**
+     * type of process such as "web"
+     */
     type?: pulumi.Input<string>;
 }
 
@@ -92,8 +141,20 @@ export interface FormationState {
  * The set of arguments for constructing a Formation resource.
  */
 export interface FormationArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * number of processes to maintain
+     */
     quantity: pulumi.Input<number>;
+    /**
+     * dyno size (Example: “standard-1X”). Capitalization does not matter.
+     */
     size: pulumi.Input<string>;
+    /**
+     * type of process such as "web"
+     */
     type: pulumi.Input<string>;
 }

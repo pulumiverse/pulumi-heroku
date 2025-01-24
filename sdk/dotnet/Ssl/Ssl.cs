@@ -10,18 +10,47 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Ssl
 {
+    /// <summary>
+    /// This resource manages an SSL certificate for a Heroku app.
+    /// 
+    /// &gt; **IMPORTANT!**
+    /// This resource renders the "private_key" attribute in plain-text in your state file.
+    /// Please ensure that your state file is properly secured and encrypted at rest.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Importing
+    /// 
+    /// An existing SSL resource can be imported using a composite value of the app name and certificate UUID separated by a colon.
+    /// 
+    /// For example:
+    /// </summary>
     [HerokuResourceType("heroku:ssl/ssl:Ssl")]
     public partial class Ssl : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// The certificate chain to add.
+        /// </summary>
         [Output("certificateChain")]
         public Output<string> CertificateChain { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the SSL certificate
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The private key for a given certificate chain. You **must** set this attribute when creating or
+        /// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+        /// SSL resource. The attribute value does not get displayed in logs or regular output.
+        /// </summary>
         [Output("privateKey")]
         public Output<string?> PrivateKey { get; private set; } = null!;
 
@@ -76,14 +105,26 @@ namespace Pulumiverse.Heroku.Ssl
 
     public sealed class SslArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// The certificate chain to add.
+        /// </summary>
         [Input("certificateChain", required: true)]
         public Input<string> CertificateChain { get; set; } = null!;
 
         [Input("privateKey")]
         private Input<string>? _privateKey;
+
+        /// <summary>
+        /// The private key for a given certificate chain. You **must** set this attribute when creating or
+        /// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+        /// SSL resource. The attribute value does not get displayed in logs or regular output.
+        /// </summary>
         public Input<string>? PrivateKey
         {
             get => _privateKey;
@@ -102,17 +143,32 @@ namespace Pulumiverse.Heroku.Ssl
 
     public sealed class SslState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// The certificate chain to add.
+        /// </summary>
         [Input("certificateChain")]
         public Input<string>? CertificateChain { get; set; }
 
+        /// <summary>
+        /// The name of the SSL certificate
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("privateKey")]
         private Input<string>? _privateKey;
+
+        /// <summary>
+        /// The private key for a given certificate chain. You **must** set this attribute when creating or
+        /// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+        /// SSL resource. The attribute value does not get displayed in logs or regular output.
+        /// </summary>
         public Input<string>? PrivateKey
         {
             get => _privateKey;

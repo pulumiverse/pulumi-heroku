@@ -13,9 +13,15 @@ namespace Pulumiverse.Heroku.Pipeline.Inputs
 
     public sealed class PipelineOwnerGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The unique identifier (UUID) of a pipeline owner.
+        /// </summary>
         [Input("id", required: true)]
         public Input<string> Id { get; set; } = null!;
 
+        /// <summary>
+        /// The type of pipeline owner. Can be either `user` or `team`.
+        /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
 

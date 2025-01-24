@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -19,7 +24,7 @@ class AppArgs:
                  region: pulumi.Input[str],
                  acm: Optional[pulumi.Input[bool]] = None,
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  internal_routing: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  organization: Optional[pulumi.Input['AppOrganizationArgs']] = None,
@@ -28,6 +33,20 @@ class AppArgs:
                  stack: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a App resource.
+        :param pulumi.Input[str] region: The region that the app should be deployed in.
+        :param pulumi.Input[bool] acm: The flag representing Automated Certificate Management for the app.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: Buildpack names or URLs for the application.
+               Buildpacks configured externally won't be altered if this is not present.
+        :param pulumi.Input[bool] internal_routing: If true, the application will be routable
+               only internally in a private space. This option is only available for apps
+               that also specify `space`.
+        :param pulumi.Input[str] name: The name of the application. In Heroku, this is also the
+               unique ID, so it must be unique and have a minimum of 3 characters.
+        :param pulumi.Input['AppOrganizationArgs'] organization: A block that can be specified once to define
+               Heroku Team settings for this app. The fields for this block are
+               documented below.
+        :param pulumi.Input[str] space: The name of a private space to create the app in.
+        :param pulumi.Input[str] stack: The application stack is what platform to run the application in.
         """
         pulumi.set(__self__, "region", region)
         if acm is not None:
@@ -52,6 +71,9 @@ class AppArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        The region that the app should be deployed in.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -61,6 +83,9 @@ class AppArgs:
     @property
     @pulumi.getter
     def acm(self) -> Optional[pulumi.Input[bool]]:
+        """
+        The flag representing Automated Certificate Management for the app.
+        """
         return pulumi.get(self, "acm")
 
     @acm.setter
@@ -70,6 +95,10 @@ class AppArgs:
     @property
     @pulumi.getter
     def buildpacks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Buildpack names or URLs for the application.
+        Buildpacks configured externally won't be altered if this is not present.
+        """
         return pulumi.get(self, "buildpacks")
 
     @buildpacks.setter
@@ -78,16 +107,21 @@ class AppArgs:
 
     @property
     @pulumi.getter(name="configVars")
-    def config_vars(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config_vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         return pulumi.get(self, "config_vars")
 
     @config_vars.setter
-    def config_vars(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config_vars(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "config_vars", value)
 
     @property
     @pulumi.getter(name="internalRouting")
     def internal_routing(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, the application will be routable
+        only internally in a private space. This option is only available for apps
+        that also specify `space`.
+        """
         return pulumi.get(self, "internal_routing")
 
     @internal_routing.setter
@@ -97,6 +131,10 @@ class AppArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the application. In Heroku, this is also the
+        unique ID, so it must be unique and have a minimum of 3 characters.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -106,6 +144,11 @@ class AppArgs:
     @property
     @pulumi.getter
     def organization(self) -> Optional[pulumi.Input['AppOrganizationArgs']]:
+        """
+        A block that can be specified once to define
+        Heroku Team settings for this app. The fields for this block are
+        documented below.
+        """
         return pulumi.get(self, "organization")
 
     @organization.setter
@@ -124,6 +167,9 @@ class AppArgs:
     @property
     @pulumi.getter
     def space(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of a private space to create the app in.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -133,6 +179,9 @@ class AppArgs:
     @property
     @pulumi.getter
     def stack(self) -> Optional[pulumi.Input[str]]:
+        """
+        The application stack is what platform to run the application in.
+        """
         return pulumi.get(self, "stack")
 
     @stack.setter
@@ -144,9 +193,9 @@ class AppArgs:
 class _AppState:
     def __init__(__self__, *,
                  acm: Optional[pulumi.Input[bool]] = None,
-                 all_config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 all_config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  git_url: Optional[pulumi.Input[str]] = None,
                  heroku_hostname: Optional[pulumi.Input[str]] = None,
                  internal_routing: Optional[pulumi.Input[bool]] = None,
@@ -160,6 +209,27 @@ class _AppState:
                  web_url: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering App resources.
+        :param pulumi.Input[bool] acm: The flag representing Automated Certificate Management for the app.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: Buildpack names or URLs for the application.
+               Buildpacks configured externally won't be altered if this is not present.
+        :param pulumi.Input[str] git_url: The Git URL for the application. This is used for
+               deploying new versions of the app.
+        :param pulumi.Input[str] heroku_hostname: A hostname for the Heroku application, suitable
+               for pointing DNS records.
+        :param pulumi.Input[bool] internal_routing: If true, the application will be routable
+               only internally in a private space. This option is only available for apps
+               that also specify `space`.
+        :param pulumi.Input[str] name: The name of the application. In Heroku, this is also the
+               unique ID, so it must be unique and have a minimum of 3 characters.
+        :param pulumi.Input['AppOrganizationArgs'] organization: A block that can be specified once to define
+               Heroku Team settings for this app. The fields for this block are
+               documented below.
+        :param pulumi.Input[str] region: The region that the app should be deployed in.
+        :param pulumi.Input[str] space: The name of a private space to create the app in.
+        :param pulumi.Input[str] stack: The application stack is what platform to run the application in.
+        :param pulumi.Input[str] uuid: The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.
+        :param pulumi.Input[str] web_url: The web (HTTP) URL that the application can be accessed
+               at by default.
         """
         if acm is not None:
             pulumi.set(__self__, "acm", acm)
@@ -195,6 +265,9 @@ class _AppState:
     @property
     @pulumi.getter
     def acm(self) -> Optional[pulumi.Input[bool]]:
+        """
+        The flag representing Automated Certificate Management for the app.
+        """
         return pulumi.get(self, "acm")
 
     @acm.setter
@@ -203,16 +276,20 @@ class _AppState:
 
     @property
     @pulumi.getter(name="allConfigVars")
-    def all_config_vars(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def all_config_vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         return pulumi.get(self, "all_config_vars")
 
     @all_config_vars.setter
-    def all_config_vars(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def all_config_vars(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "all_config_vars", value)
 
     @property
     @pulumi.getter
     def buildpacks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Buildpack names or URLs for the application.
+        Buildpacks configured externally won't be altered if this is not present.
+        """
         return pulumi.get(self, "buildpacks")
 
     @buildpacks.setter
@@ -221,16 +298,20 @@ class _AppState:
 
     @property
     @pulumi.getter(name="configVars")
-    def config_vars(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config_vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         return pulumi.get(self, "config_vars")
 
     @config_vars.setter
-    def config_vars(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config_vars(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "config_vars", value)
 
     @property
     @pulumi.getter(name="gitUrl")
     def git_url(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Git URL for the application. This is used for
+        deploying new versions of the app.
+        """
         return pulumi.get(self, "git_url")
 
     @git_url.setter
@@ -240,6 +321,10 @@ class _AppState:
     @property
     @pulumi.getter(name="herokuHostname")
     def heroku_hostname(self) -> Optional[pulumi.Input[str]]:
+        """
+        A hostname for the Heroku application, suitable
+        for pointing DNS records.
+        """
         return pulumi.get(self, "heroku_hostname")
 
     @heroku_hostname.setter
@@ -249,6 +334,11 @@ class _AppState:
     @property
     @pulumi.getter(name="internalRouting")
     def internal_routing(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, the application will be routable
+        only internally in a private space. This option is only available for apps
+        that also specify `space`.
+        """
         return pulumi.get(self, "internal_routing")
 
     @internal_routing.setter
@@ -258,6 +348,10 @@ class _AppState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the application. In Heroku, this is also the
+        unique ID, so it must be unique and have a minimum of 3 characters.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -267,6 +361,11 @@ class _AppState:
     @property
     @pulumi.getter
     def organization(self) -> Optional[pulumi.Input['AppOrganizationArgs']]:
+        """
+        A block that can be specified once to define
+        Heroku Team settings for this app. The fields for this block are
+        documented below.
+        """
         return pulumi.get(self, "organization")
 
     @organization.setter
@@ -276,6 +375,9 @@ class _AppState:
     @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
+        """
+        The region that the app should be deployed in.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -294,6 +396,9 @@ class _AppState:
     @property
     @pulumi.getter
     def space(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of a private space to create the app in.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -303,6 +408,9 @@ class _AppState:
     @property
     @pulumi.getter
     def stack(self) -> Optional[pulumi.Input[str]]:
+        """
+        The application stack is what platform to run the application in.
+        """
         return pulumi.get(self, "stack")
 
     @stack.setter
@@ -312,6 +420,9 @@ class _AppState:
     @property
     @pulumi.getter
     def uuid(self) -> Optional[pulumi.Input[str]]:
+        """
+        The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.
+        """
         return pulumi.get(self, "uuid")
 
     @uuid.setter
@@ -321,6 +432,10 @@ class _AppState:
     @property
     @pulumi.getter(name="webUrl")
     def web_url(self) -> Optional[pulumi.Input[str]]:
+        """
+        The web (HTTP) URL that the application can be accessed
+        at by default.
+        """
         return pulumi.get(self, "web_url")
 
     @web_url.setter
@@ -335,19 +450,54 @@ class App(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  acm: Optional[pulumi.Input[bool]] = None,
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  internal_routing: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 organization: Optional[pulumi.Input[pulumi.InputType['AppOrganizationArgs']]] = None,
+                 organization: Optional[pulumi.Input[Union['AppOrganizationArgs', 'AppOrganizationArgsDict']]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  sensitive_config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  space: Optional[pulumi.Input[str]] = None,
                  stack: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a App resource with the given unique name, props, and options.
+        ## Example Usage
+
+        ### A Team
+
+        A Heroku "team" was originally called an "organization", and that is still the identifier used in this resource.
+
+        ## Import
+
+        Apps can be imported using an existing app's `UUID` or name.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:app/app:App foobar MyApp
+        ```
+
+        ```sh
+        $ pulumi import heroku:app/app:App foobar e74ac056-7d00-4a7e-aa80-df4bc413a825
+        ```
+
+        Please note: `config_vars` & `sensitive_config_vars` will not be imported due to limitations of Terraform's import process (see issue). All vars will appear to be added on the next plan/apply. The diff may be manually reconciled using the outputs of `heroku config` & `pulumi preview`.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] acm: The flag representing Automated Certificate Management for the app.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: Buildpack names or URLs for the application.
+               Buildpacks configured externally won't be altered if this is not present.
+        :param pulumi.Input[bool] internal_routing: If true, the application will be routable
+               only internally in a private space. This option is only available for apps
+               that also specify `space`.
+        :param pulumi.Input[str] name: The name of the application. In Heroku, this is also the
+               unique ID, so it must be unique and have a minimum of 3 characters.
+        :param pulumi.Input[Union['AppOrganizationArgs', 'AppOrganizationArgsDict']] organization: A block that can be specified once to define
+               Heroku Team settings for this app. The fields for this block are
+               documented below.
+        :param pulumi.Input[str] region: The region that the app should be deployed in.
+        :param pulumi.Input[str] space: The name of a private space to create the app in.
+        :param pulumi.Input[str] stack: The application stack is what platform to run the application in.
         """
         ...
     @overload
@@ -356,7 +506,28 @@ class App(pulumi.CustomResource):
                  args: AppArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a App resource with the given unique name, props, and options.
+        ## Example Usage
+
+        ### A Team
+
+        A Heroku "team" was originally called an "organization", and that is still the identifier used in this resource.
+
+        ## Import
+
+        Apps can be imported using an existing app's `UUID` or name.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:app/app:App foobar MyApp
+        ```
+
+        ```sh
+        $ pulumi import heroku:app/app:App foobar e74ac056-7d00-4a7e-aa80-df4bc413a825
+        ```
+
+        Please note: `config_vars` & `sensitive_config_vars` will not be imported due to limitations of Terraform's import process (see issue). All vars will appear to be added on the next plan/apply. The diff may be manually reconciled using the outputs of `heroku config` & `pulumi preview`.
+
         :param str resource_name: The name of the resource.
         :param AppArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -374,10 +545,10 @@ class App(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  acm: Optional[pulumi.Input[bool]] = None,
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  internal_routing: Optional[pulumi.Input[bool]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 organization: Optional[pulumi.Input[pulumi.InputType['AppOrganizationArgs']]] = None,
+                 organization: Optional[pulumi.Input[Union['AppOrganizationArgs', 'AppOrganizationArgsDict']]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  sensitive_config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  space: Optional[pulumi.Input[str]] = None,
@@ -421,14 +592,14 @@ class App(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             acm: Optional[pulumi.Input[bool]] = None,
-            all_config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            all_config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-            config_vars: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             git_url: Optional[pulumi.Input[str]] = None,
             heroku_hostname: Optional[pulumi.Input[str]] = None,
             internal_routing: Optional[pulumi.Input[bool]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            organization: Optional[pulumi.Input[pulumi.InputType['AppOrganizationArgs']]] = None,
+            organization: Optional[pulumi.Input[Union['AppOrganizationArgs', 'AppOrganizationArgsDict']]] = None,
             region: Optional[pulumi.Input[str]] = None,
             sensitive_config_vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             space: Optional[pulumi.Input[str]] = None,
@@ -442,6 +613,27 @@ class App(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] acm: The flag representing Automated Certificate Management for the app.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: Buildpack names or URLs for the application.
+               Buildpacks configured externally won't be altered if this is not present.
+        :param pulumi.Input[str] git_url: The Git URL for the application. This is used for
+               deploying new versions of the app.
+        :param pulumi.Input[str] heroku_hostname: A hostname for the Heroku application, suitable
+               for pointing DNS records.
+        :param pulumi.Input[bool] internal_routing: If true, the application will be routable
+               only internally in a private space. This option is only available for apps
+               that also specify `space`.
+        :param pulumi.Input[str] name: The name of the application. In Heroku, this is also the
+               unique ID, so it must be unique and have a minimum of 3 characters.
+        :param pulumi.Input[Union['AppOrganizationArgs', 'AppOrganizationArgsDict']] organization: A block that can be specified once to define
+               Heroku Team settings for this app. The fields for this block are
+               documented below.
+        :param pulumi.Input[str] region: The region that the app should be deployed in.
+        :param pulumi.Input[str] space: The name of a private space to create the app in.
+        :param pulumi.Input[str] stack: The application stack is what platform to run the application in.
+        :param pulumi.Input[str] uuid: The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.
+        :param pulumi.Input[str] web_url: The web (HTTP) URL that the application can be accessed
+               at by default.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -467,51 +659,83 @@ class App(pulumi.CustomResource):
     @property
     @pulumi.getter
     def acm(self) -> pulumi.Output[bool]:
+        """
+        The flag representing Automated Certificate Management for the app.
+        """
         return pulumi.get(self, "acm")
 
     @property
     @pulumi.getter(name="allConfigVars")
-    def all_config_vars(self) -> pulumi.Output[Mapping[str, Any]]:
+    def all_config_vars(self) -> pulumi.Output[Mapping[str, str]]:
         return pulumi.get(self, "all_config_vars")
 
     @property
     @pulumi.getter
     def buildpacks(self) -> pulumi.Output[Sequence[str]]:
+        """
+        Buildpack names or URLs for the application.
+        Buildpacks configured externally won't be altered if this is not present.
+        """
         return pulumi.get(self, "buildpacks")
 
     @property
     @pulumi.getter(name="configVars")
-    def config_vars(self) -> pulumi.Output[Mapping[str, Any]]:
+    def config_vars(self) -> pulumi.Output[Mapping[str, str]]:
         return pulumi.get(self, "config_vars")
 
     @property
     @pulumi.getter(name="gitUrl")
     def git_url(self) -> pulumi.Output[str]:
+        """
+        The Git URL for the application. This is used for
+        deploying new versions of the app.
+        """
         return pulumi.get(self, "git_url")
 
     @property
     @pulumi.getter(name="herokuHostname")
     def heroku_hostname(self) -> pulumi.Output[str]:
+        """
+        A hostname for the Heroku application, suitable
+        for pointing DNS records.
+        """
         return pulumi.get(self, "heroku_hostname")
 
     @property
     @pulumi.getter(name="internalRouting")
     def internal_routing(self) -> pulumi.Output[bool]:
+        """
+        If true, the application will be routable
+        only internally in a private space. This option is only available for apps
+        that also specify `space`.
+        """
         return pulumi.get(self, "internal_routing")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the application. In Heroku, this is also the
+        unique ID, so it must be unique and have a minimum of 3 characters.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def organization(self) -> pulumi.Output[Optional['outputs.AppOrganization']]:
+        """
+        A block that can be specified once to define
+        Heroku Team settings for this app. The fields for this block are
+        documented below.
+        """
         return pulumi.get(self, "organization")
 
     @property
     @pulumi.getter
     def region(self) -> pulumi.Output[str]:
+        """
+        The region that the app should be deployed in.
+        """
         return pulumi.get(self, "region")
 
     @property
@@ -522,20 +746,33 @@ class App(pulumi.CustomResource):
     @property
     @pulumi.getter
     def space(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of a private space to create the app in.
+        """
         return pulumi.get(self, "space")
 
     @property
     @pulumi.getter
     def stack(self) -> pulumi.Output[str]:
+        """
+        The application stack is what platform to run the application in.
+        """
         return pulumi.get(self, "stack")
 
     @property
     @pulumi.getter
     def uuid(self) -> pulumi.Output[str]:
+        """
+        The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.
+        """
         return pulumi.get(self, "uuid")
 
     @property
     @pulumi.getter(name="webUrl")
     def web_url(self) -> pulumi.Output[str]:
+        """
+        The web (HTTP) URL that the application can be accessed
+        at by default.
+        """
         return pulumi.get(self, "web_url")
 
