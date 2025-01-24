@@ -18,7 +18,7 @@ The Pulumi Heroku provider is available as a package in all Pulumi languages:
 The Heroku provider binary is a third party binary. It can be installed using the `pulumi plugin` command.
 
 ```bash
-pulumi plugin install resource heroku v0.1.0
+pulumi plugin install resource heroku v1.0.0 --server github://api.github.com/pulumiverse
 ```
 
 Replace the version string with your desired version.
