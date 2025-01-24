@@ -4,6 +4,13 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * ## Import
+ *
+ * The `heroku_config` resource is a meta-resource, managed only within Terraform state.
+ *
+ * It does not exist as a native Heroku resource. Therefore, it is not possible to import an existing `heroku_config` configuration.
+ */
 export class Config extends pulumi.CustomResource {
     /**
      * Get an existing Config resource's state with the given name, ID, and optional extra
@@ -33,6 +40,9 @@ export class Config extends pulumi.CustomResource {
     }
 
     public readonly sensitiveVars!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Map of vars that are can be outputted in plaintext.
+     */
     public readonly vars!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -67,6 +77,9 @@ export class Config extends pulumi.CustomResource {
  */
 export interface ConfigState {
     sensitiveVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Map of vars that are can be outputted in plaintext.
+     */
     vars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -75,5 +88,8 @@ export interface ConfigState {
  */
 export interface ConfigArgs {
     sensitiveVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Map of vars that are can be outputted in plaintext.
+     */
     vars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

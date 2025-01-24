@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -20,6 +25,8 @@ class InboundRulesetArgs:
                  space: pulumi.Input[str]):
         """
         The set of arguments for constructing a InboundRuleset resource.
+        :param pulumi.Input[Sequence[pulumi.Input['InboundRulesetRuleArgs']]] rules: At least one `rule` block. Rules are documented below.
+        :param pulumi.Input[str] space: The ID of the space.
         """
         pulumi.set(__self__, "rules", rules)
         pulumi.set(__self__, "space", space)
@@ -27,6 +34,9 @@ class InboundRulesetArgs:
     @property
     @pulumi.getter
     def rules(self) -> pulumi.Input[Sequence[pulumi.Input['InboundRulesetRuleArgs']]]:
+        """
+        At least one `rule` block. Rules are documented below.
+        """
         return pulumi.get(self, "rules")
 
     @rules.setter
@@ -36,6 +46,9 @@ class InboundRulesetArgs:
     @property
     @pulumi.getter
     def space(self) -> pulumi.Input[str]:
+        """
+        The ID of the space.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -50,6 +63,8 @@ class _InboundRulesetState:
                  space: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering InboundRuleset resources.
+        :param pulumi.Input[Sequence[pulumi.Input['InboundRulesetRuleArgs']]] rules: At least one `rule` block. Rules are documented below.
+        :param pulumi.Input[str] space: The ID of the space.
         """
         if rules is not None:
             pulumi.set(__self__, "rules", rules)
@@ -59,6 +74,9 @@ class _InboundRulesetState:
     @property
     @pulumi.getter
     def rules(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InboundRulesetRuleArgs']]]]:
+        """
+        At least one `rule` block. Rules are documented below.
+        """
         return pulumi.get(self, "rules")
 
     @rules.setter
@@ -68,6 +86,9 @@ class _InboundRulesetState:
     @property
     @pulumi.getter
     def space(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the space.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -80,13 +101,18 @@ class InboundRuleset(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InboundRulesetRuleArgs']]]]] = None,
+                 rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['InboundRulesetRuleArgs', 'InboundRulesetRuleArgsDict']]]]] = None,
                  space: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a InboundRuleset resource with the given unique name, props, and options.
+        Provides a resource for managing [inbound rulesets](https://devcenter.heroku.com/articles/platform-api-reference#inbound-ruleset) for Heroku Private Spaces.
+
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['InboundRulesetRuleArgs', 'InboundRulesetRuleArgsDict']]]] rules: At least one `rule` block. Rules are documented below.
+        :param pulumi.Input[str] space: The ID of the space.
         """
         ...
     @overload
@@ -95,7 +121,10 @@ class InboundRuleset(pulumi.CustomResource):
                  args: InboundRulesetArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a InboundRuleset resource with the given unique name, props, and options.
+        Provides a resource for managing [inbound rulesets](https://devcenter.heroku.com/articles/platform-api-reference#inbound-ruleset) for Heroku Private Spaces.
+
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param InboundRulesetArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -111,7 +140,7 @@ class InboundRuleset(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InboundRulesetRuleArgs']]]]] = None,
+                 rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['InboundRulesetRuleArgs', 'InboundRulesetRuleArgsDict']]]]] = None,
                  space: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -138,7 +167,7 @@ class InboundRuleset(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InboundRulesetRuleArgs']]]]] = None,
+            rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['InboundRulesetRuleArgs', 'InboundRulesetRuleArgsDict']]]]] = None,
             space: Optional[pulumi.Input[str]] = None) -> 'InboundRuleset':
         """
         Get an existing InboundRuleset resource's state with the given name, id, and optional extra
@@ -147,6 +176,8 @@ class InboundRuleset(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['InboundRulesetRuleArgs', 'InboundRulesetRuleArgsDict']]]] rules: At least one `rule` block. Rules are documented below.
+        :param pulumi.Input[str] space: The ID of the space.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -159,10 +190,16 @@ class InboundRuleset(pulumi.CustomResource):
     @property
     @pulumi.getter
     def rules(self) -> pulumi.Output[Sequence['outputs.InboundRulesetRule']]:
+        """
+        At least one `rule` block. Rules are documented below.
+        """
         return pulumi.get(self, "rules")
 
     @property
     @pulumi.getter
     def space(self) -> pulumi.Output[str]:
+        """
+        The ID of the space.
+        """
         return pulumi.get(self, "space")
 

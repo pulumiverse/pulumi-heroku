@@ -6,8 +6,12 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * Use this data source to get information about a Heroku App.
+ *
+ * ## Example Usage
+ */
 export function getApp(args: GetAppArgs, opts?: pulumi.InvokeOptions): Promise<GetAppResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:app/getApp:getApp", {
         "name": args.name,
@@ -18,6 +22,10 @@ export function getApp(args: GetAppArgs, opts?: pulumi.InvokeOptions): Promise<G
  * A collection of arguments for invoking getApp.
  */
 export interface GetAppArgs {
+    /**
+     * The name of the application. In Heroku, this is also the
+     * unique ID, so it must be unique and have a minimum of 3 characters.
+     */
     name: string;
 }
 
@@ -25,31 +33,83 @@ export interface GetAppArgs {
  * A collection of values returned by getApp.
  */
 export interface GetAppResult {
+    /**
+     * True if Heroku ACM is enabled for this app, false otherwise.
+     */
     readonly acm: boolean;
+    /**
+     * A list of buildpacks that this app uses.
+     */
     readonly buildpacks: string[];
-    readonly configVars: {[key: string]: any};
+    /**
+     * A map of all configuration variables for the app.
+     */
+    readonly configVars: {[key: string]: string};
+    /**
+     * The Git URL for the application. This is used for
+     * deploying new versions of the app.
+     */
     readonly gitUrl: string;
+    /**
+     * The hostname for the Heroku application, suitable
+     * for pointing DNS records.
+     */
     readonly herokuHostname: string;
     /**
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
     readonly internalRouting: boolean;
+    /**
+     * The name of the Heroku Team (organization).
+     */
     readonly name: string;
+    /**
+     * The Heroku Team that owns this app.
+     */
     readonly organizations: outputs.app.GetAppOrganization[];
+    /**
+     * The region in which the app is deployed.
+     */
     readonly region: string;
+    /**
+     * The private space in which the app runs. Not present if this is a common runtime app.
+     */
     readonly space: string;
+    /**
+     * The application stack is what platform to run the application
+     * in.
+     */
     readonly stack: string;
+    /**
+     * The unique UUID of the Heroku app.
+     */
     readonly uuid: string;
+    /**
+     * The web (HTTP) URL that the application can be accessed
+     * at by default.
+     */
     readonly webUrl: string;
 }
-export function getAppOutput(args: GetAppOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAppResult> {
-    return pulumi.output(args).apply((a: any) => getApp(a, opts))
+/**
+ * Use this data source to get information about a Heroku App.
+ *
+ * ## Example Usage
+ */
+export function getAppOutput(args: GetAppOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetAppResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("heroku:app/getApp:getApp", {
+        "name": args.name,
+    }, opts);
 }
 
 /**
  * A collection of arguments for invoking getApp.
  */
 export interface GetAppOutputArgs {
+    /**
+     * The name of the application. In Heroku, this is also the
+     * unique ID, so it must be unique and have a minimum of 3 characters.
+     */
     name: pulumi.Input<string>;
 }

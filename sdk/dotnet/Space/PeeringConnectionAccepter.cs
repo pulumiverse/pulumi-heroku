@@ -10,18 +10,35 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Space
 {
+    /// <summary>
+    /// Provides a resource for accepting VPC peering requests to Heroku Private Spaces.
+    /// 
+    /// ## Example Usage
+    /// </summary>
     [HerokuResourceType("heroku:space/peeringConnectionAccepter:PeeringConnectionAccepter")]
     public partial class PeeringConnectionAccepter : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The ID of the space.
+        /// </summary>
         [Output("space")]
         public Output<string> Space { get; private set; } = null!;
 
+        /// <summary>
+        /// The status of the peering connection request.
+        /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
 
+        /// <summary>
+        /// The type of the peering connection.
+        /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
 
+        /// <summary>
+        /// The peering connection request ID.
+        /// </summary>
         [Output("vpcPeeringConnectionId")]
         public Output<string> VpcPeeringConnectionId { get; private set; } = null!;
 
@@ -72,9 +89,15 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class PeeringConnectionAccepterArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID of the space.
+        /// </summary>
         [Input("space", required: true)]
         public Input<string> Space { get; set; } = null!;
 
+        /// <summary>
+        /// The peering connection request ID.
+        /// </summary>
         [Input("vpcPeeringConnectionId", required: true)]
         public Input<string> VpcPeeringConnectionId { get; set; } = null!;
 
@@ -86,15 +109,27 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class PeeringConnectionAccepterState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID of the space.
+        /// </summary>
         [Input("space")]
         public Input<string>? Space { get; set; }
 
+        /// <summary>
+        /// The status of the peering connection request.
+        /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
 
+        /// <summary>
+        /// The type of the peering connection.
+        /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }
 
+        /// <summary>
+        /// The peering connection request ID.
+        /// </summary>
         [Input("vpcPeeringConnectionId")]
         public Input<string>? VpcPeeringConnectionId { get; set; }
 

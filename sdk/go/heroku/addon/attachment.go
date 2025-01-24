@@ -12,12 +12,27 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Attaches a Heroku Addon Resource to an additional Heroku App.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// Addons can be imported using the unique Addon Attachment `id`, e.g.
+//
+// ```sh
+// $ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef
+// ```
 type Attachment struct {
 	pulumi.CustomResourceState
 
-	AddonId   pulumi.StringOutput `pulumi:"addonId"`
-	AppId     pulumi.StringOutput `pulumi:"appId"`
-	Name      pulumi.StringOutput `pulumi:"name"`
+	// The ID of the existing Heroku Addon to attach.
+	AddonId pulumi.StringOutput `pulumi:"addonId"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// A friendly name for the Heroku Addon Attachment.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
 	Namespace pulumi.StringOutput `pulumi:"namespace"`
 }
 
@@ -57,16 +72,24 @@ func GetAttachment(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Attachment resources.
 type attachmentState struct {
-	AddonId   *string `pulumi:"addonId"`
-	AppId     *string `pulumi:"appId"`
-	Name      *string `pulumi:"name"`
+	// The ID of the existing Heroku Addon to attach.
+	AddonId *string `pulumi:"addonId"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// A friendly name for the Heroku Addon Attachment.
+	Name *string `pulumi:"name"`
+	// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
 	Namespace *string `pulumi:"namespace"`
 }
 
 type AttachmentState struct {
-	AddonId   pulumi.StringPtrInput
-	AppId     pulumi.StringPtrInput
-	Name      pulumi.StringPtrInput
+	// The ID of the existing Heroku Addon to attach.
+	AddonId pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// A friendly name for the Heroku Addon Attachment.
+	Name pulumi.StringPtrInput
+	// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
 	Namespace pulumi.StringPtrInput
 }
 
@@ -75,17 +98,25 @@ func (AttachmentState) ElementType() reflect.Type {
 }
 
 type attachmentArgs struct {
-	AddonId   string  `pulumi:"addonId"`
-	AppId     string  `pulumi:"appId"`
-	Name      *string `pulumi:"name"`
+	// The ID of the existing Heroku Addon to attach.
+	AddonId string `pulumi:"addonId"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// A friendly name for the Heroku Addon Attachment.
+	Name *string `pulumi:"name"`
+	// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
 	Namespace *string `pulumi:"namespace"`
 }
 
 // The set of arguments for constructing a Attachment resource.
 type AttachmentArgs struct {
-	AddonId   pulumi.StringInput
-	AppId     pulumi.StringInput
-	Name      pulumi.StringPtrInput
+	// The ID of the existing Heroku Addon to attach.
+	AddonId pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// A friendly name for the Heroku Addon Attachment.
+	Name pulumi.StringPtrInput
+	// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
 	Namespace pulumi.StringPtrInput
 }
 
@@ -176,18 +207,22 @@ func (o AttachmentOutput) ToAttachmentOutputWithContext(ctx context.Context) Att
 	return o
 }
 
+// The ID of the existing Heroku Addon to attach.
 func (o AttachmentOutput) AddonId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Attachment) pulumi.StringOutput { return v.AddonId }).(pulumi.StringOutput)
 }
 
+// Heroku app ID (do not use app name)
 func (o AttachmentOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Attachment) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// A friendly name for the Heroku Addon Attachment.
 func (o AttachmentOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Attachment) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
 func (o AttachmentOutput) Namespace() pulumi.StringOutput {
 	return o.ApplyT(func(v *Attachment) pulumi.StringOutput { return v.Namespace }).(pulumi.StringOutput)
 }

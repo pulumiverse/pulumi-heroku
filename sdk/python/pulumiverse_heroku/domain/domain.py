@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['DomainArgs', 'Domain']
@@ -19,6 +24,11 @@ class DomainArgs:
                  sni_endpoint_id: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Domain resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+               
+               For apps with ACM enabled (automated certificate management):
+        :param pulumi.Input[str] hostname: Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        :param pulumi.Input[str] sni_endpoint_id: The ID of the `ssl.Ssl` resource to associate the domain with.
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "hostname", hostname)
@@ -28,6 +38,11 @@ class DomainArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+
+        For apps with ACM enabled (automated certificate management):
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -37,6 +52,9 @@ class DomainArgs:
     @property
     @pulumi.getter
     def hostname(self) -> pulumi.Input[str]:
+        """
+        Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        """
         return pulumi.get(self, "hostname")
 
     @hostname.setter
@@ -46,6 +64,9 @@ class DomainArgs:
     @property
     @pulumi.getter(name="sniEndpointId")
     def sni_endpoint_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the `ssl.Ssl` resource to associate the domain with.
+        """
         return pulumi.get(self, "sni_endpoint_id")
 
     @sni_endpoint_id.setter
@@ -62,6 +83,12 @@ class _DomainState:
                  sni_endpoint_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Domain resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+               
+               For apps with ACM enabled (automated certificate management):
+        :param pulumi.Input[str] cname: The CNAME traffic should route to.
+        :param pulumi.Input[str] hostname: Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        :param pulumi.Input[str] sni_endpoint_id: The ID of the `ssl.Ssl` resource to associate the domain with.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -75,6 +102,11 @@ class _DomainState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+
+        For apps with ACM enabled (automated certificate management):
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -84,6 +116,9 @@ class _DomainState:
     @property
     @pulumi.getter
     def cname(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CNAME traffic should route to.
+        """
         return pulumi.get(self, "cname")
 
     @cname.setter
@@ -93,6 +128,9 @@ class _DomainState:
     @property
     @pulumi.getter
     def hostname(self) -> Optional[pulumi.Input[str]]:
+        """
+        Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        """
         return pulumi.get(self, "hostname")
 
     @hostname.setter
@@ -102,6 +140,9 @@ class _DomainState:
     @property
     @pulumi.getter(name="sniEndpointId")
     def sni_endpoint_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the `ssl.Ssl` resource to associate the domain with.
+        """
         return pulumi.get(self, "sni_endpoint_id")
 
     @sni_endpoint_id.setter
@@ -122,6 +163,11 @@ class Domain(pulumi.CustomResource):
         Create a Domain resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+               
+               For apps with ACM enabled (automated certificate management):
+        :param pulumi.Input[str] hostname: Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        :param pulumi.Input[str] sni_endpoint_id: The ID of the `ssl.Ssl` resource to associate the domain with.
         """
         ...
     @overload
@@ -187,6 +233,12 @@ class Domain(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+               
+               For apps with ACM enabled (automated certificate management):
+        :param pulumi.Input[str] cname: The CNAME traffic should route to.
+        :param pulumi.Input[str] hostname: Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        :param pulumi.Input[str] sni_endpoint_id: The ID of the `ssl.Ssl` resource to associate the domain with.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -201,20 +253,34 @@ class Domain(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+
+        For apps with ACM enabled (automated certificate management):
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def cname(self) -> pulumi.Output[str]:
+        """
+        The CNAME traffic should route to.
+        """
         return pulumi.get(self, "cname")
 
     @property
     @pulumi.getter
     def hostname(self) -> pulumi.Output[str]:
+        """
+        Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sni_endpoint_id`.
+        """
         return pulumi.get(self, "hostname")
 
     @property
     @pulumi.getter(name="sniEndpointId")
     def sni_endpoint_id(self) -> pulumi.Output[Optional[str]]:
+        """
+        The ID of the `ssl.Ssl` resource to associate the domain with.
+        """
         return pulumi.get(self, "sni_endpoint_id")
 

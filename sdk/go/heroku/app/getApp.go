@@ -11,6 +11,9 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get information about a Heroku App.
+//
+// ## Example Usage
 func LookupApp(ctx *pulumi.Context, args *LookupAppArgs, opts ...pulumi.InvokeOption) (*LookupAppResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupAppResult
@@ -23,43 +26,59 @@ func LookupApp(ctx *pulumi.Context, args *LookupAppArgs, opts ...pulumi.InvokeOp
 
 // A collection of arguments for invoking getApp.
 type LookupAppArgs struct {
+	// The name of the application. In Heroku, this is also the
+	// unique ID, so it must be unique and have a minimum of 3 characters.
 	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getApp.
 type LookupAppResult struct {
-	Acm            bool                   `pulumi:"acm"`
-	Buildpacks     []string               `pulumi:"buildpacks"`
-	ConfigVars     map[string]interface{} `pulumi:"configVars"`
-	GitUrl         string                 `pulumi:"gitUrl"`
-	HerokuHostname string                 `pulumi:"herokuHostname"`
+	// True if Heroku ACM is enabled for this app, false otherwise.
+	Acm bool `pulumi:"acm"`
+	// A list of buildpacks that this app uses.
+	Buildpacks []string `pulumi:"buildpacks"`
+	// A map of all configuration variables for the app.
+	ConfigVars map[string]string `pulumi:"configVars"`
+	// The Git URL for the application. This is used for
+	// deploying new versions of the app.
+	GitUrl string `pulumi:"gitUrl"`
+	// The hostname for the Heroku application, suitable
+	// for pointing DNS records.
+	HerokuHostname string `pulumi:"herokuHostname"`
 	// The provider-assigned unique ID for this managed resource.
-	Id              string               `pulumi:"id"`
-	InternalRouting bool                 `pulumi:"internalRouting"`
-	Name            string               `pulumi:"name"`
-	Organizations   []GetAppOrganization `pulumi:"organizations"`
-	Region          string               `pulumi:"region"`
-	Space           string               `pulumi:"space"`
-	Stack           string               `pulumi:"stack"`
-	Uuid            string               `pulumi:"uuid"`
-	WebUrl          string               `pulumi:"webUrl"`
+	Id              string `pulumi:"id"`
+	InternalRouting bool   `pulumi:"internalRouting"`
+	// The name of the Heroku Team (organization).
+	Name string `pulumi:"name"`
+	// The Heroku Team that owns this app.
+	Organizations []GetAppOrganization `pulumi:"organizations"`
+	// The region in which the app is deployed.
+	Region string `pulumi:"region"`
+	// The private space in which the app runs. Not present if this is a common runtime app.
+	Space string `pulumi:"space"`
+	// The application stack is what platform to run the application
+	// in.
+	Stack string `pulumi:"stack"`
+	// The unique UUID of the Heroku app.
+	Uuid string `pulumi:"uuid"`
+	// The web (HTTP) URL that the application can be accessed
+	// at by default.
+	WebUrl string `pulumi:"webUrl"`
 }
 
 func LookupAppOutput(ctx *pulumi.Context, args LookupAppOutputArgs, opts ...pulumi.InvokeOption) LookupAppResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupAppResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupAppResultOutput, error) {
 			args := v.(LookupAppArgs)
-			r, err := LookupApp(ctx, &args, opts...)
-			var s LookupAppResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:app/getApp:getApp", args, LookupAppResultOutput{}, options).(LookupAppResultOutput), nil
 		}).(LookupAppResultOutput)
 }
 
 // A collection of arguments for invoking getApp.
 type LookupAppOutputArgs struct {
+	// The name of the application. In Heroku, this is also the
+	// unique ID, so it must be unique and have a minimum of 3 characters.
 	Name pulumi.StringInput `pulumi:"name"`
 }
 
@@ -82,22 +101,29 @@ func (o LookupAppResultOutput) ToLookupAppResultOutputWithContext(ctx context.Co
 	return o
 }
 
+// True if Heroku ACM is enabled for this app, false otherwise.
 func (o LookupAppResultOutput) Acm() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupAppResult) bool { return v.Acm }).(pulumi.BoolOutput)
 }
 
+// A list of buildpacks that this app uses.
 func (o LookupAppResultOutput) Buildpacks() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v LookupAppResult) []string { return v.Buildpacks }).(pulumi.StringArrayOutput)
 }
 
-func (o LookupAppResultOutput) ConfigVars() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupAppResult) map[string]interface{} { return v.ConfigVars }).(pulumi.MapOutput)
+// A map of all configuration variables for the app.
+func (o LookupAppResultOutput) ConfigVars() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupAppResult) map[string]string { return v.ConfigVars }).(pulumi.StringMapOutput)
 }
 
+// The Git URL for the application. This is used for
+// deploying new versions of the app.
 func (o LookupAppResultOutput) GitUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.GitUrl }).(pulumi.StringOutput)
 }
 
+// The hostname for the Heroku application, suitable
+// for pointing DNS records.
 func (o LookupAppResultOutput) HerokuHostname() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.HerokuHostname }).(pulumi.StringOutput)
 }
@@ -111,30 +137,39 @@ func (o LookupAppResultOutput) InternalRouting() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupAppResult) bool { return v.InternalRouting }).(pulumi.BoolOutput)
 }
 
+// The name of the Heroku Team (organization).
 func (o LookupAppResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// The Heroku Team that owns this app.
 func (o LookupAppResultOutput) Organizations() GetAppOrganizationArrayOutput {
 	return o.ApplyT(func(v LookupAppResult) []GetAppOrganization { return v.Organizations }).(GetAppOrganizationArrayOutput)
 }
 
+// The region in which the app is deployed.
 func (o LookupAppResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.Region }).(pulumi.StringOutput)
 }
 
+// The private space in which the app runs. Not present if this is a common runtime app.
 func (o LookupAppResultOutput) Space() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.Space }).(pulumi.StringOutput)
 }
 
+// The application stack is what platform to run the application
+// in.
 func (o LookupAppResultOutput) Stack() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.Stack }).(pulumi.StringOutput)
 }
 
+// The unique UUID of the Heroku app.
 func (o LookupAppResultOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
+// The web (HTTP) URL that the application can be accessed
+// at by default.
 func (o LookupAppResultOutput) WebUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupAppResult) string { return v.WebUrl }).(pulumi.StringOutput)
 }

@@ -4,6 +4,23 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * A [Heroku Team Member](https://devcenter.heroku.com/articles/platform-api-reference#team-member) receives access to everything owned by the Team.
+ *
+ * To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard. For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+ *
+ * A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider. For `heroku.app.App` & `heroku.space.Space` resources, set the Heroku Team name as the "organization".
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Team members can be imported using the combination of the team application name, a colon, and the member's email address.
+ *
+ * ```sh
+ * $ pulumi import heroku:team/member:Member foobar-member my-team-foobar:some-user@example.com
+ * ```
+ */
 export class Member extends pulumi.CustomResource {
     /**
      * Get an existing Member resource's state with the given name, ID, and optional extra
@@ -32,9 +49,18 @@ export class Member extends pulumi.CustomResource {
         return obj['__pulumiType'] === Member.__pulumiType;
     }
 
+    /**
+     * Email address of the member
+     */
     public readonly email!: pulumi.Output<string>;
     public readonly federated!: pulumi.Output<boolean | undefined>;
+    /**
+     * The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+     */
     public readonly role!: pulumi.Output<string>;
+    /**
+     * The name of the Heroku Team.
+     */
     public readonly team!: pulumi.Output<string>;
 
     /**
@@ -79,9 +105,18 @@ export class Member extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Member resources.
  */
 export interface MemberState {
+    /**
+     * Email address of the member
+     */
     email?: pulumi.Input<string>;
     federated?: pulumi.Input<boolean>;
+    /**
+     * The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+     */
     role?: pulumi.Input<string>;
+    /**
+     * The name of the Heroku Team.
+     */
     team?: pulumi.Input<string>;
 }
 
@@ -89,8 +124,17 @@ export interface MemberState {
  * The set of arguments for constructing a Member resource.
  */
 export interface MemberArgs {
+    /**
+     * Email address of the member
+     */
     email: pulumi.Input<string>;
     federated?: pulumi.Input<boolean>;
+    /**
+     * The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+     */
     role: pulumi.Input<string>;
+    /**
+     * The name of the Heroku Team.
+     */
     team: pulumi.Input<string>;
 }

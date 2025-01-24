@@ -10,15 +10,51 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Team
 {
+    /// <summary>
+    /// A [Heroku Team Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#team-app-collaborator)
+    /// receives access to a specific Team-owned app.
+    /// 
+    /// To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard.
+    /// For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+    /// 
+    /// A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider.
+    /// For `heroku.app.App` &amp; `heroku.space.Space` resources, set the Heroku Team name as the "organization".
+    /// 
+    /// &gt; **IMPORTANT:**
+    /// This resource only works for Team-owned apps.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Team Collaborators can be imported using the combination of the team application name, a colon, and the collaborator's email address
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:team/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:team/collaborator:Collaborator")]
     public partial class Collaborator : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// Email address of the team collaborator
+        /// </summary>
         [Output("email")]
         public Output<string> Email { get; private set; } = null!;
 
+        /// <summary>
+        /// List of permissions that will be granted to the team collaborator. The order in which
+        /// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+        /// for more information on available permissions.
+        /// </summary>
         [Output("permissions")]
         public Output<ImmutableArray<string>> Permissions { get; private set; } = null!;
 
@@ -69,14 +105,26 @@ namespace Pulumiverse.Heroku.Team
 
     public sealed class CollaboratorArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// Email address of the team collaborator
+        /// </summary>
         [Input("email", required: true)]
         public Input<string> Email { get; set; } = null!;
 
         [Input("permissions", required: true)]
         private InputList<string>? _permissions;
+
+        /// <summary>
+        /// List of permissions that will be granted to the team collaborator. The order in which
+        /// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+        /// for more information on available permissions.
+        /// </summary>
         public InputList<string> Permissions
         {
             get => _permissions ?? (_permissions = new InputList<string>());
@@ -91,14 +139,26 @@ namespace Pulumiverse.Heroku.Team
 
     public sealed class CollaboratorState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// Email address of the team collaborator
+        /// </summary>
         [Input("email")]
         public Input<string>? Email { get; set; }
 
         [Input("permissions")]
         private InputList<string>? _permissions;
+
+        /// <summary>
+        /// List of permissions that will be granted to the team collaborator. The order in which
+        /// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+        /// for more information on available permissions.
+        /// </summary>
         public InputList<string> Permissions
         {
             get => _permissions ?? (_permissions = new InputList<string>());

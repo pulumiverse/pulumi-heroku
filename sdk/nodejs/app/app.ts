@@ -6,6 +6,29 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * ## Example Usage
+ *
+ * ### A Team
+ *
+ * A Heroku "team" was originally called an "organization", and that is still the identifier used in this resource.
+ *
+ * ## Import
+ *
+ * Apps can be imported using an existing app's `UUID` or name.
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:app/app:App foobar MyApp
+ * ```
+ *
+ * ```sh
+ * $ pulumi import heroku:app/app:App foobar e74ac056-7d00-4a7e-aa80-df4bc413a825
+ * ```
+ *
+ * Please note: `config_vars` & `sensitive_config_vars` will not be imported due to limitations of Terraform's import process (see issue). All vars will appear to be added on the next plan/apply. The diff may be manually reconciled using the outputs of `heroku config` & `pulumi preview`.
+ */
 export class App extends pulumi.CustomResource {
     /**
      * Get an existing App resource's state with the given name, ID, and optional extra
@@ -34,20 +57,65 @@ export class App extends pulumi.CustomResource {
         return obj['__pulumiType'] === App.__pulumiType;
     }
 
+    /**
+     * The flag representing Automated Certificate Management for the app.
+     */
     public readonly acm!: pulumi.Output<boolean>;
-    public /*out*/ readonly allConfigVars!: pulumi.Output<{[key: string]: any}>;
+    public /*out*/ readonly allConfigVars!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * Buildpack names or URLs for the application.
+     * Buildpacks configured externally won't be altered if this is not present.
+     */
     public readonly buildpacks!: pulumi.Output<string[]>;
-    public readonly configVars!: pulumi.Output<{[key: string]: any}>;
+    public readonly configVars!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * The Git URL for the application. This is used for
+     * deploying new versions of the app.
+     */
     public /*out*/ readonly gitUrl!: pulumi.Output<string>;
+    /**
+     * A hostname for the Heroku application, suitable
+     * for pointing DNS records.
+     */
     public /*out*/ readonly herokuHostname!: pulumi.Output<string>;
+    /**
+     * If true, the application will be routable
+     * only internally in a private space. This option is only available for apps
+     * that also specify `space`.
+     */
     public readonly internalRouting!: pulumi.Output<boolean>;
+    /**
+     * The name of the application. In Heroku, this is also the
+     * unique ID, so it must be unique and have a minimum of 3 characters.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * A block that can be specified once to define
+     * Heroku Team settings for this app. The fields for this block are
+     * documented below.
+     */
     public readonly organization!: pulumi.Output<outputs.app.AppOrganization | undefined>;
+    /**
+     * The region that the app should be deployed in.
+     */
     public readonly region!: pulumi.Output<string>;
     public readonly sensitiveConfigVars!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * The name of a private space to create the app in.
+     */
     public readonly space!: pulumi.Output<string | undefined>;
+    /**
+     * The application stack is what platform to run the application in.
+     */
     public readonly stack!: pulumi.Output<string>;
+    /**
+     * The unique UUID of the Heroku app. **NOTE:** Use this for `nullResource` triggers.
+     */
     public /*out*/ readonly uuid!: pulumi.Output<string>;
+    /**
+     * The web (HTTP) URL that the application can be accessed
+     * at by default.
+     */
     public /*out*/ readonly webUrl!: pulumi.Output<string>;
 
     /**
@@ -110,20 +178,65 @@ export class App extends pulumi.CustomResource {
  * Input properties used for looking up and filtering App resources.
  */
 export interface AppState {
+    /**
+     * The flag representing Automated Certificate Management for the app.
+     */
     acm?: pulumi.Input<boolean>;
-    allConfigVars?: pulumi.Input<{[key: string]: any}>;
+    allConfigVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Buildpack names or URLs for the application.
+     * Buildpacks configured externally won't be altered if this is not present.
+     */
     buildpacks?: pulumi.Input<pulumi.Input<string>[]>;
-    configVars?: pulumi.Input<{[key: string]: any}>;
+    configVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The Git URL for the application. This is used for
+     * deploying new versions of the app.
+     */
     gitUrl?: pulumi.Input<string>;
+    /**
+     * A hostname for the Heroku application, suitable
+     * for pointing DNS records.
+     */
     herokuHostname?: pulumi.Input<string>;
+    /**
+     * If true, the application will be routable
+     * only internally in a private space. This option is only available for apps
+     * that also specify `space`.
+     */
     internalRouting?: pulumi.Input<boolean>;
+    /**
+     * The name of the application. In Heroku, this is also the
+     * unique ID, so it must be unique and have a minimum of 3 characters.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * A block that can be specified once to define
+     * Heroku Team settings for this app. The fields for this block are
+     * documented below.
+     */
     organization?: pulumi.Input<inputs.app.AppOrganization>;
+    /**
+     * The region that the app should be deployed in.
+     */
     region?: pulumi.Input<string>;
     sensitiveConfigVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The name of a private space to create the app in.
+     */
     space?: pulumi.Input<string>;
+    /**
+     * The application stack is what platform to run the application in.
+     */
     stack?: pulumi.Input<string>;
+    /**
+     * The unique UUID of the Heroku app. **NOTE:** Use this for `nullResource` triggers.
+     */
     uuid?: pulumi.Input<string>;
+    /**
+     * The web (HTTP) URL that the application can be accessed
+     * at by default.
+     */
     webUrl?: pulumi.Input<string>;
 }
 
@@ -131,14 +244,44 @@ export interface AppState {
  * The set of arguments for constructing a App resource.
  */
 export interface AppArgs {
+    /**
+     * The flag representing Automated Certificate Management for the app.
+     */
     acm?: pulumi.Input<boolean>;
+    /**
+     * Buildpack names or URLs for the application.
+     * Buildpacks configured externally won't be altered if this is not present.
+     */
     buildpacks?: pulumi.Input<pulumi.Input<string>[]>;
-    configVars?: pulumi.Input<{[key: string]: any}>;
+    configVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * If true, the application will be routable
+     * only internally in a private space. This option is only available for apps
+     * that also specify `space`.
+     */
     internalRouting?: pulumi.Input<boolean>;
+    /**
+     * The name of the application. In Heroku, this is also the
+     * unique ID, so it must be unique and have a minimum of 3 characters.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * A block that can be specified once to define
+     * Heroku Team settings for this app. The fields for this block are
+     * documented below.
+     */
     organization?: pulumi.Input<inputs.app.AppOrganization>;
+    /**
+     * The region that the app should be deployed in.
+     */
     region: pulumi.Input<string>;
     sensitiveConfigVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The name of a private space to create the app in.
+     */
     space?: pulumi.Input<string>;
+    /**
+     * The application stack is what platform to run the application in.
+     */
     stack?: pulumi.Input<string>;
 }

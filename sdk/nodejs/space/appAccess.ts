@@ -4,6 +4,19 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a resource for managing permissions for the entire Private Space. Members with the admin role will
+ * always have full permissions in the Private Space, so using this resource on an admin will have no effect.
+ * The provided email must already be a member of the Heroku Team. Currently, the only supported permission is `createApps`.
+ *
+ * ## Example Usage
+ *
+ * ## Importing
+ *
+ * Existing permissions can be imported using the combination of the Private Space name, a colon, and the member email.
+ *
+ * For example:
+ */
 export class AppAccess extends pulumi.CustomResource {
     /**
      * Get an existing AppAccess resource's state with the given name, ID, and optional extra
@@ -32,8 +45,19 @@ export class AppAccess extends pulumi.CustomResource {
         return obj['__pulumiType'] === AppAccess.__pulumiType;
     }
 
+    /**
+     * The email of the existing Heroku Team member.
+     */
     public readonly email!: pulumi.Output<string>;
+    /**
+     * The permissions to grant the team member for the Private Space.
+     * Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+     * Members with admin role will always have `createApps` permissions, which cannot be removed.
+     */
     public readonly permissions!: pulumi.Output<string[]>;
+    /**
+     * The ID of the Private Space.
+     */
     public readonly space!: pulumi.Output<string>;
 
     /**
@@ -76,8 +100,19 @@ export class AppAccess extends pulumi.CustomResource {
  * Input properties used for looking up and filtering AppAccess resources.
  */
 export interface AppAccessState {
+    /**
+     * The email of the existing Heroku Team member.
+     */
     email?: pulumi.Input<string>;
+    /**
+     * The permissions to grant the team member for the Private Space.
+     * Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+     * Members with admin role will always have `createApps` permissions, which cannot be removed.
+     */
     permissions?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The ID of the Private Space.
+     */
     space?: pulumi.Input<string>;
 }
 
@@ -85,7 +120,18 @@ export interface AppAccessState {
  * The set of arguments for constructing a AppAccess resource.
  */
 export interface AppAccessArgs {
+    /**
+     * The email of the existing Heroku Team member.
+     */
     email: pulumi.Input<string>;
+    /**
+     * The permissions to grant the team member for the Private Space.
+     * Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+     * Members with admin role will always have `createApps` permissions, which cannot be removed.
+     */
     permissions: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The ID of the Private Space.
+     */
     space: pulumi.Input<string>;
 }

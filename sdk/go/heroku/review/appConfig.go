@@ -12,18 +12,48 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a resource for configuring review apps. Using this resource also enables review apps for a pipeline.
+//
+// > **IMPORTANT!**
+// This resource can only be used after you create a pipeline, and the pipeline has been connected to a Github repository.
+// Please visit this [help article](https://devcenter.heroku.com/articles/github-integration-review-apps#setup)
+// for more information.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// An Existing review app config using the combination of the pipeline UUID and the Github organization/repository
+//
+// separated by a colon.
+//
+// ```sh
+// $ pulumi import heroku:review/appConfig:AppConfig foobar afd193fb-7c5a-4d8f-afad-2388f4e6049d:heroku/homebrew-brew
+// ```
 type AppConfig struct {
 	pulumi.CustomResourceState
 
-	AutomaticReviewApps pulumi.BoolPtrOutput        `pulumi:"automaticReviewApps"`
-	BaseName            pulumi.StringOutput         `pulumi:"baseName"`
-	DeployTarget        AppConfigDeployTargetOutput `pulumi:"deployTarget"`
-	DestroyStaleApps    pulumi.BoolPtrOutput        `pulumi:"destroyStaleApps"`
-	OrgRepo             pulumi.StringOutput         `pulumi:"orgRepo"`
-	PipelineId          pulumi.StringOutput         `pulumi:"pipelineId"`
-	RepoId              pulumi.IntOutput            `pulumi:"repoId"`
-	StaleDays           pulumi.IntOutput            `pulumi:"staleDays"`
-	WaitForCi           pulumi.BoolPtrOutput        `pulumi:"waitForCi"`
+	// If true, this will trigger the creation of review apps when pull-requests
+	// are opened in the repo. Defaults to `false`.
+	AutomaticReviewApps pulumi.BoolPtrOutput `pulumi:"automaticReviewApps"`
+	// A unique prefix that will be used to create review app names.
+	BaseName pulumi.StringOutput `pulumi:"baseName"`
+	// Provides a key/value pair to specify whether to use a common runtime or a private space.
+	DeployTarget AppConfigDeployTargetOutput `pulumi:"deployTarget"`
+	// If `true`, this will trigger automatic deletion of review apps when they’re stale.
+	// Defaults to `false`.
+	DestroyStaleApps pulumi.BoolPtrOutput `pulumi:"destroyStaleApps"`
+	// The fullName of the repository that you want to enable review-apps from.
+	// Example `heroku/homebrew-brew`.
+	OrgRepo pulumi.StringOutput `pulumi:"orgRepo"`
+	// The UUID of an existing pipeline.
+	PipelineId pulumi.StringOutput `pulumi:"pipelineId"`
+	RepoId     pulumi.IntOutput    `pulumi:"repoId"`
+	// Destroy stale review apps automatically after these many days without any deploys.
+	// Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+	StaleDays pulumi.IntOutput `pulumi:"staleDays"`
+	// If true, review apps will only be created when CI passes. Defaults to `false`.
+	WaitForCi pulumi.BoolPtrOutput `pulumi:"waitForCi"`
 }
 
 // NewAppConfig registers a new resource with the given unique name, arguments, and options.
@@ -65,27 +95,51 @@ func GetAppConfig(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering AppConfig resources.
 type appConfigState struct {
-	AutomaticReviewApps *bool                  `pulumi:"automaticReviewApps"`
-	BaseName            *string                `pulumi:"baseName"`
-	DeployTarget        *AppConfigDeployTarget `pulumi:"deployTarget"`
-	DestroyStaleApps    *bool                  `pulumi:"destroyStaleApps"`
-	OrgRepo             *string                `pulumi:"orgRepo"`
-	PipelineId          *string                `pulumi:"pipelineId"`
-	RepoId              *int                   `pulumi:"repoId"`
-	StaleDays           *int                   `pulumi:"staleDays"`
-	WaitForCi           *bool                  `pulumi:"waitForCi"`
+	// If true, this will trigger the creation of review apps when pull-requests
+	// are opened in the repo. Defaults to `false`.
+	AutomaticReviewApps *bool `pulumi:"automaticReviewApps"`
+	// A unique prefix that will be used to create review app names.
+	BaseName *string `pulumi:"baseName"`
+	// Provides a key/value pair to specify whether to use a common runtime or a private space.
+	DeployTarget *AppConfigDeployTarget `pulumi:"deployTarget"`
+	// If `true`, this will trigger automatic deletion of review apps when they’re stale.
+	// Defaults to `false`.
+	DestroyStaleApps *bool `pulumi:"destroyStaleApps"`
+	// The fullName of the repository that you want to enable review-apps from.
+	// Example `heroku/homebrew-brew`.
+	OrgRepo *string `pulumi:"orgRepo"`
+	// The UUID of an existing pipeline.
+	PipelineId *string `pulumi:"pipelineId"`
+	RepoId     *int    `pulumi:"repoId"`
+	// Destroy stale review apps automatically after these many days without any deploys.
+	// Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+	StaleDays *int `pulumi:"staleDays"`
+	// If true, review apps will only be created when CI passes. Defaults to `false`.
+	WaitForCi *bool `pulumi:"waitForCi"`
 }
 
 type AppConfigState struct {
+	// If true, this will trigger the creation of review apps when pull-requests
+	// are opened in the repo. Defaults to `false`.
 	AutomaticReviewApps pulumi.BoolPtrInput
-	BaseName            pulumi.StringPtrInput
-	DeployTarget        AppConfigDeployTargetPtrInput
-	DestroyStaleApps    pulumi.BoolPtrInput
-	OrgRepo             pulumi.StringPtrInput
-	PipelineId          pulumi.StringPtrInput
-	RepoId              pulumi.IntPtrInput
-	StaleDays           pulumi.IntPtrInput
-	WaitForCi           pulumi.BoolPtrInput
+	// A unique prefix that will be used to create review app names.
+	BaseName pulumi.StringPtrInput
+	// Provides a key/value pair to specify whether to use a common runtime or a private space.
+	DeployTarget AppConfigDeployTargetPtrInput
+	// If `true`, this will trigger automatic deletion of review apps when they’re stale.
+	// Defaults to `false`.
+	DestroyStaleApps pulumi.BoolPtrInput
+	// The fullName of the repository that you want to enable review-apps from.
+	// Example `heroku/homebrew-brew`.
+	OrgRepo pulumi.StringPtrInput
+	// The UUID of an existing pipeline.
+	PipelineId pulumi.StringPtrInput
+	RepoId     pulumi.IntPtrInput
+	// Destroy stale review apps automatically after these many days without any deploys.
+	// Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+	StaleDays pulumi.IntPtrInput
+	// If true, review apps will only be created when CI passes. Defaults to `false`.
+	WaitForCi pulumi.BoolPtrInput
 }
 
 func (AppConfigState) ElementType() reflect.Type {
@@ -93,26 +147,50 @@ func (AppConfigState) ElementType() reflect.Type {
 }
 
 type appConfigArgs struct {
-	AutomaticReviewApps *bool                 `pulumi:"automaticReviewApps"`
-	BaseName            *string               `pulumi:"baseName"`
-	DeployTarget        AppConfigDeployTarget `pulumi:"deployTarget"`
-	DestroyStaleApps    *bool                 `pulumi:"destroyStaleApps"`
-	OrgRepo             string                `pulumi:"orgRepo"`
-	PipelineId          string                `pulumi:"pipelineId"`
-	StaleDays           *int                  `pulumi:"staleDays"`
-	WaitForCi           *bool                 `pulumi:"waitForCi"`
+	// If true, this will trigger the creation of review apps when pull-requests
+	// are opened in the repo. Defaults to `false`.
+	AutomaticReviewApps *bool `pulumi:"automaticReviewApps"`
+	// A unique prefix that will be used to create review app names.
+	BaseName *string `pulumi:"baseName"`
+	// Provides a key/value pair to specify whether to use a common runtime or a private space.
+	DeployTarget AppConfigDeployTarget `pulumi:"deployTarget"`
+	// If `true`, this will trigger automatic deletion of review apps when they’re stale.
+	// Defaults to `false`.
+	DestroyStaleApps *bool `pulumi:"destroyStaleApps"`
+	// The fullName of the repository that you want to enable review-apps from.
+	// Example `heroku/homebrew-brew`.
+	OrgRepo string `pulumi:"orgRepo"`
+	// The UUID of an existing pipeline.
+	PipelineId string `pulumi:"pipelineId"`
+	// Destroy stale review apps automatically after these many days without any deploys.
+	// Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+	StaleDays *int `pulumi:"staleDays"`
+	// If true, review apps will only be created when CI passes. Defaults to `false`.
+	WaitForCi *bool `pulumi:"waitForCi"`
 }
 
 // The set of arguments for constructing a AppConfig resource.
 type AppConfigArgs struct {
+	// If true, this will trigger the creation of review apps when pull-requests
+	// are opened in the repo. Defaults to `false`.
 	AutomaticReviewApps pulumi.BoolPtrInput
-	BaseName            pulumi.StringPtrInput
-	DeployTarget        AppConfigDeployTargetInput
-	DestroyStaleApps    pulumi.BoolPtrInput
-	OrgRepo             pulumi.StringInput
-	PipelineId          pulumi.StringInput
-	StaleDays           pulumi.IntPtrInput
-	WaitForCi           pulumi.BoolPtrInput
+	// A unique prefix that will be used to create review app names.
+	BaseName pulumi.StringPtrInput
+	// Provides a key/value pair to specify whether to use a common runtime or a private space.
+	DeployTarget AppConfigDeployTargetInput
+	// If `true`, this will trigger automatic deletion of review apps when they’re stale.
+	// Defaults to `false`.
+	DestroyStaleApps pulumi.BoolPtrInput
+	// The fullName of the repository that you want to enable review-apps from.
+	// Example `heroku/homebrew-brew`.
+	OrgRepo pulumi.StringInput
+	// The UUID of an existing pipeline.
+	PipelineId pulumi.StringInput
+	// Destroy stale review apps automatically after these many days without any deploys.
+	// Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
+	StaleDays pulumi.IntPtrInput
+	// If true, review apps will only be created when CI passes. Defaults to `false`.
+	WaitForCi pulumi.BoolPtrInput
 }
 
 func (AppConfigArgs) ElementType() reflect.Type {
@@ -202,26 +280,35 @@ func (o AppConfigOutput) ToAppConfigOutputWithContext(ctx context.Context) AppCo
 	return o
 }
 
+// If true, this will trigger the creation of review apps when pull-requests
+// are opened in the repo. Defaults to `false`.
 func (o AppConfigOutput) AutomaticReviewApps() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.BoolPtrOutput { return v.AutomaticReviewApps }).(pulumi.BoolPtrOutput)
 }
 
+// A unique prefix that will be used to create review app names.
 func (o AppConfigOutput) BaseName() pulumi.StringOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.StringOutput { return v.BaseName }).(pulumi.StringOutput)
 }
 
+// Provides a key/value pair to specify whether to use a common runtime or a private space.
 func (o AppConfigOutput) DeployTarget() AppConfigDeployTargetOutput {
 	return o.ApplyT(func(v *AppConfig) AppConfigDeployTargetOutput { return v.DeployTarget }).(AppConfigDeployTargetOutput)
 }
 
+// If `true`, this will trigger automatic deletion of review apps when they’re stale.
+// Defaults to `false`.
 func (o AppConfigOutput) DestroyStaleApps() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.BoolPtrOutput { return v.DestroyStaleApps }).(pulumi.BoolPtrOutput)
 }
 
+// The fullName of the repository that you want to enable review-apps from.
+// Example `heroku/homebrew-brew`.
 func (o AppConfigOutput) OrgRepo() pulumi.StringOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.StringOutput { return v.OrgRepo }).(pulumi.StringOutput)
 }
 
+// The UUID of an existing pipeline.
 func (o AppConfigOutput) PipelineId() pulumi.StringOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.StringOutput { return v.PipelineId }).(pulumi.StringOutput)
 }
@@ -230,10 +317,13 @@ func (o AppConfigOutput) RepoId() pulumi.IntOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.IntOutput { return v.RepoId }).(pulumi.IntOutput)
 }
 
+// Destroy stale review apps automatically after these many days without any deploys.
+// Must be set with `destroyStaleApps` and value needs to be between `1` and `30` inclusive.
 func (o AppConfigOutput) StaleDays() pulumi.IntOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.IntOutput { return v.StaleDays }).(pulumi.IntOutput)
 }
 
+// If true, review apps will only be created when CI passes. Defaults to `false`.
 func (o AppConfigOutput) WaitForCi() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *AppConfig) pulumi.BoolPtrOutput { return v.WaitForCi }).(pulumi.BoolPtrOutput)
 }

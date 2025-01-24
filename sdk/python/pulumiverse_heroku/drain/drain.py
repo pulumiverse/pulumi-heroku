@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['DrainArgs', 'Drain']
@@ -19,6 +24,8 @@ class DrainArgs:
                  url: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Drain resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] url: The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
         """
         pulumi.set(__self__, "app_id", app_id)
         if sensitive_url is not None:
@@ -29,6 +36,9 @@ class DrainArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -47,6 +57,9 @@ class DrainArgs:
     @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
+        """
+        The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -63,6 +76,9 @@ class _DrainState:
                  url: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Drain resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] token: The unique token for your created drain.
+        :param pulumi.Input[str] url: The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -76,6 +92,9 @@ class _DrainState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -94,6 +113,9 @@ class _DrainState:
     @property
     @pulumi.getter
     def token(self) -> Optional[pulumi.Input[str]]:
+        """
+        The unique token for your created drain.
+        """
         return pulumi.get(self, "token")
 
     @token.setter
@@ -103,6 +125,9 @@ class _DrainState:
     @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
+        """
+        The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -120,9 +145,25 @@ class Drain(pulumi.CustomResource):
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Drain resource with the given unique name, props, and options.
+        Provides a Heroku Drain resource. This can be used to
+        create and manage Log Drains on Heroku.
+
+        ## Example Usage
+
+        ## Importing
+
+        When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+        For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `url` attribute value
+        defined for the resource, you would import it as:
+
+        When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+        For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `sensitive_url` attribute value
+        defined for the resource, you would import it as:
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] url: The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
         """
         ...
     @overload
@@ -131,7 +172,21 @@ class Drain(pulumi.CustomResource):
                  args: DrainArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Drain resource with the given unique name, props, and options.
+        Provides a Heroku Drain resource. This can be used to
+        create and manage Log Drains on Heroku.
+
+        ## Example Usage
+
+        ## Importing
+
+        When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+        For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `url` attribute value
+        defined for the resource, you would import it as:
+
+        When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+        For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `sensitive_url` attribute value
+        defined for the resource, you would import it as:
+
         :param str resource_name: The name of the resource.
         :param DrainArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -188,6 +243,9 @@ class Drain(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] token: The unique token for your created drain.
+        :param pulumi.Input[str] url: The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -202,6 +260,9 @@ class Drain(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
@@ -212,10 +273,16 @@ class Drain(pulumi.CustomResource):
     @property
     @pulumi.getter
     def token(self) -> pulumi.Output[str]:
+        """
+        The unique token for your created drain.
+        """
         return pulumi.get(self, "token")
 
     @property
     @pulumi.getter
     def url(self) -> pulumi.Output[Optional[str]]:
+        """
+        The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
+        """
         return pulumi.get(self, "url")
 

@@ -12,14 +12,28 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// This resource manages an SSL certificate for a Heroku app.
+//
+// !> **WARNING:** This resource is deprecated in favor of `ssl.Ssl`.
+//
+// ## Example Usage
+//
+// ## Importing
+//
+// When importing a Heroku cert resource, the ID must be built using the app name colon the unique ID from the Heroku API. For an app named `production-api` with a certificate ID of `b85d9224-310b-409b-891e-c903f5a40568`, you would import it as:
 type Cert struct {
 	pulumi.CustomResourceState
 
-	App              pulumi.StringOutput `pulumi:"app"`
+	// Heroku app ID (do not use app name)
+	App pulumi.StringOutput `pulumi:"app"`
+	// The certificate chain to add
 	CertificateChain pulumi.StringOutput `pulumi:"certificateChain"`
-	Cname            pulumi.StringOutput `pulumi:"cname"`
-	Name             pulumi.StringOutput `pulumi:"name"`
-	PrivateKey       pulumi.StringOutput `pulumi:"privateKey"`
+	// The CNAME for the SSL endpoint
+	Cname pulumi.StringOutput `pulumi:"cname"`
+	// The name of the SSL certificate
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The private key for a given certificate chain
+	PrivateKey pulumi.StringOutput `pulumi:"privateKey"`
 }
 
 // NewCert registers a new resource with the given unique name, arguments, and options.
@@ -68,19 +82,29 @@ func GetCert(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Cert resources.
 type certState struct {
-	App              *string `pulumi:"app"`
+	// Heroku app ID (do not use app name)
+	App *string `pulumi:"app"`
+	// The certificate chain to add
 	CertificateChain *string `pulumi:"certificateChain"`
-	Cname            *string `pulumi:"cname"`
-	Name             *string `pulumi:"name"`
-	PrivateKey       *string `pulumi:"privateKey"`
+	// The CNAME for the SSL endpoint
+	Cname *string `pulumi:"cname"`
+	// The name of the SSL certificate
+	Name *string `pulumi:"name"`
+	// The private key for a given certificate chain
+	PrivateKey *string `pulumi:"privateKey"`
 }
 
 type CertState struct {
-	App              pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	App pulumi.StringPtrInput
+	// The certificate chain to add
 	CertificateChain pulumi.StringPtrInput
-	Cname            pulumi.StringPtrInput
-	Name             pulumi.StringPtrInput
-	PrivateKey       pulumi.StringPtrInput
+	// The CNAME for the SSL endpoint
+	Cname pulumi.StringPtrInput
+	// The name of the SSL certificate
+	Name pulumi.StringPtrInput
+	// The private key for a given certificate chain
+	PrivateKey pulumi.StringPtrInput
 }
 
 func (CertState) ElementType() reflect.Type {
@@ -88,16 +112,22 @@ func (CertState) ElementType() reflect.Type {
 }
 
 type certArgs struct {
-	App              string `pulumi:"app"`
+	// Heroku app ID (do not use app name)
+	App string `pulumi:"app"`
+	// The certificate chain to add
 	CertificateChain string `pulumi:"certificateChain"`
-	PrivateKey       string `pulumi:"privateKey"`
+	// The private key for a given certificate chain
+	PrivateKey string `pulumi:"privateKey"`
 }
 
 // The set of arguments for constructing a Cert resource.
 type CertArgs struct {
-	App              pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	App pulumi.StringInput
+	// The certificate chain to add
 	CertificateChain pulumi.StringInput
-	PrivateKey       pulumi.StringInput
+	// The private key for a given certificate chain
+	PrivateKey pulumi.StringInput
 }
 
 func (CertArgs) ElementType() reflect.Type {
@@ -187,22 +217,27 @@ func (o CertOutput) ToCertOutputWithContext(ctx context.Context) CertOutput {
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o CertOutput) App() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cert) pulumi.StringOutput { return v.App }).(pulumi.StringOutput)
 }
 
+// The certificate chain to add
 func (o CertOutput) CertificateChain() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cert) pulumi.StringOutput { return v.CertificateChain }).(pulumi.StringOutput)
 }
 
+// The CNAME for the SSL endpoint
 func (o CertOutput) Cname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cert) pulumi.StringOutput { return v.Cname }).(pulumi.StringOutput)
 }
 
+// The name of the SSL certificate
 func (o CertOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cert) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The private key for a given certificate chain
 func (o CertOutput) PrivateKey() pulumi.StringOutput {
 	return o.ApplyT(func(v *Cert) pulumi.StringOutput { return v.PrivateKey }).(pulumi.StringOutput)
 }

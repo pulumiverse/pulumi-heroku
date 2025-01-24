@@ -6,8 +6,12 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * Use this data source to get information about members for a Heroku Team.
+ *
+ * ## Example Usage
+ */
 export function getMembers(args: GetMembersArgs, opts?: pulumi.InvokeOptions): Promise<GetMembersResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:team/getMembers:getMembers", {
         "roles": args.roles,
@@ -19,7 +23,14 @@ export function getMembers(args: GetMembersArgs, opts?: pulumi.InvokeOptions): P
  * A collection of arguments for invoking getMembers.
  */
 export interface GetMembersArgs {
+    /**
+     * List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+     * At least one role must be specified.
+     */
     roles: string[];
+    /**
+     * The team name.
+     */
     team: string;
 }
 
@@ -31,18 +42,37 @@ export interface GetMembersResult {
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
+    /**
+     * All members of the team that have a specified role defined in the `roles` attribute above.
+     */
     readonly members: outputs.team.GetMembersMember[];
     readonly roles: string[];
     readonly team: string;
 }
-export function getMembersOutput(args: GetMembersOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetMembersResult> {
-    return pulumi.output(args).apply((a: any) => getMembers(a, opts))
+/**
+ * Use this data source to get information about members for a Heroku Team.
+ *
+ * ## Example Usage
+ */
+export function getMembersOutput(args: GetMembersOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetMembersResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("heroku:team/getMembers:getMembers", {
+        "roles": args.roles,
+        "team": args.team,
+    }, opts);
 }
 
 /**
  * A collection of arguments for invoking getMembers.
  */
 export interface GetMembersOutputArgs {
+    /**
+     * List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+     * At least one role must be specified.
+     */
     roles: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The team name.
+     */
     team: pulumi.Input<string>;
 }

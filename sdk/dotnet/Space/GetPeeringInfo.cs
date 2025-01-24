@@ -12,16 +12,79 @@ namespace Pulumiverse.Heroku.Space
 {
     public static class GetPeeringInfo
     {
+        /// <summary>
+        /// Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Look up a Heroku Private Space's peering info. 
+        /// data "heroku_space_peering_info" "default" {
+        ///   name   = "my-secret-space"
+        /// }
+        /// 
+        /// # Initiate a VPC peering connection request.
+        /// resource "aws_vpc_peering_connection" "foo" {
+        ///   peer_owner_id = data.heroku_space_peering_info.default.aws_account_id
+        ///   peer_vpc_id   = data.heroku_space_peering_info.default.vpc_id
+        ///   vpc_id        = aws_vpc.foo.id
+        /// }
+        /// ```
+        /// </summary>
         public static Task<GetPeeringInfoResult> InvokeAsync(GetPeeringInfoArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetPeeringInfoResult>("heroku:space/getPeeringInfo:getPeeringInfo", args ?? new GetPeeringInfoArgs(), options.WithDefaults());
 
+        /// <summary>
+        /// Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Look up a Heroku Private Space's peering info. 
+        /// data "heroku_space_peering_info" "default" {
+        ///   name   = "my-secret-space"
+        /// }
+        /// 
+        /// # Initiate a VPC peering connection request.
+        /// resource "aws_vpc_peering_connection" "foo" {
+        ///   peer_owner_id = data.heroku_space_peering_info.default.aws_account_id
+        ///   peer_vpc_id   = data.heroku_space_peering_info.default.vpc_id
+        ///   vpc_id        = aws_vpc.foo.id
+        /// }
+        /// ```
+        /// </summary>
         public static Output<GetPeeringInfoResult> Invoke(GetPeeringInfoInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetPeeringInfoResult>("heroku:space/getPeeringInfo:getPeeringInfo", args ?? new GetPeeringInfoInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Look up a Heroku Private Space's peering info. 
+        /// data "heroku_space_peering_info" "default" {
+        ///   name   = "my-secret-space"
+        /// }
+        /// 
+        /// # Initiate a VPC peering connection request.
+        /// resource "aws_vpc_peering_connection" "foo" {
+        ///   peer_owner_id = data.heroku_space_peering_info.default.aws_account_id
+        ///   peer_vpc_id   = data.heroku_space_peering_info.default.vpc_id
+        ///   vpc_id        = aws_vpc.foo.id
+        /// }
+        /// ```
+        /// </summary>
+        public static Output<GetPeeringInfoResult> Invoke(GetPeeringInfoInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetPeeringInfoResult>("heroku:space/getPeeringInfo:getPeeringInfo", args ?? new GetPeeringInfoInvokeArgs(), options.WithDefaults());
     }
 
 
     public sealed class GetPeeringInfoArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The name of the Heroku Private Space.
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
@@ -33,6 +96,9 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class GetPeeringInfoInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The name of the Heroku Private Space.
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
@@ -46,16 +112,34 @@ namespace Pulumiverse.Heroku.Space
     [OutputType]
     public sealed class GetPeeringInfoResult
     {
+        /// <summary>
+        /// The AWS account ID that the Heroku Private Space runs in.
+        /// </summary>
         public readonly string AwsAccountId;
+        /// <summary>
+        /// The AWS region that the Heroku Private Space runs in.
+        /// </summary>
         public readonly string AwsRegion;
+        /// <summary>
+        /// The CIDR blocks that the Dynos run on.
+        /// </summary>
         public readonly ImmutableArray<string> DynoCidrBlocks;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
         public readonly string Id;
         public readonly string Name;
+        /// <summary>
+        /// A list of unavailable CIDR blocks.
+        /// </summary>
         public readonly ImmutableArray<string> UnavailableCidrBlocks;
+        /// <summary>
+        /// The CIDR block of the VPC ID.
+        /// </summary>
         public readonly string VpcCidr;
+        /// <summary>
+        /// The VPC ID of the Heroku Private Space.
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]

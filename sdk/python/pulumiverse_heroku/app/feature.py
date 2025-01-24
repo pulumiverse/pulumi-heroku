@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['FeatureArgs', 'Feature']
@@ -19,6 +24,9 @@ class FeatureArgs:
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Feature resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[bool] enabled: Whether to enable or disable the App Feature. The default value is true.
+        :param pulumi.Input[str] name: The name of the App Feature to manage.
         """
         pulumi.set(__self__, "app_id", app_id)
         if enabled is not None:
@@ -29,6 +37,9 @@ class FeatureArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -38,6 +49,9 @@ class FeatureArgs:
     @property
     @pulumi.getter
     def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether to enable or disable the App Feature. The default value is true.
+        """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
@@ -47,6 +61,9 @@ class FeatureArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the App Feature to manage.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -62,6 +79,9 @@ class _FeatureState:
                  name: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Feature resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[bool] enabled: Whether to enable or disable the App Feature. The default value is true.
+        :param pulumi.Input[str] name: The name of the App Feature to manage.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -73,6 +93,9 @@ class _FeatureState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -82,6 +105,9 @@ class _FeatureState:
     @property
     @pulumi.getter
     def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether to enable or disable the App Feature. The default value is true.
+        """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
@@ -91,6 +117,9 @@ class _FeatureState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the App Feature to manage.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -108,9 +137,33 @@ class Feature(pulumi.CustomResource):
                  name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Feature resource with the given unique name, props, and options.
+        This resource is used to create and manage [App Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+
+        ## Available Features
+
+        For a list of available features, use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+        to fetch them for one of your existing apps: `heroku labs --app foobar`.
+
+        The output will contain **User Features** and **App Features**. This resource manages App Features.
+        If you need to manage User Features, use the `account.Feature` resource.
+
+        ## Example Usage
+
+        ## Import
+
+        App features can be imported using the combination of the application name, a colon, and the feature's name.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:app/feature:Feature log-runtime-metrics foobar:log-runtime-metrics
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[bool] enabled: Whether to enable or disable the App Feature. The default value is true.
+        :param pulumi.Input[str] name: The name of the App Feature to manage.
         """
         ...
     @overload
@@ -119,7 +172,28 @@ class Feature(pulumi.CustomResource):
                  args: FeatureArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Feature resource with the given unique name, props, and options.
+        This resource is used to create and manage [App Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+
+        ## Available Features
+
+        For a list of available features, use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+        to fetch them for one of your existing apps: `heroku labs --app foobar`.
+
+        The output will contain **User Features** and **App Features**. This resource manages App Features.
+        If you need to manage User Features, use the `account.Feature` resource.
+
+        ## Example Usage
+
+        ## Import
+
+        App features can be imported using the combination of the application name, a colon, and the feature's name.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:app/feature:Feature log-runtime-metrics foobar:log-runtime-metrics
+        ```
+
         :param str resource_name: The name of the resource.
         :param FeatureArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -172,6 +246,9 @@ class Feature(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[bool] enabled: Whether to enable or disable the App Feature. The default value is true.
+        :param pulumi.Input[str] name: The name of the App Feature to manage.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -185,15 +262,24 @@ class Feature(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def enabled(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Whether to enable or disable the App Feature. The default value is true.
+        """
         return pulumi.get(self, "enabled")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the App Feature to manage.
+        """
         return pulumi.get(self, "name")
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -21,6 +26,15 @@ class BuildSource(dict):
                  path: Optional[str] = None,
                  url: Optional[str] = None,
                  version: Optional[str] = None):
+        """
+        :param str checksum: SHA256 hash of the tarball archive to verify its integrity, example:
+               `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        :param str path: Local path to the source directory or tarball archive for the app
+        :param str url: `https` location of the source archive for the app
+        :param str version: Use to track what version of your source originated this build. If you are creating builds
+               from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+               version parameter.
+        """
         if checksum is not None:
             pulumi.set(__self__, "checksum", checksum)
         if path is not None:
@@ -33,21 +47,36 @@ class BuildSource(dict):
     @property
     @pulumi.getter
     def checksum(self) -> Optional[str]:
+        """
+        SHA256 hash of the tarball archive to verify its integrity, example:
+        `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        """
         return pulumi.get(self, "checksum")
 
     @property
     @pulumi.getter
     def path(self) -> Optional[str]:
+        """
+        Local path to the source directory or tarball archive for the app
+        """
         return pulumi.get(self, "path")
 
     @property
     @pulumi.getter
     def url(self) -> Optional[str]:
+        """
+        `https` location of the source archive for the app
+        """
         return pulumi.get(self, "url")
 
     @property
     @pulumi.getter
     def version(self) -> Optional[str]:
+        """
+        Use to track what version of your source originated this build. If you are creating builds
+        from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+        version parameter.
+        """
         return pulumi.get(self, "version")
 
 

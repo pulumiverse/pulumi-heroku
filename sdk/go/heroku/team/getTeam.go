@@ -11,6 +11,9 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get information about a Heroku Team.
+//
+// ## Example Usage
 func GetTeam(ctx *pulumi.Context, args *GetTeamArgs, opts ...pulumi.InvokeOption) (*GetTeamResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetTeamResult
@@ -23,35 +26,37 @@ func GetTeam(ctx *pulumi.Context, args *GetTeamArgs, opts ...pulumi.InvokeOption
 
 // A collection of arguments for invoking getTeam.
 type GetTeamArgs struct {
+	// The team name
 	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getTeam.
 type GetTeamResult struct {
+	// Whether to use this team when none is specified
 	Default bool `pulumi:"default"`
 	// The provider-assigned unique ID for this managed resource.
-	Id                  string `pulumi:"id"`
-	MembershipLimit     int    `pulumi:"membershipLimit"`
-	Name                string `pulumi:"name"`
-	ProvisionedLicenses bool   `pulumi:"provisionedLicenses"`
-	Type                string `pulumi:"type"`
+	Id string `pulumi:"id"`
+	// Upper limit of members allowed in a team
+	MembershipLimit int    `pulumi:"membershipLimit"`
+	Name            string `pulumi:"name"`
+	// Whether the team is provisioned licenses by Salesforce
+	ProvisionedLicenses bool `pulumi:"provisionedLicenses"`
+	// type of team Will likely be either "enterprise" or "team"
+	Type string `pulumi:"type"`
 }
 
 func GetTeamOutput(ctx *pulumi.Context, args GetTeamOutputArgs, opts ...pulumi.InvokeOption) GetTeamResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetTeamResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetTeamResultOutput, error) {
 			args := v.(GetTeamArgs)
-			r, err := GetTeam(ctx, &args, opts...)
-			var s GetTeamResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:team/getTeam:getTeam", args, GetTeamResultOutput{}, options).(GetTeamResultOutput), nil
 		}).(GetTeamResultOutput)
 }
 
 // A collection of arguments for invoking getTeam.
 type GetTeamOutputArgs struct {
+	// The team name
 	Name pulumi.StringInput `pulumi:"name"`
 }
 
@@ -74,6 +79,7 @@ func (o GetTeamResultOutput) ToGetTeamResultOutputWithContext(ctx context.Contex
 	return o
 }
 
+// Whether to use this team when none is specified
 func (o GetTeamResultOutput) Default() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetTeamResult) bool { return v.Default }).(pulumi.BoolOutput)
 }
@@ -83,6 +89,7 @@ func (o GetTeamResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetTeamResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// Upper limit of members allowed in a team
 func (o GetTeamResultOutput) MembershipLimit() pulumi.IntOutput {
 	return o.ApplyT(func(v GetTeamResult) int { return v.MembershipLimit }).(pulumi.IntOutput)
 }
@@ -91,10 +98,12 @@ func (o GetTeamResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetTeamResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Whether the team is provisioned licenses by Salesforce
 func (o GetTeamResultOutput) ProvisionedLicenses() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetTeamResult) bool { return v.ProvisionedLicenses }).(pulumi.BoolOutput)
 }
 
+// type of team Will likely be either "enterprise" or "team"
 func (o GetTeamResultOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v GetTeamResult) string { return v.Type }).(pulumi.StringOutput)
 }

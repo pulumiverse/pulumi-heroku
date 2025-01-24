@@ -11,6 +11,13 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get information about a Heroku Pipeline.
+//
+// > **NOTE:**
+// This data source can only be used to fetch information regarding a pipeline that has apps already associated to it.
+// This is a limitation in the Heroku Platform API where it is not possible to query a pipeline without apps by its name.
+//
+// ## Example Usage
 func LookupPipeline(ctx *pulumi.Context, args *LookupPipelineArgs, opts ...pulumi.InvokeOption) (*LookupPipelineResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupPipelineResult
@@ -23,33 +30,33 @@ func LookupPipeline(ctx *pulumi.Context, args *LookupPipelineArgs, opts ...pulum
 
 // A collection of arguments for invoking getPipeline.
 type LookupPipelineArgs struct {
+	// The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).
 	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getPipeline.
 type LookupPipelineResult struct {
 	// The provider-assigned unique ID for this managed resource.
-	Id        string `pulumi:"id"`
-	Name      string `pulumi:"name"`
-	OwnerId   string `pulumi:"ownerId"`
+	Id   string `pulumi:"id"`
+	Name string `pulumi:"name"`
+	// The pipeline owner's ID
+	OwnerId string `pulumi:"ownerId"`
+	// The pipeline owner's type
 	OwnerType string `pulumi:"ownerType"`
 }
 
 func LookupPipelineOutput(ctx *pulumi.Context, args LookupPipelineOutputArgs, opts ...pulumi.InvokeOption) LookupPipelineResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupPipelineResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupPipelineResultOutput, error) {
 			args := v.(LookupPipelineArgs)
-			r, err := LookupPipeline(ctx, &args, opts...)
-			var s LookupPipelineResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:pipeline/getPipeline:getPipeline", args, LookupPipelineResultOutput{}, options).(LookupPipelineResultOutput), nil
 		}).(LookupPipelineResultOutput)
 }
 
 // A collection of arguments for invoking getPipeline.
 type LookupPipelineOutputArgs struct {
+	// The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).
 	Name pulumi.StringInput `pulumi:"name"`
 }
 
@@ -81,10 +88,12 @@ func (o LookupPipelineResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupPipelineResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// The pipeline owner's ID
 func (o LookupPipelineResultOutput) OwnerId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupPipelineResult) string { return v.OwnerId }).(pulumi.StringOutput)
 }
 
+// The pipeline owner's type
 func (o LookupPipelineResultOutput) OwnerType() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupPipelineResult) string { return v.OwnerType }).(pulumi.StringOutput)
 }

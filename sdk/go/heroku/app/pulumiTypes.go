@@ -14,9 +14,12 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type AppOrganization struct {
-	Locked   *bool  `pulumi:"locked"`
-	Name     string `pulumi:"name"`
-	Personal *bool  `pulumi:"personal"`
+	// Are other team members forbidden from joining this app.
+	Locked *bool `pulumi:"locked"`
+	// The name of the Heroku Team.
+	Name string `pulumi:"name"`
+	// Force creation of the app in the user account even if a default team is set.
+	Personal *bool `pulumi:"personal"`
 }
 
 // AppOrganizationInput is an input type that accepts AppOrganizationArgs and AppOrganizationOutput values.
@@ -31,8 +34,11 @@ type AppOrganizationInput interface {
 }
 
 type AppOrganizationArgs struct {
-	Locked   pulumi.BoolPtrInput `pulumi:"locked"`
-	Name     pulumi.StringInput  `pulumi:"name"`
+	// Are other team members forbidden from joining this app.
+	Locked pulumi.BoolPtrInput `pulumi:"locked"`
+	// The name of the Heroku Team.
+	Name pulumi.StringInput `pulumi:"name"`
+	// Force creation of the app in the user account even if a default team is set.
 	Personal pulumi.BoolPtrInput `pulumi:"personal"`
 }
 
@@ -113,14 +119,17 @@ func (o AppOrganizationOutput) ToAppOrganizationPtrOutputWithContext(ctx context
 	}).(AppOrganizationPtrOutput)
 }
 
+// Are other team members forbidden from joining this app.
 func (o AppOrganizationOutput) Locked() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v AppOrganization) *bool { return v.Locked }).(pulumi.BoolPtrOutput)
 }
 
+// The name of the Heroku Team.
 func (o AppOrganizationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v AppOrganization) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Force creation of the app in the user account even if a default team is set.
 func (o AppOrganizationOutput) Personal() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v AppOrganization) *bool { return v.Personal }).(pulumi.BoolPtrOutput)
 }
@@ -149,6 +158,7 @@ func (o AppOrganizationPtrOutput) Elem() AppOrganizationOutput {
 	}).(AppOrganizationOutput)
 }
 
+// Are other team members forbidden from joining this app.
 func (o AppOrganizationPtrOutput) Locked() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *AppOrganization) *bool {
 		if v == nil {
@@ -158,6 +168,7 @@ func (o AppOrganizationPtrOutput) Locked() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// The name of the Heroku Team.
 func (o AppOrganizationPtrOutput) Name() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *AppOrganization) *string {
 		if v == nil {
@@ -167,6 +178,7 @@ func (o AppOrganizationPtrOutput) Name() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Force creation of the app in the user account even if a default team is set.
 func (o AppOrganizationPtrOutput) Personal() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *AppOrganization) *bool {
 		if v == nil {
@@ -177,7 +189,10 @@ func (o AppOrganizationPtrOutput) Personal() pulumi.BoolPtrOutput {
 }
 
 type GetAppOrganization struct {
-	Locked   bool   `pulumi:"locked"`
+	// True if the app access is locked
+	Locked bool `pulumi:"locked"`
+	// The name of the application. In Heroku, this is also the
+	// unique ID, so it must be unique and have a minimum of 3 characters.
 	Name     string `pulumi:"name"`
 	Personal bool   `pulumi:"personal"`
 }
@@ -194,7 +209,10 @@ type GetAppOrganizationInput interface {
 }
 
 type GetAppOrganizationArgs struct {
-	Locked   pulumi.BoolInput   `pulumi:"locked"`
+	// True if the app access is locked
+	Locked pulumi.BoolInput `pulumi:"locked"`
+	// The name of the application. In Heroku, this is also the
+	// unique ID, so it must be unique and have a minimum of 3 characters.
 	Name     pulumi.StringInput `pulumi:"name"`
 	Personal pulumi.BoolInput   `pulumi:"personal"`
 }
@@ -250,10 +268,13 @@ func (o GetAppOrganizationOutput) ToGetAppOrganizationOutputWithContext(ctx cont
 	return o
 }
 
+// True if the app access is locked
 func (o GetAppOrganizationOutput) Locked() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetAppOrganization) bool { return v.Locked }).(pulumi.BoolOutput)
 }
 
+// The name of the application. In Heroku, this is also the
+// unique ID, so it must be unique and have a minimum of 3 characters.
 func (o GetAppOrganizationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetAppOrganization) string { return v.Name }).(pulumi.StringOutput)
 }

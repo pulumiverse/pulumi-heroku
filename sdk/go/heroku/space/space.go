@@ -12,16 +12,39 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a Heroku Private Space resource for running apps in isolated, highly available, secure app execution environments.
+//
+// ## Example Usage
+//
+// A Heroku "team" was originally called an "organization", and that is still
+// the identifier used in this resource.
+//
+// ## Import
+//
+// Spaces can be imported using the space `id`, e.g.
+//
+// ```sh
+// $ pulumi import heroku:space/space:Space foobar MySpace
+// ```
 type Space struct {
 	pulumi.CustomResourceState
 
-	Cidr         pulumi.StringPtrOutput   `pulumi:"cidr"`
-	DataCidr     pulumi.StringOutput      `pulumi:"dataCidr"`
-	Name         pulumi.StringOutput      `pulumi:"name"`
-	Organization pulumi.StringOutput      `pulumi:"organization"`
-	OutboundIps  pulumi.StringArrayOutput `pulumi:"outboundIps"`
-	Region       pulumi.StringPtrOutput   `pulumi:"region"`
-	Shield       pulumi.BoolPtrOutput     `pulumi:"shield"`
+	// The RFC-1918 CIDR the Private Space will use.
+	// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr pulumi.StringPtrOutput `pulumi:"cidr"`
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+	// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+	DataCidr pulumi.StringOutput `pulumi:"dataCidr"`
+	// The name of the Private Space.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The name of the Heroku Team which will own the Private Space.
+	Organization pulumi.StringOutput `pulumi:"organization"`
+	// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+	OutboundIps pulumi.StringArrayOutput `pulumi:"outboundIps"`
+	// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+	Region pulumi.StringPtrOutput `pulumi:"region"`
+	// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+	Shield pulumi.BoolPtrOutput `pulumi:"shield"`
 }
 
 // NewSpace registers a new resource with the given unique name, arguments, and options.
@@ -57,23 +80,41 @@ func GetSpace(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Space resources.
 type spaceState struct {
-	Cidr         *string  `pulumi:"cidr"`
-	DataCidr     *string  `pulumi:"dataCidr"`
-	Name         *string  `pulumi:"name"`
-	Organization *string  `pulumi:"organization"`
-	OutboundIps  []string `pulumi:"outboundIps"`
-	Region       *string  `pulumi:"region"`
-	Shield       *bool    `pulumi:"shield"`
+	// The RFC-1918 CIDR the Private Space will use.
+	// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr *string `pulumi:"cidr"`
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+	// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+	DataCidr *string `pulumi:"dataCidr"`
+	// The name of the Private Space.
+	Name *string `pulumi:"name"`
+	// The name of the Heroku Team which will own the Private Space.
+	Organization *string `pulumi:"organization"`
+	// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+	OutboundIps []string `pulumi:"outboundIps"`
+	// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+	Region *string `pulumi:"region"`
+	// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+	Shield *bool `pulumi:"shield"`
 }
 
 type SpaceState struct {
-	Cidr         pulumi.StringPtrInput
-	DataCidr     pulumi.StringPtrInput
-	Name         pulumi.StringPtrInput
+	// The RFC-1918 CIDR the Private Space will use.
+	// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr pulumi.StringPtrInput
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+	// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+	DataCidr pulumi.StringPtrInput
+	// The name of the Private Space.
+	Name pulumi.StringPtrInput
+	// The name of the Heroku Team which will own the Private Space.
 	Organization pulumi.StringPtrInput
-	OutboundIps  pulumi.StringArrayInput
-	Region       pulumi.StringPtrInput
-	Shield       pulumi.BoolPtrInput
+	// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+	OutboundIps pulumi.StringArrayInput
+	// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+	Region pulumi.StringPtrInput
+	// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+	Shield pulumi.BoolPtrInput
 }
 
 func (SpaceState) ElementType() reflect.Type {
@@ -81,22 +122,38 @@ func (SpaceState) ElementType() reflect.Type {
 }
 
 type spaceArgs struct {
-	Cidr         *string `pulumi:"cidr"`
-	DataCidr     *string `pulumi:"dataCidr"`
-	Name         *string `pulumi:"name"`
-	Organization string  `pulumi:"organization"`
-	Region       *string `pulumi:"region"`
-	Shield       *bool   `pulumi:"shield"`
+	// The RFC-1918 CIDR the Private Space will use.
+	// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr *string `pulumi:"cidr"`
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+	// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+	DataCidr *string `pulumi:"dataCidr"`
+	// The name of the Private Space.
+	Name *string `pulumi:"name"`
+	// The name of the Heroku Team which will own the Private Space.
+	Organization string `pulumi:"organization"`
+	// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+	Region *string `pulumi:"region"`
+	// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+	Shield *bool `pulumi:"shield"`
 }
 
 // The set of arguments for constructing a Space resource.
 type SpaceArgs struct {
-	Cidr         pulumi.StringPtrInput
-	DataCidr     pulumi.StringPtrInput
-	Name         pulumi.StringPtrInput
+	// The RFC-1918 CIDR the Private Space will use.
+	// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr pulumi.StringPtrInput
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+	// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+	DataCidr pulumi.StringPtrInput
+	// The name of the Private Space.
+	Name pulumi.StringPtrInput
+	// The name of the Heroku Team which will own the Private Space.
 	Organization pulumi.StringInput
-	Region       pulumi.StringPtrInput
-	Shield       pulumi.BoolPtrInput
+	// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+	Region pulumi.StringPtrInput
+	// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+	Shield pulumi.BoolPtrInput
 }
 
 func (SpaceArgs) ElementType() reflect.Type {
@@ -186,30 +243,39 @@ func (o SpaceOutput) ToSpaceOutputWithContext(ctx context.Context) SpaceOutput {
 	return o
 }
 
+// The RFC-1918 CIDR the Private Space will use.
+// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
 func (o SpaceOutput) Cidr() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringPtrOutput { return v.Cidr }).(pulumi.StringPtrOutput)
 }
 
+// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
 func (o SpaceOutput) DataCidr() pulumi.StringOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringOutput { return v.DataCidr }).(pulumi.StringOutput)
 }
 
+// The name of the Private Space.
 func (o SpaceOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The name of the Heroku Team which will own the Private Space.
 func (o SpaceOutput) Organization() pulumi.StringOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringOutput { return v.Organization }).(pulumi.StringOutput)
 }
 
+// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
 func (o SpaceOutput) OutboundIps() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringArrayOutput { return v.OutboundIps }).(pulumi.StringArrayOutput)
 }
 
+// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
 func (o SpaceOutput) Region() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Space) pulumi.StringPtrOutput { return v.Region }).(pulumi.StringPtrOutput)
 }
 
+// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
 func (o SpaceOutput) Shield() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Space) pulumi.BoolPtrOutput { return v.Shield }).(pulumi.BoolPtrOutput)
 }

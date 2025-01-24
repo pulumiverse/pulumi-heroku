@@ -12,16 +12,58 @@ namespace Pulumiverse.Heroku.Addon
 {
     public static class GetAddon
     {
+        /// <summary>
+        /// Use this data source to get information about a Heroku Addon.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Lookup an existing Heroku add-on
+        /// data "heroku_addon" "example" {
+        ///   name = "example-addon-name"
+        /// }
+        /// ```
+        /// </summary>
         public static Task<GetAddonResult> InvokeAsync(GetAddonArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetAddonResult>("heroku:addon/getAddon:getAddon", args ?? new GetAddonArgs(), options.WithDefaults());
 
+        /// <summary>
+        /// Use this data source to get information about a Heroku Addon.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Lookup an existing Heroku add-on
+        /// data "heroku_addon" "example" {
+        ///   name = "example-addon-name"
+        /// }
+        /// ```
+        /// </summary>
         public static Output<GetAddonResult> Invoke(GetAddonInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetAddonResult>("heroku:addon/getAddon:getAddon", args ?? new GetAddonInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to get information about a Heroku Addon.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Lookup an existing Heroku add-on
+        /// data "heroku_addon" "example" {
+        ///   name = "example-addon-name"
+        /// }
+        /// ```
+        /// </summary>
+        public static Output<GetAddonResult> Invoke(GetAddonInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetAddonResult>("heroku:addon/getAddon:getAddon", args ?? new GetAddonInvokeArgs(), options.WithDefaults());
     }
 
 
     public sealed class GetAddonArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The add-on name
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
@@ -33,6 +75,9 @@ namespace Pulumiverse.Heroku.Addon
 
     public sealed class GetAddonInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The add-on name
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
@@ -46,11 +91,29 @@ namespace Pulumiverse.Heroku.Addon
     [OutputType]
     public sealed class GetAddonResult
     {
+        /// <summary>
+        /// Heroku app ID
+        /// </summary>
         public readonly string AppId;
+        /// <summary>
+        /// The Configuration variables of the add-on
+        /// </summary>
         public readonly ImmutableArray<string> ConfigVars;
+        /// <summary>
+        /// The ID of the add-on
+        /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// The add-on name
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// The plan name
+        /// </summary>
         public readonly string Plan;
+        /// <summary>
+        /// The ID of the plan provider
+        /// </summary>
         public readonly string ProviderId;
 
         [OutputConstructor]

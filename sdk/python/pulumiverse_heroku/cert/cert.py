@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['CertArgs', 'Cert']
@@ -19,6 +24,9 @@ class CertArgs:
                  private_key: pulumi.Input[str]):
         """
         The set of arguments for constructing a Cert resource.
+        :param pulumi.Input[str] app: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain
         """
         pulumi.set(__self__, "app", app)
         pulumi.set(__self__, "certificate_chain", certificate_chain)
@@ -27,6 +35,9 @@ class CertArgs:
     @property
     @pulumi.getter
     def app(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app")
 
     @app.setter
@@ -36,6 +47,9 @@ class CertArgs:
     @property
     @pulumi.getter(name="certificateChain")
     def certificate_chain(self) -> pulumi.Input[str]:
+        """
+        The certificate chain to add
+        """
         return pulumi.get(self, "certificate_chain")
 
     @certificate_chain.setter
@@ -45,6 +59,9 @@ class CertArgs:
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> pulumi.Input[str]:
+        """
+        The private key for a given certificate chain
+        """
         return pulumi.get(self, "private_key")
 
     @private_key.setter
@@ -62,6 +79,11 @@ class _CertState:
                  private_key: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Cert resources.
+        :param pulumi.Input[str] app: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add
+        :param pulumi.Input[str] cname: The CNAME for the SSL endpoint
+        :param pulumi.Input[str] name: The name of the SSL certificate
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain
         """
         if app is not None:
             pulumi.set(__self__, "app", app)
@@ -77,6 +99,9 @@ class _CertState:
     @property
     @pulumi.getter
     def app(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app")
 
     @app.setter
@@ -86,6 +111,9 @@ class _CertState:
     @property
     @pulumi.getter(name="certificateChain")
     def certificate_chain(self) -> Optional[pulumi.Input[str]]:
+        """
+        The certificate chain to add
+        """
         return pulumi.get(self, "certificate_chain")
 
     @certificate_chain.setter
@@ -95,6 +123,9 @@ class _CertState:
     @property
     @pulumi.getter
     def cname(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CNAME for the SSL endpoint
+        """
         return pulumi.get(self, "cname")
 
     @cname.setter
@@ -104,6 +135,9 @@ class _CertState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the SSL certificate
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -113,6 +147,9 @@ class _CertState:
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The private key for a given certificate chain
+        """
         return pulumi.get(self, "private_key")
 
     @private_key.setter
@@ -130,9 +167,21 @@ class Cert(pulumi.CustomResource):
                  private_key: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Cert resource with the given unique name, props, and options.
+        This resource manages an SSL certificate for a Heroku app.
+
+        !> **WARNING:** This resource is deprecated in favor of `ssl.Ssl`.
+
+        ## Example Usage
+
+        ## Importing
+
+        When importing a Heroku cert resource, the ID must be built using the app name colon the unique ID from the Heroku API. For an app named `production-api` with a certificate ID of `b85d9224-310b-409b-891e-c903f5a40568`, you would import it as:
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain
         """
         ...
     @overload
@@ -141,7 +190,16 @@ class Cert(pulumi.CustomResource):
                  args: CertArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Cert resource with the given unique name, props, and options.
+        This resource manages an SSL certificate for a Heroku app.
+
+        !> **WARNING:** This resource is deprecated in favor of `ssl.Ssl`.
+
+        ## Example Usage
+
+        ## Importing
+
+        When importing a Heroku cert resource, the ID must be built using the app name colon the unique ID from the Heroku API. For an app named `production-api` with a certificate ID of `b85d9224-310b-409b-891e-c903f5a40568`, you would import it as:
+
         :param str resource_name: The name of the resource.
         :param CertArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -204,6 +262,11 @@ class Cert(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] certificate_chain: The certificate chain to add
+        :param pulumi.Input[str] cname: The CNAME for the SSL endpoint
+        :param pulumi.Input[str] name: The name of the SSL certificate
+        :param pulumi.Input[str] private_key: The private key for a given certificate chain
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -219,25 +282,40 @@ class Cert(pulumi.CustomResource):
     @property
     @pulumi.getter
     def app(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app")
 
     @property
     @pulumi.getter(name="certificateChain")
     def certificate_chain(self) -> pulumi.Output[str]:
+        """
+        The certificate chain to add
+        """
         return pulumi.get(self, "certificate_chain")
 
     @property
     @pulumi.getter
     def cname(self) -> pulumi.Output[str]:
+        """
+        The CNAME for the SSL endpoint
+        """
         return pulumi.get(self, "cname")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the SSL certificate
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> pulumi.Output[str]:
+        """
+        The private key for a given certificate chain
+        """
         return pulumi.get(self, "private_key")
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['ReleaseArgs', 'Release']
@@ -19,6 +24,9 @@ class ReleaseArgs:
                  description: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Release resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] slug_id: unique identifier of slug
+        :param pulumi.Input[str] description: description of changes in this release
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "slug_id", slug_id)
@@ -28,6 +36,9 @@ class ReleaseArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -37,6 +48,9 @@ class ReleaseArgs:
     @property
     @pulumi.getter(name="slugId")
     def slug_id(self) -> pulumi.Input[str]:
+        """
+        unique identifier of slug
+        """
         return pulumi.get(self, "slug_id")
 
     @slug_id.setter
@@ -46,6 +60,9 @@ class ReleaseArgs:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        description of changes in this release
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -61,6 +78,9 @@ class _ReleaseState:
                  slug_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Release resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] description: description of changes in this release
+        :param pulumi.Input[str] slug_id: unique identifier of slug
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -72,6 +92,9 @@ class _ReleaseState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -81,6 +104,9 @@ class _ReleaseState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        description of changes in this release
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -90,6 +116,9 @@ class _ReleaseState:
     @property
     @pulumi.getter(name="slugId")
     def slug_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        unique identifier of slug
+        """
         return pulumi.get(self, "slug_id")
 
     @slug_id.setter
@@ -107,9 +136,23 @@ class Release(pulumi.CustomResource):
                  slug_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Release resource with the given unique name, props, and options.
+        ## Example Usage
+
+        ## Import
+
+        The most recent app release can be imported using the application name.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:app/release:Release foobar-release foobar
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] description: description of changes in this release
+        :param pulumi.Input[str] slug_id: unique identifier of slug
         """
         ...
     @overload
@@ -118,7 +161,18 @@ class Release(pulumi.CustomResource):
                  args: ReleaseArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Release resource with the given unique name, props, and options.
+        ## Example Usage
+
+        ## Import
+
+        The most recent app release can be imported using the application name.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:app/release:Release foobar-release foobar
+        ```
+
         :param str resource_name: The name of the resource.
         :param ReleaseArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -173,6 +227,9 @@ class Release(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] description: description of changes in this release
+        :param pulumi.Input[str] slug_id: unique identifier of slug
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -186,15 +243,24 @@ class Release(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[str]:
+        """
+        description of changes in this release
+        """
         return pulumi.get(self, "description")
 
     @property
     @pulumi.getter(name="slugId")
     def slug_id(self) -> pulumi.Output[str]:
+        """
+        unique identifier of slug
+        """
         return pulumi.get(self, "slug_id")
 

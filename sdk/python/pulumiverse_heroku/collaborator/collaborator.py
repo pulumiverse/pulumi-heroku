@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['CollaboratorArgs', 'Collaborator']
@@ -18,6 +23,8 @@ class CollaboratorArgs:
                  email: pulumi.Input[str]):
         """
         The set of arguments for constructing a Collaborator resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the collaborator
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "email", email)
@@ -25,6 +32,9 @@ class CollaboratorArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -34,6 +44,9 @@ class CollaboratorArgs:
     @property
     @pulumi.getter
     def email(self) -> pulumi.Input[str]:
+        """
+        Email address of the collaborator
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -48,6 +61,8 @@ class _CollaboratorState:
                  email: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Collaborator resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the collaborator
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -57,6 +72,9 @@ class _CollaboratorState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -66,6 +84,9 @@ class _CollaboratorState:
     @property
     @pulumi.getter
     def email(self) -> Optional[pulumi.Input[str]]:
+        """
+        Email address of the collaborator
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -82,9 +103,28 @@ class Collaborator(pulumi.CustomResource):
                  email: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Collaborator resource with the given unique name, props, and options.
+        A [Heroku Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#collaborator)
+        receives access to a specific app that is not owned by a team.
+
+        > **IMPORTANT!:**
+        This resource only works for apps that are not part of a team.
+
+        ## Example Usage
+
+        ## Import
+
+        Collaborators can be imported using the combination of the application name, a colon, and the collaborator's email address
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:collaborator/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the collaborator
         """
         ...
     @overload
@@ -93,7 +133,24 @@ class Collaborator(pulumi.CustomResource):
                  args: CollaboratorArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Collaborator resource with the given unique name, props, and options.
+        A [Heroku Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#collaborator)
+        receives access to a specific app that is not owned by a team.
+
+        > **IMPORTANT!:**
+        This resource only works for apps that are not part of a team.
+
+        ## Example Usage
+
+        ## Import
+
+        Collaborators can be imported using the combination of the application name, a colon, and the collaborator's email address
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:collaborator/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+        ```
+
         :param str resource_name: The name of the resource.
         :param CollaboratorArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -145,6 +202,8 @@ class Collaborator(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] email: Email address of the collaborator
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -157,10 +216,16 @@ class Collaborator(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def email(self) -> pulumi.Output[str]:
+        """
+        Email address of the collaborator
+        """
         return pulumi.get(self, "email")
 

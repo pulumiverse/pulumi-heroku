@@ -14,7 +14,13 @@ namespace Pulumiverse.Heroku.Slug.Outputs
     [OutputType]
     public sealed class SlugBlob
     {
+        /// <summary>
+        /// HTTP method to upload the archive
+        /// </summary>
         public readonly string? Method;
+        /// <summary>
+        /// Pre-signed, expiring URL to upload the archive
+        /// </summary>
         public readonly string? Url;
 
         [OutputConstructor]

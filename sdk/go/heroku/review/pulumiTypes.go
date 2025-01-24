@@ -14,7 +14,9 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type AppConfigDeployTarget struct {
-	Id   string `pulumi:"id"`
+	// Unique identifier of deploy target.
+	Id string `pulumi:"id"`
+	// Type of deploy target. Must be either `space` or `region`.
 	Type string `pulumi:"type"`
 }
 
@@ -30,7 +32,9 @@ type AppConfigDeployTargetInput interface {
 }
 
 type AppConfigDeployTargetArgs struct {
-	Id   pulumi.StringInput `pulumi:"id"`
+	// Unique identifier of deploy target.
+	Id pulumi.StringInput `pulumi:"id"`
+	// Type of deploy target. Must be either `space` or `region`.
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
@@ -111,10 +115,12 @@ func (o AppConfigDeployTargetOutput) ToAppConfigDeployTargetPtrOutputWithContext
 	}).(AppConfigDeployTargetPtrOutput)
 }
 
+// Unique identifier of deploy target.
 func (o AppConfigDeployTargetOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v AppConfigDeployTarget) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// Type of deploy target. Must be either `space` or `region`.
 func (o AppConfigDeployTargetOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v AppConfigDeployTarget) string { return v.Type }).(pulumi.StringOutput)
 }
@@ -143,6 +149,7 @@ func (o AppConfigDeployTargetPtrOutput) Elem() AppConfigDeployTargetOutput {
 	}).(AppConfigDeployTargetOutput)
 }
 
+// Unique identifier of deploy target.
 func (o AppConfigDeployTargetPtrOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *AppConfigDeployTarget) *string {
 		if v == nil {
@@ -152,6 +159,7 @@ func (o AppConfigDeployTargetPtrOutput) Id() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Type of deploy target. Must be either `space` or `region`.
 func (o AppConfigDeployTargetPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *AppConfigDeployTarget) *string {
 		if v == nil {

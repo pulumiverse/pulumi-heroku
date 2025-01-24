@@ -12,13 +12,30 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a Heroku Drain resource. This can be used to
+// create and manage Log Drains on Heroku.
+//
+// ## Example Usage
+//
+// ## Importing
+//
+// When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+// For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `url` attribute value
+// defined for the resource, you would import it as:
+//
+// When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+// For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `sensitiveUrl` attribute value
+// defined for the resource, you would import it as:
 type Drain struct {
 	pulumi.CustomResourceState
 
+	// Heroku app ID (do not use app name)
 	AppId        pulumi.StringOutput    `pulumi:"appId"`
 	SensitiveUrl pulumi.StringPtrOutput `pulumi:"sensitiveUrl"`
-	Token        pulumi.StringOutput    `pulumi:"token"`
-	Url          pulumi.StringPtrOutput `pulumi:"url"`
+	// The unique token for your created drain.
+	Token pulumi.StringOutput `pulumi:"token"`
+	// The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+	Url pulumi.StringPtrOutput `pulumi:"url"`
 }
 
 // NewDrain registers a new resource with the given unique name, arguments, and options.
@@ -61,17 +78,23 @@ func GetDrain(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Drain resources.
 type drainState struct {
+	// Heroku app ID (do not use app name)
 	AppId        *string `pulumi:"appId"`
 	SensitiveUrl *string `pulumi:"sensitiveUrl"`
-	Token        *string `pulumi:"token"`
-	Url          *string `pulumi:"url"`
+	// The unique token for your created drain.
+	Token *string `pulumi:"token"`
+	// The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+	Url *string `pulumi:"url"`
 }
 
 type DrainState struct {
+	// Heroku app ID (do not use app name)
 	AppId        pulumi.StringPtrInput
 	SensitiveUrl pulumi.StringPtrInput
-	Token        pulumi.StringPtrInput
-	Url          pulumi.StringPtrInput
+	// The unique token for your created drain.
+	Token pulumi.StringPtrInput
+	// The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+	Url pulumi.StringPtrInput
 }
 
 func (DrainState) ElementType() reflect.Type {
@@ -79,16 +102,20 @@ func (DrainState) ElementType() reflect.Type {
 }
 
 type drainArgs struct {
+	// Heroku app ID (do not use app name)
 	AppId        string  `pulumi:"appId"`
 	SensitiveUrl *string `pulumi:"sensitiveUrl"`
-	Url          *string `pulumi:"url"`
+	// The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+	Url *string `pulumi:"url"`
 }
 
 // The set of arguments for constructing a Drain resource.
 type DrainArgs struct {
+	// Heroku app ID (do not use app name)
 	AppId        pulumi.StringInput
 	SensitiveUrl pulumi.StringPtrInput
-	Url          pulumi.StringPtrInput
+	// The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
+	Url pulumi.StringPtrInput
 }
 
 func (DrainArgs) ElementType() reflect.Type {
@@ -178,6 +205,7 @@ func (o DrainOutput) ToDrainOutputWithContext(ctx context.Context) DrainOutput {
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o DrainOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Drain) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
@@ -186,10 +214,12 @@ func (o DrainOutput) SensitiveUrl() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Drain) pulumi.StringPtrOutput { return v.SensitiveUrl }).(pulumi.StringPtrOutput)
 }
 
+// The unique token for your created drain.
 func (o DrainOutput) Token() pulumi.StringOutput {
 	return o.ApplyT(func(v *Drain) pulumi.StringOutput { return v.Token }).(pulumi.StringOutput)
 }
 
+// The URL for Heroku to drain your logs to. Either `url` or `sensitiveUrl` must be defined.
 func (o DrainOutput) Url() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Drain) pulumi.StringPtrOutput { return v.Url }).(pulumi.StringPtrOutput)
 }

@@ -14,7 +14,9 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type InboundRulesetRule struct {
+	// The action to apply this rule to. Must be one of `allow` or `deny`.
 	Action string `pulumi:"action"`
+	// A CIDR block source for the rule.
 	Source string `pulumi:"source"`
 }
 
@@ -30,7 +32,9 @@ type InboundRulesetRuleInput interface {
 }
 
 type InboundRulesetRuleArgs struct {
+	// The action to apply this rule to. Must be one of `allow` or `deny`.
 	Action pulumi.StringInput `pulumi:"action"`
+	// A CIDR block source for the rule.
 	Source pulumi.StringInput `pulumi:"source"`
 }
 
@@ -85,10 +89,12 @@ func (o InboundRulesetRuleOutput) ToInboundRulesetRuleOutputWithContext(ctx cont
 	return o
 }
 
+// The action to apply this rule to. Must be one of `allow` or `deny`.
 func (o InboundRulesetRuleOutput) Action() pulumi.StringOutput {
 	return o.ApplyT(func(v InboundRulesetRule) string { return v.Action }).(pulumi.StringOutput)
 }
 
+// A CIDR block source for the rule.
 func (o InboundRulesetRuleOutput) Source() pulumi.StringOutput {
 	return o.ApplyT(func(v InboundRulesetRule) string { return v.Source }).(pulumi.StringOutput)
 }
@@ -114,7 +120,9 @@ func (o InboundRulesetRuleArrayOutput) Index(i pulumi.IntInput) InboundRulesetRu
 }
 
 type VpnConnectionTunnel struct {
-	Ip           *string `pulumi:"ip"`
+	// The public IP address of the tunnel.
+	Ip *string `pulumi:"ip"`
+	// The pre-shared IPSec secret for the tunnel.
 	PreSharedKey *string `pulumi:"preSharedKey"`
 }
 
@@ -130,7 +138,9 @@ type VpnConnectionTunnelInput interface {
 }
 
 type VpnConnectionTunnelArgs struct {
-	Ip           pulumi.StringPtrInput `pulumi:"ip"`
+	// The public IP address of the tunnel.
+	Ip pulumi.StringPtrInput `pulumi:"ip"`
+	// The pre-shared IPSec secret for the tunnel.
 	PreSharedKey pulumi.StringPtrInput `pulumi:"preSharedKey"`
 }
 
@@ -185,10 +195,12 @@ func (o VpnConnectionTunnelOutput) ToVpnConnectionTunnelOutputWithContext(ctx co
 	return o
 }
 
+// The public IP address of the tunnel.
 func (o VpnConnectionTunnelOutput) Ip() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v VpnConnectionTunnel) *string { return v.Ip }).(pulumi.StringPtrOutput)
 }
 
+// The pre-shared IPSec secret for the tunnel.
 func (o VpnConnectionTunnelOutput) PreSharedKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v VpnConnectionTunnel) *string { return v.PreSharedKey }).(pulumi.StringPtrOutput)
 }

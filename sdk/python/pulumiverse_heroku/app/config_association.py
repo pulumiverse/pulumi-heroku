@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['ConfigAssociationArgs', 'ConfigAssociation']
@@ -19,6 +24,8 @@ class ConfigAssociationArgs:
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a ConfigAssociation resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         pulumi.set(__self__, "app_id", app_id)
         if sensitive_vars is not None:
@@ -29,6 +36,9 @@ class ConfigAssociationArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -47,6 +57,9 @@ class ConfigAssociationArgs:
     @property
     @pulumi.getter
     def vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of config vars that can be output in plaintext.
+        """
         return pulumi.get(self, "vars")
 
     @vars.setter
@@ -62,6 +75,8 @@ class _ConfigAssociationState:
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering ConfigAssociation resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -73,6 +88,9 @@ class _ConfigAssociationState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -91,6 +109,9 @@ class _ConfigAssociationState:
     @property
     @pulumi.getter
     def vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of config vars that can be output in plaintext.
+        """
         return pulumi.get(self, "vars")
 
     @vars.setter
@@ -108,9 +129,24 @@ class ConfigAssociation(pulumi.CustomResource):
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
-        Create a ConfigAssociation resource with the given unique name, props, and options.
+        ## Import
+
+        This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+
+        during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+
+        this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+
+        this resource.
+
+        However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+
+        as the end result is `noop` when the config vars already exist on the remote resource.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         ...
     @overload
@@ -119,7 +155,20 @@ class ConfigAssociation(pulumi.CustomResource):
                  args: ConfigAssociationArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a ConfigAssociation resource with the given unique name, props, and options.
+        ## Import
+
+        This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+
+        during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+
+        this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+
+        this resource.
+
+        However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+
+        as the end result is `noop` when the config vars already exist on the remote resource.
+
         :param str resource_name: The name of the resource.
         :param ConfigAssociationArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -174,6 +223,8 @@ class ConfigAssociation(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of config vars that can be output in plaintext.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -187,6 +238,9 @@ class ConfigAssociation(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
@@ -197,5 +251,8 @@ class ConfigAssociation(pulumi.CustomResource):
     @property
     @pulumi.getter
     def vars(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Map of config vars that can be output in plaintext.
+        """
         return pulumi.get(self, "vars")
 

@@ -14,11 +14,29 @@ namespace Pulumiverse.Heroku.Team.Outputs
     [OutputType]
     public sealed class GetMembersMemberResult
     {
+        /// <summary>
+        /// Email address of the team member.
+        /// </summary>
         public readonly string Email;
+        /// <summary>
+        /// Whether the user is federated and belongs to an Identity Provider.
+        /// </summary>
         public readonly bool Federated;
+        /// <summary>
+        /// Role in the team.
+        /// </summary>
         public readonly string Role;
+        /// <summary>
+        /// Unique identifier of the team member on the team.
+        /// </summary>
         public readonly string TeamMemberId;
+        /// <summary>
+        /// Whether the Enterprise team member has two-factor authentication enabled.
+        /// </summary>
         public readonly bool TwoFactorAuthentication;
+        /// <summary>
+        /// Unique identifier of the team member. This is the member's user ID in Heroku.
+        /// </summary>
         public readonly string UserId;
 
         [OutputConstructor]

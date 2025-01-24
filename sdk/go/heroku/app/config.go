@@ -11,11 +11,17 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// ## Import
+//
+// The `heroku_config` resource is a meta-resource, managed only within Terraform state.
+//
+// It does not exist as a native Heroku resource. Therefore, it is not possible to import an existing `heroku_config` configuration.
 type Config struct {
 	pulumi.CustomResourceState
 
 	SensitiveVars pulumi.StringMapOutput `pulumi:"sensitiveVars"`
-	Vars          pulumi.StringMapOutput `pulumi:"vars"`
+	// Map of vars that are can be outputted in plaintext.
+	Vars pulumi.StringMapOutput `pulumi:"vars"`
 }
 
 // NewConfig registers a new resource with the given unique name, arguments, and options.
@@ -56,12 +62,14 @@ func GetConfig(ctx *pulumi.Context,
 // Input properties used for looking up and filtering Config resources.
 type configState struct {
 	SensitiveVars map[string]string `pulumi:"sensitiveVars"`
-	Vars          map[string]string `pulumi:"vars"`
+	// Map of vars that are can be outputted in plaintext.
+	Vars map[string]string `pulumi:"vars"`
 }
 
 type ConfigState struct {
 	SensitiveVars pulumi.StringMapInput
-	Vars          pulumi.StringMapInput
+	// Map of vars that are can be outputted in plaintext.
+	Vars pulumi.StringMapInput
 }
 
 func (ConfigState) ElementType() reflect.Type {
@@ -70,13 +78,15 @@ func (ConfigState) ElementType() reflect.Type {
 
 type configArgs struct {
 	SensitiveVars map[string]string `pulumi:"sensitiveVars"`
-	Vars          map[string]string `pulumi:"vars"`
+	// Map of vars that are can be outputted in plaintext.
+	Vars map[string]string `pulumi:"vars"`
 }
 
 // The set of arguments for constructing a Config resource.
 type ConfigArgs struct {
 	SensitiveVars pulumi.StringMapInput
-	Vars          pulumi.StringMapInput
+	// Map of vars that are can be outputted in plaintext.
+	Vars pulumi.StringMapInput
 }
 
 func (ConfigArgs) ElementType() reflect.Type {
@@ -170,6 +180,7 @@ func (o ConfigOutput) SensitiveVars() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Config) pulumi.StringMapOutput { return v.SensitiveVars }).(pulumi.StringMapOutput)
 }
 
+// Map of vars that are can be outputted in plaintext.
 func (o ConfigOutput) Vars() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Config) pulumi.StringMapOutput { return v.Vars }).(pulumi.StringMapOutput)
 }

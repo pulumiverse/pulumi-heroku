@@ -4,6 +4,27 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a [Heroku Pipeline Coupling](https://devcenter.heroku.com/articles/pipelines)
+ * resource.
+ *
+ * A pipeline is a group of Heroku apps that share the same codebase. Once a
+ * pipeline is created using `heroku.pipeline.Pipeline`, and apps are added
+ * to different stages using `heroku.pipeline.Coupling`, you can promote app slugs
+ * to the downstream stages.
+ *
+ * See `heroku.pipeline.Pipeline` for complete usage documentation.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Pipeline couplings can be imported using the Pipeline coupling `id`, e.g.
+ *
+ * ```sh
+ * $ pulumi import heroku:pipeline/coupling:Coupling foobar 12345678
+ * ```
+ */
 export class Coupling extends pulumi.CustomResource {
     /**
      * Get an existing Coupling resource's state with the given name, ID, and optional extra
@@ -32,8 +53,18 @@ export class Coupling extends pulumi.CustomResource {
         return obj['__pulumiType'] === Coupling.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * The ID of the pipeline to add this app to.
+     */
     public readonly pipeline!: pulumi.Output<string>;
+    /**
+     * The stage to couple this app to. Must be one of
+     * `review`, `development`, `staging`, or `production`.
+     */
     public readonly stage!: pulumi.Output<string>;
 
     /**
@@ -76,8 +107,18 @@ export class Coupling extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Coupling resources.
  */
 export interface CouplingState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * The ID of the pipeline to add this app to.
+     */
     pipeline?: pulumi.Input<string>;
+    /**
+     * The stage to couple this app to. Must be one of
+     * `review`, `development`, `staging`, or `production`.
+     */
     stage?: pulumi.Input<string>;
 }
 
@@ -85,7 +126,17 @@ export interface CouplingState {
  * The set of arguments for constructing a Coupling resource.
  */
 export interface CouplingArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * The ID of the pipeline to add this app to.
+     */
     pipeline: pulumi.Input<string>;
+    /**
+     * The stage to couple this app to. Must be one of
+     * `review`, `development`, `staging`, or `production`.
+     */
     stage: pulumi.Input<string>;
 }

@@ -10,18 +10,43 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Addon
 {
+    /// <summary>
+    /// Attaches a Heroku Addon Resource to an additional Heroku App.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Addons can be imported using the unique Addon Attachment `id`, e.g.
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:addon/attachment:Attachment")]
     public partial class Attachment : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The ID of the existing Heroku Addon to attach.
+        /// </summary>
         [Output("addonId")]
         public Output<string> AddonId { get; private set; } = null!;
 
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// A friendly name for the Heroku Addon Attachment.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+        /// </summary>
         [Output("namespace")]
         public Output<string> Namespace { get; private set; } = null!;
 
@@ -72,15 +97,27 @@ namespace Pulumiverse.Heroku.Addon
 
     public sealed class AttachmentArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID of the existing Heroku Addon to attach.
+        /// </summary>
         [Input("addonId", required: true)]
         public Input<string> AddonId { get; set; } = null!;
 
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// A friendly name for the Heroku Addon Attachment.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+        /// </summary>
         [Input("namespace")]
         public Input<string>? Namespace { get; set; }
 
@@ -92,15 +129,27 @@ namespace Pulumiverse.Heroku.Addon
 
     public sealed class AttachmentState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID of the existing Heroku Addon to attach.
+        /// </summary>
         [Input("addonId")]
         public Input<string>? AddonId { get; set; }
 
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// A friendly name for the Heroku Addon Attachment.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+        /// </summary>
         [Input("namespace")]
         public Input<string>? Namespace { get; set; }
 

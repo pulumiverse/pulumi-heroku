@@ -10,12 +10,37 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Collaborator
 {
+    /// <summary>
+    /// A [Heroku Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#collaborator)
+    /// receives access to a specific app that is not owned by a team.
+    /// 
+    /// &gt; **IMPORTANT!:**
+    /// This resource only works for apps that are not part of a team.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Collaborators can be imported using the combination of the application name, a colon, and the collaborator's email address
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:collaborator/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:collaborator/collaborator:Collaborator")]
     public partial class Collaborator : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// Email address of the collaborator
+        /// </summary>
         [Output("email")]
         public Output<string> Email { get; private set; } = null!;
 
@@ -66,9 +91,15 @@ namespace Pulumiverse.Heroku.Collaborator
 
     public sealed class CollaboratorArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// Email address of the collaborator
+        /// </summary>
         [Input("email", required: true)]
         public Input<string> Email { get; set; } = null!;
 
@@ -80,9 +111,15 @@ namespace Pulumiverse.Heroku.Collaborator
 
     public sealed class CollaboratorState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// Email address of the collaborator
+        /// </summary>
         [Input("email")]
         public Input<string>? Email { get; set; }
 

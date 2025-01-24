@@ -4,6 +4,22 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a Heroku Private Space resource for running apps in isolated, highly available, secure app execution environments.
+ *
+ * ## Example Usage
+ *
+ * A Heroku "team" was originally called an "organization", and that is still
+ * the identifier used in this resource.
+ *
+ * ## Import
+ *
+ * Spaces can be imported using the space `id`, e.g.
+ *
+ * ```sh
+ * $ pulumi import heroku:space/space:Space foobar MySpace
+ * ```
+ */
 export class Space extends pulumi.CustomResource {
     /**
      * Get an existing Space resource's state with the given name, ID, and optional extra
@@ -32,12 +48,35 @@ export class Space extends pulumi.CustomResource {
         return obj['__pulumiType'] === Space.__pulumiType;
     }
 
+    /**
+     * The RFC-1918 CIDR the Private Space will use.
+     * It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+     */
     public readonly cidr!: pulumi.Output<string | undefined>;
+    /**
+     * The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+     * that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+     */
     public readonly dataCidr!: pulumi.Output<string>;
+    /**
+     * The name of the Private Space.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * The name of the Heroku Team which will own the Private Space.
+     */
     public readonly organization!: pulumi.Output<string>;
+    /**
+     * The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+     */
     public /*out*/ readonly outboundIps!: pulumi.Output<string[]>;
+    /**
+     * provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+     */
     public readonly region!: pulumi.Output<string | undefined>;
+    /**
+     * provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+     */
     public readonly shield!: pulumi.Output<boolean | undefined>;
 
     /**
@@ -82,12 +121,35 @@ export class Space extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Space resources.
  */
 export interface SpaceState {
+    /**
+     * The RFC-1918 CIDR the Private Space will use.
+     * It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+     */
     cidr?: pulumi.Input<string>;
+    /**
+     * The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+     * that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+     */
     dataCidr?: pulumi.Input<string>;
+    /**
+     * The name of the Private Space.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The name of the Heroku Team which will own the Private Space.
+     */
     organization?: pulumi.Input<string>;
+    /**
+     * The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+     */
     outboundIps?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+     */
     region?: pulumi.Input<string>;
+    /**
+     * provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+     */
     shield?: pulumi.Input<boolean>;
 }
 
@@ -95,10 +157,30 @@ export interface SpaceState {
  * The set of arguments for constructing a Space resource.
  */
 export interface SpaceArgs {
+    /**
+     * The RFC-1918 CIDR the Private Space will use.
+     * It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+     */
     cidr?: pulumi.Input<string>;
+    /**
+     * The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+     * that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+     */
     dataCidr?: pulumi.Input<string>;
+    /**
+     * The name of the Private Space.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The name of the Heroku Team which will own the Private Space.
+     */
     organization: pulumi.Input<string>;
+    /**
+     * provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+     */
     region?: pulumi.Input<string>;
+    /**
+     * provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+     */
     shield?: pulumi.Input<boolean>;
 }

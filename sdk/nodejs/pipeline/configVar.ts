@@ -4,6 +4,32 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a resource to manage a pipeline's config vars.
+ *
+ * The pipeline config var API can only retrieve config vars that can be set at the pipeline level.
+ * Additionally, these two supported pipeline stages are:
+ * - [Heroku CI](https://devcenter.heroku.com/articles/heroku-ci#setting-environment-variables-the-env-key) config vars (test stage)
+ * - [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps#configuration) config vars (review stage)
+ *
+ * The development, staging & production stages do not have stage-level config vars, only those on the apps within each stage.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+ *
+ * during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+ *
+ * this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+ *
+ * this resource.
+ *
+ * However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+ *
+ * as the end result is `noop` when the config vars already exist on the remote resource.
+ */
 export class ConfigVar extends pulumi.CustomResource {
     /**
      * Get an existing ConfigVar resource's state with the given name, ID, and optional extra
@@ -32,10 +58,22 @@ export class ConfigVar extends pulumi.CustomResource {
         return obj['__pulumiType'] === ConfigVar.__pulumiType;
     }
 
-    public /*out*/ readonly allVars!: pulumi.Output<{[key: string]: any}>;
+    /**
+     * All vars of a pipeline stage. This is marked `sensitive` so that `sensitiveVars` do not leak in the console/logs.
+     */
+    public /*out*/ readonly allVars!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * The UUID of an existing pipeline.
+     */
     public readonly pipelineId!: pulumi.Output<string>;
+    /**
+     * The pipeline's stage. Supported values are `test` & `review`.
+     */
     public readonly pipelineStage!: pulumi.Output<string>;
     public readonly sensitiveVars!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Map of config vars that can be output in plaintext.
+     */
     public readonly vars!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -81,10 +119,22 @@ export class ConfigVar extends pulumi.CustomResource {
  * Input properties used for looking up and filtering ConfigVar resources.
  */
 export interface ConfigVarState {
-    allVars?: pulumi.Input<{[key: string]: any}>;
+    /**
+     * All vars of a pipeline stage. This is marked `sensitive` so that `sensitiveVars` do not leak in the console/logs.
+     */
+    allVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The UUID of an existing pipeline.
+     */
     pipelineId?: pulumi.Input<string>;
+    /**
+     * The pipeline's stage. Supported values are `test` & `review`.
+     */
     pipelineStage?: pulumi.Input<string>;
     sensitiveVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Map of config vars that can be output in plaintext.
+     */
     vars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -92,8 +142,17 @@ export interface ConfigVarState {
  * The set of arguments for constructing a ConfigVar resource.
  */
 export interface ConfigVarArgs {
+    /**
+     * The UUID of an existing pipeline.
+     */
     pipelineId: pulumi.Input<string>;
+    /**
+     * The pipeline's stage. Supported values are `test` & `review`.
+     */
     pipelineStage: pulumi.Input<string>;
     sensitiveVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Map of config vars that can be output in plaintext.
+     */
     vars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

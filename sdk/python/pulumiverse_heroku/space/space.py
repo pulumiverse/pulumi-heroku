@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['SpaceArgs', 'Space']
@@ -22,6 +27,14 @@ class SpaceArgs:
                  shield: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Space resource.
+        :param pulumi.Input[str] organization: The name of the Heroku Team which will own the Private Space.
+        :param pulumi.Input[str] cidr: The RFC-1918 CIDR the Private Space will use.
+               It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        :param pulumi.Input[str] data_cidr: The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+               that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        :param pulumi.Input[str] name: The name of the Private Space.
+        :param pulumi.Input[str] region: provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        :param pulumi.Input[bool] shield: provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
         """
         pulumi.set(__self__, "organization", organization)
         if cidr is not None:
@@ -38,6 +51,9 @@ class SpaceArgs:
     @property
     @pulumi.getter
     def organization(self) -> pulumi.Input[str]:
+        """
+        The name of the Heroku Team which will own the Private Space.
+        """
         return pulumi.get(self, "organization")
 
     @organization.setter
@@ -47,6 +63,10 @@ class SpaceArgs:
     @property
     @pulumi.getter
     def cidr(self) -> Optional[pulumi.Input[str]]:
+        """
+        The RFC-1918 CIDR the Private Space will use.
+        It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        """
         return pulumi.get(self, "cidr")
 
     @cidr.setter
@@ -56,6 +76,10 @@ class SpaceArgs:
     @property
     @pulumi.getter(name="dataCidr")
     def data_cidr(self) -> Optional[pulumi.Input[str]]:
+        """
+        The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+        that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        """
         return pulumi.get(self, "data_cidr")
 
     @data_cidr.setter
@@ -65,6 +89,9 @@ class SpaceArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the Private Space.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -74,6 +101,9 @@ class SpaceArgs:
     @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
+        """
+        provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -83,6 +113,9 @@ class SpaceArgs:
     @property
     @pulumi.getter
     def shield(self) -> Optional[pulumi.Input[bool]]:
+        """
+        provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+        """
         return pulumi.get(self, "shield")
 
     @shield.setter
@@ -102,6 +135,15 @@ class _SpaceState:
                  shield: Optional[pulumi.Input[bool]] = None):
         """
         Input properties used for looking up and filtering Space resources.
+        :param pulumi.Input[str] cidr: The RFC-1918 CIDR the Private Space will use.
+               It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        :param pulumi.Input[str] data_cidr: The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+               that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        :param pulumi.Input[str] name: The name of the Private Space.
+        :param pulumi.Input[str] organization: The name of the Heroku Team which will own the Private Space.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] outbound_ips: The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        :param pulumi.Input[str] region: provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        :param pulumi.Input[bool] shield: provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
         """
         if cidr is not None:
             pulumi.set(__self__, "cidr", cidr)
@@ -121,6 +163,10 @@ class _SpaceState:
     @property
     @pulumi.getter
     def cidr(self) -> Optional[pulumi.Input[str]]:
+        """
+        The RFC-1918 CIDR the Private Space will use.
+        It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        """
         return pulumi.get(self, "cidr")
 
     @cidr.setter
@@ -130,6 +176,10 @@ class _SpaceState:
     @property
     @pulumi.getter(name="dataCidr")
     def data_cidr(self) -> Optional[pulumi.Input[str]]:
+        """
+        The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+        that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        """
         return pulumi.get(self, "data_cidr")
 
     @data_cidr.setter
@@ -139,6 +189,9 @@ class _SpaceState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the Private Space.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -148,6 +201,9 @@ class _SpaceState:
     @property
     @pulumi.getter
     def organization(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the Heroku Team which will own the Private Space.
+        """
         return pulumi.get(self, "organization")
 
     @organization.setter
@@ -157,6 +213,9 @@ class _SpaceState:
     @property
     @pulumi.getter(name="outboundIps")
     def outbound_ips(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        """
         return pulumi.get(self, "outbound_ips")
 
     @outbound_ips.setter
@@ -166,6 +225,9 @@ class _SpaceState:
     @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
+        """
+        provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -175,6 +237,9 @@ class _SpaceState:
     @property
     @pulumi.getter
     def shield(self) -> Optional[pulumi.Input[bool]]:
+        """
+        provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+        """
         return pulumi.get(self, "shield")
 
     @shield.setter
@@ -195,9 +260,31 @@ class Space(pulumi.CustomResource):
                  shield: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
         """
-        Create a Space resource with the given unique name, props, and options.
+        Provides a Heroku Private Space resource for running apps in isolated, highly available, secure app execution environments.
+
+        ## Example Usage
+
+        A Heroku "team" was originally called an "organization", and that is still
+        the identifier used in this resource.
+
+        ## Import
+
+        Spaces can be imported using the space `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:space/space:Space foobar MySpace
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] cidr: The RFC-1918 CIDR the Private Space will use.
+               It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        :param pulumi.Input[str] data_cidr: The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+               that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        :param pulumi.Input[str] name: The name of the Private Space.
+        :param pulumi.Input[str] organization: The name of the Heroku Team which will own the Private Space.
+        :param pulumi.Input[str] region: provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        :param pulumi.Input[bool] shield: provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
         """
         ...
     @overload
@@ -206,7 +293,21 @@ class Space(pulumi.CustomResource):
                  args: SpaceArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Space resource with the given unique name, props, and options.
+        Provides a Heroku Private Space resource for running apps in isolated, highly available, secure app execution environments.
+
+        ## Example Usage
+
+        A Heroku "team" was originally called an "organization", and that is still
+        the identifier used in this resource.
+
+        ## Import
+
+        Spaces can be imported using the space `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:space/space:Space foobar MySpace
+        ```
+
         :param str resource_name: The name of the resource.
         :param SpaceArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -270,6 +371,15 @@ class Space(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] cidr: The RFC-1918 CIDR the Private Space will use.
+               It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        :param pulumi.Input[str] data_cidr: The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+               that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        :param pulumi.Input[str] name: The name of the Private Space.
+        :param pulumi.Input[str] organization: The name of the Heroku Team which will own the Private Space.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] outbound_ips: The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        :param pulumi.Input[str] region: provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        :param pulumi.Input[bool] shield: provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -287,35 +397,58 @@ class Space(pulumi.CustomResource):
     @property
     @pulumi.getter
     def cidr(self) -> pulumi.Output[Optional[str]]:
+        """
+        The RFC-1918 CIDR the Private Space will use.
+        It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        """
         return pulumi.get(self, "cidr")
 
     @property
     @pulumi.getter(name="dataCidr")
     def data_cidr(self) -> pulumi.Output[str]:
+        """
+        The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+        that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        """
         return pulumi.get(self, "data_cidr")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the Private Space.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def organization(self) -> pulumi.Output[str]:
+        """
+        The name of the Heroku Team which will own the Private Space.
+        """
         return pulumi.get(self, "organization")
 
     @property
     @pulumi.getter(name="outboundIps")
     def outbound_ips(self) -> pulumi.Output[Sequence[str]]:
+        """
+        The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        """
         return pulumi.get(self, "outbound_ips")
 
     @property
     @pulumi.getter
     def region(self) -> pulumi.Output[Optional[str]]:
+        """
+        provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        """
         return pulumi.get(self, "region")
 
     @property
     @pulumi.getter
     def shield(self) -> pulumi.Output[Optional[bool]]:
+        """
+        provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+        """
         return pulumi.get(self, "shield")
 

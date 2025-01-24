@@ -10,15 +10,39 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Space
 {
+    /// <summary>
+    /// Provides a resource for managing permissions for the entire Private Space. Members with the admin role will
+    /// always have full permissions in the Private Space, so using this resource on an admin will have no effect.
+    /// The provided email must already be a member of the Heroku Team. Currently, the only supported permission is `create_apps`.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Importing
+    /// 
+    /// Existing permissions can be imported using the combination of the Private Space name, a colon, and the member email.
+    /// 
+    /// For example:
+    /// </summary>
     [HerokuResourceType("heroku:space/appAccess:AppAccess")]
     public partial class AppAccess : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The email of the existing Heroku Team member.
+        /// </summary>
         [Output("email")]
         public Output<string> Email { get; private set; } = null!;
 
+        /// <summary>
+        /// The permissions to grant the team member for the Private Space.
+        /// Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+        /// Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        /// </summary>
         [Output("permissions")]
         public Output<ImmutableArray<string>> Permissions { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the Private Space.
+        /// </summary>
         [Output("space")]
         public Output<string> Space { get; private set; } = null!;
 
@@ -69,17 +93,29 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class AppAccessArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The email of the existing Heroku Team member.
+        /// </summary>
         [Input("email", required: true)]
         public Input<string> Email { get; set; } = null!;
 
         [Input("permissions", required: true)]
         private InputList<string>? _permissions;
+
+        /// <summary>
+        /// The permissions to grant the team member for the Private Space.
+        /// Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+        /// Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        /// </summary>
         public InputList<string> Permissions
         {
             get => _permissions ?? (_permissions = new InputList<string>());
             set => _permissions = value;
         }
 
+        /// <summary>
+        /// The ID of the Private Space.
+        /// </summary>
         [Input("space", required: true)]
         public Input<string> Space { get; set; } = null!;
 
@@ -91,17 +127,29 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class AppAccessState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The email of the existing Heroku Team member.
+        /// </summary>
         [Input("email")]
         public Input<string>? Email { get; set; }
 
         [Input("permissions")]
         private InputList<string>? _permissions;
+
+        /// <summary>
+        /// The permissions to grant the team member for the Private Space.
+        /// Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+        /// Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        /// </summary>
         public InputList<string> Permissions
         {
             get => _permissions ?? (_permissions = new InputList<string>());
             set => _permissions = value;
         }
 
+        /// <summary>
+        /// The ID of the Private Space.
+        /// </summary>
         [Input("space")]
         public Input<string>? Space { get; set; }
 
