@@ -80,8 +80,8 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/pulumiverse/pulumi-heroku",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg:               "",
-		TFProviderModuleVersion: "v2",
+		GitHubOrg:               "heroku",
+		TFProviderModuleVersion: "v5",
 		Config:                  map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
