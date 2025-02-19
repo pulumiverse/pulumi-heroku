@@ -12,13 +12,13 @@ on:
 
 jobs:
   prerequisites:
-    uses: pulumiverse/infra/.github/workflows/provider-prerequisites.yaml@actions-workflows-v0.0.4
+    uses: pulumiverse/infra/.github/workflows/provider-prerequisites.yaml@main
     with:
       provider: heroku
       goversion: 1.23.x
   build:
     needs: prerequisites
-    uses: pulumiverse/infra/.github/workflows/provider-build-sdk.yaml@actions-workflows-v0.0.4
+    uses: pulumiverse/infra/.github/workflows/provider-build-sdk.yaml@main
     with:
       provider: heroku
       goversion: 1.23.x
