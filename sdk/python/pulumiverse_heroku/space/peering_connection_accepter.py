@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['PeeringConnectionAccepterArgs', 'PeeringConnectionAccepter']
@@ -18,6 +23,8 @@ class PeeringConnectionAccepterArgs:
                  vpc_peering_connection_id: pulumi.Input[str]):
         """
         The set of arguments for constructing a PeeringConnectionAccepter resource.
+        :param pulumi.Input[str] space: The ID of the space.
+        :param pulumi.Input[str] vpc_peering_connection_id: The peering connection request ID.
         """
         pulumi.set(__self__, "space", space)
         pulumi.set(__self__, "vpc_peering_connection_id", vpc_peering_connection_id)
@@ -25,6 +32,9 @@ class PeeringConnectionAccepterArgs:
     @property
     @pulumi.getter
     def space(self) -> pulumi.Input[str]:
+        """
+        The ID of the space.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -34,6 +44,9 @@ class PeeringConnectionAccepterArgs:
     @property
     @pulumi.getter(name="vpcPeeringConnectionId")
     def vpc_peering_connection_id(self) -> pulumi.Input[str]:
+        """
+        The peering connection request ID.
+        """
         return pulumi.get(self, "vpc_peering_connection_id")
 
     @vpc_peering_connection_id.setter
@@ -50,6 +63,10 @@ class _PeeringConnectionAccepterState:
                  vpc_peering_connection_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering PeeringConnectionAccepter resources.
+        :param pulumi.Input[str] space: The ID of the space.
+        :param pulumi.Input[str] status: The status of the peering connection request.
+        :param pulumi.Input[str] type: The type of the peering connection.
+        :param pulumi.Input[str] vpc_peering_connection_id: The peering connection request ID.
         """
         if space is not None:
             pulumi.set(__self__, "space", space)
@@ -63,6 +80,9 @@ class _PeeringConnectionAccepterState:
     @property
     @pulumi.getter
     def space(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the space.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -72,6 +92,9 @@ class _PeeringConnectionAccepterState:
     @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
+        """
+        The status of the peering connection request.
+        """
         return pulumi.get(self, "status")
 
     @status.setter
@@ -81,6 +104,9 @@ class _PeeringConnectionAccepterState:
     @property
     @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        The type of the peering connection.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -90,6 +116,9 @@ class _PeeringConnectionAccepterState:
     @property
     @pulumi.getter(name="vpcPeeringConnectionId")
     def vpc_peering_connection_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The peering connection request ID.
+        """
         return pulumi.get(self, "vpc_peering_connection_id")
 
     @vpc_peering_connection_id.setter
@@ -106,9 +135,14 @@ class PeeringConnectionAccepter(pulumi.CustomResource):
                  vpc_peering_connection_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a PeeringConnectionAccepter resource with the given unique name, props, and options.
+        Provides a resource for accepting VPC peering requests to Heroku Private Spaces.
+
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] space: The ID of the space.
+        :param pulumi.Input[str] vpc_peering_connection_id: The peering connection request ID.
         """
         ...
     @overload
@@ -117,7 +151,10 @@ class PeeringConnectionAccepter(pulumi.CustomResource):
                  args: PeeringConnectionAccepterArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a PeeringConnectionAccepter resource with the given unique name, props, and options.
+        Provides a resource for accepting VPC peering requests to Heroku Private Spaces.
+
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param PeeringConnectionAccepterArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -173,6 +210,10 @@ class PeeringConnectionAccepter(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] space: The ID of the space.
+        :param pulumi.Input[str] status: The status of the peering connection request.
+        :param pulumi.Input[str] type: The type of the peering connection.
+        :param pulumi.Input[str] vpc_peering_connection_id: The peering connection request ID.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -187,20 +228,32 @@ class PeeringConnectionAccepter(pulumi.CustomResource):
     @property
     @pulumi.getter
     def space(self) -> pulumi.Output[str]:
+        """
+        The ID of the space.
+        """
         return pulumi.get(self, "space")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[str]:
+        """
+        The status of the peering connection request.
+        """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
     def type(self) -> pulumi.Output[str]:
+        """
+        The type of the peering connection.
+        """
         return pulumi.get(self, "type")
 
     @property
     @pulumi.getter(name="vpcPeeringConnectionId")
     def vpc_peering_connection_id(self) -> pulumi.Output[str]:
+        """
+        The peering connection request ID.
+        """
         return pulumi.get(self, "vpc_peering_connection_id")
 

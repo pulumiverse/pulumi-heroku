@@ -9,7 +9,7 @@
     ],
     "homepage": "https://www.pulumi.com",
     "license": "Apache-2.0",
-    "attribution": "This Pulumi package is based on the [`heroku` Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku).",
+    "attribution": "This Pulumi package is based on the [`heroku` Terraform Provider](https://github.com/heroku/terraform-provider-heroku).",
     "repository": "https://github.com/pulumiverse/pulumi-heroku",
     "pluginDownloadURL": "github://api.github.com/pulumiverse",
     "publisher": "pulumiverse - Marcel Arns",
@@ -18,20 +18,21 @@
     },
     "language": {
         "csharp": {
-            "compatibility": "tfbridge20",
-            "namespaces": null,
             "packageReferences": {
                 "Pulumi": "3.*"
             },
+            "compatibility": "tfbridge20",
             "rootNamespace": "Pulumiverse"
         },
         "go": {
-            "generateExtraInputTypes": true,
+            "importBasePath": "github.com/pulumiverse/pulumi-heroku/sdk/go/heroku",
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/pulumiverse/pulumi-heroku/sdk/go/heroku"
+            "generateExtraInputTypes": true
         },
         "nodejs": {
-            "compatibility": "tfbridge20",
+            "packageName": "@pulumiverse/heroku",
+            "packageDescription": "A Pulumi package for creating and managing heroku cloud resources.",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/heroku/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/heroku/terraform-provider-heroku/issues).",
             "dependencies": {
                 "@pulumi/pulumi": "^3.0.0"
             },
@@ -39,21 +40,17 @@
                 "@types/mime": "^2.0.0",
                 "@types/node": "^10.0.0"
             },
-            "disableUnionOutputTypes": true,
-            "packageDescription": "A Pulumi package for creating and managing heroku cloud resources.",
-            "packageName": "@pulumiverse/heroku",
-            "pluginName": "",
-            "pluginVersion": "",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
-            "typescriptVersion": ""
+            "compatibility": "tfbridge20",
+            "disableUnionOutputTypes": true
         },
         "python": {
-            "compatibility": "tfbridge20",
             "packageName": "pulumiverse_heroku",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/terraform-providers/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/terraform-providers/terraform-provider-heroku/issues).",
             "requires": {
                 "pulumi": "\u003e=3.0.0,\u003c4.0.0"
-            }
+            },
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/heroku/terraform-provider-heroku)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-heroku` repo](https://github.com/pulumiverse/pulumi-heroku/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-heroku` repo](https://github.com/heroku/terraform-provider-heroku/issues).",
+            "compatibility": "tfbridge20",
+            "pyproject": {}
         }
     },
     "config": {
@@ -88,14 +85,17 @@
         "heroku:app/AppOrganization:AppOrganization": {
             "properties": {
                 "locked": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Are other team members forbidden from joining this app.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "The name of the Heroku Team.\n",
                     "willReplaceOnChanges": true
                 },
                 "personal": {
                     "type": "boolean",
+                    "description": "Force creation of the app in the user account even if a default team is set.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -116,10 +116,12 @@
         "heroku:app/getAppOrganization:getAppOrganization": {
             "properties": {
                 "locked": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "True if the app access is locked\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the application. In Heroku, this is also the\nunique ID, so it must be unique and have a minimum of 3 characters.\n"
                 },
                 "personal": {
                     "type": "boolean"
@@ -141,18 +143,22 @@
             "properties": {
                 "checksum": {
                     "type": "string",
+                    "description": "SHA256 hash of the tarball archive to verify its integrity, example:\n`SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`\n",
                     "willReplaceOnChanges": true
                 },
                 "path": {
                     "type": "string",
+                    "description": "Local path to the source directory or tarball archive for the app\n",
                     "willReplaceOnChanges": true
                 },
                 "url": {
                     "type": "string",
+                    "description": "`https` location of the source archive for the app\n",
                     "willReplaceOnChanges": true
                 },
                 "version": {
                     "type": "string",
+                    "description": "Use to track what version of your source originated this build. If you are creating builds\nfrom git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the\nversion parameter.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -254,10 +260,12 @@
             "properties": {
                 "id": {
                     "type": "string",
+                    "description": "The unique identifier (UUID) of a pipeline owner.\n",
                     "willReplaceOnChanges": true
                 },
                 "type": {
                     "type": "string",
+                    "description": "The type of pipeline owner. Can be either `user` or `team`.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -270,10 +278,12 @@
         "heroku:review/AppConfigDeployTarget:AppConfigDeployTarget": {
             "properties": {
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unique identifier of deploy target.\n"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Type of deploy target. Must be either `space` or `region`.\n"
                 }
             },
             "type": "object",
@@ -285,10 +295,12 @@
         "heroku:slug/SlugBlob:SlugBlob": {
             "properties": {
                 "method": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "HTTP method to upload the archive\n"
                 },
                 "url": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Pre-signed, expiring URL to upload the archive\n"
                 }
             },
             "type": "object",
@@ -304,10 +316,12 @@
         "heroku:space/InboundRulesetRule:InboundRulesetRule": {
             "properties": {
                 "action": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The action to apply this rule to. Must be one of `allow` or `deny`.\n"
                 },
                 "source": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A CIDR block source for the rule.\n"
                 }
             },
             "type": "object",
@@ -319,10 +333,12 @@
         "heroku:space/VpnConnectionTunnel:VpnConnectionTunnel": {
             "properties": {
                 "ip": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The public IP address of the tunnel.\n"
                 },
                 "preSharedKey": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The pre-shared IPSec secret for the tunnel.\n"
                 }
             },
             "type": "object",
@@ -338,22 +354,28 @@
         "heroku:team/getMembersMember:getMembersMember": {
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Email address of the team member.\n"
                 },
                 "federated": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Whether the user is federated and belongs to an Identity Provider.\n"
                 },
                 "role": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Role in the team.\n"
                 },
                 "teamMemberId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unique identifier of the team member on the team.\n"
                 },
                 "twoFactorAuthentication": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Whether the Enterprise team member has two-factor authentication enabled.\n"
                 },
                 "userId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unique identifier of the team member. This is the member's user ID in Heroku.\n"
                 }
             },
             "type": "object",
@@ -429,18 +451,23 @@
     },
     "resources": {
         "heroku:account/feature:Feature": {
+            "description": "This resource is used to create and manage [User Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.\n\n\u003e **NOTE:** If this resource's HCL is removed from a `.tf` file, the behavior is to disable account feature\nand remove resource from state.\n\n## Available Features\n\nFor a list of available features, use the [`heroku labs`](https://devcenter.heroku.com/articles/heroku-cli)\ncommand to fetch them for the current authenticated user.\n\nThe output will contain **User Features** that may be managed with this resource.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_account_feature\" \"example_metrics\" {\n  name = \"metrics-request-volume\"\n  enabled = true\n}\n```\n\n## Import\n\nExisting account features can be imported using a combination of the account email (the email address tied to the Heroku API key)\nand the feature name.\n\nFor example:\n\n```sh\n$ pulumi import heroku:account/feature:Feature example_metrics name@example.com:metrics-request-volume\n```\n",
             "properties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of account feature\n"
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Enable or disable the account feature\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the account feature\n"
                 },
                 "state": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "State of account feature\n"
                 }
             },
             "required": [
@@ -451,10 +478,12 @@
             ],
             "inputProperties": {
                 "enabled": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Enable or disable the account feature\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the account feature\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -465,32 +494,39 @@
                 "description": "Input properties used for looking up and filtering Feature resources.\n",
                 "properties": {
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of account feature\n"
                     },
                     "enabled": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "Enable or disable the account feature\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the account feature\n",
                         "willReplaceOnChanges": true
                     },
                     "state": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "State of account feature\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:addon/addon:Addon": {
+            "description": "Provides a Heroku Add-On resource. These can be attach\nservices to a Heroku app.\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku app\nresource \"heroku_app\" \"default\" {\n  name = \"test-app\"\n}\n\n# Create a database, and configure the app to use it\nresource \"heroku_addon\" \"database\" {\n  app_id = heroku_app.default.id\n  plan   = \"heroku-postgresql:mini\"\n}\n```\n\n## Import\n\nAddons can be imported using the Addon `id`, e.g.\n\n```sh\n$ pulumi import heroku:addon/addon:Addon foobar 12345678\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "config": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
-                    }
+                        "type": "string"
+                    },
+                    "description": "Optional plan configuration.\n"
                 },
                 "configVarValues": {
                     "type": "object",
@@ -503,16 +539,20 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "The Configuration variables of the add-on\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Globally unique name of the add-on.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The addon to add.\n"
                 },
                 "providerId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the plan provider\n"
                 }
             },
             "required": [
@@ -526,20 +566,24 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "config": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
+                        "type": "string"
                     },
+                    "description": "Optional plan configuration.\n",
                     "willReplaceOnChanges": true
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Globally unique name of the add-on.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The addon to add.\n"
                 }
             },
             "requiredInputs": [
@@ -551,13 +595,15 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "config": {
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "pulumi.json#/Any"
+                            "type": "string"
                         },
+                        "description": "Optional plan configuration.\n",
                         "willReplaceOnChanges": true
                     },
                     "configVarValues": {
@@ -571,34 +617,43 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "The Configuration variables of the add-on\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Globally unique name of the add-on.\n"
                     },
                     "plan": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The addon to add.\n"
                     },
                     "providerId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the plan provider\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:addon/attachment:Attachment": {
+            "description": "Attaches a Heroku Addon Resource to an additional Heroku App.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_addon_attachment\" \"database\" {\n  app_id  = heroku_app.default.id\n  addon_id = heroku_addon.database.id\n}\n\n// attach postgres credentials\nresource \"heroku_addon_attachment\" \"database_credentials\" {\n  app_id  = heroku_app.default.id\n  addon_id = heroku_addon.database.id\n  namespace = \"credential: ${var.credential_name}\"\n}\n\n```\n\n## Import\n\nAddons can be imported using the unique Addon Attachment `id`, e.g.\n\n```sh\n$ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef\n```\n",
             "properties": {
                 "addonId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the existing Heroku Addon to attach.\n"
                 },
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A friendly name for the Heroku Addon Attachment.\n"
                 },
                 "namespace": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)\n"
                 }
             },
             "required": [
@@ -610,18 +665,22 @@
             "inputProperties": {
                 "addonId": {
                     "type": "string",
+                    "description": "The ID of the existing Heroku Addon to attach.\n",
                     "willReplaceOnChanges": true
                 },
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "name": {
                     "type": "string",
+                    "description": "A friendly name for the Heroku Addon Attachment.\n",
                     "willReplaceOnChanges": true
                 },
                 "namespace": {
                     "type": "string",
+                    "description": "The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -634,18 +693,22 @@
                 "properties": {
                     "addonId": {
                         "type": "string",
+                        "description": "The ID of the existing Heroku Addon to attach.\n",
                         "willReplaceOnChanges": true
                     },
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "name": {
                         "type": "string",
+                        "description": "A friendly name for the Heroku Addon Attachment.\n",
                         "willReplaceOnChanges": true
                     },
                     "namespace": {
                         "type": "string",
+                        "description": "The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -653,14 +716,16 @@
             }
         },
         "heroku:app/app:App": {
+            "description": "## Example Usage\n\n```hcl-terraform\nresource \"heroku_app\" \"default\" {\n  name   = \"my-cool-app\"\n  region = \"us\"\n\n  config_vars = {\n    FOOBAR = \"baz\"\n  }\n\n  buildpacks = [\n    \"heroku/go\"\n  ]\n}\n```\n\n\n### A Team\n\nA Heroku \"team\" was originally called an \"organization\", and that is still the identifier used in this resource.\n\n```hcl-terraform\nresource \"heroku_app\" \"default\" {\n  name   = \"my-cool-app\"\n  region = \"us\"\n\n  organization {\n    name = \"my-cool-team\"\n  }\n}\n```\n\n## Import\n\nApps can be imported using an existing app's `UUID` or name.\n\nFor example:\n\n```sh\n$ pulumi import heroku:app/app:App foobar MyApp\n```\n\n```sh\n$ pulumi import heroku:app/app:App foobar e74ac056-7d00-4a7e-aa80-df4bc413a825\n```\n\nPlease note: `config_vars` \u0026 `sensitive_config_vars` will not be imported due to limitations of Terraform's import process (see issue). All vars will appear to be added on the next plan/apply. The diff may be manually reconciled using the outputs of `heroku config` \u0026 `pulumi preview`.\n\n",
             "properties": {
                 "acm": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The flag representing Automated Certificate Management for the app.\n"
                 },
                 "allConfigVars": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
+                        "type": "string"
                     },
                     "secret": true
                 },
@@ -668,31 +733,38 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Buildpack names or URLs for the application.\nBuildpacks configured externally won't be altered if this is not present.\n"
                 },
                 "configVars": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
+                        "type": "string"
                     }
                 },
                 "gitUrl": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The Git URL for the application. This is used for\ndeploying new versions of the app.\n"
                 },
                 "herokuHostname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A hostname for the Heroku application, suitable\nfor pointing DNS records.\n"
                 },
                 "internalRouting": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, the application will be routable\nonly internally in a private space. This option is only available for apps\nthat also specify `space`.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the application. In Heroku, this is also the\nunique ID, so it must be unique and have a minimum of 3 characters.\n"
                 },
                 "organization": {
-                    "$ref": "#/types/heroku:app/AppOrganization:AppOrganization"
+                    "$ref": "#/types/heroku:app/AppOrganization:AppOrganization",
+                    "description": "A block that can be specified once to define\nHeroku Team settings for this app. The fields for this block are\ndocumented below.\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The region that the app should be deployed in.\n"
                 },
                 "sensitiveConfigVars": {
                     "type": "object",
@@ -702,16 +774,20 @@
                     "secret": true
                 },
                 "space": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of a private space to create the app in.\n"
                 },
                 "stack": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The application stack is what platform to run the application in.\n"
                 },
                 "uuid": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.\n"
                 },
                 "webUrl": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The web (HTTP) URL that the application can be accessed\nat by default.\n"
                 }
             },
             "required": [
@@ -731,32 +807,38 @@
             ],
             "inputProperties": {
                 "acm": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The flag representing Automated Certificate Management for the app.\n"
                 },
                 "buildpacks": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Buildpack names or URLs for the application.\nBuildpacks configured externally won't be altered if this is not present.\n"
                 },
                 "configVars": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
+                        "type": "string"
                     }
                 },
                 "internalRouting": {
                     "type": "boolean",
+                    "description": "If true, the application will be routable\nonly internally in a private space. This option is only available for apps\nthat also specify `space`.\n",
                     "willReplaceOnChanges": true
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the application. In Heroku, this is also the\nunique ID, so it must be unique and have a minimum of 3 characters.\n"
                 },
                 "organization": {
-                    "$ref": "#/types/heroku:app/AppOrganization:AppOrganization"
+                    "$ref": "#/types/heroku:app/AppOrganization:AppOrganization",
+                    "description": "A block that can be specified once to define\nHeroku Team settings for this app. The fields for this block are\ndocumented below.\n"
                 },
                 "region": {
                     "type": "string",
+                    "description": "The region that the app should be deployed in.\n",
                     "willReplaceOnChanges": true
                 },
                 "sensitiveConfigVars": {
@@ -768,10 +850,12 @@
                 },
                 "space": {
                     "type": "string",
+                    "description": "The name of a private space to create the app in.\n",
                     "willReplaceOnChanges": true
                 },
                 "stack": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The application stack is what platform to run the application in.\n"
                 }
             },
             "requiredInputs": [
@@ -781,12 +865,13 @@
                 "description": "Input properties used for looking up and filtering App resources.\n",
                 "properties": {
                     "acm": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The flag representing Automated Certificate Management for the app.\n"
                     },
                     "allConfigVars": {
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "pulumi.json#/Any"
+                            "type": "string"
                         },
                         "secret": true
                     },
@@ -794,32 +879,39 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Buildpack names or URLs for the application.\nBuildpacks configured externally won't be altered if this is not present.\n"
                     },
                     "configVars": {
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "pulumi.json#/Any"
+                            "type": "string"
                         }
                     },
                     "gitUrl": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The Git URL for the application. This is used for\ndeploying new versions of the app.\n"
                     },
                     "herokuHostname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A hostname for the Heroku application, suitable\nfor pointing DNS records.\n"
                     },
                     "internalRouting": {
                         "type": "boolean",
+                        "description": "If true, the application will be routable\nonly internally in a private space. This option is only available for apps\nthat also specify `space`.\n",
                         "willReplaceOnChanges": true
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the application. In Heroku, this is also the\nunique ID, so it must be unique and have a minimum of 3 characters.\n"
                     },
                     "organization": {
-                        "$ref": "#/types/heroku:app/AppOrganization:AppOrganization"
+                        "$ref": "#/types/heroku:app/AppOrganization:AppOrganization",
+                        "description": "A block that can be specified once to define\nHeroku Team settings for this app. The fields for this block are\ndocumented below.\n"
                     },
                     "region": {
                         "type": "string",
+                        "description": "The region that the app should be deployed in.\n",
                         "willReplaceOnChanges": true
                     },
                     "sensitiveConfigVars": {
@@ -831,22 +923,27 @@
                     },
                     "space": {
                         "type": "string",
+                        "description": "The name of a private space to create the app in.\n",
                         "willReplaceOnChanges": true
                     },
                     "stack": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The application stack is what platform to run the application in.\n"
                     },
                     "uuid": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The unique UUID of the Heroku app. **NOTE:** Use this for `null_resource` triggers.\n"
                     },
                     "webUrl": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The web (HTTP) URL that the application can be accessed\nat by default.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:app/config:Config": {
+            "description": "\n\n## Import\n\nThe `heroku_config` resource is a meta-resource, managed only within Terraform state.\n\nIt does not exist as a native Heroku resource. Therefore, it is not possible to import an existing `heroku_config` configuration.\n\n",
             "properties": {
                 "sensitiveVars": {
                     "type": "object",
@@ -859,7 +956,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Map of vars that are can be outputted in plaintext.\n"
                 }
             },
             "inputProperties": {
@@ -874,7 +972,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Map of vars that are can be outputted in plaintext.\n"
                 }
             },
             "stateInputs": {
@@ -891,16 +990,19 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Map of vars that are can be outputted in plaintext.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:app/configAssociation:ConfigAssociation": {
+            "description": "\n\n## Import\n\nThis resource defines two config var attributes with one of them used for masking any sensitive/secret variables\n\nduring a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to\n\nthis provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import\n\nthis resource.\n\nHowever, it is safe to define the resource in your configuration file and execute a `pulumi up`\n\nas the end result is `noop` when the config vars already exist on the remote resource.\n\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "sensitiveVars": {
                     "type": "object",
@@ -913,7 +1015,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Map of config vars that can be output in plaintext.\n"
                 }
             },
             "required": [
@@ -921,7 +1024,8 @@
             ],
             "inputProperties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "sensitiveVars": {
                     "type": "object",
@@ -934,7 +1038,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Map of config vars that can be output in plaintext.\n"
                 }
             },
             "requiredInputs": [
@@ -944,7 +1049,8 @@
                 "description": "Input properties used for looking up and filtering ConfigAssociation resources.\n",
                 "properties": {
                     "appId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n"
                     },
                     "sensitiveVars": {
                         "type": "object",
@@ -957,22 +1063,27 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Map of config vars that can be output in plaintext.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:app/feature:Feature": {
+            "description": "This resource is used to create and manage [App Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.\n\n## Available Features\n\nFor a list of available features, use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)\nto fetch them for one of your existing apps: `heroku labs --app foobar`.\n\nThe output will contain **User Features** and **App Features**. This resource manages App Features.\nIf you need to manage User Features, use the `heroku.account.Feature` resource.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n    name = \"foobar\"\n    region = \"us\"\n}\n\nresource \"heroku_app_feature\" \"log_runtime_metrics\" {\n  app_id = heroku_app.foobar.id\n  name = \"log-runtime-metrics\"\n}\n```\n\n## Import\n\nApp features can be imported using the combination of the application name, a colon, and the feature's name.\n\nFor example:\n\n```sh\n$ pulumi import heroku:app/feature:Feature log-runtime-metrics foobar:log-runtime-metrics\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Whether to enable or disable the App Feature. The default value is true.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the App Feature to manage.\n"
                 }
             },
             "required": [
@@ -982,13 +1093,16 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Whether to enable or disable the App Feature. The default value is true.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "The name of the App Feature to manage.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1000,13 +1114,16 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "enabled": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "Whether to enable or disable the App Feature. The default value is true.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "The name of the App Feature to manage.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -1014,15 +1131,19 @@
             }
         },
         "heroku:app/release:Release": {
+            "description": "## Example Usage\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n    name = \"foobar\"\n    region = \"us\"\n}\n\n# Upload your slug\n\nresource \"heroku_app_release\" \"foobar-release\" {\n    app_id = heroku_app.foobar.id\n    slug_id = \"01234567-89ab-cdef-0123-456789abcdef\"\n}\n```\n\n## Import\n\nThe most recent app release can be imported using the application name.\n\nFor example:\n\n```sh\n$ pulumi import heroku:app/release:Release foobar-release foobar\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "description of changes in this release\n"
                 },
                 "slugId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "unique identifier of slug\n"
                 }
             },
             "required": [
@@ -1033,13 +1154,16 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "description of changes in this release\n"
                 },
                 "slugId": {
                     "type": "string",
+                    "description": "unique identifier of slug\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1052,13 +1176,16 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "description of changes in this release\n"
                     },
                     "slugId": {
                         "type": "string",
+                        "description": "unique identifier of slug\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -1066,29 +1193,36 @@
             }
         },
         "heroku:app/webhook:Webhook": {
+            "description": "Provides a [Heroku App Webhook](https://devcenter.heroku.com/categories/app-webhooks).\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku app\nresource \"heroku_app\" \"foobar\" {\n  name = \"foobar\"\n  region = \"us\"\n}\n\n# Add a web-hook for the app\nresource \"heroku_app_webhook\" \"foobar_release\" {\n  app_id  = heroku_app.foobar.id\n  level   = \"notify\"\n  url     = \"https://example.com/heroku_webhook\"\n  include = [\"api:release\"]\n}\n```\n\n## Importing\n\nExisting webhooks can be imported using the combination of the application name or id, a colon, and the webhook name or id, e.g.\n\n```\n$ terraform import heroku_app_webhook.foobar_release foobar:b85d9224-310b-409b-891e-c903f5a40568\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "authorization": {
                     "type": "string",
+                    "description": "Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.\n",
                     "secret": true
                 },
                 "includes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of events to deliver to the webhook.\n"
                 },
                 "level": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The webhook level (either `notify` or `sync`)\n"
                 },
                 "secret": {
                     "type": "string",
+                    "description": "Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.\n",
                     "secret": true
                 },
                 "url": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Optional plan configuration.\n"
                 }
             },
             "required": [
@@ -1100,27 +1234,33 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "authorization": {
                     "type": "string",
+                    "description": "Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.\n",
                     "secret": true
                 },
                 "includes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of events to deliver to the webhook.\n"
                 },
                 "level": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The webhook level (either `notify` or `sync`)\n"
                 },
                 "secret": {
                     "type": "string",
+                    "description": "Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.\n",
                     "secret": true
                 },
                 "url": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Optional plan configuration.\n"
                 }
             },
             "requiredInputs": [
@@ -1134,72 +1274,89 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "authorization": {
                         "type": "string",
+                        "description": "Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.\n",
                         "secret": true
                     },
                     "includes": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of events to deliver to the webhook.\n"
                     },
                     "level": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The webhook level (either `notify` or `sync`)\n"
                     },
                     "secret": {
                         "type": "string",
+                        "description": "Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.\n",
                         "secret": true
                     },
                     "url": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Optional plan configuration.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:build/build:Build": {
+            "description": "\n\n## Import\n\nExisting builds can be imported using the combination of the application name, a colon, and the build ID.\n\nFor example:\n\n```sh\n$ pulumi import heroku:build/build:Build foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc\n```\n\n* `foobar` is the **heroku_build** resource's name\n\n* `bazbux` is the Heroku app name (or ID) that the build belongs to\n\n* `:` separates the app identifier \u0026 the build identifier\n\n* `4f1db8ef…` is the build ID\n\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "buildpacks": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of buildpack GitHub URLs\n"
                 },
                 "localChecksum": {
                     "type": "string"
                 },
                 "outputStreamUrl": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)\n"
                 },
                 "releaseId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The Heroku app release created with a build's slug\n"
                 },
                 "slugId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The Heroku slug created by a build\n"
                 },
                 "source": {
-                    "$ref": "#/types/heroku:build/BuildSource:BuildSource"
+                    "$ref": "#/types/heroku:build/BuildSource:BuildSource",
+                    "description": "A block that specifies the source code to build \u0026 release:\n"
                 },
                 "stack": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)\n"
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The status of a build. Possible values are `pending`, `successful` and `failed`\n"
                 },
                 "users": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/heroku:build/BuildUser:BuildUser"
-                    }
+                    },
+                    "description": "Heroku account that created a build\n"
                 },
                 "uuid": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the build\n"
                 }
             },
             "required": [
@@ -1218,6 +1375,7 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "buildpacks": {
@@ -1225,10 +1383,12 @@
                     "items": {
                         "type": "string"
                     },
+                    "description": "List of buildpack GitHub URLs\n",
                     "willReplaceOnChanges": true
                 },
                 "source": {
                     "$ref": "#/types/heroku:build/BuildSource:BuildSource",
+                    "description": "A block that specifies the source code to build \u0026 release:\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1241,6 +1401,7 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "buildpacks": {
@@ -1248,59 +1409,74 @@
                         "items": {
                             "type": "string"
                         },
+                        "description": "List of buildpack GitHub URLs\n",
                         "willReplaceOnChanges": true
                     },
                     "localChecksum": {
                         "type": "string"
                     },
                     "outputStreamUrl": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)\n"
                     },
                     "releaseId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The Heroku app release created with a build's slug\n"
                     },
                     "slugId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The Heroku slug created by a build\n"
                     },
                     "source": {
                         "$ref": "#/types/heroku:build/BuildSource:BuildSource",
+                        "description": "A block that specifies the source code to build \u0026 release:\n",
                         "willReplaceOnChanges": true
                     },
                     "stack": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)\n"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The status of a build. Possible values are `pending`, `successful` and `failed`\n"
                     },
                     "users": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/heroku:build/BuildUser:BuildUser"
-                        }
+                        },
+                        "description": "Heroku account that created a build\n"
                     },
                     "uuid": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the build\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:cert/cert:Cert": {
+            "description": "This resource manages an SSL certificate for a Heroku app.\n\n!\u003e **WARNING:** This resource is deprecated in favor of `heroku.ssl.Ssl`.\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku app\nresource \"heroku_app\" \"default\" {\n  name = \"test-app\"\n  region = \"us\"\n}\n\n# Add-on SSL to application\nresource \"heroku_addon\" \"ssl\" {\n  app_id = heroku_app.default.id\n  plan  = \"ssl\"\n}\n\n# Establish certificate for a given application\nresource \"heroku_cert\" \"ssl_certificate\" {\n  app               = heroku_app.default.id\n  certificate_chain = file(\"server.crt\")\n  private_key       = file(\"server.key\")\n  depends_on        = [\"heroku_addon.ssl\"]\n}\n```\n\n## Importing\n\nWhen importing a Heroku cert resource, the ID must be built using the app name colon the unique ID from the Heroku API. For an app named `production-api` with a certificate ID of `b85d9224-310b-409b-891e-c903f5a40568`, you would import it as:\n\n```\n$ terraform import heroku_cert.production_api production-api:b85d9224-310b-409b-891e-c903f5a40568\n```\n",
             "properties": {
                 "app": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "certificateChain": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The certificate chain to add\n"
                 },
                 "cname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The CNAME for the SSL endpoint\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the SSL certificate\n"
                 },
                 "privateKey": {
                     "type": "string",
+                    "description": "The private key for a given certificate chain\n",
                     "secret": true
                 }
             },
@@ -1314,13 +1490,16 @@
             "inputProperties": {
                 "app": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "certificateChain": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The certificate chain to add\n"
                 },
                 "privateKey": {
                     "type": "string",
+                    "description": "The private key for a given certificate chain\n",
                     "secret": true
                 }
             },
@@ -1334,19 +1513,24 @@
                 "properties": {
                     "app": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "certificateChain": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The certificate chain to add\n"
                     },
                     "cname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The CNAME for the SSL endpoint\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the SSL certificate\n"
                     },
                     "privateKey": {
                         "type": "string",
+                        "description": "The private key for a given certificate chain\n",
                         "secret": true
                     }
                 },
@@ -1354,12 +1538,15 @@
             }
         },
         "heroku:collaborator/collaborator:Collaborator": {
+            "description": "A [Heroku Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#collaborator)\nreceives access to a specific app that is not owned by a team.\n\n\u003e **IMPORTANT!:**\nThis resource only works for apps that are not part of a team.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n  name = \"foobar\"\n  region = \"us\"\n}\n\n# Create a new collaborator for the foobar application\nresource \"heroku_collaborator\" \"foobar-collaborator\" {\n\tapp_id = heroku_app.foobar.id\n\temail = \"collaborator@foobar.com\"\n}\n```\n\n## Import\n\nCollaborators can be imported using the combination of the application name, a colon, and the collaborator's email address\n\nFor example:\n\n```sh\n$ pulumi import heroku:collaborator/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Email address of the collaborator\n"
                 }
             },
             "required": [
@@ -1369,10 +1556,12 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "email": {
                     "type": "string",
+                    "description": "Email address of the collaborator\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1385,10 +1574,12 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "email": {
                         "type": "string",
+                        "description": "Email address of the collaborator\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -1398,16 +1589,20 @@
         "heroku:domain/domain:Domain": {
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n\nFor apps with ACM enabled (automated certificate management):\n"
                 },
                 "cname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The CNAME traffic should route to.\n"
                 },
                 "hostname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sni_endpoint_id`.\n"
                 },
                 "sniEndpointId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the `heroku.ssl.Ssl` resource to associate the domain with.\n"
                 }
             },
             "required": [
@@ -1418,14 +1613,17 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n\nFor apps with ACM enabled (automated certificate management):\n",
                     "willReplaceOnChanges": true
                 },
                 "hostname": {
                     "type": "string",
+                    "description": "Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sni_endpoint_id`.\n",
                     "willReplaceOnChanges": true
                 },
                 "sniEndpointId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the `heroku.ssl.Ssl` resource to associate the domain with.\n"
                 }
             },
             "requiredInputs": [
@@ -1437,36 +1635,44 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n\nFor apps with ACM enabled (automated certificate management):\n",
                         "willReplaceOnChanges": true
                     },
                     "cname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The CNAME traffic should route to.\n"
                     },
                     "hostname": {
                         "type": "string",
+                        "description": "Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sni_endpoint_id`.\n",
                         "willReplaceOnChanges": true
                     },
                     "sniEndpointId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the `heroku.ssl.Ssl` resource to associate the domain with.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:drain/drain:Drain": {
+            "description": "Provides a Heroku Drain resource. This can be used to\ncreate and manage Log Drains on Heroku.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n  name = \"foobar\"\n  region = \"us\"\n}\n\nresource \"heroku_drain\" \"default\" {\n  app_id = heroku_app.foobar.id\n  url = \"syslog://terraform.example.com:1234\"\n}\n```\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n  name = \"foobar\"\n  region = \"us\"\n}\n\nresource \"heroku_drain\" \"default\" {\n  app_id = heroku_app.foobar.id\n  sensitive_url = \"https://user:pass@terraform.example.com\"\n}\n```\n\n## Importing\n\nWhen importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.\nFor an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `url` attribute value\ndefined for the resource, you would import it as:\n\n```\n$ terraform import heroku_drain.production_api production-api:b85d9224-310b-409b-891e-c903f5a40568\n```\n\nWhen importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.\nFor an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `sensitive_url` attribute value\ndefined for the resource, you would import it as:\n\n```\n$ terraform import heroku_drain.production_api production-api:b85d9224-310b-409b-891e-c903f5a40568:sensitive\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "sensitiveUrl": {
                     "type": "string",
                     "secret": true
                 },
                 "token": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The unique token for your created drain.\n"
                 },
                 "url": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.\n"
                 }
             },
             "required": [
@@ -1476,6 +1682,7 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "sensitiveUrl": {
@@ -1485,6 +1692,7 @@
                 },
                 "url": {
                     "type": "string",
+                    "description": "The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1496,6 +1704,7 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "sensitiveUrl": {
@@ -1504,10 +1713,12 @@
                         "willReplaceOnChanges": true
                     },
                     "token": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The unique token for your created drain.\n"
                     },
                     "url": {
                         "type": "string",
+                        "description": "The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -1515,18 +1726,23 @@
             }
         },
         "heroku:formation/formation:Formation": {
+            "description": "Provides a [Heroku Formation](https://devcenter.heroku.com/articles/platform-api-reference#formation)\nresource.\n\nA formation represents the formation of processes that should be set for an application.\n\nPlease note the following:\n* The application must have a dyno in order to update its formation.\n* If the heroku formation resource is removed and deleted, this will be a no-op action in Heroku.\nThe Heroku Platform does not have a `DELETE` endpoint for `formation`.\n* This resource works well with the `heroku.app.Release` resource, which allows you to deploy a slug/release to an application\nbefore the formation can be updated.\n\n## Example Usage\n\n```hcl-terraform\n# Creates a new application called foobar\nresource \"heroku_app\" \"foobar\" {\n    name = \"foobar\"\n    region = \"us\"\n}\n\n# Creates a new release for application foobar using a slug id\nresource \"heroku_app_release\" \"foobar-release\" {\n    app_id = heroku_app.foobar.id\n    slug_id = \"01234567-89ab-cdef-0123-456789abcdef\"\n}\n\n# Update the web formation for the foobar application's web\nresource \"heroku_formation\" \"foobar-web\" {\n    app_id = heroku_app.foobar.id\n    type = \"web\"\n    quantity = 2\n    size = \"standard-2x\"\n\n    # Tells Terraform that this formation must be created/updated only after the app release has been created\n    depends_on = [\"heroku_app_release.foobar-release\"]\n}\n```\n\n## Import\n\nExisting formations can be imported using the combination of the application name, a colon, and the formation's type.\n\nFor example:\n\n```sh\n$ pulumi import heroku:formation/formation:Formation foobar-web foobar:web\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "quantity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "number of processes to maintain\n"
                 },
                 "size": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "dyno size (Example: “standard-1X”). Capitalization does not matter.\n"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "type of process such as \"web\"\n"
                 }
             },
             "required": [
@@ -1538,16 +1754,20 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "quantity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "number of processes to maintain\n"
                 },
                 "size": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "dyno size (Example: “standard-1X”). Capitalization does not matter.\n"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "type of process such as \"web\"\n"
                 }
             },
             "requiredInputs": [
@@ -1561,35 +1781,43 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "quantity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "number of processes to maintain\n"
                     },
                     "size": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "dyno size (Example: “standard-1X”). Capitalization does not matter.\n"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "type of process such as \"web\"\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:pipeline/configVar:ConfigVar": {
+            "description": "Provides a resource to manage a pipeline's config vars.\n\nThe pipeline config var API can only retrieve config vars that can be set at the pipeline level.\nAdditionally, these two supported pipeline stages are:\n- [Heroku CI](https://devcenter.heroku.com/articles/heroku-ci#setting-environment-variables-the-env-key) config vars (test stage)\n- [Review Apps](https://devcenter.heroku.com/articles/github-integration-review-apps#configuration) config vars (review stage)\n\nThe development, staging \u0026 production stages do not have stage-level config vars, only those on the apps within each stage.\n\n## Example Usage\n\n```hcl-terraform\n# Create a Heroku pipeline\nresource \"heroku_pipeline\" \"test-pipeline\" {\n  name = \"test-app\"\n}\n\nresource \"heroku_pipeline_config_var\" \"configs\" {\n  pipeline_id = heroku_pipeline.test-pipeline.id\n  pipeline_stage = \"test\"\n  \n  vars = {\n    ENV = \"test\"\n    TARGET = \"develop\"\n  }\n\n  sensitive_vars = {\n    TEST_ACCESS_TOKEN = \"some_access token\"\n  }\n}\n```\n\n## Import\n\nThis resource defines two config var attributes with one of them used for masking any sensitive/secret variables\n\nduring a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to\n\nthis provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import\n\nthis resource.\n\nHowever, it is safe to define the resource in your configuration file and execute a `pulumi up`\n\nas the end result is `noop` when the config vars already exist on the remote resource.\n\n",
             "properties": {
                 "allVars": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
+                        "type": "string"
                     },
+                    "description": "All vars of a pipeline stage. This is marked `sensitive` so that `sensitive_vars` do not leak in the console/logs.\n",
                     "secret": true
                 },
                 "pipelineId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The UUID of an existing pipeline.\n"
                 },
                 "pipelineStage": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The pipeline's stage. Supported values are `test` \u0026 `review`.\n"
                 },
                 "sensitiveVars": {
                     "type": "object",
@@ -1602,7 +1830,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Map of config vars that can be output in plaintext.\n"
                 }
             },
             "required": [
@@ -1613,10 +1842,12 @@
             "inputProperties": {
                 "pipelineId": {
                     "type": "string",
+                    "description": "The UUID of an existing pipeline.\n",
                     "willReplaceOnChanges": true
                 },
                 "pipelineStage": {
                     "type": "string",
+                    "description": "The pipeline's stage. Supported values are `test` \u0026 `review`.\n",
                     "willReplaceOnChanges": true
                 },
                 "sensitiveVars": {
@@ -1630,7 +1861,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Map of config vars that can be output in plaintext.\n"
                 }
             },
             "requiredInputs": [
@@ -1643,16 +1875,19 @@
                     "allVars": {
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "pulumi.json#/Any"
+                            "type": "string"
                         },
+                        "description": "All vars of a pipeline stage. This is marked `sensitive` so that `sensitive_vars` do not leak in the console/logs.\n",
                         "secret": true
                     },
                     "pipelineId": {
                         "type": "string",
+                        "description": "The UUID of an existing pipeline.\n",
                         "willReplaceOnChanges": true
                     },
                     "pipelineStage": {
                         "type": "string",
+                        "description": "The pipeline's stage. Supported values are `test` \u0026 `review`.\n",
                         "willReplaceOnChanges": true
                     },
                     "sensitiveVars": {
@@ -1666,22 +1901,27 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Map of config vars that can be output in plaintext.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:pipeline/coupling:Coupling": {
+            "description": "Provides a [Heroku Pipeline Coupling](https://devcenter.heroku.com/articles/pipelines)\nresource.\n\nA pipeline is a group of Heroku apps that share the same codebase. Once a\npipeline is created using `heroku.pipeline.Pipeline`, and apps are added\nto different stages using `heroku.pipeline.Coupling`, you can promote app slugs\nto the downstream stages.\n\nSee `heroku.pipeline.Pipeline` for complete usage documentation.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_pipeline_coupling\" \"production\" {\n  app_id   = heroku_app.production.id\n  pipeline = heroku_pipeline.test.id\n  stage    = \"production\"\n}\n```\n\n## Import\n\nPipeline couplings can be imported using the Pipeline coupling `id`, e.g.\n\n```sh\n$ pulumi import heroku:pipeline/coupling:Coupling foobar 12345678\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "pipeline": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the pipeline to add this app to.\n"
                 },
                 "stage": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The stage to couple this app to. Must be one of\n`review`, `development`, `staging`, or `production`.\n"
                 }
             },
             "required": [
@@ -1692,14 +1932,17 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "pipeline": {
                     "type": "string",
+                    "description": "The ID of the pipeline to add this app to.\n",
                     "willReplaceOnChanges": true
                 },
                 "stage": {
                     "type": "string",
+                    "description": "The stage to couple this app to. Must be one of\n`review`, `development`, `staging`, or `production`.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1713,14 +1956,17 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "pipeline": {
                         "type": "string",
+                        "description": "The ID of the pipeline to add this app to.\n",
                         "willReplaceOnChanges": true
                     },
                     "stage": {
                         "type": "string",
+                        "description": "The stage to couple this app to. Must be one of\n`review`, `development`, `staging`, or `production`.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -1728,12 +1974,15 @@
             }
         },
         "heroku:pipeline/pipeline:Pipeline": {
+            "description": "## Example Usage\n\n```hcl-terraform\n# Create Heroku apps for staging and production\nresource \"heroku_app\" \"staging\" {\n  name   = \"test-app-staging\"\n  region = \"us\"\n}\n\nresource \"heroku_app\" \"production\" {\n  name   = \"test-app-production\"\n  region = \"us\"\n}\n\n# Create a Heroku pipeline\nresource \"heroku_pipeline\" \"test\" {\n  name = \"test-pipeline\"\n\n  owner {\n\t  id   = \"00b4aef3-073c-425b-92ab-274e483d19db\"\n\t  type = \"team\"\n  }\n}\n\n# Couple apps to different pipeline stages\nresource \"heroku_pipeline_coupling\" \"staging\" {\n  app_id   = heroku_app.staging.id\n  pipeline = heroku_pipeline.test.id\n  stage    = \"staging\"\n}\n\nresource \"heroku_pipeline_coupling\" \"production\" {\n  app_id   = heroku_app.production.id\n  pipeline = heroku_pipeline.test.id\n  stage    = \"production\"\n}\n```\n\n## Import\n\nPipelines can be imported using the Pipeline `id`, e.g.\n\n```sh\n$ pulumi import heroku:pipeline/pipeline:Pipeline foobar 12345678\n```\n",
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the pipeline.\n"
                 },
                 "owner": {
-                    "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner"
+                    "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner",
+                    "description": "The owner of the pipeline. This block as the following required attributes:\n"
                 }
             },
             "required": [
@@ -1742,53 +1991,66 @@
             ],
             "inputProperties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the pipeline.\n"
                 },
                 "owner": {
-                    "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner"
+                    "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner",
+                    "description": "The owner of the pipeline. This block as the following required attributes:\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Pipeline resources.\n",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the pipeline.\n"
                     },
                     "owner": {
-                        "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner"
+                        "$ref": "#/types/heroku:pipeline/PipelineOwner:PipelineOwner",
+                        "description": "The owner of the pipeline. This block as the following required attributes:\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:review/appConfig:AppConfig": {
+            "description": "Provides a resource for configuring review apps. Using this resource also enables review apps for a pipeline.\n\n\u003e **IMPORTANT!**\nThis resource can only be used after you create a pipeline, and the pipeline has been connected to a Github repository.\nPlease visit this [help article](https://devcenter.heroku.com/articles/github-integration-review-apps#setup)\nfor more information.\n\n## Example Usage\n\n```hcl-terraform\ndata \"heroku_pipeline\" \"test-pipeline\" {\n  name = \"test pipeline\"\n}\n\nresource \"heroku_review_app_config\" \"foobar\" {\n  pipeline_id = data.heroku_pipeline.test-pipeline.id\n  org_repo = \"yourcompany/yourrepo\"\n  automatic_review_apps = true\n  base_name = \"yourcompany\"\n\n  deploy_target {\n    id   = \"us\"\n    type = \"region\"\n  }\n\n  destroy_stale_apps = true\n  stale_days = 5\n  wait_for_ci = true\n}\n```\n\n## Import\n\nAn Existing review app config using the combination of the pipeline UUID and the Github organization/repository\n\nseparated by a colon.\n\n```sh\n$ pulumi import heroku:review/appConfig:AppConfig foobar afd193fb-7c5a-4d8f-afad-2388f4e6049d:heroku/homebrew-brew\n```\n\n",
             "properties": {
                 "automaticReviewApps": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, this will trigger the creation of review apps when pull-requests\nare opened in the repo. Defaults to `false`.\n"
                 },
                 "baseName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A unique prefix that will be used to create review app names.\n"
                 },
                 "deployTarget": {
-                    "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget"
+                    "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget",
+                    "description": "Provides a key/value pair to specify whether to use a common runtime or a private space.\n"
                 },
                 "destroyStaleApps": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If `true`, this will trigger automatic deletion of review apps when they’re stale.\nDefaults to `false`.\n"
                 },
                 "orgRepo": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The full_name of the repository that you want to enable review-apps from.\nExample `heroku/homebrew-brew`.\n"
                 },
                 "pipelineId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The UUID of an existing pipeline.\n"
                 },
                 "repoId": {
                     "type": "integer"
                 },
                 "staleDays": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Destroy stale review apps automatically after these many days without any deploys.\nMust be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.\n"
                 },
                 "waitForCi": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, review apps will only be created when CI passes. Defaults to `false`.\n"
                 }
             },
             "required": [
@@ -1801,30 +2063,38 @@
             ],
             "inputProperties": {
                 "automaticReviewApps": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, this will trigger the creation of review apps when pull-requests\nare opened in the repo. Defaults to `false`.\n"
                 },
                 "baseName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A unique prefix that will be used to create review app names.\n"
                 },
                 "deployTarget": {
-                    "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget"
+                    "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget",
+                    "description": "Provides a key/value pair to specify whether to use a common runtime or a private space.\n"
                 },
                 "destroyStaleApps": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If `true`, this will trigger automatic deletion of review apps when they’re stale.\nDefaults to `false`.\n"
                 },
                 "orgRepo": {
                     "type": "string",
+                    "description": "The full_name of the repository that you want to enable review-apps from.\nExample `heroku/homebrew-brew`.\n",
                     "willReplaceOnChanges": true
                 },
                 "pipelineId": {
                     "type": "string",
+                    "description": "The UUID of an existing pipeline.\n",
                     "willReplaceOnChanges": true
                 },
                 "staleDays": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Destroy stale review apps automatically after these many days without any deploys.\nMust be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.\n"
                 },
                 "waitForCi": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, review apps will only be created when CI passes. Defaults to `false`.\n"
                 }
             },
             "requiredInputs": [
@@ -1836,81 +2106,102 @@
                 "description": "Input properties used for looking up and filtering AppConfig resources.\n",
                 "properties": {
                     "automaticReviewApps": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "If true, this will trigger the creation of review apps when pull-requests\nare opened in the repo. Defaults to `false`.\n"
                     },
                     "baseName": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A unique prefix that will be used to create review app names.\n"
                     },
                     "deployTarget": {
-                        "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget"
+                        "$ref": "#/types/heroku:review/AppConfigDeployTarget:AppConfigDeployTarget",
+                        "description": "Provides a key/value pair to specify whether to use a common runtime or a private space.\n"
                     },
                     "destroyStaleApps": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "If `true`, this will trigger automatic deletion of review apps when they’re stale.\nDefaults to `false`.\n"
                     },
                     "orgRepo": {
                         "type": "string",
+                        "description": "The full_name of the repository that you want to enable review-apps from.\nExample `heroku/homebrew-brew`.\n",
                         "willReplaceOnChanges": true
                     },
                     "pipelineId": {
                         "type": "string",
+                        "description": "The UUID of an existing pipeline.\n",
                         "willReplaceOnChanges": true
                     },
                     "repoId": {
                         "type": "integer"
                     },
                     "staleDays": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "Destroy stale review apps automatically after these many days without any deploys.\nMust be set with `destroy_stale_apps` and value needs to be between `1` and `30` inclusive.\n"
                     },
                     "waitForCi": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "If true, review apps will only be created when CI passes. Defaults to `false`.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:slug/slug:Slug": {
+            "description": "## Example Usage\n\nComplete config to launch a Heroku app:\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n    name = \"foobar\"\n    region = \"us\"\n}\n\n# Create a slug for the app with a local slug archive file\nresource \"heroku_slug\" \"foobar\" {\n  app_id                         = heroku_app.foobar.id\n  buildpack_provided_description = \"Ruby\"\n  // The slug archive file must already exist\n  file_path                      = \"slug.tgz\"\n\n  process_types = {\n    web = \"ruby server.rb\"\n  }\n}\n\n# Deploy a release to the app with the slug\nresource \"heroku_app_release\" \"foobar\" {\n  app_id  = heroku_app.foobar.id\n  slug_id = heroku_slug.foobar.id\n}\n\n# Launch the app's web process by scaling-up\nresource \"heroku_formation\" \"foobar\" {\n  app_id     = heroku_app.foobar.id\n  type       = \"web\"\n  quantity   = 1\n  size       = \"Standard-1x\"\n  depends_on = [\"heroku_app_release.foobar\"]\n}\n```\n\n## Import\n\nExisting slugs can be imported using the combination of the application name, a colon, and the slug ID.\n\nFor example:\n\n```sh\n$ pulumi import heroku:slug/slug:Slug foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc\n```\n\n* `foobar` is the **heroku_slug** resource's name\n\n* `bazbux` is the Heroku app name (or ID) that the slug belongs to\n\n* `:` separates the app identifier \u0026 the slug identifier\n\n* `4f1db8ef…` is the slug ID\n\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "blobs": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/heroku:slug/SlugBlob:SlugBlob"
-                    }
+                    },
+                    "description": "Slug archive (compressed tar of executable code)\n"
                 },
                 "buildpackProvidedDescription": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of language or app framework, `\"Ruby/Rack\"`;\ndisplayed as the app's language in the Heroku Dashboard\n"
                 },
                 "checksum": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,\n`SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`\n"
                 },
                 "commit": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Identification of the code with your version control system (eg: SHA of the git HEAD), `\"60883d9e8947a57e04dc9124f25df004866a2051\"`\n"
                 },
                 "commitDescription": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the provided commit\n"
                 },
                 "filePath": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Local path to a slug archive, `\"slugs/current.tgz\"`\n"
                 },
                 "fileUrl": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "**https** URL to a slug archive, `\"https://example.com/slugs/app-v1.tgz\"`\n"
                 },
                 "processTypes": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
-                    }
+                        "type": "string"
+                    },
+                    "description": "Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)\n"
                 },
                 "size": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Slug archive filesize in bytes\n"
                 },
                 "stack": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)\n"
                 },
                 "stackId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "[Heroku stack](https://devcenter.heroku.com/articles/stack) ID\n"
                 }
             },
             "required": [
@@ -1925,41 +2216,50 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "buildpackProvidedDescription": {
                     "type": "string",
+                    "description": "Description of language or app framework, `\"Ruby/Rack\"`;\ndisplayed as the app's language in the Heroku Dashboard\n",
                     "willReplaceOnChanges": true
                 },
                 "checksum": {
                     "type": "string",
+                    "description": "Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,\n`SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`\n",
                     "willReplaceOnChanges": true
                 },
                 "commit": {
                     "type": "string",
+                    "description": "Identification of the code with your version control system (eg: SHA of the git HEAD), `\"60883d9e8947a57e04dc9124f25df004866a2051\"`\n",
                     "willReplaceOnChanges": true
                 },
                 "commitDescription": {
                     "type": "string",
+                    "description": "Description of the provided commit\n",
                     "willReplaceOnChanges": true
                 },
                 "filePath": {
                     "type": "string",
+                    "description": "Local path to a slug archive, `\"slugs/current.tgz\"`\n",
                     "willReplaceOnChanges": true
                 },
                 "fileUrl": {
                     "type": "string",
+                    "description": "**https** URL to a slug archive, `\"https://example.com/slugs/app-v1.tgz\"`\n",
                     "willReplaceOnChanges": true
                 },
                 "processTypes": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "pulumi.json#/Any"
+                        "type": "string"
                     },
+                    "description": "Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)\n",
                     "willReplaceOnChanges": true
                 },
                 "stack": {
                     "type": "string",
+                    "description": "Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -1972,72 +2272,88 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "blobs": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/heroku:slug/SlugBlob:SlugBlob"
-                        }
+                        },
+                        "description": "Slug archive (compressed tar of executable code)\n"
                     },
                     "buildpackProvidedDescription": {
                         "type": "string",
+                        "description": "Description of language or app framework, `\"Ruby/Rack\"`;\ndisplayed as the app's language in the Heroku Dashboard\n",
                         "willReplaceOnChanges": true
                     },
                     "checksum": {
                         "type": "string",
+                        "description": "Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,\n`SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`\n",
                         "willReplaceOnChanges": true
                     },
                     "commit": {
                         "type": "string",
+                        "description": "Identification of the code with your version control system (eg: SHA of the git HEAD), `\"60883d9e8947a57e04dc9124f25df004866a2051\"`\n",
                         "willReplaceOnChanges": true
                     },
                     "commitDescription": {
                         "type": "string",
+                        "description": "Description of the provided commit\n",
                         "willReplaceOnChanges": true
                     },
                     "filePath": {
                         "type": "string",
+                        "description": "Local path to a slug archive, `\"slugs/current.tgz\"`\n",
                         "willReplaceOnChanges": true
                     },
                     "fileUrl": {
                         "type": "string",
+                        "description": "**https** URL to a slug archive, `\"https://example.com/slugs/app-v1.tgz\"`\n",
                         "willReplaceOnChanges": true
                     },
                     "processTypes": {
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "pulumi.json#/Any"
+                            "type": "string"
                         },
+                        "description": "Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)\n",
                         "willReplaceOnChanges": true
                     },
                     "size": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "Slug archive filesize in bytes\n"
                     },
                     "stack": {
                         "type": "string",
+                        "description": "Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)\n",
                         "willReplaceOnChanges": true
                     },
                     "stackId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "[Heroku stack](https://devcenter.heroku.com/articles/stack) ID\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:space/appAccess:AppAccess": {
+            "description": "Provides a resource for managing permissions for the entire Private Space. Members with the admin role will\nalways have full permissions in the Private Space, so using this resource on an admin will have no effect.\nThe provided email must already be a member of the Heroku Team. Currently, the only supported permission is `create_apps`.\n\n## Example Usage\n\n```hcl-terraform\n// Create a new Heroku Private Space\nresource \"heroku_space\" \"default\" {\n  name = \"test-space\"\n  organization = \"my-company\"\n  region = \"virginia\"\n}\n\n// Give an existing team member create_apps permissions to the Private Space\nresource \"heroku_space_app_access\" \"member1\" {\n  space = heroku_space.default.id\n  email = \"member1@example.com\"\n  permissions = [\"create_apps\"]\n}\n\n// Remove all permissions from an existing team member\nresource \"heroku_space_app_access\" \"member2\" {\n  space = heroku_space.default.id\n  email = \"member2@example.com\"\n  permissions = []\n}\n```\n\n## Importing\n\nExisting permissions can be imported using the combination of the Private Space name, a colon, and the member email.\n\nFor example:\n\n```\n$ terraform import heroku_space_app_access.member1 my-space:member1@foobar.com\n```\n",
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The email of the existing Heroku Team member.\n"
                 },
                 "permissions": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "The permissions to grant the team member for the Private Space.\nCurrently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.\nMembers with admin role will always have `create_apps` permissions, which cannot be removed.\n"
                 },
                 "space": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the Private Space.\n"
                 }
             },
             "required": [
@@ -2048,16 +2364,19 @@
             "inputProperties": {
                 "email": {
                     "type": "string",
+                    "description": "The email of the existing Heroku Team member.\n",
                     "willReplaceOnChanges": true
                 },
                 "permissions": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "The permissions to grant the team member for the Private Space.\nCurrently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.\nMembers with admin role will always have `create_apps` permissions, which cannot be removed.\n"
                 },
                 "space": {
                     "type": "string",
+                    "description": "The ID of the Private Space.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -2071,16 +2390,19 @@
                 "properties": {
                     "email": {
                         "type": "string",
+                        "description": "The email of the existing Heroku Team member.\n",
                         "willReplaceOnChanges": true
                     },
                     "permissions": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "The permissions to grant the team member for the Private Space.\nCurrently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.\nMembers with admin role will always have `create_apps` permissions, which cannot be removed.\n"
                     },
                     "space": {
                         "type": "string",
+                        "description": "The ID of the Private Space.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -2088,15 +2410,18 @@
             }
         },
         "heroku:space/inboundRuleset:InboundRuleset": {
+            "description": "Provides a resource for managing [inbound rulesets](https://devcenter.heroku.com/articles/platform-api-reference#inbound-ruleset) for Heroku Private Spaces.\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku space\nresource \"heroku_space\" \"default\" {\n  name         = \"test-space\"\n  organization = \"my-company\"\n  region       = \"virginia\"\n}\n\n# Allow all traffic EXCEPT 8.8.4.4 to access the HPS.\nresource \"heroku_space_inbound_ruleset\" \"default\" {\n  space = heroku_space.default.id\n\n  rule {\n    action = \"allow\"\n    source = \"0.0.0.0/0\"\n  }\n\n  rule {\n    action = \"deny\"\n    source = \"8.8.4.4/32\"\n  }\n}\n```\n",
             "properties": {
                 "rules": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/heroku:space/InboundRulesetRule:InboundRulesetRule"
-                    }
+                    },
+                    "description": "At least one `rule` block. Rules are documented below.\n"
                 },
                 "space": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the space.\n"
                 }
             },
             "required": [
@@ -2108,10 +2433,12 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/heroku:space/InboundRulesetRule:InboundRulesetRule"
-                    }
+                    },
+                    "description": "At least one `rule` block. Rules are documented below.\n"
                 },
                 "space": {
                     "type": "string",
+                    "description": "The ID of the space.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -2126,10 +2453,12 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/heroku:space/InboundRulesetRule:InboundRulesetRule"
-                        }
+                        },
+                        "description": "At least one `rule` block. Rules are documented below.\n"
                     },
                     "space": {
                         "type": "string",
+                        "description": "The ID of the space.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -2137,18 +2466,23 @@
             }
         },
         "heroku:space/peeringConnectionAccepter:PeeringConnectionAccepter": {
+            "description": "Provides a resource for accepting VPC peering requests to Heroku Private Spaces.\n\n## Example Usage\n\n```hcl-terraform\n# Fetch the peering information for the Heroku Private Space.\ndata \"heroku_space_peering_info\" \"peer_space\" {\n  name = \"my-fancy-space\"\n}\n\n# Initiate the request.\nresource \"aws_vpc_peering_connection\" \"request\" {\n  peer_owner_id = data.heroku_space_peering_info.peer_space.aws_account_id\n  peer_vpc_id   = data.heroku_space_peering_info.peer_space.vpc_id\n  vpc_id        = aws_vpc.main.id\n}\n\n# Accept the request.\nresource \"heroku_space_peering_connection_accepter\" \"accept\" {\n  space                     = heroku_space.peer_space.id\n  vpc_peering_connection_id = aws_vpc_peering_connection.request.id\n}\n```\n",
             "properties": {
                 "space": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the space.\n"
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The status of the peering connection request.\n"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The type of the peering connection.\n"
                 },
                 "vpcPeeringConnectionId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The peering connection request ID.\n"
                 }
             },
             "required": [
@@ -2160,10 +2494,12 @@
             "inputProperties": {
                 "space": {
                     "type": "string",
+                    "description": "The ID of the space.\n",
                     "willReplaceOnChanges": true
                 },
                 "vpcPeeringConnectionId": {
                     "type": "string",
+                    "description": "The peering connection request ID.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -2176,16 +2512,20 @@
                 "properties": {
                     "space": {
                         "type": "string",
+                        "description": "The ID of the space.\n",
                         "willReplaceOnChanges": true
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The status of the peering connection request.\n"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The type of the peering connection.\n"
                     },
                     "vpcPeeringConnectionId": {
                         "type": "string",
+                        "description": "The peering connection request ID.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -2193,30 +2533,38 @@
             }
         },
         "heroku:space/space:Space": {
+            "description": "Provides a Heroku Private Space resource for running apps in isolated, highly available, secure app execution environments.\n\n## Example Usage\n\nA Heroku \"team\" was originally called an \"organization\", and that is still \nthe identifier used in this resource.\n\n```hcl-terraform\n// Create a new Heroku space\nresource \"heroku_space\" \"default\" {\n  name = \"test-space\"\n  organization = \"my-company\"\n  region = \"virginia\"\n}\n\n// Create a new Heroku app in test-space, same region\nresource \"heroku_app\" \"default\" {\n  name = \"test-app\"\n  region = \"virginia\"\n  space = heroku_space.default.id\n  organization = {\n    name = \"my-company\"\n  }\n}\n```\n\n## Import\n\nSpaces can be imported using the space `id`, e.g.\n\n```sh\n$ pulumi import heroku:space/space:Space foobar MySpace\n```\n",
             "properties": {
                 "cidr": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The RFC-1918 CIDR the Private Space will use.\nIt must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16\n"
                 },
                 "dataCidr": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection\nthat’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the Private Space.\n"
                 },
                 "organization": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the Heroku Team which will own the Private Space.\n"
                 },
                 "outboundIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).\n"
                 },
                 "shield": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).\n"
                 }
             },
             "required": [
@@ -2228,25 +2576,31 @@
             "inputProperties": {
                 "cidr": {
                     "type": "string",
+                    "description": "The RFC-1918 CIDR the Private Space will use.\nIt must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16\n",
                     "willReplaceOnChanges": true
                 },
                 "dataCidr": {
                     "type": "string",
+                    "description": "The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection\nthat’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20\n",
                     "willReplaceOnChanges": true
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the Private Space.\n"
                 },
                 "organization": {
                     "type": "string",
+                    "description": "The name of the Heroku Team which will own the Private Space.\n",
                     "willReplaceOnChanges": true
                 },
                 "region": {
                     "type": "string",
+                    "description": "provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).\n",
                     "willReplaceOnChanges": true
                 },
                 "shield": {
                     "type": "boolean",
+                    "description": "provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -2258,31 +2612,38 @@
                 "properties": {
                     "cidr": {
                         "type": "string",
+                        "description": "The RFC-1918 CIDR the Private Space will use.\nIt must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16\n",
                         "willReplaceOnChanges": true
                     },
                     "dataCidr": {
                         "type": "string",
+                        "description": "The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection\nthat’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20\n",
                         "willReplaceOnChanges": true
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the Private Space.\n"
                     },
                     "organization": {
                         "type": "string",
+                        "description": "The name of the Heroku Team which will own the Private Space.\n",
                         "willReplaceOnChanges": true
                     },
                     "outboundIps": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).\n"
                     },
                     "region": {
                         "type": "string",
+                        "description": "provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).\n",
                         "willReplaceOnChanges": true
                     },
                     "shield": {
                         "type": "boolean",
+                        "description": "provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -2290,33 +2651,41 @@
             }
         },
         "heroku:space/vpnConnection:VpnConnection": {
+            "description": "Provides a resource for creating a VPN connection between a network and a Heroku Private Space. For more information, see [Private Spaces VPN Connection](https://devcenter.heroku.com/articles/private-space-vpn-connection?preview=1) in the Heroku DevCenter.\n\n## Example Usage\n\n```hcl-terraform\n// Create a new Heroku space\nresource \"heroku_space\" \"default\" {\n  name         = \"test-space\"\n  organization = \"my-company\"\n  region       = \"virginia\"\n}\n\n// Connect the Heroku space to another network with a VPN\nresource \"heroku_space_vpn_connection\" \"office\" {\n  name           = \"office\"\n  space          = heroku_space.default.id\n  public_ip      = \"203.0.113.1\"\n  routable_cidrs = [\"192.168.1.0/24\"]\n}\n```\n",
             "properties": {
                 "ikeVersion": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The IKE version used to setup the IPsec tunnel.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the VPN connection.\n"
                 },
                 "publicIp": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The public IP address of the VPN endpoint on the network where the VPN connection will be established.\n"
                 },
                 "routableCidrs": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.\n"
                 },
                 "space": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the Heroku Private Space where the VPN connection will be established.\n"
                 },
                 "spaceCidrBlock": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.\n"
                 },
                 "tunnels": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/heroku:space/VpnConnectionTunnel:VpnConnectionTunnel"
-                    }
+                    },
+                    "description": "Details about each VPN tunnel endpoint.\n"
                 }
             },
             "required": [
@@ -2331,10 +2700,12 @@
             "inputProperties": {
                 "name": {
                     "type": "string",
+                    "description": "The name of the VPN connection.\n",
                     "willReplaceOnChanges": true
                 },
                 "publicIp": {
                     "type": "string",
+                    "description": "The public IP address of the VPN endpoint on the network where the VPN connection will be established.\n",
                     "willReplaceOnChanges": true
                 },
                 "routableCidrs": {
@@ -2342,17 +2713,20 @@
                     "items": {
                         "type": "string"
                     },
+                    "description": "A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.\n",
                     "willReplaceOnChanges": true
                 },
                 "space": {
                     "type": "string",
+                    "description": "The ID of the Heroku Private Space where the VPN connection will be established.\n",
                     "willReplaceOnChanges": true
                 },
                 "tunnels": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/heroku:space/VpnConnectionTunnel:VpnConnectionTunnel"
-                    }
+                    },
+                    "description": "Details about each VPN tunnel endpoint.\n"
                 }
             },
             "requiredInputs": [
@@ -2364,14 +2738,17 @@
                 "description": "Input properties used for looking up and filtering VpnConnection resources.\n",
                 "properties": {
                     "ikeVersion": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The IKE version used to setup the IPsec tunnel.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "The name of the VPN connection.\n",
                         "willReplaceOnChanges": true
                     },
                     "publicIp": {
                         "type": "string",
+                        "description": "The public IP address of the VPN endpoint on the network where the VPN connection will be established.\n",
                         "willReplaceOnChanges": true
                     },
                     "routableCidrs": {
@@ -2379,38 +2756,47 @@
                         "items": {
                             "type": "string"
                         },
+                        "description": "A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.\n",
                         "willReplaceOnChanges": true
                     },
                     "space": {
                         "type": "string",
+                        "description": "The ID of the Heroku Private Space where the VPN connection will be established.\n",
                         "willReplaceOnChanges": true
                     },
                     "spaceCidrBlock": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.\n"
                     },
                     "tunnels": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/heroku:space/VpnConnectionTunnel:VpnConnectionTunnel"
-                        }
+                        },
+                        "description": "Details about each VPN tunnel endpoint.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:ssl/ssl:Ssl": {
+            "description": "This resource manages an SSL certificate for a Heroku app.\n\n\u003e **IMPORTANT!**\nThis resource renders the \"private_key\" attribute in plain-text in your state file.\nPlease ensure that your state file is properly secured and encrypted at rest.\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku app\nresource \"heroku_app\" \"default\" {\n  name = \"test-app\"\n  region = \"us\"\n}\n\n# Build a slug that we can scale\nresource \"heroku_build\" \"default\" {\n  app_id = heroku_app.default.id\n  source {\n    url = \"https://github.com/heroku/terraform-provider-heroku/raw/master/heroku/test-fixtures/app.tgz\"\n  }\n}\n\n# Scale the app to a tier that supports Heroku SSL\nresource \"heroku_formation\" \"web\" {\n  app_id = heroku_app.default.id\n  type = \"web\"\n  size = \"basic\"\n  quantity = 1\n\n  # Wait until the build has completed before attempting to scale\n  depends_on = [heroku_build.default]\n}\n\n# Create the certificate\nresource \"heroku_ssl\" \"one\" {\n  app_id = heroku_app.default.uuid\n  certificate_chain = file(\"server.crt\")\n  private_key = file(\"server.key\")\n\n  # Wait until the process_tier changes to basic before attempting to create a cert\n  depends_on = [heroku_formation.web]\n}\n\nresource \"heroku_domain\" \"no-ssl\" {\n  app_id = heroku_app.default.id\n  hostname = \"terraform-123-no-ssl.example.com\"\n  # Until November 2021 if you have an ssl resource, but do not want to associate it with a domain, you must ensure the domain is created after the ssl resource. See https://devcenter.heroku.com/changelog-items/2192 for more details. We do this by adding a depends_on for the ssl resources.\n  depends_on = [heroku_ssl.one]\n}\n\n# Associate it with a domain\nresource \"heroku_domain\" \"one\" {\n  app_id = heroku_app.default.id\n  hostname = \"terraform-123.example.com\"\n  sni_endpoint_id = heroku_ssl.one.id\n}\n\n# Create another certificate\nresource \"heroku_ssl\" \"two\" {\n  app_id = heroku_app.default.uuid\n  certificate_chain = file(\"server.crt\")\n  private_key = file(\"server.key\")\n  # Wait until the process_tier changes to basic before attempting to create a cert\n  depends_on = [heroku_formation.web]\n}\n\n# Associate it with a second domain\nresource \"heroku_domain\" \"two\" {\n  app_id = heroku_app.default.id\n  hostname = \"terraform-456.example.com\"\n  sni_endpoint_id = heroku_ssl.two.id\n}\n```\n\n## Importing\n\nAn existing SSL resource can be imported using a composite value of the app name and certificate UUID separated by a colon.\n\nFor example:\n\n```\n$ terraform import heroku_ssl.production_api production-api:b85d9224-310b-409b-891e-c903f5a40568\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "certificateChain": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The certificate chain to add.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the SSL certificate\n"
                 },
                 "privateKey": {
                     "type": "string",
+                    "description": "The private key for a given certificate chain. You **must** set this attribute when creating or\nupdating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing\nSSL resource. The attribute value does not get displayed in logs or regular output.\n",
                     "secret": true
                 }
             },
@@ -2422,13 +2808,16 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "certificateChain": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The certificate chain to add.\n"
                 },
                 "privateKey": {
                     "type": "string",
+                    "description": "The private key for a given certificate chain. You **must** set this attribute when creating or\nupdating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing\nSSL resource. The attribute value does not get displayed in logs or regular output.\n",
                     "secret": true
                 }
             },
@@ -2441,16 +2830,20 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "certificateChain": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The certificate chain to add.\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the SSL certificate\n"
                     },
                     "privateKey": {
                         "type": "string",
+                        "description": "The private key for a given certificate chain. You **must** set this attribute when creating or\nupdating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing\nSSL resource. The attribute value does not get displayed in logs or regular output.\n",
                         "secret": true
                     }
                 },
@@ -2458,18 +2851,22 @@
             }
         },
         "heroku:team/collaborator:Collaborator": {
+            "description": "A [Heroku Team Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#team-app-collaborator)\nreceives access to a specific Team-owned app.\n\nTo create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard.\nFor Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.\n\nA Heroku \"team\" was originally called an \"organization\", and that is still the identifier used elsewhere in this provider.\nFor `heroku.app.App` \u0026 `heroku.space.Space` resources, set the Heroku Team name as the \"organization\".\n\n\u003e **IMPORTANT:**\nThis resource only works for Team-owned apps.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_app\" \"foobar\" {\n  name = \"some name\"\n  region = \"us\"\n  organization {\n    name = \"some organization\"\n  }\n}\n\n# Create a new team collaborator for the foobar application that has view, operate, manage permissions\nresource \"heroku_team_collaborator\" \"foobar-collaborator\" {\n\tapp_id = heroku_app.foobar.id\n\temail = \"collaborator@foobar.com\"\n\tpermissions = [\"view\", \"operate\", \"manage\"]\n}\n```\n\n## Import\n\nTeam Collaborators can be imported using the combination of the team application name, a colon, and the collaborator's email address\n\nFor example:\n\n```sh\n$ pulumi import heroku:team/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com\n```\n",
             "properties": {
                 "appId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n"
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Email address of the team collaborator\n"
                 },
                 "permissions": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of permissions that will be granted to the team collaborator. The order in which\nindividual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)\nfor more information on available permissions.\n"
                 }
             },
             "required": [
@@ -2480,17 +2877,20 @@
             "inputProperties": {
                 "appId": {
                     "type": "string",
+                    "description": "Heroku app ID (do not use app name)\n",
                     "willReplaceOnChanges": true
                 },
                 "email": {
                     "type": "string",
+                    "description": "Email address of the team collaborator\n",
                     "willReplaceOnChanges": true
                 },
                 "permissions": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of permissions that will be granted to the team collaborator. The order in which\nindividual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)\nfor more information on available permissions.\n"
                 }
             },
             "requiredInputs": [
@@ -2503,35 +2903,42 @@
                 "properties": {
                     "appId": {
                         "type": "string",
+                        "description": "Heroku app ID (do not use app name)\n",
                         "willReplaceOnChanges": true
                     },
                     "email": {
                         "type": "string",
+                        "description": "Email address of the team collaborator\n",
                         "willReplaceOnChanges": true
                     },
                     "permissions": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of permissions that will be granted to the team collaborator. The order in which\nindividual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)\nfor more information on available permissions.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "heroku:team/member:Member": {
+            "description": "A [Heroku Team Member](https://devcenter.heroku.com/articles/platform-api-reference#team-member) receives access to everything owned by the Team.\n\nTo create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard. For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.\n\nA Heroku \"team\" was originally called an \"organization\", and that is still the identifier used elsewhere in this provider. For `heroku.app.App` \u0026 `heroku.space.Space` resources, set the Heroku Team name as the \"organization\".\n\n## Example Usage\n\n```hcl-terraform\n# Adds a Heroku user to a Heroku team as a viewer.\nresource \"heroku_team_member\" \"foobar-member\" {\n  team  = \"my-team\"\n  email = \"some-user@example.com\"\n  role  = \"member\"\n}\n```\n\n## Import\n\nTeam members can be imported using the combination of the team application name, a colon, and the member's email address.\n\n```sh\n$ pulumi import heroku:team/member:Member foobar-member my-team-foobar:some-user@example.com\n```\n",
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Email address of the member\n"
                 },
                 "federated": {
                     "type": "boolean"
                 },
                 "role": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.\n"
                 },
                 "team": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the Heroku Team.\n"
                 }
             },
             "required": [
@@ -2542,16 +2949,19 @@
             "inputProperties": {
                 "email": {
                     "type": "string",
+                    "description": "Email address of the member\n",
                     "willReplaceOnChanges": true
                 },
                 "federated": {
                     "type": "boolean"
                 },
                 "role": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.\n"
                 },
                 "team": {
                     "type": "string",
+                    "description": "The name of the Heroku Team.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -2565,16 +2975,19 @@
                 "properties": {
                     "email": {
                         "type": "string",
+                        "description": "Email address of the member\n",
                         "willReplaceOnChanges": true
                     },
                     "federated": {
                         "type": "boolean"
                     },
                     "role": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.\n"
                     },
                     "team": {
                         "type": "string",
+                        "description": "The name of the Heroku Team.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -2584,11 +2997,13 @@
     },
     "functions": {
         "heroku:addon/getAddon:getAddon": {
+            "description": "Use this data source to get information about a Heroku Addon.\n\n## Example Usage\n\n```hcl-terraform\n# Lookup an existing Heroku add-on\ndata \"heroku_addon\" \"example\" {\n  name = \"example-addon-name\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getAddon.\n",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The add-on name\n"
                     }
                 },
                 "type": "object",
@@ -2600,25 +3015,31 @@
                 "description": "A collection of values returned by getAddon.\n",
                 "properties": {
                     "appId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Heroku app ID\n"
                     },
                     "configVars": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "The Configuration variables of the add-on\n"
                     },
                     "id": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the add-on\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The add-on name\n"
                     },
                     "plan": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The plan name\n"
                     },
                     "providerId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the plan provider\n"
                     }
                 },
                 "type": "object",
@@ -2633,11 +3054,13 @@
             }
         },
         "heroku:app/getApp:getApp": {
+            "description": "Use this data source to get information about a Heroku App.\n\n## Example Usage\n\n```hcl-terraform\n# Lookup an existing Heroku app\ndata \"heroku_app\" \"default\" {\n  name   = \"my-cool-app\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getApp.\n",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the application. In Heroku, this is also the\nunique ID, so it must be unique and have a minimum of 3 characters.\n"
                     }
                 },
                 "type": "object",
@@ -2649,25 +3072,30 @@
                 "description": "A collection of values returned by getApp.\n",
                 "properties": {
                     "acm": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "True if Heroku ACM is enabled for this app, false otherwise.\n"
                     },
                     "buildpacks": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of buildpacks that this app uses.\n"
                     },
                     "configVars": {
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "pulumi.json#/Any"
-                        }
+                            "type": "string"
+                        },
+                        "description": "A map of all configuration variables for the app.\n"
                     },
                     "gitUrl": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The Git URL for the application. This is used for\ndeploying new versions of the app.\n"
                     },
                     "herokuHostname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The hostname for the Heroku application, suitable\nfor pointing DNS records.\n"
                     },
                     "id": {
                         "type": "string",
@@ -2677,28 +3105,35 @@
                         "type": "boolean"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the Heroku Team (organization).\n"
                     },
                     "organizations": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/heroku:app/getAppOrganization:getAppOrganization"
-                        }
+                        },
+                        "description": "The Heroku Team that owns this app.\n"
                     },
                     "region": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The region in which the app is deployed.\n"
                     },
                     "space": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The private space in which the app runs. Not present if this is a common runtime app.\n"
                     },
                     "stack": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The application stack is what platform to run the application\nin.\n"
                     },
                     "uuid": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The unique UUID of the Heroku app.\n"
                     },
                     "webUrl": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The web (HTTP) URL that the application can be accessed\nat by default.\n"
                     }
                 },
                 "type": "object",
@@ -2721,11 +3156,13 @@
             }
         },
         "heroku:pipeline/getPipeline:getPipeline": {
+            "description": "Use this data source to get information about a Heroku Pipeline.\n\n\u003e **NOTE:**\nThis data source can only be used to fetch information regarding a pipeline that has apps already associated to it.\nThis is a limitation in the Heroku Platform API where it is not possible to query a pipeline without apps by its name.\n\n## Example Usage\n\n```hcl-terraform\ndata \"heroku_pipeline\" \"foobar\" {\n  name = \"pipeline-test-123\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getPipeline.\n",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).\n"
                     }
                 },
                 "type": "object",
@@ -2744,10 +3181,12 @@
                         "type": "string"
                     },
                     "ownerId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The pipeline owner's ID\n"
                     },
                     "ownerType": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The pipeline owner's type\n"
                     }
                 },
                 "type": "object",
@@ -2760,11 +3199,13 @@
             }
         },
         "heroku:space/getPeeringInfo:getPeeringInfo": {
+            "description": "Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).\n\n## Example Usage\n\n```hcl-terraform\n# Look up a Heroku Private Space's peering info. \ndata \"heroku_space_peering_info\" \"default\" {\n  name   = \"my-secret-space\"\n}\n\n# Initiate a VPC peering connection request.\nresource \"aws_vpc_peering_connection\" \"foo\" {\n  peer_owner_id = data.heroku_space_peering_info.default.aws_account_id\n  peer_vpc_id   = data.heroku_space_peering_info.default.vpc_id\n  vpc_id        = aws_vpc.foo.id\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getPeeringInfo.\n",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the Heroku Private Space.\n"
                     }
                 },
                 "type": "object",
@@ -2776,16 +3217,19 @@
                 "description": "A collection of values returned by getPeeringInfo.\n",
                 "properties": {
                     "awsAccountId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The AWS account ID that the Heroku Private Space runs in.\n"
                     },
                     "awsRegion": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The AWS region that the Heroku Private Space runs in.\n"
                     },
                     "dynoCidrBlocks": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "The CIDR blocks that the Dynos run on.\n"
                     },
                     "id": {
                         "type": "string",
@@ -2798,13 +3242,16 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of unavailable CIDR blocks.\n"
                     },
                     "vpcCidr": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The CIDR block of the VPC ID.\n"
                     },
                     "vpcId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The VPC ID of the Heroku Private Space.\n"
                     }
                 },
                 "type": "object",
@@ -2821,17 +3268,21 @@
             }
         },
         "heroku:space/getSpace:getSpace": {
+            "description": "Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).\n\n## Example Usage\n\n```hcl-terraform\n# Look up a Heroku Private Space\ndata \"heroku_space\" \"default\" {\n  name   = \"my-secret-space\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getSpace.\n",
                 "properties": {
                     "cidr": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16\n"
                     },
                     "dataCidr": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the Heroku Private Space.\n"
                     }
                 },
                 "type": "object",
@@ -2843,35 +3294,43 @@
                 "description": "A collection of values returned by getSpace.\n",
                 "properties": {
                     "cidr": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16\n"
                     },
                     "dataCidr": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20\n"
                     },
                     "id": {
                         "type": "string",
                         "description": "The provider-assigned unique ID for this managed resource.\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "(string) - The name of the Heroku Team.\n"
                     },
                     "organization": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The Heroku Team that owns this space. The fields for this block are documented below.\n"
                     },
                     "outboundIps": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).\n"
                     },
                     "region": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The region in which the Heroku Private Space is deployed.\n"
                     },
                     "shield": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "Whether or not the space has [Shield](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces) turned on. One of `on` or `off`.\n"
                     },
                     "state": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The state of the Heroku Private Space. Either `allocating` or `allocated`.\n"
                     }
                 },
                 "type": "object",
@@ -2889,6 +3348,7 @@
             }
         },
         "heroku:team/getMembers:getMembers": {
+            "description": "Use this data source to get information about members for a Heroku Team.\n\n## Example Usage\n\n```hcl-terraform\ndata \"heroku_team_members\" \"foobar\" {\n  team = \"name_of_my_heroku_team\"\n  roles = [\"admin\", \"member\", \"viewer\", \"collaborator\"]\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getMembers.\n",
                 "properties": {
@@ -2896,10 +3356,12 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.\nAt least one role must be specified.\n"
                     },
                     "team": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The team name.\n"
                     }
                 },
                 "type": "object",
@@ -2919,7 +3381,8 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/heroku:team/getMembersMember:getMembersMember"
-                        }
+                        },
+                        "description": "All members of the team that have a specified role defined in the `roles` attribute above.\n"
                     },
                     "roles": {
                         "type": "array",
@@ -2941,11 +3404,13 @@
             }
         },
         "heroku:team/getTeam:getTeam": {
+            "description": "Use this data source to get information about a Heroku Team.\n\n## Example Usage\n\n```hcl-terraform\ndata \"heroku_team\" \"my_heroku_team\" {\n  name = \"name_of_my_heroku_team\"\n}\n\noutput \"heroku_team_data_basic\" {\n  value = [\n    \"Heroku team\",\n    \"id: ${data.heroku_team.my_heroku_team.id}\",\n    \"default: ${data.heroku_team.my_heroku_team.default}\",\n    \"membership_limit: ${data.heroku_team.my_heroku_team.membership_limit}\",\n    \"provisioned_licenses: ${data.heroku_team.my_heroku_team.provisioned_licenses}\",\n    \"type: ${data.heroku_team.my_heroku_team.type}\",\n  ]\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getTeam.\n",
                 "properties": {
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The team name\n"
                     }
                 },
                 "type": "object",
@@ -2957,23 +3422,27 @@
                 "description": "A collection of values returned by getTeam.\n",
                 "properties": {
                     "default": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "Whether to use this team when none is specified\n"
                     },
                     "id": {
                         "type": "string",
                         "description": "The provider-assigned unique ID for this managed resource.\n"
                     },
                     "membershipLimit": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "Upper limit of members allowed in a team\n"
                     },
                     "name": {
                         "type": "string"
                     },
                     "provisionedLicenses": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "Whether the team is provisioned licenses by Salesforce\n"
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "type of team Will likely be either \"enterprise\" or \"team\"\n"
                     }
                 },
                 "type": "object",

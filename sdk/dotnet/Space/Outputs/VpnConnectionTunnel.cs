@@ -14,7 +14,13 @@ namespace Pulumiverse.Heroku.Space.Outputs
     [OutputType]
     public sealed class VpnConnectionTunnel
     {
+        /// <summary>
+        /// The public IP address of the tunnel.
+        /// </summary>
         public readonly string? Ip;
+        /// <summary>
+        /// The pre-shared IPSec secret for the tunnel.
+        /// </summary>
         public readonly string? PreSharedKey;
 
         [OutputConstructor]

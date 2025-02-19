@@ -10,18 +10,56 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Account
 {
+    /// <summary>
+    /// This resource is used to create and manage [User Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+    /// 
+    /// &gt; **NOTE:** If this resource's HCL is removed from a `.tf` file, the behavior is to disable account feature
+    /// and remove resource from state.
+    /// 
+    /// ## Available Features
+    /// 
+    /// For a list of available features, use the [`heroku labs`](https://devcenter.heroku.com/articles/heroku-cli)
+    /// command to fetch them for the current authenticated user.
+    /// 
+    /// The output will contain **User Features** that may be managed with this resource.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Existing account features can be imported using a combination of the account email (the email address tied to the Heroku API key)
+    /// and the feature name.
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:account/feature:Feature example_metrics name@example.com:metrics-request-volume
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:account/feature:Feature")]
     public partial class Feature : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Description of account feature
+        /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Enable or disable the account feature
+        /// </summary>
         [Output("enabled")]
         public Output<bool> Enabled { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the account feature
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// State of account feature
+        /// </summary>
         [Output("state")]
         public Output<string> State { get; private set; } = null!;
 
@@ -72,9 +110,15 @@ namespace Pulumiverse.Heroku.Account
 
     public sealed class FeatureArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Enable or disable the account feature
+        /// </summary>
         [Input("enabled", required: true)]
         public Input<bool> Enabled { get; set; } = null!;
 
+        /// <summary>
+        /// Name of the account feature
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -86,15 +130,27 @@ namespace Pulumiverse.Heroku.Account
 
     public sealed class FeatureState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Description of account feature
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Enable or disable the account feature
+        /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
+        /// <summary>
+        /// Name of the account feature
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// State of account feature
+        /// </summary>
         [Input("state")]
         public Input<string>? State { get; set; }
 

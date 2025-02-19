@@ -10,27 +10,66 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Space
 {
+    /// <summary>
+    /// Provides a Heroku Private Space resource for running apps in isolated, highly available, secure app execution environments.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// A Heroku "team" was originally called an "organization", and that is still
+    /// the identifier used in this resource.
+    /// 
+    /// ## Import
+    /// 
+    /// Spaces can be imported using the space `id`, e.g.
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:space/space:Space foobar MySpace
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:space/space:Space")]
     public partial class Space : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The RFC-1918 CIDR the Private Space will use.
+        /// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        /// </summary>
         [Output("cidr")]
         public Output<string?> Cidr { get; private set; } = null!;
 
+        /// <summary>
+        /// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+        /// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        /// </summary>
         [Output("dataCidr")]
         public Output<string> DataCidr { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the Private Space.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the Heroku Team which will own the Private Space.
+        /// </summary>
         [Output("organization")]
         public Output<string> Organization { get; private set; } = null!;
 
+        /// <summary>
+        /// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        /// </summary>
         [Output("outboundIps")]
         public Output<ImmutableArray<string>> OutboundIps { get; private set; } = null!;
 
+        /// <summary>
+        /// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        /// </summary>
         [Output("region")]
         public Output<string?> Region { get; private set; } = null!;
 
+        /// <summary>
+        /// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+        /// </summary>
         [Output("shield")]
         public Output<bool?> Shield { get; private set; } = null!;
 
@@ -81,21 +120,41 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class SpaceArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The RFC-1918 CIDR the Private Space will use.
+        /// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        /// </summary>
         [Input("cidr")]
         public Input<string>? Cidr { get; set; }
 
+        /// <summary>
+        /// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+        /// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        /// </summary>
         [Input("dataCidr")]
         public Input<string>? DataCidr { get; set; }
 
+        /// <summary>
+        /// The name of the Private Space.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The name of the Heroku Team which will own the Private Space.
+        /// </summary>
         [Input("organization", required: true)]
         public Input<string> Organization { get; set; } = null!;
 
+        /// <summary>
+        /// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 
+        /// <summary>
+        /// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+        /// </summary>
         [Input("shield")]
         public Input<bool>? Shield { get; set; }
 
@@ -107,29 +166,53 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class SpaceState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The RFC-1918 CIDR the Private Space will use.
+        /// It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+        /// </summary>
         [Input("cidr")]
         public Input<string>? Cidr { get; set; }
 
+        /// <summary>
+        /// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection
+        /// that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+        /// </summary>
         [Input("dataCidr")]
         public Input<string>? DataCidr { get; set; }
 
+        /// <summary>
+        /// The name of the Private Space.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The name of the Heroku Team which will own the Private Space.
+        /// </summary>
         [Input("organization")]
         public Input<string>? Organization { get; set; }
 
         [Input("outboundIps")]
         private InputList<string>? _outboundIps;
+
+        /// <summary>
+        /// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+        /// </summary>
         public InputList<string> OutboundIps
         {
             get => _outboundIps ?? (_outboundIps = new InputList<string>());
             set => _outboundIps = value;
         }
 
+        /// <summary>
+        /// provision in a specific [Private Spaces region](https://devcenter.heroku.com/articles/regions#viewing-available-regions).
+        /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 
+        /// <summary>
+        /// provision as a [Shield Private Space](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces).
+        /// </summary>
         [Input("shield")]
         public Input<bool>? Shield { get; set; }
 

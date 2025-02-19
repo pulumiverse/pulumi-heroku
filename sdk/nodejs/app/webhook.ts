@@ -4,6 +4,15 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a [Heroku App Webhook](https://devcenter.heroku.com/categories/app-webhooks).
+ *
+ * ## Example Usage
+ *
+ * ## Importing
+ *
+ * Existing webhooks can be imported using the combination of the application name or id, a colon, and the webhook name or id, e.g.
+ */
 export class Webhook extends pulumi.CustomResource {
     /**
      * Get an existing Webhook resource's state with the given name, ID, and optional extra
@@ -32,11 +41,29 @@ export class Webhook extends pulumi.CustomResource {
         return obj['__pulumiType'] === Webhook.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+     */
     public readonly authorization!: pulumi.Output<string | undefined>;
+    /**
+     * List of events to deliver to the webhook.
+     */
     public readonly includes!: pulumi.Output<string[]>;
+    /**
+     * The webhook level (either `notify` or `sync`)
+     */
     public readonly level!: pulumi.Output<string>;
+    /**
+     * Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+     */
     public readonly secret!: pulumi.Output<string | undefined>;
+    /**
+     * Optional plan configuration.
+     */
     public readonly url!: pulumi.Output<string>;
 
     /**
@@ -90,11 +117,29 @@ export class Webhook extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Webhook resources.
  */
 export interface WebhookState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+     */
     authorization?: pulumi.Input<string>;
+    /**
+     * List of events to deliver to the webhook.
+     */
     includes?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The webhook level (either `notify` or `sync`)
+     */
     level?: pulumi.Input<string>;
+    /**
+     * Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+     */
     secret?: pulumi.Input<string>;
+    /**
+     * Optional plan configuration.
+     */
     url?: pulumi.Input<string>;
 }
 
@@ -102,10 +147,28 @@ export interface WebhookState {
  * The set of arguments for constructing a Webhook resource.
  */
 export interface WebhookArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+     */
     authorization?: pulumi.Input<string>;
+    /**
+     * List of events to deliver to the webhook.
+     */
     includes: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The webhook level (either `notify` or `sync`)
+     */
     level: pulumi.Input<string>;
+    /**
+     * Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+     */
     secret?: pulumi.Input<string>;
+    /**
+     * Optional plan configuration.
+     */
     url: pulumi.Input<string>;
 }

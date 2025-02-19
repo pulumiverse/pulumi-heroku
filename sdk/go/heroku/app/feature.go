@@ -12,12 +12,36 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// This resource is used to create and manage [App Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+//
+// ## Available Features
+//
+// For a list of available features, use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+// to fetch them for one of your existing apps: `heroku labs --app foobar`.
+//
+// The output will contain **User Features** and **App Features**. This resource manages App Features.
+// If you need to manage User Features, use the `account.Feature` resource.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// App features can be imported using the combination of the application name, a colon, and the feature's name.
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:app/feature:Feature log-runtime-metrics foobar:log-runtime-metrics
+// ```
 type Feature struct {
 	pulumi.CustomResourceState
 
-	AppId   pulumi.StringOutput  `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// Whether to enable or disable the App Feature. The default value is true.
 	Enabled pulumi.BoolPtrOutput `pulumi:"enabled"`
-	Name    pulumi.StringOutput  `pulumi:"name"`
+	// The name of the App Feature to manage.
+	Name pulumi.StringOutput `pulumi:"name"`
 }
 
 // NewFeature registers a new resource with the given unique name, arguments, and options.
@@ -53,15 +77,21 @@ func GetFeature(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Feature resources.
 type featureState struct {
-	AppId   *string `pulumi:"appId"`
-	Enabled *bool   `pulumi:"enabled"`
-	Name    *string `pulumi:"name"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// Whether to enable or disable the App Feature. The default value is true.
+	Enabled *bool `pulumi:"enabled"`
+	// The name of the App Feature to manage.
+	Name *string `pulumi:"name"`
 }
 
 type FeatureState struct {
-	AppId   pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// Whether to enable or disable the App Feature. The default value is true.
 	Enabled pulumi.BoolPtrInput
-	Name    pulumi.StringPtrInput
+	// The name of the App Feature to manage.
+	Name pulumi.StringPtrInput
 }
 
 func (FeatureState) ElementType() reflect.Type {
@@ -69,16 +99,22 @@ func (FeatureState) ElementType() reflect.Type {
 }
 
 type featureArgs struct {
-	AppId   string  `pulumi:"appId"`
-	Enabled *bool   `pulumi:"enabled"`
-	Name    *string `pulumi:"name"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// Whether to enable or disable the App Feature. The default value is true.
+	Enabled *bool `pulumi:"enabled"`
+	// The name of the App Feature to manage.
+	Name *string `pulumi:"name"`
 }
 
 // The set of arguments for constructing a Feature resource.
 type FeatureArgs struct {
-	AppId   pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// Whether to enable or disable the App Feature. The default value is true.
 	Enabled pulumi.BoolPtrInput
-	Name    pulumi.StringPtrInput
+	// The name of the App Feature to manage.
+	Name pulumi.StringPtrInput
 }
 
 func (FeatureArgs) ElementType() reflect.Type {
@@ -168,14 +204,17 @@ func (o FeatureOutput) ToFeatureOutputWithContext(ctx context.Context) FeatureOu
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o FeatureOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Feature) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// Whether to enable or disable the App Feature. The default value is true.
 func (o FeatureOutput) Enabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Feature) pulumi.BoolPtrOutput { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
+// The name of the App Feature to manage.
 func (o FeatureOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Feature) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }

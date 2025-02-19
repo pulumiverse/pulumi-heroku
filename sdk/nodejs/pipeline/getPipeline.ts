@@ -4,8 +4,16 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Use this data source to get information about a Heroku Pipeline.
+ *
+ * > **NOTE:**
+ * This data source can only be used to fetch information regarding a pipeline that has apps already associated to it.
+ * This is a limitation in the Heroku Platform API where it is not possible to query a pipeline without apps by its name.
+ *
+ * ## Example Usage
+ */
 export function getPipeline(args: GetPipelineArgs, opts?: pulumi.InvokeOptions): Promise<GetPipelineResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:pipeline/getPipeline:getPipeline", {
         "name": args.name,
@@ -16,6 +24,9 @@ export function getPipeline(args: GetPipelineArgs, opts?: pulumi.InvokeOptions):
  * A collection of arguments for invoking getPipeline.
  */
 export interface GetPipelineArgs {
+    /**
+     * The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).
+     */
     name: string;
 }
 
@@ -28,16 +39,37 @@ export interface GetPipelineResult {
      */
     readonly id: string;
     readonly name: string;
+    /**
+     * The pipeline owner's ID
+     */
     readonly ownerId: string;
+    /**
+     * The pipeline owner's type
+     */
     readonly ownerType: string;
 }
-export function getPipelineOutput(args: GetPipelineOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetPipelineResult> {
-    return pulumi.output(args).apply((a: any) => getPipeline(a, opts))
+/**
+ * Use this data source to get information about a Heroku Pipeline.
+ *
+ * > **NOTE:**
+ * This data source can only be used to fetch information regarding a pipeline that has apps already associated to it.
+ * This is a limitation in the Heroku Platform API where it is not possible to query a pipeline without apps by its name.
+ *
+ * ## Example Usage
+ */
+export function getPipelineOutput(args: GetPipelineOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetPipelineResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("heroku:pipeline/getPipeline:getPipeline", {
+        "name": args.name,
+    }, opts);
 }
 
 /**
  * A collection of arguments for invoking getPipeline.
  */
 export interface GetPipelineOutputArgs {
+    /**
+     * The pipeline name or ID. Empty pipelines can only be retrieved by ID (UUID).
+     */
     name: pulumi.Input<string>;
 }

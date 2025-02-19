@@ -10,15 +10,47 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.App
 {
+    /// <summary>
+    /// This resource is used to create and manage [App Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+    /// 
+    /// ## Available Features
+    /// 
+    /// For a list of available features, use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+    /// to fetch them for one of your existing apps: `heroku labs --app foobar`.
+    /// 
+    /// The output will contain **User Features** and **App Features**. This resource manages App Features.
+    /// If you need to manage User Features, use the `heroku.account.Feature` resource.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// App features can be imported using the combination of the application name, a colon, and the feature's name.
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:app/feature:Feature log-runtime-metrics foobar:log-runtime-metrics
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:app/feature:Feature")]
     public partial class Feature : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// Whether to enable or disable the App Feature. The default value is true.
+        /// </summary>
         [Output("enabled")]
         public Output<bool?> Enabled { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the App Feature to manage.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
@@ -69,12 +101,21 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class FeatureArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// Whether to enable or disable the App Feature. The default value is true.
+        /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
+        /// <summary>
+        /// The name of the App Feature to manage.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -86,12 +127,21 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class FeatureState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// Whether to enable or disable the App Feature. The default value is true.
+        /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
+        /// <summary>
+        /// The name of the App Feature to manage.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 

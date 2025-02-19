@@ -11,6 +11,9 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+//
+// ## Example Usage
 func LookupSpace(ctx *pulumi.Context, args *LookupSpaceArgs, opts ...pulumi.InvokeOption) (*LookupSpaceResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupSpaceResult
@@ -23,43 +26,53 @@ func LookupSpace(ctx *pulumi.Context, args *LookupSpaceArgs, opts ...pulumi.Invo
 
 // A collection of arguments for invoking getSpace.
 type LookupSpaceArgs struct {
-	Cidr     *string `pulumi:"cidr"`
+	// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr *string `pulumi:"cidr"`
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
 	DataCidr *string `pulumi:"dataCidr"`
-	Name     string  `pulumi:"name"`
+	// The name of the Heroku Private Space.
+	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getSpace.
 type LookupSpaceResult struct {
-	Cidr     string `pulumi:"cidr"`
+	// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr string `pulumi:"cidr"`
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
 	DataCidr string `pulumi:"dataCidr"`
 	// The provider-assigned unique ID for this managed resource.
-	Id           string   `pulumi:"id"`
-	Name         string   `pulumi:"name"`
-	Organization string   `pulumi:"organization"`
-	OutboundIps  []string `pulumi:"outboundIps"`
-	Region       string   `pulumi:"region"`
-	Shield       bool     `pulumi:"shield"`
-	State        string   `pulumi:"state"`
+	Id string `pulumi:"id"`
+	// (string) - The name of the Heroku Team.
+	Name string `pulumi:"name"`
+	// The Heroku Team that owns this space. The fields for this block are documented below.
+	Organization string `pulumi:"organization"`
+	// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+	OutboundIps []string `pulumi:"outboundIps"`
+	// The region in which the Heroku Private Space is deployed.
+	Region string `pulumi:"region"`
+	// Whether or not the space has [Shield](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces) turned on. One of `on` or `off`.
+	Shield bool `pulumi:"shield"`
+	// The state of the Heroku Private Space. Either `allocating` or `allocated`.
+	State string `pulumi:"state"`
 }
 
 func LookupSpaceOutput(ctx *pulumi.Context, args LookupSpaceOutputArgs, opts ...pulumi.InvokeOption) LookupSpaceResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupSpaceResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupSpaceResultOutput, error) {
 			args := v.(LookupSpaceArgs)
-			r, err := LookupSpace(ctx, &args, opts...)
-			var s LookupSpaceResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:space/getSpace:getSpace", args, LookupSpaceResultOutput{}, options).(LookupSpaceResultOutput), nil
 		}).(LookupSpaceResultOutput)
 }
 
 // A collection of arguments for invoking getSpace.
 type LookupSpaceOutputArgs struct {
-	Cidr     pulumi.StringPtrInput `pulumi:"cidr"`
+	// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+	Cidr pulumi.StringPtrInput `pulumi:"cidr"`
+	// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
 	DataCidr pulumi.StringPtrInput `pulumi:"dataCidr"`
-	Name     pulumi.StringInput    `pulumi:"name"`
+	// The name of the Heroku Private Space.
+	Name pulumi.StringInput `pulumi:"name"`
 }
 
 func (LookupSpaceOutputArgs) ElementType() reflect.Type {
@@ -81,10 +94,12 @@ func (o LookupSpaceResultOutput) ToLookupSpaceResultOutputWithContext(ctx contex
 	return o
 }
 
+// The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
 func (o LookupSpaceResultOutput) Cidr() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.Cidr }).(pulumi.StringOutput)
 }
 
+// The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
 func (o LookupSpaceResultOutput) DataCidr() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.DataCidr }).(pulumi.StringOutput)
 }
@@ -94,26 +109,32 @@ func (o LookupSpaceResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// (string) - The name of the Heroku Team.
 func (o LookupSpaceResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// The Heroku Team that owns this space. The fields for this block are documented below.
 func (o LookupSpaceResultOutput) Organization() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.Organization }).(pulumi.StringOutput)
 }
 
+// The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
 func (o LookupSpaceResultOutput) OutboundIps() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v LookupSpaceResult) []string { return v.OutboundIps }).(pulumi.StringArrayOutput)
 }
 
+// The region in which the Heroku Private Space is deployed.
 func (o LookupSpaceResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.Region }).(pulumi.StringOutput)
 }
 
+// Whether or not the space has [Shield](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces) turned on. One of `on` or `off`.
 func (o LookupSpaceResultOutput) Shield() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupSpaceResult) bool { return v.Shield }).(pulumi.BoolOutput)
 }
 
+// The state of the Heroku Private Space. Either `allocating` or `allocated`.
 func (o LookupSpaceResultOutput) State() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.State }).(pulumi.StringOutput)
 }

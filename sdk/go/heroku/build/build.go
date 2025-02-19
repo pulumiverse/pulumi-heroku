@@ -12,20 +12,47 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// ## Import
+//
+// Existing builds can be imported using the combination of the application name, a colon, and the build ID.
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:build/build:Build foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+// ```
+//
+// * `foobar` is the **heroku_build** resource's name
+//
+// * `bazbux` is the Heroku app name (or ID) that the build belongs to
+//
+// * `:` separates the app identifier & the build identifier
+//
+// * `4f1db8ef…` is the build ID
 type Build struct {
 	pulumi.CustomResourceState
 
-	AppId           pulumi.StringOutput      `pulumi:"appId"`
-	Buildpacks      pulumi.StringArrayOutput `pulumi:"buildpacks"`
-	LocalChecksum   pulumi.StringOutput      `pulumi:"localChecksum"`
-	OutputStreamUrl pulumi.StringOutput      `pulumi:"outputStreamUrl"`
-	ReleaseId       pulumi.StringOutput      `pulumi:"releaseId"`
-	SlugId          pulumi.StringOutput      `pulumi:"slugId"`
-	Source          BuildSourceOutput        `pulumi:"source"`
-	Stack           pulumi.StringOutput      `pulumi:"stack"`
-	Status          pulumi.StringOutput      `pulumi:"status"`
-	Users           BuildUserArrayOutput     `pulumi:"users"`
-	Uuid            pulumi.StringOutput      `pulumi:"uuid"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// List of buildpack GitHub URLs
+	Buildpacks    pulumi.StringArrayOutput `pulumi:"buildpacks"`
+	LocalChecksum pulumi.StringOutput      `pulumi:"localChecksum"`
+	// URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+	OutputStreamUrl pulumi.StringOutput `pulumi:"outputStreamUrl"`
+	// The Heroku app release created with a build's slug
+	ReleaseId pulumi.StringOutput `pulumi:"releaseId"`
+	// The Heroku slug created by a build
+	SlugId pulumi.StringOutput `pulumi:"slugId"`
+	// A block that specifies the source code to build & release:
+	Source BuildSourceOutput `pulumi:"source"`
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack pulumi.StringOutput `pulumi:"stack"`
+	// The status of a build. Possible values are `pending`, `successful` and `failed`
+	Status pulumi.StringOutput `pulumi:"status"`
+	// Heroku account that created a build
+	Users BuildUserArrayOutput `pulumi:"users"`
+	// The ID of the build
+	Uuid pulumi.StringOutput `pulumi:"uuid"`
 }
 
 // NewBuild registers a new resource with the given unique name, arguments, and options.
@@ -64,31 +91,51 @@ func GetBuild(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Build resources.
 type buildState struct {
-	AppId           *string      `pulumi:"appId"`
-	Buildpacks      []string     `pulumi:"buildpacks"`
-	LocalChecksum   *string      `pulumi:"localChecksum"`
-	OutputStreamUrl *string      `pulumi:"outputStreamUrl"`
-	ReleaseId       *string      `pulumi:"releaseId"`
-	SlugId          *string      `pulumi:"slugId"`
-	Source          *BuildSource `pulumi:"source"`
-	Stack           *string      `pulumi:"stack"`
-	Status          *string      `pulumi:"status"`
-	Users           []BuildUser  `pulumi:"users"`
-	Uuid            *string      `pulumi:"uuid"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// List of buildpack GitHub URLs
+	Buildpacks    []string `pulumi:"buildpacks"`
+	LocalChecksum *string  `pulumi:"localChecksum"`
+	// URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+	OutputStreamUrl *string `pulumi:"outputStreamUrl"`
+	// The Heroku app release created with a build's slug
+	ReleaseId *string `pulumi:"releaseId"`
+	// The Heroku slug created by a build
+	SlugId *string `pulumi:"slugId"`
+	// A block that specifies the source code to build & release:
+	Source *BuildSource `pulumi:"source"`
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack *string `pulumi:"stack"`
+	// The status of a build. Possible values are `pending`, `successful` and `failed`
+	Status *string `pulumi:"status"`
+	// Heroku account that created a build
+	Users []BuildUser `pulumi:"users"`
+	// The ID of the build
+	Uuid *string `pulumi:"uuid"`
 }
 
 type BuildState struct {
-	AppId           pulumi.StringPtrInput
-	Buildpacks      pulumi.StringArrayInput
-	LocalChecksum   pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// List of buildpack GitHub URLs
+	Buildpacks    pulumi.StringArrayInput
+	LocalChecksum pulumi.StringPtrInput
+	// URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
 	OutputStreamUrl pulumi.StringPtrInput
-	ReleaseId       pulumi.StringPtrInput
-	SlugId          pulumi.StringPtrInput
-	Source          BuildSourcePtrInput
-	Stack           pulumi.StringPtrInput
-	Status          pulumi.StringPtrInput
-	Users           BuildUserArrayInput
-	Uuid            pulumi.StringPtrInput
+	// The Heroku app release created with a build's slug
+	ReleaseId pulumi.StringPtrInput
+	// The Heroku slug created by a build
+	SlugId pulumi.StringPtrInput
+	// A block that specifies the source code to build & release:
+	Source BuildSourcePtrInput
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack pulumi.StringPtrInput
+	// The status of a build. Possible values are `pending`, `successful` and `failed`
+	Status pulumi.StringPtrInput
+	// Heroku account that created a build
+	Users BuildUserArrayInput
+	// The ID of the build
+	Uuid pulumi.StringPtrInput
 }
 
 func (BuildState) ElementType() reflect.Type {
@@ -96,16 +143,22 @@ func (BuildState) ElementType() reflect.Type {
 }
 
 type buildArgs struct {
-	AppId      string      `pulumi:"appId"`
-	Buildpacks []string    `pulumi:"buildpacks"`
-	Source     BuildSource `pulumi:"source"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// List of buildpack GitHub URLs
+	Buildpacks []string `pulumi:"buildpacks"`
+	// A block that specifies the source code to build & release:
+	Source BuildSource `pulumi:"source"`
 }
 
 // The set of arguments for constructing a Build resource.
 type BuildArgs struct {
-	AppId      pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// List of buildpack GitHub URLs
 	Buildpacks pulumi.StringArrayInput
-	Source     BuildSourceInput
+	// A block that specifies the source code to build & release:
+	Source BuildSourceInput
 }
 
 func (BuildArgs) ElementType() reflect.Type {
@@ -195,10 +248,12 @@ func (o BuildOutput) ToBuildOutputWithContext(ctx context.Context) BuildOutput {
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o BuildOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// List of buildpack GitHub URLs
 func (o BuildOutput) Buildpacks() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringArrayOutput { return v.Buildpacks }).(pulumi.StringArrayOutput)
 }
@@ -207,34 +262,42 @@ func (o BuildOutput) LocalChecksum() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.LocalChecksum }).(pulumi.StringOutput)
 }
 
+// URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
 func (o BuildOutput) OutputStreamUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.OutputStreamUrl }).(pulumi.StringOutput)
 }
 
+// The Heroku app release created with a build's slug
 func (o BuildOutput) ReleaseId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.ReleaseId }).(pulumi.StringOutput)
 }
 
+// The Heroku slug created by a build
 func (o BuildOutput) SlugId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.SlugId }).(pulumi.StringOutput)
 }
 
+// A block that specifies the source code to build & release:
 func (o BuildOutput) Source() BuildSourceOutput {
 	return o.ApplyT(func(v *Build) BuildSourceOutput { return v.Source }).(BuildSourceOutput)
 }
 
+// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
 func (o BuildOutput) Stack() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.Stack }).(pulumi.StringOutput)
 }
 
+// The status of a build. Possible values are `pending`, `successful` and `failed`
 func (o BuildOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
+// Heroku account that created a build
 func (o BuildOutput) Users() BuildUserArrayOutput {
 	return o.ApplyT(func(v *Build) BuildUserArrayOutput { return v.Users }).(BuildUserArrayOutput)
 }
 
+// The ID of the build
 func (o BuildOutput) Uuid() pulumi.StringOutput {
 	return o.ApplyT(func(v *Build) pulumi.StringOutput { return v.Uuid }).(pulumi.StringOutput)
 }

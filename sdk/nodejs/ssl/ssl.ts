@@ -4,6 +4,21 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * This resource manages an SSL certificate for a Heroku app.
+ *
+ * > **IMPORTANT!**
+ * This resource renders the "privateKey" attribute in plain-text in your state file.
+ * Please ensure that your state file is properly secured and encrypted at rest.
+ *
+ * ## Example Usage
+ *
+ * ## Importing
+ *
+ * An existing SSL resource can be imported using a composite value of the app name and certificate UUID separated by a colon.
+ *
+ * For example:
+ */
 export class Ssl extends pulumi.CustomResource {
     /**
      * Get an existing Ssl resource's state with the given name, ID, and optional extra
@@ -32,9 +47,23 @@ export class Ssl extends pulumi.CustomResource {
         return obj['__pulumiType'] === Ssl.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * The certificate chain to add.
+     */
     public readonly certificateChain!: pulumi.Output<string>;
+    /**
+     * The name of the SSL certificate
+     */
     public /*out*/ readonly name!: pulumi.Output<string>;
+    /**
+     * The private key for a given certificate chain. You **must** set this attribute when creating or
+     * updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+     * SSL resource. The attribute value does not get displayed in logs or regular output.
+     */
     public readonly privateKey!: pulumi.Output<string | undefined>;
 
     /**
@@ -78,9 +107,23 @@ export class Ssl extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Ssl resources.
  */
 export interface SslState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * The certificate chain to add.
+     */
     certificateChain?: pulumi.Input<string>;
+    /**
+     * The name of the SSL certificate
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The private key for a given certificate chain. You **must** set this attribute when creating or
+     * updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+     * SSL resource. The attribute value does not get displayed in logs or regular output.
+     */
     privateKey?: pulumi.Input<string>;
 }
 
@@ -88,7 +131,18 @@ export interface SslState {
  * The set of arguments for constructing a Ssl resource.
  */
 export interface SslArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * The certificate chain to add.
+     */
     certificateChain: pulumi.Input<string>;
+    /**
+     * The private key for a given certificate chain. You **must** set this attribute when creating or
+     * updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+     * SSL resource. The attribute value does not get displayed in logs or regular output.
+     */
     privateKey?: pulumi.Input<string>;
 }

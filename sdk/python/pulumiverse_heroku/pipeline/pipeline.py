@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -20,6 +25,8 @@ class PipelineArgs:
                  owner: Optional[pulumi.Input['PipelineOwnerArgs']] = None):
         """
         The set of arguments for constructing a Pipeline resource.
+        :param pulumi.Input[str] name: The name of the pipeline.
+        :param pulumi.Input['PipelineOwnerArgs'] owner: The owner of the pipeline. This block as the following required attributes:
         """
         if name is not None:
             pulumi.set(__self__, "name", name)
@@ -29,6 +36,9 @@ class PipelineArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the pipeline.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -38,6 +48,9 @@ class PipelineArgs:
     @property
     @pulumi.getter
     def owner(self) -> Optional[pulumi.Input['PipelineOwnerArgs']]:
+        """
+        The owner of the pipeline. This block as the following required attributes:
+        """
         return pulumi.get(self, "owner")
 
     @owner.setter
@@ -52,6 +65,8 @@ class _PipelineState:
                  owner: Optional[pulumi.Input['PipelineOwnerArgs']] = None):
         """
         Input properties used for looking up and filtering Pipeline resources.
+        :param pulumi.Input[str] name: The name of the pipeline.
+        :param pulumi.Input['PipelineOwnerArgs'] owner: The owner of the pipeline. This block as the following required attributes:
         """
         if name is not None:
             pulumi.set(__self__, "name", name)
@@ -61,6 +76,9 @@ class _PipelineState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the pipeline.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -70,6 +88,9 @@ class _PipelineState:
     @property
     @pulumi.getter
     def owner(self) -> Optional[pulumi.Input['PipelineOwnerArgs']]:
+        """
+        The owner of the pipeline. This block as the following required attributes:
+        """
         return pulumi.get(self, "owner")
 
     @owner.setter
@@ -83,12 +104,23 @@ class Pipeline(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 owner: Optional[pulumi.Input[pulumi.InputType['PipelineOwnerArgs']]] = None,
+                 owner: Optional[pulumi.Input[Union['PipelineOwnerArgs', 'PipelineOwnerArgsDict']]] = None,
                  __props__=None):
         """
-        Create a Pipeline resource with the given unique name, props, and options.
+        ## Example Usage
+
+        ## Import
+
+        Pipelines can be imported using the Pipeline `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:pipeline/pipeline:Pipeline foobar 12345678
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] name: The name of the pipeline.
+        :param pulumi.Input[Union['PipelineOwnerArgs', 'PipelineOwnerArgsDict']] owner: The owner of the pipeline. This block as the following required attributes:
         """
         ...
     @overload
@@ -97,7 +129,16 @@ class Pipeline(pulumi.CustomResource):
                  args: Optional[PipelineArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Pipeline resource with the given unique name, props, and options.
+        ## Example Usage
+
+        ## Import
+
+        Pipelines can be imported using the Pipeline `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:pipeline/pipeline:Pipeline foobar 12345678
+        ```
+
         :param str resource_name: The name of the resource.
         :param PipelineArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -114,7 +155,7 @@ class Pipeline(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 owner: Optional[pulumi.Input[pulumi.InputType['PipelineOwnerArgs']]] = None,
+                 owner: Optional[pulumi.Input[Union['PipelineOwnerArgs', 'PipelineOwnerArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -137,7 +178,7 @@ class Pipeline(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             name: Optional[pulumi.Input[str]] = None,
-            owner: Optional[pulumi.Input[pulumi.InputType['PipelineOwnerArgs']]] = None) -> 'Pipeline':
+            owner: Optional[pulumi.Input[Union['PipelineOwnerArgs', 'PipelineOwnerArgsDict']]] = None) -> 'Pipeline':
         """
         Get an existing Pipeline resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -145,6 +186,8 @@ class Pipeline(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] name: The name of the pipeline.
+        :param pulumi.Input[Union['PipelineOwnerArgs', 'PipelineOwnerArgsDict']] owner: The owner of the pipeline. This block as the following required attributes:
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -157,10 +200,16 @@ class Pipeline(pulumi.CustomResource):
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the pipeline.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def owner(self) -> pulumi.Output['outputs.PipelineOwner']:
+        """
+        The owner of the pipeline. This block as the following required attributes:
+        """
         return pulumi.get(self, "owner")
 

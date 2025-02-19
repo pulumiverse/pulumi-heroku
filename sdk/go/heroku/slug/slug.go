@@ -12,21 +12,56 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// ## Example Usage
+//
+// Complete config to launch a Heroku app:
+//
+// ## Import
+//
+// Existing slugs can be imported using the combination of the application name, a colon, and the slug ID.
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:slug/slug:Slug foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+// ```
+//
+// * `foobar` is the **heroku_slug** resource's name
+//
+// * `bazbux` is the Heroku app name (or ID) that the slug belongs to
+//
+// * `:` separates the app identifier & the slug identifier
+//
+// * `4f1db8ef…` is the slug ID
 type Slug struct {
 	pulumi.CustomResourceState
 
-	AppId                        pulumi.StringOutput    `pulumi:"appId"`
-	Blobs                        SlugBlobArrayOutput    `pulumi:"blobs"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// Slug archive (compressed tar of executable code)
+	Blobs SlugBlobArrayOutput `pulumi:"blobs"`
+	// Description of language or app framework, `"Ruby/Rack"`;
+	// displayed as the app's language in the Heroku Dashboard
 	BuildpackProvidedDescription pulumi.StringPtrOutput `pulumi:"buildpackProvidedDescription"`
-	Checksum                     pulumi.StringOutput    `pulumi:"checksum"`
-	Commit                       pulumi.StringPtrOutput `pulumi:"commit"`
-	CommitDescription            pulumi.StringPtrOutput `pulumi:"commitDescription"`
-	FilePath                     pulumi.StringPtrOutput `pulumi:"filePath"`
-	FileUrl                      pulumi.StringPtrOutput `pulumi:"fileUrl"`
-	ProcessTypes                 pulumi.MapOutput       `pulumi:"processTypes"`
-	Size                         pulumi.IntOutput       `pulumi:"size"`
-	Stack                        pulumi.StringOutput    `pulumi:"stack"`
-	StackId                      pulumi.StringOutput    `pulumi:"stackId"`
+	// Hash of the slug for verifying its integrity, auto-generated from contents of `filePath` or `fileUrl`,
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+	Checksum pulumi.StringOutput `pulumi:"checksum"`
+	// Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+	Commit pulumi.StringPtrOutput `pulumi:"commit"`
+	// Description of the provided commit
+	CommitDescription pulumi.StringPtrOutput `pulumi:"commitDescription"`
+	// Local path to a slug archive, `"slugs/current.tgz"`
+	FilePath pulumi.StringPtrOutput `pulumi:"filePath"`
+	// **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+	FileUrl pulumi.StringPtrOutput `pulumi:"fileUrl"`
+	// Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+	ProcessTypes pulumi.StringMapOutput `pulumi:"processTypes"`
+	// Slug archive filesize in bytes
+	Size pulumi.IntOutput `pulumi:"size"`
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack pulumi.StringOutput `pulumi:"stack"`
+	// [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
+	StackId pulumi.StringOutput `pulumi:"stackId"`
 }
 
 // NewSlug registers a new resource with the given unique name, arguments, and options.
@@ -65,33 +100,61 @@ func GetSlug(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Slug resources.
 type slugState struct {
-	AppId                        *string                `pulumi:"appId"`
-	Blobs                        []SlugBlob             `pulumi:"blobs"`
-	BuildpackProvidedDescription *string                `pulumi:"buildpackProvidedDescription"`
-	Checksum                     *string                `pulumi:"checksum"`
-	Commit                       *string                `pulumi:"commit"`
-	CommitDescription            *string                `pulumi:"commitDescription"`
-	FilePath                     *string                `pulumi:"filePath"`
-	FileUrl                      *string                `pulumi:"fileUrl"`
-	ProcessTypes                 map[string]interface{} `pulumi:"processTypes"`
-	Size                         *int                   `pulumi:"size"`
-	Stack                        *string                `pulumi:"stack"`
-	StackId                      *string                `pulumi:"stackId"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// Slug archive (compressed tar of executable code)
+	Blobs []SlugBlob `pulumi:"blobs"`
+	// Description of language or app framework, `"Ruby/Rack"`;
+	// displayed as the app's language in the Heroku Dashboard
+	BuildpackProvidedDescription *string `pulumi:"buildpackProvidedDescription"`
+	// Hash of the slug for verifying its integrity, auto-generated from contents of `filePath` or `fileUrl`,
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+	Checksum *string `pulumi:"checksum"`
+	// Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+	Commit *string `pulumi:"commit"`
+	// Description of the provided commit
+	CommitDescription *string `pulumi:"commitDescription"`
+	// Local path to a slug archive, `"slugs/current.tgz"`
+	FilePath *string `pulumi:"filePath"`
+	// **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+	FileUrl *string `pulumi:"fileUrl"`
+	// Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+	ProcessTypes map[string]string `pulumi:"processTypes"`
+	// Slug archive filesize in bytes
+	Size *int `pulumi:"size"`
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack *string `pulumi:"stack"`
+	// [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
+	StackId *string `pulumi:"stackId"`
 }
 
 type SlugState struct {
-	AppId                        pulumi.StringPtrInput
-	Blobs                        SlugBlobArrayInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// Slug archive (compressed tar of executable code)
+	Blobs SlugBlobArrayInput
+	// Description of language or app framework, `"Ruby/Rack"`;
+	// displayed as the app's language in the Heroku Dashboard
 	BuildpackProvidedDescription pulumi.StringPtrInput
-	Checksum                     pulumi.StringPtrInput
-	Commit                       pulumi.StringPtrInput
-	CommitDescription            pulumi.StringPtrInput
-	FilePath                     pulumi.StringPtrInput
-	FileUrl                      pulumi.StringPtrInput
-	ProcessTypes                 pulumi.MapInput
-	Size                         pulumi.IntPtrInput
-	Stack                        pulumi.StringPtrInput
-	StackId                      pulumi.StringPtrInput
+	// Hash of the slug for verifying its integrity, auto-generated from contents of `filePath` or `fileUrl`,
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+	Checksum pulumi.StringPtrInput
+	// Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+	Commit pulumi.StringPtrInput
+	// Description of the provided commit
+	CommitDescription pulumi.StringPtrInput
+	// Local path to a slug archive, `"slugs/current.tgz"`
+	FilePath pulumi.StringPtrInput
+	// **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+	FileUrl pulumi.StringPtrInput
+	// Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+	ProcessTypes pulumi.StringMapInput
+	// Slug archive filesize in bytes
+	Size pulumi.IntPtrInput
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack pulumi.StringPtrInput
+	// [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
+	StackId pulumi.StringPtrInput
 }
 
 func (SlugState) ElementType() reflect.Type {
@@ -99,28 +162,50 @@ func (SlugState) ElementType() reflect.Type {
 }
 
 type slugArgs struct {
-	AppId                        string                 `pulumi:"appId"`
-	BuildpackProvidedDescription *string                `pulumi:"buildpackProvidedDescription"`
-	Checksum                     *string                `pulumi:"checksum"`
-	Commit                       *string                `pulumi:"commit"`
-	CommitDescription            *string                `pulumi:"commitDescription"`
-	FilePath                     *string                `pulumi:"filePath"`
-	FileUrl                      *string                `pulumi:"fileUrl"`
-	ProcessTypes                 map[string]interface{} `pulumi:"processTypes"`
-	Stack                        *string                `pulumi:"stack"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// Description of language or app framework, `"Ruby/Rack"`;
+	// displayed as the app's language in the Heroku Dashboard
+	BuildpackProvidedDescription *string `pulumi:"buildpackProvidedDescription"`
+	// Hash of the slug for verifying its integrity, auto-generated from contents of `filePath` or `fileUrl`,
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+	Checksum *string `pulumi:"checksum"`
+	// Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+	Commit *string `pulumi:"commit"`
+	// Description of the provided commit
+	CommitDescription *string `pulumi:"commitDescription"`
+	// Local path to a slug archive, `"slugs/current.tgz"`
+	FilePath *string `pulumi:"filePath"`
+	// **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+	FileUrl *string `pulumi:"fileUrl"`
+	// Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+	ProcessTypes map[string]string `pulumi:"processTypes"`
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack *string `pulumi:"stack"`
 }
 
 // The set of arguments for constructing a Slug resource.
 type SlugArgs struct {
-	AppId                        pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// Description of language or app framework, `"Ruby/Rack"`;
+	// displayed as the app's language in the Heroku Dashboard
 	BuildpackProvidedDescription pulumi.StringPtrInput
-	Checksum                     pulumi.StringPtrInput
-	Commit                       pulumi.StringPtrInput
-	CommitDescription            pulumi.StringPtrInput
-	FilePath                     pulumi.StringPtrInput
-	FileUrl                      pulumi.StringPtrInput
-	ProcessTypes                 pulumi.MapInput
-	Stack                        pulumi.StringPtrInput
+	// Hash of the slug for verifying its integrity, auto-generated from contents of `filePath` or `fileUrl`,
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+	Checksum pulumi.StringPtrInput
+	// Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+	Commit pulumi.StringPtrInput
+	// Description of the provided commit
+	CommitDescription pulumi.StringPtrInput
+	// Local path to a slug archive, `"slugs/current.tgz"`
+	FilePath pulumi.StringPtrInput
+	// **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+	FileUrl pulumi.StringPtrInput
+	// Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+	ProcessTypes pulumi.StringMapInput
+	// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+	Stack pulumi.StringPtrInput
 }
 
 func (SlugArgs) ElementType() reflect.Type {
@@ -210,50 +295,64 @@ func (o SlugOutput) ToSlugOutputWithContext(ctx context.Context) SlugOutput {
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o SlugOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// Slug archive (compressed tar of executable code)
 func (o SlugOutput) Blobs() SlugBlobArrayOutput {
 	return o.ApplyT(func(v *Slug) SlugBlobArrayOutput { return v.Blobs }).(SlugBlobArrayOutput)
 }
 
+// Description of language or app framework, `"Ruby/Rack"`;
+// displayed as the app's language in the Heroku Dashboard
 func (o SlugOutput) BuildpackProvidedDescription() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringPtrOutput { return v.BuildpackProvidedDescription }).(pulumi.StringPtrOutput)
 }
 
+// Hash of the slug for verifying its integrity, auto-generated from contents of `filePath` or `fileUrl`,
+// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 func (o SlugOutput) Checksum() pulumi.StringOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringOutput { return v.Checksum }).(pulumi.StringOutput)
 }
 
+// Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
 func (o SlugOutput) Commit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringPtrOutput { return v.Commit }).(pulumi.StringPtrOutput)
 }
 
+// Description of the provided commit
 func (o SlugOutput) CommitDescription() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringPtrOutput { return v.CommitDescription }).(pulumi.StringPtrOutput)
 }
 
+// Local path to a slug archive, `"slugs/current.tgz"`
 func (o SlugOutput) FilePath() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringPtrOutput { return v.FilePath }).(pulumi.StringPtrOutput)
 }
 
+// **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
 func (o SlugOutput) FileUrl() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringPtrOutput { return v.FileUrl }).(pulumi.StringPtrOutput)
 }
 
-func (o SlugOutput) ProcessTypes() pulumi.MapOutput {
-	return o.ApplyT(func(v *Slug) pulumi.MapOutput { return v.ProcessTypes }).(pulumi.MapOutput)
+// Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+func (o SlugOutput) ProcessTypes() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Slug) pulumi.StringMapOutput { return v.ProcessTypes }).(pulumi.StringMapOutput)
 }
 
+// Slug archive filesize in bytes
 func (o SlugOutput) Size() pulumi.IntOutput {
 	return o.ApplyT(func(v *Slug) pulumi.IntOutput { return v.Size }).(pulumi.IntOutput)
 }
 
+// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
 func (o SlugOutput) Stack() pulumi.StringOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringOutput { return v.Stack }).(pulumi.StringOutput)
 }
 
+// [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
 func (o SlugOutput) StackId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Slug) pulumi.StringOutput { return v.StackId }).(pulumi.StringOutput)
 }

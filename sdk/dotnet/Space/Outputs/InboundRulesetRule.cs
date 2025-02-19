@@ -14,7 +14,13 @@ namespace Pulumiverse.Heroku.Space.Outputs
     [OutputType]
     public sealed class InboundRulesetRule
     {
+        /// <summary>
+        /// The action to apply this rule to. Must be one of `allow` or `deny`.
+        /// </summary>
         public readonly string Action;
+        /// <summary>
+        /// A CIDR block source for the rule.
+        /// </summary>
         public readonly string Source;
 
         [OutputConstructor]

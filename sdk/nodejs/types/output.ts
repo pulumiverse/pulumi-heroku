@@ -7,13 +7,29 @@ import * as outputs from "../types/output";
 
 export namespace app {
     export interface AppOrganization {
+        /**
+         * Are other team members forbidden from joining this app.
+         */
         locked: boolean;
+        /**
+         * The name of the Heroku Team.
+         */
         name: string;
+        /**
+         * Force creation of the app in the user account even if a default team is set.
+         */
         personal: boolean;
     }
 
     export interface GetAppOrganization {
+        /**
+         * True if the app access is locked
+         */
         locked: boolean;
+        /**
+         * The name of the application. In Heroku, this is also the
+         * unique ID, so it must be unique and have a minimum of 3 characters.
+         */
         name: string;
         personal: boolean;
     }
@@ -22,9 +38,24 @@ export namespace app {
 
 export namespace build {
     export interface BuildSource {
+        /**
+         * SHA256 hash of the tarball archive to verify its integrity, example:
+         * `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+         */
         checksum: string;
+        /**
+         * Local path to the source directory or tarball archive for the app
+         */
         path?: string;
+        /**
+         * `https` location of the source archive for the app
+         */
         url?: string;
+        /**
+         * Use to track what version of your source originated this build. If you are creating builds
+         * from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+         * version parameter.
+         */
         version?: string;
     }
 
@@ -55,7 +86,13 @@ export namespace config {
 
 export namespace pipeline {
     export interface PipelineOwner {
+        /**
+         * The unique identifier (UUID) of a pipeline owner.
+         */
         id: string;
+        /**
+         * The type of pipeline owner. Can be either `user` or `team`.
+         */
         type: string;
     }
 
@@ -63,7 +100,13 @@ export namespace pipeline {
 
 export namespace review {
     export interface AppConfigDeployTarget {
+        /**
+         * Unique identifier of deploy target.
+         */
         id: string;
+        /**
+         * Type of deploy target. Must be either `space` or `region`.
+         */
         type: string;
     }
 
@@ -71,7 +114,13 @@ export namespace review {
 
 export namespace slug {
     export interface SlugBlob {
+        /**
+         * HTTP method to upload the archive
+         */
         method: string;
+        /**
+         * Pre-signed, expiring URL to upload the archive
+         */
         url: string;
     }
 
@@ -79,12 +128,24 @@ export namespace slug {
 
 export namespace space {
     export interface InboundRulesetRule {
+        /**
+         * The action to apply this rule to. Must be one of `allow` or `deny`.
+         */
         action: string;
+        /**
+         * A CIDR block source for the rule.
+         */
         source: string;
     }
 
     export interface VpnConnectionTunnel {
+        /**
+         * The public IP address of the tunnel.
+         */
         ip: string;
+        /**
+         * The pre-shared IPSec secret for the tunnel.
+         */
         preSharedKey: string;
     }
 
@@ -92,11 +153,29 @@ export namespace space {
 
 export namespace team {
     export interface GetMembersMember {
+        /**
+         * Email address of the team member.
+         */
         email: string;
+        /**
+         * Whether the user is federated and belongs to an Identity Provider.
+         */
         federated: boolean;
+        /**
+         * Role in the team.
+         */
         role: string;
+        /**
+         * Unique identifier of the team member on the team.
+         */
         teamMemberId: string;
+        /**
+         * Whether the Enterprise team member has two-factor authentication enabled.
+         */
         twoFactorAuthentication: boolean;
+        /**
+         * Unique identifier of the team member. This is the member's user ID in Heroku.
+         */
         userId: string;
     }
 

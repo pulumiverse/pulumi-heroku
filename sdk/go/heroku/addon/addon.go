@@ -12,16 +12,34 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a Heroku Add-On resource. These can be attach
+// services to a Heroku app.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// Addons can be imported using the Addon `id`, e.g.
+//
+// ```sh
+// $ pulumi import heroku:addon/addon:Addon foobar 12345678
+// ```
 type Addon struct {
 	pulumi.CustomResourceState
 
-	AppId           pulumi.StringOutput      `pulumi:"appId"`
-	Config          pulumi.MapOutput         `pulumi:"config"`
-	ConfigVarValues pulumi.StringMapOutput   `pulumi:"configVarValues"`
-	ConfigVars      pulumi.StringArrayOutput `pulumi:"configVars"`
-	Name            pulumi.StringOutput      `pulumi:"name"`
-	Plan            pulumi.StringOutput      `pulumi:"plan"`
-	ProviderId      pulumi.StringOutput      `pulumi:"providerId"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// Optional plan configuration.
+	Config          pulumi.StringMapOutput `pulumi:"config"`
+	ConfigVarValues pulumi.StringMapOutput `pulumi:"configVarValues"`
+	// The Configuration variables of the add-on
+	ConfigVars pulumi.StringArrayOutput `pulumi:"configVars"`
+	// Globally unique name of the add-on.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The addon to add.
+	Plan pulumi.StringOutput `pulumi:"plan"`
+	// The ID of the plan provider
+	ProviderId pulumi.StringOutput `pulumi:"providerId"`
 }
 
 // NewAddon registers a new resource with the given unique name, arguments, and options.
@@ -64,23 +82,35 @@ func GetAddon(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Addon resources.
 type addonState struct {
-	AppId           *string                `pulumi:"appId"`
-	Config          map[string]interface{} `pulumi:"config"`
-	ConfigVarValues map[string]string      `pulumi:"configVarValues"`
-	ConfigVars      []string               `pulumi:"configVars"`
-	Name            *string                `pulumi:"name"`
-	Plan            *string                `pulumi:"plan"`
-	ProviderId      *string                `pulumi:"providerId"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// Optional plan configuration.
+	Config          map[string]string `pulumi:"config"`
+	ConfigVarValues map[string]string `pulumi:"configVarValues"`
+	// The Configuration variables of the add-on
+	ConfigVars []string `pulumi:"configVars"`
+	// Globally unique name of the add-on.
+	Name *string `pulumi:"name"`
+	// The addon to add.
+	Plan *string `pulumi:"plan"`
+	// The ID of the plan provider
+	ProviderId *string `pulumi:"providerId"`
 }
 
 type AddonState struct {
-	AppId           pulumi.StringPtrInput
-	Config          pulumi.MapInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// Optional plan configuration.
+	Config          pulumi.StringMapInput
 	ConfigVarValues pulumi.StringMapInput
-	ConfigVars      pulumi.StringArrayInput
-	Name            pulumi.StringPtrInput
-	Plan            pulumi.StringPtrInput
-	ProviderId      pulumi.StringPtrInput
+	// The Configuration variables of the add-on
+	ConfigVars pulumi.StringArrayInput
+	// Globally unique name of the add-on.
+	Name pulumi.StringPtrInput
+	// The addon to add.
+	Plan pulumi.StringPtrInput
+	// The ID of the plan provider
+	ProviderId pulumi.StringPtrInput
 }
 
 func (AddonState) ElementType() reflect.Type {
@@ -88,18 +118,26 @@ func (AddonState) ElementType() reflect.Type {
 }
 
 type addonArgs struct {
-	AppId  string                 `pulumi:"appId"`
-	Config map[string]interface{} `pulumi:"config"`
-	Name   *string                `pulumi:"name"`
-	Plan   string                 `pulumi:"plan"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// Optional plan configuration.
+	Config map[string]string `pulumi:"config"`
+	// Globally unique name of the add-on.
+	Name *string `pulumi:"name"`
+	// The addon to add.
+	Plan string `pulumi:"plan"`
 }
 
 // The set of arguments for constructing a Addon resource.
 type AddonArgs struct {
-	AppId  pulumi.StringInput
-	Config pulumi.MapInput
-	Name   pulumi.StringPtrInput
-	Plan   pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// Optional plan configuration.
+	Config pulumi.StringMapInput
+	// Globally unique name of the add-on.
+	Name pulumi.StringPtrInput
+	// The addon to add.
+	Plan pulumi.StringInput
 }
 
 func (AddonArgs) ElementType() reflect.Type {
@@ -189,30 +227,36 @@ func (o AddonOutput) ToAddonOutputWithContext(ctx context.Context) AddonOutput {
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o AddonOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Addon) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
-func (o AddonOutput) Config() pulumi.MapOutput {
-	return o.ApplyT(func(v *Addon) pulumi.MapOutput { return v.Config }).(pulumi.MapOutput)
+// Optional plan configuration.
+func (o AddonOutput) Config() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Addon) pulumi.StringMapOutput { return v.Config }).(pulumi.StringMapOutput)
 }
 
 func (o AddonOutput) ConfigVarValues() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Addon) pulumi.StringMapOutput { return v.ConfigVarValues }).(pulumi.StringMapOutput)
 }
 
+// The Configuration variables of the add-on
 func (o AddonOutput) ConfigVars() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Addon) pulumi.StringArrayOutput { return v.ConfigVars }).(pulumi.StringArrayOutput)
 }
 
+// Globally unique name of the add-on.
 func (o AddonOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Addon) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The addon to add.
 func (o AddonOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v *Addon) pulumi.StringOutput { return v.Plan }).(pulumi.StringOutput)
 }
 
+// The ID of the plan provider
 func (o AddonOutput) ProviderId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Addon) pulumi.StringOutput { return v.ProviderId }).(pulumi.StringOutput)
 }

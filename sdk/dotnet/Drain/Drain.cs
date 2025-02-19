@@ -10,18 +10,43 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Drain
 {
+    /// <summary>
+    /// Provides a Heroku Drain resource. This can be used to
+    /// create and manage Log Drains on Heroku.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Importing
+    /// 
+    /// When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+    /// For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `url` attribute value
+    /// defined for the resource, you would import it as:
+    /// 
+    /// When importing a Heroku drain resource, the ID must be built using the app name colon the unique ID from the Heroku API.
+    /// For an app named `production-api` with a drain ID of `b85d9224-310b-409b-891e-c903f5a40568` and the `sensitive_url` attribute value
+    /// defined for the resource, you would import it as:
+    /// </summary>
     [HerokuResourceType("heroku:drain/drain:Drain")]
     public partial class Drain : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
         [Output("sensitiveUrl")]
         public Output<string?> SensitiveUrl { get; private set; } = null!;
 
+        /// <summary>
+        /// The unique token for your created drain.
+        /// </summary>
         [Output("token")]
         public Output<string> Token { get; private set; } = null!;
 
+        /// <summary>
+        /// The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
+        /// </summary>
         [Output("url")]
         public Output<string?> Url { get; private set; } = null!;
 
@@ -76,6 +101,9 @@ namespace Pulumiverse.Heroku.Drain
 
     public sealed class DrainArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
@@ -91,6 +119,9 @@ namespace Pulumiverse.Heroku.Drain
             }
         }
 
+        /// <summary>
+        /// The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
+        /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
 
@@ -102,6 +133,9 @@ namespace Pulumiverse.Heroku.Drain
 
     public sealed class DrainState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
@@ -117,9 +151,15 @@ namespace Pulumiverse.Heroku.Drain
             }
         }
 
+        /// <summary>
+        /// The unique token for your created drain.
+        /// </summary>
         [Input("token")]
         public Input<string>? Token { get; set; }
 
+        /// <summary>
+        /// The URL for Heroku to drain your logs to. Either `url` or `sensitive_url` must be defined.
+        /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
 

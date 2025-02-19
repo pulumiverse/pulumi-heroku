@@ -4,14 +4,39 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
     'AppOrganizationArgs',
+    'AppOrganizationArgsDict',
 ]
+
+MYPY = False
+
+if not MYPY:
+    class AppOrganizationArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        """
+        The name of the Heroku Team.
+        """
+        locked: NotRequired[pulumi.Input[bool]]
+        """
+        Are other team members forbidden from joining this app.
+        """
+        personal: NotRequired[pulumi.Input[bool]]
+        """
+        Force creation of the app in the user account even if a default team is set.
+        """
+elif False:
+    AppOrganizationArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class AppOrganizationArgs:
@@ -19,6 +44,11 @@ class AppOrganizationArgs:
                  name: pulumi.Input[str],
                  locked: Optional[pulumi.Input[bool]] = None,
                  personal: Optional[pulumi.Input[bool]] = None):
+        """
+        :param pulumi.Input[str] name: The name of the Heroku Team.
+        :param pulumi.Input[bool] locked: Are other team members forbidden from joining this app.
+        :param pulumi.Input[bool] personal: Force creation of the app in the user account even if a default team is set.
+        """
         pulumi.set(__self__, "name", name)
         if locked is not None:
             pulumi.set(__self__, "locked", locked)
@@ -28,6 +58,9 @@ class AppOrganizationArgs:
     @property
     @pulumi.getter
     def name(self) -> pulumi.Input[str]:
+        """
+        The name of the Heroku Team.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -37,6 +70,9 @@ class AppOrganizationArgs:
     @property
     @pulumi.getter
     def locked(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Are other team members forbidden from joining this app.
+        """
         return pulumi.get(self, "locked")
 
     @locked.setter
@@ -46,6 +82,9 @@ class AppOrganizationArgs:
     @property
     @pulumi.getter
     def personal(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Force creation of the app in the user account even if a default team is set.
+        """
         return pulumi.get(self, "personal")
 
     @personal.setter

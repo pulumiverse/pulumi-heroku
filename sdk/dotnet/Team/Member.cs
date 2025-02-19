@@ -10,18 +10,44 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Team
 {
+    /// <summary>
+    /// A [Heroku Team Member](https://devcenter.heroku.com/articles/platform-api-reference#team-member) receives access to everything owned by the Team.
+    /// 
+    /// To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard. For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+    /// 
+    /// A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider. For `heroku.app.App` &amp; `heroku.space.Space` resources, set the Heroku Team name as the "organization".
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Team members can be imported using the combination of the team application name, a colon, and the member's email address.
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:team/member:Member foobar-member my-team-foobar:some-user@example.com
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:team/member:Member")]
     public partial class Member : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Email address of the member
+        /// </summary>
         [Output("email")]
         public Output<string> Email { get; private set; } = null!;
 
         [Output("federated")]
         public Output<bool?> Federated { get; private set; } = null!;
 
+        /// <summary>
+        /// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        /// </summary>
         [Output("role")]
         public Output<string> Role { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the Heroku Team.
+        /// </summary>
         [Output("team")]
         public Output<string> Team { get; private set; } = null!;
 
@@ -72,15 +98,24 @@ namespace Pulumiverse.Heroku.Team
 
     public sealed class MemberArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Email address of the member
+        /// </summary>
         [Input("email", required: true)]
         public Input<string> Email { get; set; } = null!;
 
         [Input("federated")]
         public Input<bool>? Federated { get; set; }
 
+        /// <summary>
+        /// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        /// </summary>
         [Input("role", required: true)]
         public Input<string> Role { get; set; } = null!;
 
+        /// <summary>
+        /// The name of the Heroku Team.
+        /// </summary>
         [Input("team", required: true)]
         public Input<string> Team { get; set; } = null!;
 
@@ -92,15 +127,24 @@ namespace Pulumiverse.Heroku.Team
 
     public sealed class MemberState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Email address of the member
+        /// </summary>
         [Input("email")]
         public Input<string>? Email { get; set; }
 
         [Input("federated")]
         public Input<bool>? Federated { get; set; }
 
+        /// <summary>
+        /// The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        /// </summary>
         [Input("role")]
         public Input<string>? Role { get; set; }
 
+        /// <summary>
+        /// The name of the Heroku Team.
+        /// </summary>
         [Input("team")]
         public Input<string>? Team { get; set; }
 

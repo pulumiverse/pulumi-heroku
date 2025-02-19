@@ -4,6 +4,17 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * This resource manages an SSL certificate for a Heroku app.
+ *
+ * !> **WARNING:** This resource is deprecated in favor of `heroku.ssl.Ssl`.
+ *
+ * ## Example Usage
+ *
+ * ## Importing
+ *
+ * When importing a Heroku cert resource, the ID must be built using the app name colon the unique ID from the Heroku API. For an app named `production-api` with a certificate ID of `b85d9224-310b-409b-891e-c903f5a40568`, you would import it as:
+ */
 export class Cert extends pulumi.CustomResource {
     /**
      * Get an existing Cert resource's state with the given name, ID, and optional extra
@@ -32,10 +43,25 @@ export class Cert extends pulumi.CustomResource {
         return obj['__pulumiType'] === Cert.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly app!: pulumi.Output<string>;
+    /**
+     * The certificate chain to add
+     */
     public readonly certificateChain!: pulumi.Output<string>;
+    /**
+     * The CNAME for the SSL endpoint
+     */
     public /*out*/ readonly cname!: pulumi.Output<string>;
+    /**
+     * The name of the SSL certificate
+     */
     public /*out*/ readonly name!: pulumi.Output<string>;
+    /**
+     * The private key for a given certificate chain
+     */
     public readonly privateKey!: pulumi.Output<string>;
 
     /**
@@ -84,10 +110,25 @@ export class Cert extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Cert resources.
  */
 export interface CertState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     app?: pulumi.Input<string>;
+    /**
+     * The certificate chain to add
+     */
     certificateChain?: pulumi.Input<string>;
+    /**
+     * The CNAME for the SSL endpoint
+     */
     cname?: pulumi.Input<string>;
+    /**
+     * The name of the SSL certificate
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The private key for a given certificate chain
+     */
     privateKey?: pulumi.Input<string>;
 }
 
@@ -95,7 +136,16 @@ export interface CertState {
  * The set of arguments for constructing a Cert resource.
  */
 export interface CertArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     app: pulumi.Input<string>;
+    /**
+     * The certificate chain to add
+     */
     certificateChain: pulumi.Input<string>;
+    /**
+     * The private key for a given certificate chain
+     */
     privateKey: pulumi.Input<string>;
 }

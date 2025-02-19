@@ -12,13 +12,32 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// This resource manages an SSL certificate for a Heroku app.
+//
+// > **IMPORTANT!**
+// This resource renders the "privateKey" attribute in plain-text in your state file.
+// Please ensure that your state file is properly secured and encrypted at rest.
+//
+// ## Example Usage
+//
+// ## Importing
+//
+// An existing SSL resource can be imported using a composite value of the app name and certificate UUID separated by a colon.
+//
+// For example:
 type Ssl struct {
 	pulumi.CustomResourceState
 
-	AppId            pulumi.StringOutput    `pulumi:"appId"`
-	CertificateChain pulumi.StringOutput    `pulumi:"certificateChain"`
-	Name             pulumi.StringOutput    `pulumi:"name"`
-	PrivateKey       pulumi.StringPtrOutput `pulumi:"privateKey"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// The certificate chain to add.
+	CertificateChain pulumi.StringOutput `pulumi:"certificateChain"`
+	// The name of the SSL certificate
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The private key for a given certificate chain. You **must** set this attribute when creating or
+	// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+	// SSL resource. The attribute value does not get displayed in logs or regular output.
+	PrivateKey pulumi.StringPtrOutput `pulumi:"privateKey"`
 }
 
 // NewSsl registers a new resource with the given unique name, arguments, and options.
@@ -64,17 +83,29 @@ func GetSsl(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Ssl resources.
 type sslState struct {
-	AppId            *string `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// The certificate chain to add.
 	CertificateChain *string `pulumi:"certificateChain"`
-	Name             *string `pulumi:"name"`
-	PrivateKey       *string `pulumi:"privateKey"`
+	// The name of the SSL certificate
+	Name *string `pulumi:"name"`
+	// The private key for a given certificate chain. You **must** set this attribute when creating or
+	// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+	// SSL resource. The attribute value does not get displayed in logs or regular output.
+	PrivateKey *string `pulumi:"privateKey"`
 }
 
 type SslState struct {
-	AppId            pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// The certificate chain to add.
 	CertificateChain pulumi.StringPtrInput
-	Name             pulumi.StringPtrInput
-	PrivateKey       pulumi.StringPtrInput
+	// The name of the SSL certificate
+	Name pulumi.StringPtrInput
+	// The private key for a given certificate chain. You **must** set this attribute when creating or
+	// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+	// SSL resource. The attribute value does not get displayed in logs or regular output.
+	PrivateKey pulumi.StringPtrInput
 }
 
 func (SslState) ElementType() reflect.Type {
@@ -82,16 +113,26 @@ func (SslState) ElementType() reflect.Type {
 }
 
 type sslArgs struct {
-	AppId            string  `pulumi:"appId"`
-	CertificateChain string  `pulumi:"certificateChain"`
-	PrivateKey       *string `pulumi:"privateKey"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// The certificate chain to add.
+	CertificateChain string `pulumi:"certificateChain"`
+	// The private key for a given certificate chain. You **must** set this attribute when creating or
+	// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+	// SSL resource. The attribute value does not get displayed in logs or regular output.
+	PrivateKey *string `pulumi:"privateKey"`
 }
 
 // The set of arguments for constructing a Ssl resource.
 type SslArgs struct {
-	AppId            pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// The certificate chain to add.
 	CertificateChain pulumi.StringInput
-	PrivateKey       pulumi.StringPtrInput
+	// The private key for a given certificate chain. You **must** set this attribute when creating or
+	// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+	// SSL resource. The attribute value does not get displayed in logs or regular output.
+	PrivateKey pulumi.StringPtrInput
 }
 
 func (SslArgs) ElementType() reflect.Type {
@@ -181,18 +222,24 @@ func (o SslOutput) ToSslOutputWithContext(ctx context.Context) SslOutput {
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o SslOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Ssl) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// The certificate chain to add.
 func (o SslOutput) CertificateChain() pulumi.StringOutput {
 	return o.ApplyT(func(v *Ssl) pulumi.StringOutput { return v.CertificateChain }).(pulumi.StringOutput)
 }
 
+// The name of the SSL certificate
 func (o SslOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Ssl) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The private key for a given certificate chain. You **must** set this attribute when creating or
+// updating an SSL resource. However, **do not** set a value for this attribute if you are initially importing an existing
+// SSL resource. The attribute value does not get displayed in logs or regular output.
 func (o SslOutput) PrivateKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Ssl) pulumi.StringPtrOutput { return v.PrivateKey }).(pulumi.StringPtrOutput)
 }

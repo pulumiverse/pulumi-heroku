@@ -4,8 +4,12 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Use this data source to get information about a Heroku Addon.
+ *
+ * ## Example Usage
+ */
 export function getAddon(args: GetAddonArgs, opts?: pulumi.InvokeOptions): Promise<GetAddonResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:addon/getAddon:getAddon", {
         "name": args.name,
@@ -16,6 +20,9 @@ export function getAddon(args: GetAddonArgs, opts?: pulumi.InvokeOptions): Promi
  * A collection of arguments for invoking getAddon.
  */
 export interface GetAddonArgs {
+    /**
+     * The add-on name
+     */
     name: string;
 }
 
@@ -23,20 +30,49 @@ export interface GetAddonArgs {
  * A collection of values returned by getAddon.
  */
 export interface GetAddonResult {
+    /**
+     * Heroku app ID
+     */
     readonly appId: string;
+    /**
+     * The Configuration variables of the add-on
+     */
     readonly configVars: string[];
+    /**
+     * The ID of the add-on
+     */
     readonly id: string;
+    /**
+     * The add-on name
+     */
     readonly name: string;
+    /**
+     * The plan name
+     */
     readonly plan: string;
+    /**
+     * The ID of the plan provider
+     */
     readonly providerId: string;
 }
-export function getAddonOutput(args: GetAddonOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetAddonResult> {
-    return pulumi.output(args).apply((a: any) => getAddon(a, opts))
+/**
+ * Use this data source to get information about a Heroku Addon.
+ *
+ * ## Example Usage
+ */
+export function getAddonOutput(args: GetAddonOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetAddonResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("heroku:addon/getAddon:getAddon", {
+        "name": args.name,
+    }, opts);
 }
 
 /**
  * A collection of arguments for invoking getAddon.
  */
 export interface GetAddonOutputArgs {
+    /**
+     * The add-on name
+     */
     name: pulumi.Input<string>;
 }

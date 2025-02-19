@@ -4,6 +4,20 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a Heroku Add-On resource. These can be attach
+ * services to a Heroku app.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Addons can be imported using the Addon `id`, e.g.
+ *
+ * ```sh
+ * $ pulumi import heroku:addon/addon:Addon foobar 12345678
+ * ```
+ */
 export class Addon extends pulumi.CustomResource {
     /**
      * Get an existing Addon resource's state with the given name, ID, and optional extra
@@ -32,12 +46,30 @@ export class Addon extends pulumi.CustomResource {
         return obj['__pulumiType'] === Addon.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
-    public readonly config!: pulumi.Output<{[key: string]: any} | undefined>;
+    /**
+     * Optional plan configuration.
+     */
+    public readonly config!: pulumi.Output<{[key: string]: string} | undefined>;
     public /*out*/ readonly configVarValues!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * The Configuration variables of the add-on
+     */
     public /*out*/ readonly configVars!: pulumi.Output<string[]>;
+    /**
+     * Globally unique name of the add-on.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * The addon to add.
+     */
     public readonly plan!: pulumi.Output<string>;
+    /**
+     * The ID of the plan provider
+     */
     public /*out*/ readonly providerId!: pulumi.Output<string>;
 
     /**
@@ -87,12 +119,30 @@ export class Addon extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Addon resources.
  */
 export interface AddonState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
-    config?: pulumi.Input<{[key: string]: any}>;
+    /**
+     * Optional plan configuration.
+     */
+    config?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     configVarValues?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The Configuration variables of the add-on
+     */
     configVars?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Globally unique name of the add-on.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The addon to add.
+     */
     plan?: pulumi.Input<string>;
+    /**
+     * The ID of the plan provider
+     */
     providerId?: pulumi.Input<string>;
 }
 
@@ -100,8 +150,20 @@ export interface AddonState {
  * The set of arguments for constructing a Addon resource.
  */
 export interface AddonArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
-    config?: pulumi.Input<{[key: string]: any}>;
+    /**
+     * Optional plan configuration.
+     */
+    config?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Globally unique name of the add-on.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The addon to add.
+     */
     plan: pulumi.Input<string>;
 }

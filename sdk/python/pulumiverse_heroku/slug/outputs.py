@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -18,6 +23,10 @@ class SlugBlob(dict):
     def __init__(__self__, *,
                  method: Optional[str] = None,
                  url: Optional[str] = None):
+        """
+        :param str method: HTTP method to upload the archive
+        :param str url: Pre-signed, expiring URL to upload the archive
+        """
         if method is not None:
             pulumi.set(__self__, "method", method)
         if url is not None:
@@ -26,11 +35,17 @@ class SlugBlob(dict):
     @property
     @pulumi.getter
     def method(self) -> Optional[str]:
+        """
+        HTTP method to upload the archive
+        """
         return pulumi.get(self, "method")
 
     @property
     @pulumi.getter
     def url(self) -> Optional[str]:
+        """
+        Pre-signed, expiring URL to upload the archive
+        """
         return pulumi.get(self, "url")
 
 

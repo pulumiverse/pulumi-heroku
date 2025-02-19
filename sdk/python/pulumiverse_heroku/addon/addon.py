@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['AddonArgs', 'Addon']
@@ -16,10 +21,14 @@ class AddonArgs:
     def __init__(__self__, *,
                  app_id: pulumi.Input[str],
                  plan: pulumi.Input[str],
-                 config: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Addon resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] plan: The addon to add.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] config: Optional plan configuration.
+        :param pulumi.Input[str] name: Globally unique name of the add-on.
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "plan", plan)
@@ -31,6 +40,9 @@ class AddonArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -40,6 +52,9 @@ class AddonArgs:
     @property
     @pulumi.getter
     def plan(self) -> pulumi.Input[str]:
+        """
+        The addon to add.
+        """
         return pulumi.get(self, "plan")
 
     @plan.setter
@@ -48,16 +63,22 @@ class AddonArgs:
 
     @property
     @pulumi.getter
-    def config(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Optional plan configuration.
+        """
         return pulumi.get(self, "config")
 
     @config.setter
-    def config(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "config", value)
 
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Globally unique name of the add-on.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -69,7 +90,7 @@ class AddonArgs:
 class _AddonState:
     def __init__(__self__, *,
                  app_id: Optional[pulumi.Input[str]] = None,
-                 config: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  config_var_values: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  config_vars: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -77,6 +98,12 @@ class _AddonState:
                  provider_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Addon resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] config: Optional plan configuration.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] config_vars: The Configuration variables of the add-on
+        :param pulumi.Input[str] name: Globally unique name of the add-on.
+        :param pulumi.Input[str] plan: The addon to add.
+        :param pulumi.Input[str] provider_id: The ID of the plan provider
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -96,6 +123,9 @@ class _AddonState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -104,11 +134,14 @@ class _AddonState:
 
     @property
     @pulumi.getter
-    def config(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def config(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Optional plan configuration.
+        """
         return pulumi.get(self, "config")
 
     @config.setter
-    def config(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def config(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "config", value)
 
     @property
@@ -123,6 +156,9 @@ class _AddonState:
     @property
     @pulumi.getter(name="configVars")
     def config_vars(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The Configuration variables of the add-on
+        """
         return pulumi.get(self, "config_vars")
 
     @config_vars.setter
@@ -132,6 +168,9 @@ class _AddonState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Globally unique name of the add-on.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -141,6 +180,9 @@ class _AddonState:
     @property
     @pulumi.getter
     def plan(self) -> Optional[pulumi.Input[str]]:
+        """
+        The addon to add.
+        """
         return pulumi.get(self, "plan")
 
     @plan.setter
@@ -150,6 +192,9 @@ class _AddonState:
     @property
     @pulumi.getter(name="providerId")
     def provider_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the plan provider
+        """
         return pulumi.get(self, "provider_id")
 
     @provider_id.setter
@@ -163,14 +208,30 @@ class Addon(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  app_id: Optional[pulumi.Input[str]] = None,
-                 config: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Addon resource with the given unique name, props, and options.
+        Provides a Heroku Add-On resource. These can be attach
+        services to a Heroku app.
+
+        ## Example Usage
+
+        ## Import
+
+        Addons can be imported using the Addon `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:addon/addon:Addon foobar 12345678
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] config: Optional plan configuration.
+        :param pulumi.Input[str] name: Globally unique name of the add-on.
+        :param pulumi.Input[str] plan: The addon to add.
         """
         ...
     @overload
@@ -179,7 +240,19 @@ class Addon(pulumi.CustomResource):
                  args: AddonArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Addon resource with the given unique name, props, and options.
+        Provides a Heroku Add-On resource. These can be attach
+        services to a Heroku app.
+
+        ## Example Usage
+
+        ## Import
+
+        Addons can be imported using the Addon `id`, e.g.
+
+        ```sh
+        $ pulumi import heroku:addon/addon:Addon foobar 12345678
+        ```
+
         :param str resource_name: The name of the resource.
         :param AddonArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -196,7 +269,7 @@ class Addon(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  app_id: Optional[pulumi.Input[str]] = None,
-                 config: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -232,7 +305,7 @@ class Addon(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             app_id: Optional[pulumi.Input[str]] = None,
-            config: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            config: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             config_var_values: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             config_vars: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
@@ -245,6 +318,12 @@ class Addon(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] config: Optional plan configuration.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] config_vars: The Configuration variables of the add-on
+        :param pulumi.Input[str] name: Globally unique name of the add-on.
+        :param pulumi.Input[str] plan: The addon to add.
+        :param pulumi.Input[str] provider_id: The ID of the plan provider
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -262,11 +341,17 @@ class Addon(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
-    def config(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def config(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Optional plan configuration.
+        """
         return pulumi.get(self, "config")
 
     @property
@@ -277,20 +362,32 @@ class Addon(pulumi.CustomResource):
     @property
     @pulumi.getter(name="configVars")
     def config_vars(self) -> pulumi.Output[Sequence[str]]:
+        """
+        The Configuration variables of the add-on
+        """
         return pulumi.get(self, "config_vars")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        Globally unique name of the add-on.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def plan(self) -> pulumi.Output[str]:
+        """
+        The addon to add.
+        """
         return pulumi.get(self, "plan")
 
     @property
     @pulumi.getter(name="providerId")
     def provider_id(self) -> pulumi.Output[str]:
+        """
+        The ID of the plan provider
+        """
         return pulumi.get(self, "provider_id")
 

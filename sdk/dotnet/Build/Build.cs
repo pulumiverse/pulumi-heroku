@@ -10,39 +10,88 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Build
 {
+    /// <summary>
+    /// ## Import
+    /// 
+    /// Existing builds can be imported using the combination of the application name, a colon, and the build ID.
+    /// 
+    /// For example:
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:build/build:Build foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+    /// ```
+    /// 
+    /// * `foobar` is the **heroku_build** resource's name
+    /// 
+    /// * `bazbux` is the Heroku app name (or ID) that the build belongs to
+    /// 
+    /// * `:` separates the app identifier &amp; the build identifier
+    /// 
+    /// * `4f1db8ef…` is the build ID
+    /// </summary>
     [HerokuResourceType("heroku:build/build:Build")]
     public partial class Build : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// List of buildpack GitHub URLs
+        /// </summary>
         [Output("buildpacks")]
         public Output<ImmutableArray<string>> Buildpacks { get; private set; } = null!;
 
         [Output("localChecksum")]
         public Output<string> LocalChecksum { get; private set; } = null!;
 
+        /// <summary>
+        /// URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+        /// </summary>
         [Output("outputStreamUrl")]
         public Output<string> OutputStreamUrl { get; private set; } = null!;
 
+        /// <summary>
+        /// The Heroku app release created with a build's slug
+        /// </summary>
         [Output("releaseId")]
         public Output<string> ReleaseId { get; private set; } = null!;
 
+        /// <summary>
+        /// The Heroku slug created by a build
+        /// </summary>
         [Output("slugId")]
         public Output<string> SlugId { get; private set; } = null!;
 
+        /// <summary>
+        /// A block that specifies the source code to build &amp; release:
+        /// </summary>
         [Output("source")]
         public Output<Outputs.BuildSource> Source { get; private set; } = null!;
 
+        /// <summary>
+        /// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        /// </summary>
         [Output("stack")]
         public Output<string> Stack { get; private set; } = null!;
 
+        /// <summary>
+        /// The status of a build. Possible values are `pending`, `successful` and `failed`
+        /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
 
+        /// <summary>
+        /// Heroku account that created a build
+        /// </summary>
         [Output("users")]
         public Output<ImmutableArray<Outputs.BuildUser>> Users { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the build
+        /// </summary>
         [Output("uuid")]
         public Output<string> Uuid { get; private set; } = null!;
 
@@ -93,17 +142,27 @@ namespace Pulumiverse.Heroku.Build
 
     public sealed class BuildArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
         [Input("buildpacks")]
         private InputList<string>? _buildpacks;
+
+        /// <summary>
+        /// List of buildpack GitHub URLs
+        /// </summary>
         public InputList<string> Buildpacks
         {
             get => _buildpacks ?? (_buildpacks = new InputList<string>());
             set => _buildpacks = value;
         }
 
+        /// <summary>
+        /// A block that specifies the source code to build &amp; release:
+        /// </summary>
         [Input("source", required: true)]
         public Input<Inputs.BuildSourceArgs> Source { get; set; } = null!;
 
@@ -115,11 +174,18 @@ namespace Pulumiverse.Heroku.Build
 
     public sealed class BuildState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
         [Input("buildpacks")]
         private InputList<string>? _buildpacks;
+
+        /// <summary>
+        /// List of buildpack GitHub URLs
+        /// </summary>
         public InputList<string> Buildpacks
         {
             get => _buildpacks ?? (_buildpacks = new InputList<string>());
@@ -129,32 +195,57 @@ namespace Pulumiverse.Heroku.Build
         [Input("localChecksum")]
         public Input<string>? LocalChecksum { get; set; }
 
+        /// <summary>
+        /// URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+        /// </summary>
         [Input("outputStreamUrl")]
         public Input<string>? OutputStreamUrl { get; set; }
 
+        /// <summary>
+        /// The Heroku app release created with a build's slug
+        /// </summary>
         [Input("releaseId")]
         public Input<string>? ReleaseId { get; set; }
 
+        /// <summary>
+        /// The Heroku slug created by a build
+        /// </summary>
         [Input("slugId")]
         public Input<string>? SlugId { get; set; }
 
+        /// <summary>
+        /// A block that specifies the source code to build &amp; release:
+        /// </summary>
         [Input("source")]
         public Input<Inputs.BuildSourceGetArgs>? Source { get; set; }
 
+        /// <summary>
+        /// Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        /// </summary>
         [Input("stack")]
         public Input<string>? Stack { get; set; }
 
+        /// <summary>
+        /// The status of a build. Possible values are `pending`, `successful` and `failed`
+        /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
 
         [Input("users")]
         private InputList<Inputs.BuildUserGetArgs>? _users;
+
+        /// <summary>
+        /// Heroku account that created a build
+        /// </summary>
         public InputList<Inputs.BuildUserGetArgs> Users
         {
             get => _users ?? (_users = new InputList<Inputs.BuildUserGetArgs>());
             set => _users = value;
         }
 
+        /// <summary>
+        /// The ID of the build
+        /// </summary>
         [Input("uuid")]
         public Input<string>? Uuid { get; set; }
 

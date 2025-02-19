@@ -10,12 +10,22 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.App
 {
+    /// <summary>
+    /// ## Import
+    /// 
+    /// The `heroku_config` resource is a meta-resource, managed only within Terraform state.
+    /// 
+    /// It does not exist as a native Heroku resource. Therefore, it is not possible to import an existing `heroku_config` configuration.
+    /// </summary>
     [HerokuResourceType("heroku:app/config:Config")]
     public partial class Config : global::Pulumi.CustomResource
     {
         [Output("sensitiveVars")]
         public Output<ImmutableDictionary<string, string>?> SensitiveVars { get; private set; } = null!;
 
+        /// <summary>
+        /// Map of vars that are can be outputted in plaintext.
+        /// </summary>
         [Output("vars")]
         public Output<ImmutableDictionary<string, string>?> Vars { get; private set; } = null!;
 
@@ -84,6 +94,10 @@ namespace Pulumiverse.Heroku.App
 
         [Input("vars")]
         private InputMap<string>? _vars;
+
+        /// <summary>
+        /// Map of vars that are can be outputted in plaintext.
+        /// </summary>
         public InputMap<string> Vars
         {
             get => _vars ?? (_vars = new InputMap<string>());
@@ -112,6 +126,10 @@ namespace Pulumiverse.Heroku.App
 
         [Input("vars")]
         private InputMap<string>? _vars;
+
+        /// <summary>
+        /// Map of vars that are can be outputted in plaintext.
+        /// </summary>
         public InputMap<string> Vars
         {
             get => _vars ?? (_vars = new InputMap<string>());

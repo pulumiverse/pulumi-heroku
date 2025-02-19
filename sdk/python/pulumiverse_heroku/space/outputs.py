@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -19,17 +24,27 @@ class InboundRulesetRule(dict):
     def __init__(__self__, *,
                  action: str,
                  source: str):
+        """
+        :param str action: The action to apply this rule to. Must be one of `allow` or `deny`.
+        :param str source: A CIDR block source for the rule.
+        """
         pulumi.set(__self__, "action", action)
         pulumi.set(__self__, "source", source)
 
     @property
     @pulumi.getter
     def action(self) -> str:
+        """
+        The action to apply this rule to. Must be one of `allow` or `deny`.
+        """
         return pulumi.get(self, "action")
 
     @property
     @pulumi.getter
     def source(self) -> str:
+        """
+        A CIDR block source for the rule.
+        """
         return pulumi.get(self, "source")
 
 
@@ -55,6 +70,10 @@ class VpnConnectionTunnel(dict):
     def __init__(__self__, *,
                  ip: Optional[str] = None,
                  pre_shared_key: Optional[str] = None):
+        """
+        :param str ip: The public IP address of the tunnel.
+        :param str pre_shared_key: The pre-shared IPSec secret for the tunnel.
+        """
         if ip is not None:
             pulumi.set(__self__, "ip", ip)
         if pre_shared_key is not None:
@@ -63,11 +82,17 @@ class VpnConnectionTunnel(dict):
     @property
     @pulumi.getter
     def ip(self) -> Optional[str]:
+        """
+        The public IP address of the tunnel.
+        """
         return pulumi.get(self, "ip")
 
     @property
     @pulumi.getter(name="preSharedKey")
     def pre_shared_key(self) -> Optional[str]:
+        """
+        The pre-shared IPSec secret for the tunnel.
+        """
         return pulumi.get(self, "pre_shared_key")
 
 

@@ -12,12 +12,35 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a [Heroku Pipeline Coupling](https://devcenter.heroku.com/articles/pipelines)
+// resource.
+//
+// A pipeline is a group of Heroku apps that share the same codebase. Once a
+// pipeline is created using `pipeline.Pipeline`, and apps are added
+// to different stages using `pipeline.Coupling`, you can promote app slugs
+// to the downstream stages.
+//
+// See `pipeline.Pipeline` for complete usage documentation.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// Pipeline couplings can be imported using the Pipeline coupling `id`, e.g.
+//
+// ```sh
+// $ pulumi import heroku:pipeline/coupling:Coupling foobar 12345678
+// ```
 type Coupling struct {
 	pulumi.CustomResourceState
 
-	AppId    pulumi.StringOutput `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// The ID of the pipeline to add this app to.
 	Pipeline pulumi.StringOutput `pulumi:"pipeline"`
-	Stage    pulumi.StringOutput `pulumi:"stage"`
+	// The stage to couple this app to. Must be one of
+	// `review`, `development`, `staging`, or `production`.
+	Stage pulumi.StringOutput `pulumi:"stage"`
 }
 
 // NewCoupling registers a new resource with the given unique name, arguments, and options.
@@ -59,15 +82,23 @@ func GetCoupling(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Coupling resources.
 type couplingState struct {
-	AppId    *string `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// The ID of the pipeline to add this app to.
 	Pipeline *string `pulumi:"pipeline"`
-	Stage    *string `pulumi:"stage"`
+	// The stage to couple this app to. Must be one of
+	// `review`, `development`, `staging`, or `production`.
+	Stage *string `pulumi:"stage"`
 }
 
 type CouplingState struct {
-	AppId    pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// The ID of the pipeline to add this app to.
 	Pipeline pulumi.StringPtrInput
-	Stage    pulumi.StringPtrInput
+	// The stage to couple this app to. Must be one of
+	// `review`, `development`, `staging`, or `production`.
+	Stage pulumi.StringPtrInput
 }
 
 func (CouplingState) ElementType() reflect.Type {
@@ -75,16 +106,24 @@ func (CouplingState) ElementType() reflect.Type {
 }
 
 type couplingArgs struct {
-	AppId    string `pulumi:"appId"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// The ID of the pipeline to add this app to.
 	Pipeline string `pulumi:"pipeline"`
-	Stage    string `pulumi:"stage"`
+	// The stage to couple this app to. Must be one of
+	// `review`, `development`, `staging`, or `production`.
+	Stage string `pulumi:"stage"`
 }
 
 // The set of arguments for constructing a Coupling resource.
 type CouplingArgs struct {
-	AppId    pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// The ID of the pipeline to add this app to.
 	Pipeline pulumi.StringInput
-	Stage    pulumi.StringInput
+	// The stage to couple this app to. Must be one of
+	// `review`, `development`, `staging`, or `production`.
+	Stage pulumi.StringInput
 }
 
 func (CouplingArgs) ElementType() reflect.Type {
@@ -174,14 +213,18 @@ func (o CouplingOutput) ToCouplingOutputWithContext(ctx context.Context) Couplin
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o CouplingOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Coupling) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// The ID of the pipeline to add this app to.
 func (o CouplingOutput) Pipeline() pulumi.StringOutput {
 	return o.ApplyT(func(v *Coupling) pulumi.StringOutput { return v.Pipeline }).(pulumi.StringOutput)
 }
 
+// The stage to couple this app to. Must be one of
+// `review`, `development`, `staging`, or `production`.
 func (o CouplingOutput) Stage() pulumi.StringOutput {
 	return o.ApplyT(func(v *Coupling) pulumi.StringOutput { return v.Stage }).(pulumi.StringOutput)
 }

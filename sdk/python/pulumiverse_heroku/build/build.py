@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -21,6 +26,9 @@ class BuildArgs:
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Build resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input['BuildSourceArgs'] source: A block that specifies the source code to build & release:
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: List of buildpack GitHub URLs
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "source", source)
@@ -30,6 +38,9 @@ class BuildArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -39,6 +50,9 @@ class BuildArgs:
     @property
     @pulumi.getter
     def source(self) -> pulumi.Input['BuildSourceArgs']:
+        """
+        A block that specifies the source code to build & release:
+        """
         return pulumi.get(self, "source")
 
     @source.setter
@@ -48,6 +62,9 @@ class BuildArgs:
     @property
     @pulumi.getter
     def buildpacks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of buildpack GitHub URLs
+        """
         return pulumi.get(self, "buildpacks")
 
     @buildpacks.setter
@@ -71,6 +88,16 @@ class _BuildState:
                  uuid: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Build resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: List of buildpack GitHub URLs
+        :param pulumi.Input[str] output_stream_url: URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+        :param pulumi.Input[str] release_id: The Heroku app release created with a build's slug
+        :param pulumi.Input[str] slug_id: The Heroku slug created by a build
+        :param pulumi.Input['BuildSourceArgs'] source: A block that specifies the source code to build & release:
+        :param pulumi.Input[str] stack: Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        :param pulumi.Input[str] status: The status of a build. Possible values are `pending`, `successful` and `failed`
+        :param pulumi.Input[Sequence[pulumi.Input['BuildUserArgs']]] users: Heroku account that created a build
+        :param pulumi.Input[str] uuid: The ID of the build
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -98,6 +125,9 @@ class _BuildState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -107,6 +137,9 @@ class _BuildState:
     @property
     @pulumi.getter
     def buildpacks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of buildpack GitHub URLs
+        """
         return pulumi.get(self, "buildpacks")
 
     @buildpacks.setter
@@ -125,6 +158,9 @@ class _BuildState:
     @property
     @pulumi.getter(name="outputStreamUrl")
     def output_stream_url(self) -> Optional[pulumi.Input[str]]:
+        """
+        URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+        """
         return pulumi.get(self, "output_stream_url")
 
     @output_stream_url.setter
@@ -134,6 +170,9 @@ class _BuildState:
     @property
     @pulumi.getter(name="releaseId")
     def release_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Heroku app release created with a build's slug
+        """
         return pulumi.get(self, "release_id")
 
     @release_id.setter
@@ -143,6 +182,9 @@ class _BuildState:
     @property
     @pulumi.getter(name="slugId")
     def slug_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Heroku slug created by a build
+        """
         return pulumi.get(self, "slug_id")
 
     @slug_id.setter
@@ -152,6 +194,9 @@ class _BuildState:
     @property
     @pulumi.getter
     def source(self) -> Optional[pulumi.Input['BuildSourceArgs']]:
+        """
+        A block that specifies the source code to build & release:
+        """
         return pulumi.get(self, "source")
 
     @source.setter
@@ -161,6 +206,9 @@ class _BuildState:
     @property
     @pulumi.getter
     def stack(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        """
         return pulumi.get(self, "stack")
 
     @stack.setter
@@ -170,6 +218,9 @@ class _BuildState:
     @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
+        """
+        The status of a build. Possible values are `pending`, `successful` and `failed`
+        """
         return pulumi.get(self, "status")
 
     @status.setter
@@ -179,6 +230,9 @@ class _BuildState:
     @property
     @pulumi.getter
     def users(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['BuildUserArgs']]]]:
+        """
+        Heroku account that created a build
+        """
         return pulumi.get(self, "users")
 
     @users.setter
@@ -188,6 +242,9 @@ class _BuildState:
     @property
     @pulumi.getter
     def uuid(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the build
+        """
         return pulumi.get(self, "uuid")
 
     @uuid.setter
@@ -202,12 +259,32 @@ class Build(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  app_id: Optional[pulumi.Input[str]] = None,
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 source: Optional[pulumi.Input[pulumi.InputType['BuildSourceArgs']]] = None,
+                 source: Optional[pulumi.Input[Union['BuildSourceArgs', 'BuildSourceArgsDict']]] = None,
                  __props__=None):
         """
-        Create a Build resource with the given unique name, props, and options.
+        ## Import
+
+        Existing builds can be imported using the combination of the application name, a colon, and the build ID.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:build/build:Build foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+        ```
+
+        * `foobar` is the **heroku_build** resource's name
+
+        * `bazbux` is the Heroku app name (or ID) that the build belongs to
+
+        * `:` separates the app identifier & the build identifier
+
+        * `4f1db8ef…` is the build ID
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: List of buildpack GitHub URLs
+        :param pulumi.Input[Union['BuildSourceArgs', 'BuildSourceArgsDict']] source: A block that specifies the source code to build & release:
         """
         ...
     @overload
@@ -216,7 +293,24 @@ class Build(pulumi.CustomResource):
                  args: BuildArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Build resource with the given unique name, props, and options.
+        ## Import
+
+        Existing builds can be imported using the combination of the application name, a colon, and the build ID.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:build/build:Build foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+        ```
+
+        * `foobar` is the **heroku_build** resource's name
+
+        * `bazbux` is the Heroku app name (or ID) that the build belongs to
+
+        * `:` separates the app identifier & the build identifier
+
+        * `4f1db8ef…` is the build ID
+
         :param str resource_name: The name of the resource.
         :param BuildArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -234,7 +328,7 @@ class Build(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  app_id: Optional[pulumi.Input[str]] = None,
                  buildpacks: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 source: Optional[pulumi.Input[pulumi.InputType['BuildSourceArgs']]] = None,
+                 source: Optional[pulumi.Input[Union['BuildSourceArgs', 'BuildSourceArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -275,10 +369,10 @@ class Build(pulumi.CustomResource):
             output_stream_url: Optional[pulumi.Input[str]] = None,
             release_id: Optional[pulumi.Input[str]] = None,
             slug_id: Optional[pulumi.Input[str]] = None,
-            source: Optional[pulumi.Input[pulumi.InputType['BuildSourceArgs']]] = None,
+            source: Optional[pulumi.Input[Union['BuildSourceArgs', 'BuildSourceArgsDict']]] = None,
             stack: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
-            users: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['BuildUserArgs']]]]] = None,
+            users: Optional[pulumi.Input[Sequence[pulumi.Input[Union['BuildUserArgs', 'BuildUserArgsDict']]]]] = None,
             uuid: Optional[pulumi.Input[str]] = None) -> 'Build':
         """
         Get an existing Build resource's state with the given name, id, and optional extra
@@ -287,6 +381,16 @@ class Build(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] buildpacks: List of buildpack GitHub URLs
+        :param pulumi.Input[str] output_stream_url: URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+        :param pulumi.Input[str] release_id: The Heroku app release created with a build's slug
+        :param pulumi.Input[str] slug_id: The Heroku slug created by a build
+        :param pulumi.Input[Union['BuildSourceArgs', 'BuildSourceArgsDict']] source: A block that specifies the source code to build & release:
+        :param pulumi.Input[str] stack: Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        :param pulumi.Input[str] status: The status of a build. Possible values are `pending`, `successful` and `failed`
+        :param pulumi.Input[Sequence[pulumi.Input[Union['BuildUserArgs', 'BuildUserArgsDict']]]] users: Heroku account that created a build
+        :param pulumi.Input[str] uuid: The ID of the build
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -308,11 +412,17 @@ class Build(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def buildpacks(self) -> pulumi.Output[Sequence[str]]:
+        """
+        List of buildpack GitHub URLs
+        """
         return pulumi.get(self, "buildpacks")
 
     @property
@@ -323,40 +433,64 @@ class Build(pulumi.CustomResource):
     @property
     @pulumi.getter(name="outputStreamUrl")
     def output_stream_url(self) -> pulumi.Output[str]:
+        """
+        URL that [streams the log output from the build](https://devcenter.heroku.com/articles/build-and-release-using-the-api#streaming-build-output)
+        """
         return pulumi.get(self, "output_stream_url")
 
     @property
     @pulumi.getter(name="releaseId")
     def release_id(self) -> pulumi.Output[str]:
+        """
+        The Heroku app release created with a build's slug
+        """
         return pulumi.get(self, "release_id")
 
     @property
     @pulumi.getter(name="slugId")
     def slug_id(self) -> pulumi.Output[str]:
+        """
+        The Heroku slug created by a build
+        """
         return pulumi.get(self, "slug_id")
 
     @property
     @pulumi.getter
     def source(self) -> pulumi.Output['outputs.BuildSource']:
+        """
+        A block that specifies the source code to build & release:
+        """
         return pulumi.get(self, "source")
 
     @property
     @pulumi.getter
     def stack(self) -> pulumi.Output[str]:
+        """
+        Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        """
         return pulumi.get(self, "stack")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[str]:
+        """
+        The status of a build. Possible values are `pending`, `successful` and `failed`
+        """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
     def users(self) -> pulumi.Output[Sequence['outputs.BuildUser']]:
+        """
+        Heroku account that created a build
+        """
         return pulumi.get(self, "users")
 
     @property
     @pulumi.getter
     def uuid(self) -> pulumi.Output[str]:
+        """
+        The ID of the build
+        """
         return pulumi.get(self, "uuid")
 

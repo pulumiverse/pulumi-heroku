@@ -10,15 +10,36 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.App
 {
+    /// <summary>
+    /// ## Import
+    /// 
+    /// This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+    /// 
+    /// during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+    /// 
+    /// this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+    /// 
+    /// this resource.
+    /// 
+    /// However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+    /// 
+    /// as the end result is `noop` when the config vars already exist on the remote resource.
+    /// </summary>
     [HerokuResourceType("heroku:app/configAssociation:ConfigAssociation")]
     public partial class ConfigAssociation : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
         [Output("sensitiveVars")]
         public Output<ImmutableDictionary<string, string>?> SensitiveVars { get; private set; } = null!;
 
+        /// <summary>
+        /// Map of config vars that can be output in plaintext.
+        /// </summary>
         [Output("vars")]
         public Output<ImmutableDictionary<string, string>?> Vars { get; private set; } = null!;
 
@@ -73,6 +94,9 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class ConfigAssociationArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
@@ -90,6 +114,10 @@ namespace Pulumiverse.Heroku.App
 
         [Input("vars")]
         private InputMap<string>? _vars;
+
+        /// <summary>
+        /// Map of config vars that can be output in plaintext.
+        /// </summary>
         public InputMap<string> Vars
         {
             get => _vars ?? (_vars = new InputMap<string>());
@@ -104,6 +132,9 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class ConfigAssociationState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
@@ -121,6 +152,10 @@ namespace Pulumiverse.Heroku.App
 
         [Input("vars")]
         private InputMap<string>? _vars;
+
+        /// <summary>
+        /// Map of config vars that can be output in plaintext.
+        /// </summary>
         public InputMap<string> Vars
         {
             get => _vars ?? (_vars = new InputMap<string>());

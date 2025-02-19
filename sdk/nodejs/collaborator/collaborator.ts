@@ -4,6 +4,25 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * A [Heroku Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#collaborator)
+ * receives access to a specific app that is not owned by a team.
+ *
+ * > **IMPORTANT!:**
+ * This resource only works for apps that are not part of a team.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Collaborators can be imported using the combination of the application name, a colon, and the collaborator's email address
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:collaborator/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+ * ```
+ */
 export class Collaborator extends pulumi.CustomResource {
     /**
      * Get an existing Collaborator resource's state with the given name, ID, and optional extra
@@ -32,7 +51,13 @@ export class Collaborator extends pulumi.CustomResource {
         return obj['__pulumiType'] === Collaborator.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * Email address of the collaborator
+     */
     public readonly email!: pulumi.Output<string>;
 
     /**
@@ -70,7 +95,13 @@ export class Collaborator extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Collaborator resources.
  */
 export interface CollaboratorState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * Email address of the collaborator
+     */
     email?: pulumi.Input<string>;
 }
 
@@ -78,6 +109,12 @@ export interface CollaboratorState {
  * The set of arguments for constructing a Collaborator resource.
  */
 export interface CollaboratorArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * Email address of the collaborator
+     */
     email: pulumi.Input<string>;
 }

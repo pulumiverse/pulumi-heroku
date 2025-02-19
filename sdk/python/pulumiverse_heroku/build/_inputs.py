@@ -4,15 +4,48 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
     'BuildSourceArgs',
+    'BuildSourceArgsDict',
     'BuildUserArgs',
+    'BuildUserArgsDict',
 ]
+
+MYPY = False
+
+if not MYPY:
+    class BuildSourceArgsDict(TypedDict):
+        checksum: NotRequired[pulumi.Input[str]]
+        """
+        SHA256 hash of the tarball archive to verify its integrity, example:
+        `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        """
+        path: NotRequired[pulumi.Input[str]]
+        """
+        Local path to the source directory or tarball archive for the app
+        """
+        url: NotRequired[pulumi.Input[str]]
+        """
+        `https` location of the source archive for the app
+        """
+        version: NotRequired[pulumi.Input[str]]
+        """
+        Use to track what version of your source originated this build. If you are creating builds
+        from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+        version parameter.
+        """
+elif False:
+    BuildSourceArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class BuildSourceArgs:
@@ -21,6 +54,15 @@ class BuildSourceArgs:
                  path: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None):
+        """
+        :param pulumi.Input[str] checksum: SHA256 hash of the tarball archive to verify its integrity, example:
+               `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        :param pulumi.Input[str] path: Local path to the source directory or tarball archive for the app
+        :param pulumi.Input[str] url: `https` location of the source archive for the app
+        :param pulumi.Input[str] version: Use to track what version of your source originated this build. If you are creating builds
+               from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+               version parameter.
+        """
         if checksum is not None:
             pulumi.set(__self__, "checksum", checksum)
         if path is not None:
@@ -33,6 +75,10 @@ class BuildSourceArgs:
     @property
     @pulumi.getter
     def checksum(self) -> Optional[pulumi.Input[str]]:
+        """
+        SHA256 hash of the tarball archive to verify its integrity, example:
+        `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        """
         return pulumi.get(self, "checksum")
 
     @checksum.setter
@@ -42,6 +88,9 @@ class BuildSourceArgs:
     @property
     @pulumi.getter
     def path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Local path to the source directory or tarball archive for the app
+        """
         return pulumi.get(self, "path")
 
     @path.setter
@@ -51,6 +100,9 @@ class BuildSourceArgs:
     @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
+        """
+        `https` location of the source archive for the app
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -60,12 +112,24 @@ class BuildSourceArgs:
     @property
     @pulumi.getter
     def version(self) -> Optional[pulumi.Input[str]]:
+        """
+        Use to track what version of your source originated this build. If you are creating builds
+        from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+        version parameter.
+        """
         return pulumi.get(self, "version")
 
     @version.setter
     def version(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "version", value)
 
+
+if not MYPY:
+    class BuildUserArgsDict(TypedDict):
+        email: NotRequired[pulumi.Input[str]]
+        id: NotRequired[pulumi.Input[str]]
+elif False:
+    BuildUserArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class BuildUserArgs:

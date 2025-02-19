@@ -10,12 +10,23 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Space
 {
+    /// <summary>
+    /// Provides a resource for managing [inbound rulesets](https://devcenter.heroku.com/articles/platform-api-reference#inbound-ruleset) for Heroku Private Spaces.
+    /// 
+    /// ## Example Usage
+    /// </summary>
     [HerokuResourceType("heroku:space/inboundRuleset:InboundRuleset")]
     public partial class InboundRuleset : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// At least one `rule` block. Rules are documented below.
+        /// </summary>
         [Output("rules")]
         public Output<ImmutableArray<Outputs.InboundRulesetRule>> Rules { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the space.
+        /// </summary>
         [Output("space")]
         public Output<string> Space { get; private set; } = null!;
 
@@ -68,12 +79,19 @@ namespace Pulumiverse.Heroku.Space
     {
         [Input("rules", required: true)]
         private InputList<Inputs.InboundRulesetRuleArgs>? _rules;
+
+        /// <summary>
+        /// At least one `rule` block. Rules are documented below.
+        /// </summary>
         public InputList<Inputs.InboundRulesetRuleArgs> Rules
         {
             get => _rules ?? (_rules = new InputList<Inputs.InboundRulesetRuleArgs>());
             set => _rules = value;
         }
 
+        /// <summary>
+        /// The ID of the space.
+        /// </summary>
         [Input("space", required: true)]
         public Input<string> Space { get; set; } = null!;
 
@@ -87,12 +105,19 @@ namespace Pulumiverse.Heroku.Space
     {
         [Input("rules")]
         private InputList<Inputs.InboundRulesetRuleGetArgs>? _rules;
+
+        /// <summary>
+        /// At least one `rule` block. Rules are documented below.
+        /// </summary>
         public InputList<Inputs.InboundRulesetRuleGetArgs> Rules
         {
             get => _rules ?? (_rules = new InputList<Inputs.InboundRulesetRuleGetArgs>());
             set => _rules = value;
         }
 
+        /// <summary>
+        /// The ID of the space.
+        /// </summary>
         [Input("space")]
         public Input<string>? Space { get; set; }
 

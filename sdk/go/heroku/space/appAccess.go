@@ -12,12 +12,28 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a resource for managing permissions for the entire Private Space. Members with the admin role will
+// always have full permissions in the Private Space, so using this resource on an admin will have no effect.
+// The provided email must already be a member of the Heroku Team. Currently, the only supported permission is `createApps`.
+//
+// ## Example Usage
+//
+// ## Importing
+//
+// Existing permissions can be imported using the combination of the Private Space name, a colon, and the member email.
+//
+// For example:
 type AppAccess struct {
 	pulumi.CustomResourceState
 
-	Email       pulumi.StringOutput      `pulumi:"email"`
+	// The email of the existing Heroku Team member.
+	Email pulumi.StringOutput `pulumi:"email"`
+	// The permissions to grant the team member for the Private Space.
+	// Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+	// Members with admin role will always have `createApps` permissions, which cannot be removed.
 	Permissions pulumi.StringArrayOutput `pulumi:"permissions"`
-	Space       pulumi.StringOutput      `pulumi:"space"`
+	// The ID of the Private Space.
+	Space pulumi.StringOutput `pulumi:"space"`
 }
 
 // NewAppAccess registers a new resource with the given unique name, arguments, and options.
@@ -59,15 +75,25 @@ func GetAppAccess(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering AppAccess resources.
 type appAccessState struct {
-	Email       *string  `pulumi:"email"`
+	// The email of the existing Heroku Team member.
+	Email *string `pulumi:"email"`
+	// The permissions to grant the team member for the Private Space.
+	// Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+	// Members with admin role will always have `createApps` permissions, which cannot be removed.
 	Permissions []string `pulumi:"permissions"`
-	Space       *string  `pulumi:"space"`
+	// The ID of the Private Space.
+	Space *string `pulumi:"space"`
 }
 
 type AppAccessState struct {
-	Email       pulumi.StringPtrInput
+	// The email of the existing Heroku Team member.
+	Email pulumi.StringPtrInput
+	// The permissions to grant the team member for the Private Space.
+	// Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+	// Members with admin role will always have `createApps` permissions, which cannot be removed.
 	Permissions pulumi.StringArrayInput
-	Space       pulumi.StringPtrInput
+	// The ID of the Private Space.
+	Space pulumi.StringPtrInput
 }
 
 func (AppAccessState) ElementType() reflect.Type {
@@ -75,16 +101,26 @@ func (AppAccessState) ElementType() reflect.Type {
 }
 
 type appAccessArgs struct {
-	Email       string   `pulumi:"email"`
+	// The email of the existing Heroku Team member.
+	Email string `pulumi:"email"`
+	// The permissions to grant the team member for the Private Space.
+	// Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+	// Members with admin role will always have `createApps` permissions, which cannot be removed.
 	Permissions []string `pulumi:"permissions"`
-	Space       string   `pulumi:"space"`
+	// The ID of the Private Space.
+	Space string `pulumi:"space"`
 }
 
 // The set of arguments for constructing a AppAccess resource.
 type AppAccessArgs struct {
-	Email       pulumi.StringInput
+	// The email of the existing Heroku Team member.
+	Email pulumi.StringInput
+	// The permissions to grant the team member for the Private Space.
+	// Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+	// Members with admin role will always have `createApps` permissions, which cannot be removed.
 	Permissions pulumi.StringArrayInput
-	Space       pulumi.StringInput
+	// The ID of the Private Space.
+	Space pulumi.StringInput
 }
 
 func (AppAccessArgs) ElementType() reflect.Type {
@@ -174,14 +210,19 @@ func (o AppAccessOutput) ToAppAccessOutputWithContext(ctx context.Context) AppAc
 	return o
 }
 
+// The email of the existing Heroku Team member.
 func (o AppAccessOutput) Email() pulumi.StringOutput {
 	return o.ApplyT(func(v *AppAccess) pulumi.StringOutput { return v.Email }).(pulumi.StringOutput)
 }
 
+// The permissions to grant the team member for the Private Space.
+// Currently `createApps` is the only supported permission. If not provided the member will have no permissions to the space.
+// Members with admin role will always have `createApps` permissions, which cannot be removed.
 func (o AppAccessOutput) Permissions() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *AppAccess) pulumi.StringArrayOutput { return v.Permissions }).(pulumi.StringArrayOutput)
 }
 
+// The ID of the Private Space.
 func (o AppAccessOutput) Space() pulumi.StringOutput {
 	return o.ApplyT(func(v *AppAccess) pulumi.StringOutput { return v.Space }).(pulumi.StringOutput)
 }

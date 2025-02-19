@@ -13,9 +13,15 @@ namespace Pulumiverse.Heroku.Slug.Inputs
 
     public sealed class SlugBlobGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// HTTP method to upload the archive
+        /// </summary>
         [Input("method")]
         public Input<string>? Method { get; set; }
 
+        /// <summary>
+        /// Pre-signed, expiring URL to upload the archive
+        /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
 

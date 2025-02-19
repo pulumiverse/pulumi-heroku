@@ -4,6 +4,31 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * A [Heroku Team Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#team-app-collaborator)
+ * receives access to a specific Team-owned app.
+ *
+ * To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard.
+ * For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+ *
+ * A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider.
+ * For `heroku.app.App` & `heroku.space.Space` resources, set the Heroku Team name as the "organization".
+ *
+ * > **IMPORTANT:**
+ * This resource only works for Team-owned apps.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Team Collaborators can be imported using the combination of the team application name, a colon, and the collaborator's email address
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:team/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+ * ```
+ */
 export class Collaborator extends pulumi.CustomResource {
     /**
      * Get an existing Collaborator resource's state with the given name, ID, and optional extra
@@ -32,8 +57,19 @@ export class Collaborator extends pulumi.CustomResource {
         return obj['__pulumiType'] === Collaborator.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * Email address of the team collaborator
+     */
     public readonly email!: pulumi.Output<string>;
+    /**
+     * List of permissions that will be granted to the team collaborator. The order in which
+     * individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+     * for more information on available permissions.
+     */
     public readonly permissions!: pulumi.Output<string[]>;
 
     /**
@@ -76,8 +112,19 @@ export class Collaborator extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Collaborator resources.
  */
 export interface CollaboratorState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * Email address of the team collaborator
+     */
     email?: pulumi.Input<string>;
+    /**
+     * List of permissions that will be granted to the team collaborator. The order in which
+     * individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+     * for more information on available permissions.
+     */
     permissions?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
@@ -85,7 +132,18 @@ export interface CollaboratorState {
  * The set of arguments for constructing a Collaborator resource.
  */
 export interface CollaboratorArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * Email address of the team collaborator
+     */
     email: pulumi.Input<string>;
+    /**
+     * List of permissions that will be granted to the team collaborator. The order in which
+     * individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+     * for more information on available permissions.
+     */
     permissions: pulumi.Input<pulumi.Input<string>[]>;
 }

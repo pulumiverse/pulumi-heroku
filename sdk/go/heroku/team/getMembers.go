@@ -11,6 +11,9 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get information about members for a Heroku Team.
+//
+// ## Example Usage
 func GetMembers(ctx *pulumi.Context, args *GetMembersArgs, opts ...pulumi.InvokeOption) (*GetMembersResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetMembersResult
@@ -23,36 +26,39 @@ func GetMembers(ctx *pulumi.Context, args *GetMembersArgs, opts ...pulumi.Invoke
 
 // A collection of arguments for invoking getMembers.
 type GetMembersArgs struct {
+	// List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+	// At least one role must be specified.
 	Roles []string `pulumi:"roles"`
-	Team  string   `pulumi:"team"`
+	// The team name.
+	Team string `pulumi:"team"`
 }
 
 // A collection of values returned by getMembers.
 type GetMembersResult struct {
 	// The provider-assigned unique ID for this managed resource.
-	Id      string             `pulumi:"id"`
+	Id string `pulumi:"id"`
+	// All members of the team that have a specified role defined in the `roles` attribute above.
 	Members []GetMembersMember `pulumi:"members"`
 	Roles   []string           `pulumi:"roles"`
 	Team    string             `pulumi:"team"`
 }
 
 func GetMembersOutput(ctx *pulumi.Context, args GetMembersOutputArgs, opts ...pulumi.InvokeOption) GetMembersResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetMembersResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetMembersResultOutput, error) {
 			args := v.(GetMembersArgs)
-			r, err := GetMembers(ctx, &args, opts...)
-			var s GetMembersResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:team/getMembers:getMembers", args, GetMembersResultOutput{}, options).(GetMembersResultOutput), nil
 		}).(GetMembersResultOutput)
 }
 
 // A collection of arguments for invoking getMembers.
 type GetMembersOutputArgs struct {
+	// List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+	// At least one role must be specified.
 	Roles pulumi.StringArrayInput `pulumi:"roles"`
-	Team  pulumi.StringInput      `pulumi:"team"`
+	// The team name.
+	Team pulumi.StringInput `pulumi:"team"`
 }
 
 func (GetMembersOutputArgs) ElementType() reflect.Type {
@@ -79,6 +85,7 @@ func (o GetMembersResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembersResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// All members of the team that have a specified role defined in the `roles` attribute above.
 func (o GetMembersResultOutput) Members() GetMembersMemberArrayOutput {
 	return o.ApplyT(func(v GetMembersResult) []GetMembersMember { return v.Members }).(GetMembersMemberArrayOutput)
 }

@@ -14,8 +14,10 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type SlugBlob struct {
+	// HTTP method to upload the archive
 	Method *string `pulumi:"method"`
-	Url    *string `pulumi:"url"`
+	// Pre-signed, expiring URL to upload the archive
+	Url *string `pulumi:"url"`
 }
 
 // SlugBlobInput is an input type that accepts SlugBlobArgs and SlugBlobOutput values.
@@ -30,8 +32,10 @@ type SlugBlobInput interface {
 }
 
 type SlugBlobArgs struct {
+	// HTTP method to upload the archive
 	Method pulumi.StringPtrInput `pulumi:"method"`
-	Url    pulumi.StringPtrInput `pulumi:"url"`
+	// Pre-signed, expiring URL to upload the archive
+	Url pulumi.StringPtrInput `pulumi:"url"`
 }
 
 func (SlugBlobArgs) ElementType() reflect.Type {
@@ -85,10 +89,12 @@ func (o SlugBlobOutput) ToSlugBlobOutputWithContext(ctx context.Context) SlugBlo
 	return o
 }
 
+// HTTP method to upload the archive
 func (o SlugBlobOutput) Method() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SlugBlob) *string { return v.Method }).(pulumi.StringPtrOutput)
 }
 
+// Pre-signed, expiring URL to upload the archive
 func (o SlugBlobOutput) Url() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SlugBlob) *string { return v.Url }).(pulumi.StringPtrOutput)
 }

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['ConfigArgs', 'Config']
@@ -18,6 +23,7 @@ class ConfigArgs:
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Config resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of vars that are can be outputted in plaintext.
         """
         if sensitive_vars is not None:
             pulumi.set(__self__, "sensitive_vars", sensitive_vars)
@@ -36,6 +42,9 @@ class ConfigArgs:
     @property
     @pulumi.getter
     def vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of vars that are can be outputted in plaintext.
+        """
         return pulumi.get(self, "vars")
 
     @vars.setter
@@ -50,6 +59,7 @@ class _ConfigState:
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Config resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of vars that are can be outputted in plaintext.
         """
         if sensitive_vars is not None:
             pulumi.set(__self__, "sensitive_vars", sensitive_vars)
@@ -68,6 +78,9 @@ class _ConfigState:
     @property
     @pulumi.getter
     def vars(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of vars that are can be outputted in plaintext.
+        """
         return pulumi.get(self, "vars")
 
     @vars.setter
@@ -84,9 +97,15 @@ class Config(pulumi.CustomResource):
                  vars: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
-        Create a Config resource with the given unique name, props, and options.
+        ## Import
+
+        The `heroku_config` resource is a meta-resource, managed only within Terraform state.
+
+        It does not exist as a native Heroku resource. Therefore, it is not possible to import an existing `heroku_config` configuration.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of vars that are can be outputted in plaintext.
         """
         ...
     @overload
@@ -95,7 +114,12 @@ class Config(pulumi.CustomResource):
                  args: Optional[ConfigArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Config resource with the given unique name, props, and options.
+        ## Import
+
+        The `heroku_config` resource is a meta-resource, managed only within Terraform state.
+
+        It does not exist as a native Heroku resource. Therefore, it is not possible to import an existing `heroku_config` configuration.
+
         :param str resource_name: The name of the resource.
         :param ConfigArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -145,6 +169,7 @@ class Config(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] vars: Map of vars that are can be outputted in plaintext.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -162,5 +187,8 @@ class Config(pulumi.CustomResource):
     @property
     @pulumi.getter
     def vars(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Map of vars that are can be outputted in plaintext.
+        """
         return pulumi.get(self, "vars")
 

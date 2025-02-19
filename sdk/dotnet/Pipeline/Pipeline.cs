@@ -10,12 +10,29 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Pipeline
 {
+    /// <summary>
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Pipelines can be imported using the Pipeline `id`, e.g.
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:pipeline/pipeline:Pipeline foobar 12345678
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:pipeline/pipeline:Pipeline")]
     public partial class Pipeline : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The name of the pipeline.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The owner of the pipeline. This block as the following required attributes:
+        /// </summary>
         [Output("owner")]
         public Output<Outputs.PipelineOwner> Owner { get; private set; } = null!;
 
@@ -66,9 +83,15 @@ namespace Pulumiverse.Heroku.Pipeline
 
     public sealed class PipelineArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The name of the pipeline.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The owner of the pipeline. This block as the following required attributes:
+        /// </summary>
         [Input("owner")]
         public Input<Inputs.PipelineOwnerArgs>? Owner { get; set; }
 
@@ -80,9 +103,15 @@ namespace Pulumiverse.Heroku.Pipeline
 
     public sealed class PipelineState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The name of the pipeline.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The owner of the pipeline. This block as the following required attributes:
+        /// </summary>
         [Input("owner")]
         public Input<Inputs.PipelineOwnerGetArgs>? Owner { get; set; }
 

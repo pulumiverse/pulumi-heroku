@@ -12,12 +12,19 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a resource for accepting VPC peering requests to Heroku Private Spaces.
+//
+// ## Example Usage
 type PeeringConnectionAccepter struct {
 	pulumi.CustomResourceState
 
-	Space                  pulumi.StringOutput `pulumi:"space"`
-	Status                 pulumi.StringOutput `pulumi:"status"`
-	Type                   pulumi.StringOutput `pulumi:"type"`
+	// The ID of the space.
+	Space pulumi.StringOutput `pulumi:"space"`
+	// The status of the peering connection request.
+	Status pulumi.StringOutput `pulumi:"status"`
+	// The type of the peering connection.
+	Type pulumi.StringOutput `pulumi:"type"`
+	// The peering connection request ID.
 	VpcPeeringConnectionId pulumi.StringOutput `pulumi:"vpcPeeringConnectionId"`
 }
 
@@ -57,16 +64,24 @@ func GetPeeringConnectionAccepter(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering PeeringConnectionAccepter resources.
 type peeringConnectionAccepterState struct {
-	Space                  *string `pulumi:"space"`
-	Status                 *string `pulumi:"status"`
-	Type                   *string `pulumi:"type"`
+	// The ID of the space.
+	Space *string `pulumi:"space"`
+	// The status of the peering connection request.
+	Status *string `pulumi:"status"`
+	// The type of the peering connection.
+	Type *string `pulumi:"type"`
+	// The peering connection request ID.
 	VpcPeeringConnectionId *string `pulumi:"vpcPeeringConnectionId"`
 }
 
 type PeeringConnectionAccepterState struct {
-	Space                  pulumi.StringPtrInput
-	Status                 pulumi.StringPtrInput
-	Type                   pulumi.StringPtrInput
+	// The ID of the space.
+	Space pulumi.StringPtrInput
+	// The status of the peering connection request.
+	Status pulumi.StringPtrInput
+	// The type of the peering connection.
+	Type pulumi.StringPtrInput
+	// The peering connection request ID.
 	VpcPeeringConnectionId pulumi.StringPtrInput
 }
 
@@ -75,13 +90,17 @@ func (PeeringConnectionAccepterState) ElementType() reflect.Type {
 }
 
 type peeringConnectionAccepterArgs struct {
-	Space                  string `pulumi:"space"`
+	// The ID of the space.
+	Space string `pulumi:"space"`
+	// The peering connection request ID.
 	VpcPeeringConnectionId string `pulumi:"vpcPeeringConnectionId"`
 }
 
 // The set of arguments for constructing a PeeringConnectionAccepter resource.
 type PeeringConnectionAccepterArgs struct {
-	Space                  pulumi.StringInput
+	// The ID of the space.
+	Space pulumi.StringInput
+	// The peering connection request ID.
 	VpcPeeringConnectionId pulumi.StringInput
 }
 
@@ -172,18 +191,22 @@ func (o PeeringConnectionAccepterOutput) ToPeeringConnectionAccepterOutputWithCo
 	return o
 }
 
+// The ID of the space.
 func (o PeeringConnectionAccepterOutput) Space() pulumi.StringOutput {
 	return o.ApplyT(func(v *PeeringConnectionAccepter) pulumi.StringOutput { return v.Space }).(pulumi.StringOutput)
 }
 
+// The status of the peering connection request.
 func (o PeeringConnectionAccepterOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *PeeringConnectionAccepter) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
+// The type of the peering connection.
 func (o PeeringConnectionAccepterOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *PeeringConnectionAccepter) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
 }
 
+// The peering connection request ID.
 func (o PeeringConnectionAccepterOutput) VpcPeeringConnectionId() pulumi.StringOutput {
 	return o.ApplyT(func(v *PeeringConnectionAccepter) pulumi.StringOutput { return v.VpcPeeringConnectionId }).(pulumi.StringOutput)
 }

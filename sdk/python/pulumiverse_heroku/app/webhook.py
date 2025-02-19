@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['WebhookArgs', 'Webhook']
@@ -22,6 +27,12 @@ class WebhookArgs:
                  secret: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Webhook resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] includes: List of events to deliver to the webhook.
+        :param pulumi.Input[str] level: The webhook level (either `notify` or `sync`)
+        :param pulumi.Input[str] url: Optional plan configuration.
+        :param pulumi.Input[str] authorization: Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[str] secret: Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "includes", includes)
@@ -35,6 +46,9 @@ class WebhookArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -44,6 +58,9 @@ class WebhookArgs:
     @property
     @pulumi.getter
     def includes(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of events to deliver to the webhook.
+        """
         return pulumi.get(self, "includes")
 
     @includes.setter
@@ -53,6 +70,9 @@ class WebhookArgs:
     @property
     @pulumi.getter
     def level(self) -> pulumi.Input[str]:
+        """
+        The webhook level (either `notify` or `sync`)
+        """
         return pulumi.get(self, "level")
 
     @level.setter
@@ -62,6 +82,9 @@ class WebhookArgs:
     @property
     @pulumi.getter
     def url(self) -> pulumi.Input[str]:
+        """
+        Optional plan configuration.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -71,6 +94,9 @@ class WebhookArgs:
     @property
     @pulumi.getter
     def authorization(self) -> Optional[pulumi.Input[str]]:
+        """
+        Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        """
         return pulumi.get(self, "authorization")
 
     @authorization.setter
@@ -80,6 +106,9 @@ class WebhookArgs:
     @property
     @pulumi.getter
     def secret(self) -> Optional[pulumi.Input[str]]:
+        """
+        Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        """
         return pulumi.get(self, "secret")
 
     @secret.setter
@@ -98,6 +127,12 @@ class _WebhookState:
                  url: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Webhook resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] authorization: Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] includes: List of events to deliver to the webhook.
+        :param pulumi.Input[str] level: The webhook level (either `notify` or `sync`)
+        :param pulumi.Input[str] secret: Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[str] url: Optional plan configuration.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -115,6 +150,9 @@ class _WebhookState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -124,6 +162,9 @@ class _WebhookState:
     @property
     @pulumi.getter
     def authorization(self) -> Optional[pulumi.Input[str]]:
+        """
+        Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        """
         return pulumi.get(self, "authorization")
 
     @authorization.setter
@@ -133,6 +174,9 @@ class _WebhookState:
     @property
     @pulumi.getter
     def includes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of events to deliver to the webhook.
+        """
         return pulumi.get(self, "includes")
 
     @includes.setter
@@ -142,6 +186,9 @@ class _WebhookState:
     @property
     @pulumi.getter
     def level(self) -> Optional[pulumi.Input[str]]:
+        """
+        The webhook level (either `notify` or `sync`)
+        """
         return pulumi.get(self, "level")
 
     @level.setter
@@ -151,6 +198,9 @@ class _WebhookState:
     @property
     @pulumi.getter
     def secret(self) -> Optional[pulumi.Input[str]]:
+        """
+        Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        """
         return pulumi.get(self, "secret")
 
     @secret.setter
@@ -160,6 +210,9 @@ class _WebhookState:
     @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional plan configuration.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -180,9 +233,22 @@ class Webhook(pulumi.CustomResource):
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Webhook resource with the given unique name, props, and options.
+        Provides a [Heroku App Webhook](https://devcenter.heroku.com/categories/app-webhooks).
+
+        ## Example Usage
+
+        ## Importing
+
+        Existing webhooks can be imported using the combination of the application name or id, a colon, and the webhook name or id, e.g.
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] authorization: Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] includes: List of events to deliver to the webhook.
+        :param pulumi.Input[str] level: The webhook level (either `notify` or `sync`)
+        :param pulumi.Input[str] secret: Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[str] url: Optional plan configuration.
         """
         ...
     @overload
@@ -191,7 +257,14 @@ class Webhook(pulumi.CustomResource):
                  args: WebhookArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Webhook resource with the given unique name, props, and options.
+        Provides a [Heroku App Webhook](https://devcenter.heroku.com/categories/app-webhooks).
+
+        ## Example Usage
+
+        ## Importing
+
+        Existing webhooks can be imported using the combination of the application name or id, a colon, and the webhook name or id, e.g.
+
         :param str resource_name: The name of the resource.
         :param WebhookArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -261,6 +334,12 @@ class Webhook(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] authorization: Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] includes: List of events to deliver to the webhook.
+        :param pulumi.Input[str] level: The webhook level (either `notify` or `sync`)
+        :param pulumi.Input[str] secret: Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        :param pulumi.Input[str] url: Optional plan configuration.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -277,30 +356,48 @@ class Webhook(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def authorization(self) -> pulumi.Output[Optional[str]]:
+        """
+        Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        """
         return pulumi.get(self, "authorization")
 
     @property
     @pulumi.getter
     def includes(self) -> pulumi.Output[Sequence[str]]:
+        """
+        List of events to deliver to the webhook.
+        """
         return pulumi.get(self, "includes")
 
     @property
     @pulumi.getter
     def level(self) -> pulumi.Output[str]:
+        """
+        The webhook level (either `notify` or `sync`)
+        """
         return pulumi.get(self, "level")
 
     @property
     @pulumi.getter
     def secret(self) -> pulumi.Output[Optional[str]]:
+        """
+        Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+        """
         return pulumi.get(self, "secret")
 
     @property
     @pulumi.getter
     def url(self) -> pulumi.Output[str]:
+        """
+        Optional plan configuration.
+        """
         return pulumi.get(self, "url")
 

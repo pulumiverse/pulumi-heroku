@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['MemberArgs', 'Member']
@@ -20,6 +25,9 @@ class MemberArgs:
                  federated: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a Member resource.
+        :param pulumi.Input[str] email: Email address of the member
+        :param pulumi.Input[str] role: The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        :param pulumi.Input[str] team: The name of the Heroku Team.
         """
         pulumi.set(__self__, "email", email)
         pulumi.set(__self__, "role", role)
@@ -30,6 +38,9 @@ class MemberArgs:
     @property
     @pulumi.getter
     def email(self) -> pulumi.Input[str]:
+        """
+        Email address of the member
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -39,6 +50,9 @@ class MemberArgs:
     @property
     @pulumi.getter
     def role(self) -> pulumi.Input[str]:
+        """
+        The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        """
         return pulumi.get(self, "role")
 
     @role.setter
@@ -48,6 +62,9 @@ class MemberArgs:
     @property
     @pulumi.getter
     def team(self) -> pulumi.Input[str]:
+        """
+        The name of the Heroku Team.
+        """
         return pulumi.get(self, "team")
 
     @team.setter
@@ -73,6 +90,9 @@ class _MemberState:
                  team: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Member resources.
+        :param pulumi.Input[str] email: Email address of the member
+        :param pulumi.Input[str] role: The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        :param pulumi.Input[str] team: The name of the Heroku Team.
         """
         if email is not None:
             pulumi.set(__self__, "email", email)
@@ -86,6 +106,9 @@ class _MemberState:
     @property
     @pulumi.getter
     def email(self) -> Optional[pulumi.Input[str]]:
+        """
+        Email address of the member
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -104,6 +127,9 @@ class _MemberState:
     @property
     @pulumi.getter
     def role(self) -> Optional[pulumi.Input[str]]:
+        """
+        The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        """
         return pulumi.get(self, "role")
 
     @role.setter
@@ -113,6 +139,9 @@ class _MemberState:
     @property
     @pulumi.getter
     def team(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the Heroku Team.
+        """
         return pulumi.get(self, "team")
 
     @team.setter
@@ -131,9 +160,27 @@ class Member(pulumi.CustomResource):
                  team: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Member resource with the given unique name, props, and options.
+        A [Heroku Team Member](https://devcenter.heroku.com/articles/platform-api-reference#team-member) receives access to everything owned by the Team.
+
+        To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard. For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+
+        A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider. For `app.App` & `space.Space` resources, set the Heroku Team name as the "organization".
+
+        ## Example Usage
+
+        ## Import
+
+        Team members can be imported using the combination of the team application name, a colon, and the member's email address.
+
+        ```sh
+        $ pulumi import heroku:team/member:Member foobar-member my-team-foobar:some-user@example.com
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] email: Email address of the member
+        :param pulumi.Input[str] role: The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        :param pulumi.Input[str] team: The name of the Heroku Team.
         """
         ...
     @overload
@@ -142,7 +189,22 @@ class Member(pulumi.CustomResource):
                  args: MemberArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Member resource with the given unique name, props, and options.
+        A [Heroku Team Member](https://devcenter.heroku.com/articles/platform-api-reference#team-member) receives access to everything owned by the Team.
+
+        To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard. For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+
+        A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider. For `app.App` & `space.Space` resources, set the Heroku Team name as the "organization".
+
+        ## Example Usage
+
+        ## Import
+
+        Team members can be imported using the combination of the team application name, a colon, and the member's email address.
+
+        ```sh
+        $ pulumi import heroku:team/member:Member foobar-member my-team-foobar:some-user@example.com
+        ```
+
         :param str resource_name: The name of the resource.
         :param MemberArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -202,6 +264,9 @@ class Member(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] email: Email address of the member
+        :param pulumi.Input[str] role: The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        :param pulumi.Input[str] team: The name of the Heroku Team.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -216,6 +281,9 @@ class Member(pulumi.CustomResource):
     @property
     @pulumi.getter
     def email(self) -> pulumi.Output[str]:
+        """
+        Email address of the member
+        """
         return pulumi.get(self, "email")
 
     @property
@@ -226,10 +294,16 @@ class Member(pulumi.CustomResource):
     @property
     @pulumi.getter
     def role(self) -> pulumi.Output[str]:
+        """
+        The role to assign the member. See [the API docs](https://devcenter.heroku.com/articles/platform-api-reference#team-member) for available options.
+        """
         return pulumi.get(self, "role")
 
     @property
     @pulumi.getter
     def team(self) -> pulumi.Output[str]:
+        """
+        The name of the Heroku Team.
+        """
         return pulumi.get(self, "team")
 

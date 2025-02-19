@@ -12,11 +12,39 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// A [Heroku Team Collaborator](https://devcenter.heroku.com/articles/platform-api-reference#team-app-collaborator)
+// receives access to a specific Team-owned app.
+//
+// To create a Heroku Team, use the [New Team](https://dashboard.heroku.com/teams/new) feature of Heroku Dashboard.
+// For Heroku Enterprise accounts, new Teams may be created within the account by users with the right permissions.
+//
+// A Heroku "team" was originally called an "organization", and that is still the identifier used elsewhere in this provider.
+// For `app.App` & `space.Space` resources, set the Heroku Team name as the "organization".
+//
+// > **IMPORTANT:**
+// This resource only works for Team-owned apps.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// # Team Collaborators can be imported using the combination of the team application name, a colon, and the collaborator's email address
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:team/collaborator:Collaborator foobar-collaborator foobar_app:collaborator@foobar.com
+// ```
 type Collaborator struct {
 	pulumi.CustomResourceState
 
-	AppId       pulumi.StringOutput      `pulumi:"appId"`
-	Email       pulumi.StringOutput      `pulumi:"email"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// Email address of the team collaborator
+	Email pulumi.StringOutput `pulumi:"email"`
+	// List of permissions that will be granted to the team collaborator. The order in which
+	// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+	// for more information on available permissions.
 	Permissions pulumi.StringArrayOutput `pulumi:"permissions"`
 }
 
@@ -59,14 +87,24 @@ func GetCollaborator(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Collaborator resources.
 type collaboratorState struct {
-	AppId       *string  `pulumi:"appId"`
-	Email       *string  `pulumi:"email"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// Email address of the team collaborator
+	Email *string `pulumi:"email"`
+	// List of permissions that will be granted to the team collaborator. The order in which
+	// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+	// for more information on available permissions.
 	Permissions []string `pulumi:"permissions"`
 }
 
 type CollaboratorState struct {
-	AppId       pulumi.StringPtrInput
-	Email       pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// Email address of the team collaborator
+	Email pulumi.StringPtrInput
+	// List of permissions that will be granted to the team collaborator. The order in which
+	// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+	// for more information on available permissions.
 	Permissions pulumi.StringArrayInput
 }
 
@@ -75,15 +113,25 @@ func (CollaboratorState) ElementType() reflect.Type {
 }
 
 type collaboratorArgs struct {
-	AppId       string   `pulumi:"appId"`
-	Email       string   `pulumi:"email"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// Email address of the team collaborator
+	Email string `pulumi:"email"`
+	// List of permissions that will be granted to the team collaborator. The order in which
+	// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+	// for more information on available permissions.
 	Permissions []string `pulumi:"permissions"`
 }
 
 // The set of arguments for constructing a Collaborator resource.
 type CollaboratorArgs struct {
-	AppId       pulumi.StringInput
-	Email       pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// Email address of the team collaborator
+	Email pulumi.StringInput
+	// List of permissions that will be granted to the team collaborator. The order in which
+	// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+	// for more information on available permissions.
 	Permissions pulumi.StringArrayInput
 }
 
@@ -174,14 +222,19 @@ func (o CollaboratorOutput) ToCollaboratorOutputWithContext(ctx context.Context)
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o CollaboratorOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Collaborator) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// Email address of the team collaborator
 func (o CollaboratorOutput) Email() pulumi.StringOutput {
 	return o.ApplyT(func(v *Collaborator) pulumi.StringOutput { return v.Email }).(pulumi.StringOutput)
 }
 
+// List of permissions that will be granted to the team collaborator. The order in which
+// individual permissions are set here does not matter. Please [visit this link](https://devcenter.heroku.com/articles/app-permissions)
+// for more information on available permissions.
 func (o CollaboratorOutput) Permissions() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Collaborator) pulumi.StringArrayOutput { return v.Permissions }).(pulumi.StringArrayOutput)
 }
