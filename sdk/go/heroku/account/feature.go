@@ -12,13 +12,41 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// This resource is used to create and manage [User Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+//
+// > **NOTE:** If this resource's HCL is removed from a `.tf` file, the behavior is to disable account feature
+// and remove resource from state.
+//
+// ## Available Features
+//
+// For a list of available features, use the [`heroku labs`](https://devcenter.heroku.com/articles/heroku-cli)
+// command to fetch them for the current authenticated user.
+//
+// The output will contain **User Features** that may be managed with this resource.
+//
+// ## Example Usage
+//
+// ## Import
+//
+// Existing account features can be imported using a combination of the account email (the email address tied to the Heroku API key)
+// and the feature name.
+//
+// For example:
+//
+// ```sh
+// $ pulumi import heroku:account/feature:Feature example_metrics name@example.com:metrics-request-volume
+// ```
 type Feature struct {
 	pulumi.CustomResourceState
 
+	// Description of account feature
 	Description pulumi.StringOutput `pulumi:"description"`
-	Enabled     pulumi.BoolOutput   `pulumi:"enabled"`
-	Name        pulumi.StringOutput `pulumi:"name"`
-	State       pulumi.StringOutput `pulumi:"state"`
+	// Enable or disable the account feature
+	Enabled pulumi.BoolOutput `pulumi:"enabled"`
+	// Name of the account feature
+	Name pulumi.StringOutput `pulumi:"name"`
+	// State of account feature
+	State pulumi.StringOutput `pulumi:"state"`
 }
 
 // NewFeature registers a new resource with the given unique name, arguments, and options.
@@ -54,17 +82,25 @@ func GetFeature(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Feature resources.
 type featureState struct {
+	// Description of account feature
 	Description *string `pulumi:"description"`
-	Enabled     *bool   `pulumi:"enabled"`
-	Name        *string `pulumi:"name"`
-	State       *string `pulumi:"state"`
+	// Enable or disable the account feature
+	Enabled *bool `pulumi:"enabled"`
+	// Name of the account feature
+	Name *string `pulumi:"name"`
+	// State of account feature
+	State *string `pulumi:"state"`
 }
 
 type FeatureState struct {
+	// Description of account feature
 	Description pulumi.StringPtrInput
-	Enabled     pulumi.BoolPtrInput
-	Name        pulumi.StringPtrInput
-	State       pulumi.StringPtrInput
+	// Enable or disable the account feature
+	Enabled pulumi.BoolPtrInput
+	// Name of the account feature
+	Name pulumi.StringPtrInput
+	// State of account feature
+	State pulumi.StringPtrInput
 }
 
 func (FeatureState) ElementType() reflect.Type {
@@ -72,14 +108,18 @@ func (FeatureState) ElementType() reflect.Type {
 }
 
 type featureArgs struct {
-	Enabled bool    `pulumi:"enabled"`
-	Name    *string `pulumi:"name"`
+	// Enable or disable the account feature
+	Enabled bool `pulumi:"enabled"`
+	// Name of the account feature
+	Name *string `pulumi:"name"`
 }
 
 // The set of arguments for constructing a Feature resource.
 type FeatureArgs struct {
+	// Enable or disable the account feature
 	Enabled pulumi.BoolInput
-	Name    pulumi.StringPtrInput
+	// Name of the account feature
+	Name pulumi.StringPtrInput
 }
 
 func (FeatureArgs) ElementType() reflect.Type {
@@ -169,18 +209,22 @@ func (o FeatureOutput) ToFeatureOutputWithContext(ctx context.Context) FeatureOu
 	return o
 }
 
+// Description of account feature
 func (o FeatureOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Feature) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
+// Enable or disable the account feature
 func (o FeatureOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Feature) pulumi.BoolOutput { return v.Enabled }).(pulumi.BoolOutput)
 }
 
+// Name of the account feature
 func (o FeatureOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Feature) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// State of account feature
 func (o FeatureOutput) State() pulumi.StringOutput {
 	return o.ApplyT(func(v *Feature) pulumi.StringOutput { return v.State }).(pulumi.StringOutput)
 }

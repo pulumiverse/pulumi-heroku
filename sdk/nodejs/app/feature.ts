@@ -4,6 +4,29 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * This resource is used to create and manage [App Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+ *
+ * ## Available Features
+ *
+ * For a list of available features, use the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+ * to fetch them for one of your existing apps: `heroku labs --app foobar`.
+ *
+ * The output will contain **User Features** and **App Features**. This resource manages App Features.
+ * If you need to manage User Features, use the `heroku.account.Feature` resource.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * App features can be imported using the combination of the application name, a colon, and the feature's name.
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:app/feature:Feature log-runtime-metrics foobar:log-runtime-metrics
+ * ```
+ */
 export class Feature extends pulumi.CustomResource {
     /**
      * Get an existing Feature resource's state with the given name, ID, and optional extra
@@ -32,8 +55,17 @@ export class Feature extends pulumi.CustomResource {
         return obj['__pulumiType'] === Feature.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * Whether to enable or disable the App Feature. The default value is true.
+     */
     public readonly enabled!: pulumi.Output<boolean | undefined>;
+    /**
+     * The name of the App Feature to manage.
+     */
     public readonly name!: pulumi.Output<string>;
 
     /**
@@ -70,8 +102,17 @@ export class Feature extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Feature resources.
  */
 export interface FeatureState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * Whether to enable or disable the App Feature. The default value is true.
+     */
     enabled?: pulumi.Input<boolean>;
+    /**
+     * The name of the App Feature to manage.
+     */
     name?: pulumi.Input<string>;
 }
 
@@ -79,7 +120,16 @@ export interface FeatureState {
  * The set of arguments for constructing a Feature resource.
  */
 export interface FeatureArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * Whether to enable or disable the App Feature. The default value is true.
+     */
     enabled?: pulumi.Input<boolean>;
+    /**
+     * The name of the App Feature to manage.
+     */
     name?: pulumi.Input<string>;
 }

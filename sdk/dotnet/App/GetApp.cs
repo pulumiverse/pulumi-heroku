@@ -12,16 +12,59 @@ namespace Pulumiverse.Heroku.App
 {
     public static class GetApp
     {
+        /// <summary>
+        /// Use this data source to get information about a Heroku App.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Lookup an existing Heroku app
+        /// data "heroku_app" "default" {
+        ///   name   = "my-cool-app"
+        /// }
+        /// ```
+        /// </summary>
         public static Task<GetAppResult> InvokeAsync(GetAppArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetAppResult>("heroku:app/getApp:getApp", args ?? new GetAppArgs(), options.WithDefaults());
 
+        /// <summary>
+        /// Use this data source to get information about a Heroku App.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Lookup an existing Heroku app
+        /// data "heroku_app" "default" {
+        ///   name   = "my-cool-app"
+        /// }
+        /// ```
+        /// </summary>
         public static Output<GetAppResult> Invoke(GetAppInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetAppResult>("heroku:app/getApp:getApp", args ?? new GetAppInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to get information about a Heroku App.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// # Lookup an existing Heroku app
+        /// data "heroku_app" "default" {
+        ///   name   = "my-cool-app"
+        /// }
+        /// ```
+        /// </summary>
+        public static Output<GetAppResult> Invoke(GetAppInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetAppResult>("heroku:app/getApp:getApp", args ?? new GetAppInvokeArgs(), options.WithDefaults());
     }
 
 
     public sealed class GetAppArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The name of the application. In Heroku, this is also the
+        /// unique ID, so it must be unique and have a minimum of 3 characters.
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
@@ -33,6 +76,10 @@ namespace Pulumiverse.Heroku.App
 
     public sealed class GetAppInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The name of the application. In Heroku, this is also the
+        /// unique ID, so it must be unique and have a minimum of 3 characters.
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
@@ -46,22 +93,62 @@ namespace Pulumiverse.Heroku.App
     [OutputType]
     public sealed class GetAppResult
     {
+        /// <summary>
+        /// True if Heroku ACM is enabled for this app, false otherwise.
+        /// </summary>
         public readonly bool Acm;
+        /// <summary>
+        /// A list of buildpacks that this app uses.
+        /// </summary>
         public readonly ImmutableArray<string> Buildpacks;
-        public readonly ImmutableDictionary<string, object> ConfigVars;
+        /// <summary>
+        /// A map of all configuration variables for the app.
+        /// </summary>
+        public readonly ImmutableDictionary<string, string> ConfigVars;
+        /// <summary>
+        /// The Git URL for the application. This is used for
+        /// deploying new versions of the app.
+        /// </summary>
         public readonly string GitUrl;
+        /// <summary>
+        /// The hostname for the Heroku application, suitable
+        /// for pointing DNS records.
+        /// </summary>
         public readonly string HerokuHostname;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
         public readonly string Id;
         public readonly bool InternalRouting;
+        /// <summary>
+        /// The name of the Heroku Team (organization).
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// The Heroku Team that owns this app.
+        /// </summary>
         public readonly ImmutableArray<Outputs.GetAppOrganizationResult> Organizations;
+        /// <summary>
+        /// The region in which the app is deployed.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// The private space in which the app runs. Not present if this is a common runtime app.
+        /// </summary>
         public readonly string Space;
+        /// <summary>
+        /// The application stack is what platform to run the application
+        /// in.
+        /// </summary>
         public readonly string Stack;
+        /// <summary>
+        /// The unique UUID of the Heroku app.
+        /// </summary>
         public readonly string Uuid;
+        /// <summary>
+        /// The web (HTTP) URL that the application can be accessed
+        /// at by default.
+        /// </summary>
         public readonly string WebUrl;
 
         [OutputConstructor]
@@ -70,7 +157,7 @@ namespace Pulumiverse.Heroku.App
 
             ImmutableArray<string> buildpacks,
 
-            ImmutableDictionary<string, object> configVars,
+            ImmutableDictionary<string, string> configVars,
 
             string gitUrl,
 

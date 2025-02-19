@@ -4,6 +4,19 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Attaches a Heroku Addon Resource to an additional Heroku App.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Addons can be imported using the unique Addon Attachment `id`, e.g.
+ *
+ * ```sh
+ * $ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef
+ * ```
+ */
 export class Attachment extends pulumi.CustomResource {
     /**
      * Get an existing Attachment resource's state with the given name, ID, and optional extra
@@ -32,9 +45,21 @@ export class Attachment extends pulumi.CustomResource {
         return obj['__pulumiType'] === Attachment.__pulumiType;
     }
 
+    /**
+     * The ID of the existing Heroku Addon to attach.
+     */
     public readonly addonId!: pulumi.Output<string>;
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * A friendly name for the Heroku Addon Attachment.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+     */
     public readonly namespace!: pulumi.Output<string>;
 
     /**
@@ -76,9 +101,21 @@ export class Attachment extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Attachment resources.
  */
 export interface AttachmentState {
+    /**
+     * The ID of the existing Heroku Addon to attach.
+     */
     addonId?: pulumi.Input<string>;
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * A friendly name for the Heroku Addon Attachment.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+     */
     namespace?: pulumi.Input<string>;
 }
 
@@ -86,8 +123,20 @@ export interface AttachmentState {
  * The set of arguments for constructing a Attachment resource.
  */
 export interface AttachmentArgs {
+    /**
+     * The ID of the existing Heroku Addon to attach.
+     */
     addonId: pulumi.Input<string>;
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * A friendly name for the Heroku Addon Attachment.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The namespace value for the Heroku Addon Attachment. This can be used to configure the behaviour of the attachment. See [Heroku Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference#add-on-attachment-create)
+     */
     namespace?: pulumi.Input<string>;
 }

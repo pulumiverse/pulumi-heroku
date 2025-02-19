@@ -4,27 +4,56 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
     'InboundRulesetRuleArgs',
+    'InboundRulesetRuleArgsDict',
     'VpnConnectionTunnelArgs',
+    'VpnConnectionTunnelArgsDict',
 ]
+
+MYPY = False
+
+if not MYPY:
+    class InboundRulesetRuleArgsDict(TypedDict):
+        action: pulumi.Input[str]
+        """
+        The action to apply this rule to. Must be one of `allow` or `deny`.
+        """
+        source: pulumi.Input[str]
+        """
+        A CIDR block source for the rule.
+        """
+elif False:
+    InboundRulesetRuleArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class InboundRulesetRuleArgs:
     def __init__(__self__, *,
                  action: pulumi.Input[str],
                  source: pulumi.Input[str]):
+        """
+        :param pulumi.Input[str] action: The action to apply this rule to. Must be one of `allow` or `deny`.
+        :param pulumi.Input[str] source: A CIDR block source for the rule.
+        """
         pulumi.set(__self__, "action", action)
         pulumi.set(__self__, "source", source)
 
     @property
     @pulumi.getter
     def action(self) -> pulumi.Input[str]:
+        """
+        The action to apply this rule to. Must be one of `allow` or `deny`.
+        """
         return pulumi.get(self, "action")
 
     @action.setter
@@ -34,6 +63,9 @@ class InboundRulesetRuleArgs:
     @property
     @pulumi.getter
     def source(self) -> pulumi.Input[str]:
+        """
+        A CIDR block source for the rule.
+        """
         return pulumi.get(self, "source")
 
     @source.setter
@@ -41,11 +73,28 @@ class InboundRulesetRuleArgs:
         pulumi.set(self, "source", value)
 
 
+if not MYPY:
+    class VpnConnectionTunnelArgsDict(TypedDict):
+        ip: NotRequired[pulumi.Input[str]]
+        """
+        The public IP address of the tunnel.
+        """
+        pre_shared_key: NotRequired[pulumi.Input[str]]
+        """
+        The pre-shared IPSec secret for the tunnel.
+        """
+elif False:
+    VpnConnectionTunnelArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class VpnConnectionTunnelArgs:
     def __init__(__self__, *,
                  ip: Optional[pulumi.Input[str]] = None,
                  pre_shared_key: Optional[pulumi.Input[str]] = None):
+        """
+        :param pulumi.Input[str] ip: The public IP address of the tunnel.
+        :param pulumi.Input[str] pre_shared_key: The pre-shared IPSec secret for the tunnel.
+        """
         if ip is not None:
             pulumi.set(__self__, "ip", ip)
         if pre_shared_key is not None:
@@ -54,6 +103,9 @@ class VpnConnectionTunnelArgs:
     @property
     @pulumi.getter
     def ip(self) -> Optional[pulumi.Input[str]]:
+        """
+        The public IP address of the tunnel.
+        """
         return pulumi.get(self, "ip")
 
     @ip.setter
@@ -63,6 +115,9 @@ class VpnConnectionTunnelArgs:
     @property
     @pulumi.getter(name="preSharedKey")
     def pre_shared_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The pre-shared IPSec secret for the tunnel.
+        """
         return pulumi.get(self, "pre_shared_key")
 
     @pre_shared_key.setter

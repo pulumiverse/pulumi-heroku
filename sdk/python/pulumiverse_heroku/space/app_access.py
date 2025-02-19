@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = ['AppAccessArgs', 'AppAccess']
@@ -19,6 +24,11 @@ class AppAccessArgs:
                  space: pulumi.Input[str]):
         """
         The set of arguments for constructing a AppAccess resource.
+        :param pulumi.Input[str] email: The email of the existing Heroku Team member.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: The permissions to grant the team member for the Private Space.
+               Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+               Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        :param pulumi.Input[str] space: The ID of the Private Space.
         """
         pulumi.set(__self__, "email", email)
         pulumi.set(__self__, "permissions", permissions)
@@ -27,6 +37,9 @@ class AppAccessArgs:
     @property
     @pulumi.getter
     def email(self) -> pulumi.Input[str]:
+        """
+        The email of the existing Heroku Team member.
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -36,6 +49,11 @@ class AppAccessArgs:
     @property
     @pulumi.getter
     def permissions(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        The permissions to grant the team member for the Private Space.
+        Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+        Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        """
         return pulumi.get(self, "permissions")
 
     @permissions.setter
@@ -45,6 +63,9 @@ class AppAccessArgs:
     @property
     @pulumi.getter
     def space(self) -> pulumi.Input[str]:
+        """
+        The ID of the Private Space.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -60,6 +81,11 @@ class _AppAccessState:
                  space: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering AppAccess resources.
+        :param pulumi.Input[str] email: The email of the existing Heroku Team member.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: The permissions to grant the team member for the Private Space.
+               Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+               Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        :param pulumi.Input[str] space: The ID of the Private Space.
         """
         if email is not None:
             pulumi.set(__self__, "email", email)
@@ -71,6 +97,9 @@ class _AppAccessState:
     @property
     @pulumi.getter
     def email(self) -> Optional[pulumi.Input[str]]:
+        """
+        The email of the existing Heroku Team member.
+        """
         return pulumi.get(self, "email")
 
     @email.setter
@@ -80,6 +109,11 @@ class _AppAccessState:
     @property
     @pulumi.getter
     def permissions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The permissions to grant the team member for the Private Space.
+        Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+        Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        """
         return pulumi.get(self, "permissions")
 
     @permissions.setter
@@ -89,6 +123,9 @@ class _AppAccessState:
     @property
     @pulumi.getter
     def space(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the Private Space.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -106,9 +143,25 @@ class AppAccess(pulumi.CustomResource):
                  space: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a AppAccess resource with the given unique name, props, and options.
+        Provides a resource for managing permissions for the entire Private Space. Members with the admin role will
+        always have full permissions in the Private Space, so using this resource on an admin will have no effect.
+        The provided email must already be a member of the Heroku Team. Currently, the only supported permission is `create_apps`.
+
+        ## Example Usage
+
+        ## Importing
+
+        Existing permissions can be imported using the combination of the Private Space name, a colon, and the member email.
+
+        For example:
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] email: The email of the existing Heroku Team member.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: The permissions to grant the team member for the Private Space.
+               Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+               Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        :param pulumi.Input[str] space: The ID of the Private Space.
         """
         ...
     @overload
@@ -117,7 +170,18 @@ class AppAccess(pulumi.CustomResource):
                  args: AppAccessArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a AppAccess resource with the given unique name, props, and options.
+        Provides a resource for managing permissions for the entire Private Space. Members with the admin role will
+        always have full permissions in the Private Space, so using this resource on an admin will have no effect.
+        The provided email must already be a member of the Heroku Team. Currently, the only supported permission is `create_apps`.
+
+        ## Example Usage
+
+        ## Importing
+
+        Existing permissions can be imported using the combination of the Private Space name, a colon, and the member email.
+
+        For example:
+
         :param str resource_name: The name of the resource.
         :param AppAccessArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -174,6 +238,11 @@ class AppAccess(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] email: The email of the existing Heroku Team member.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: The permissions to grant the team member for the Private Space.
+               Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+               Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        :param pulumi.Input[str] space: The ID of the Private Space.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -187,15 +256,26 @@ class AppAccess(pulumi.CustomResource):
     @property
     @pulumi.getter
     def email(self) -> pulumi.Output[str]:
+        """
+        The email of the existing Heroku Team member.
+        """
         return pulumi.get(self, "email")
 
     @property
     @pulumi.getter
     def permissions(self) -> pulumi.Output[Sequence[str]]:
+        """
+        The permissions to grant the team member for the Private Space.
+        Currently `create_apps` is the only supported permission. If not provided the member will have no permissions to the space.
+        Members with admin role will always have `create_apps` permissions, which cannot be removed.
+        """
         return pulumi.get(self, "permissions")
 
     @property
     @pulumi.getter
     def space(self) -> pulumi.Output[str]:
+        """
+        The ID of the Private Space.
+        """
         return pulumi.get(self, "space")
 

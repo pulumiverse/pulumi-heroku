@@ -14,12 +14,18 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type GetMembersMember struct {
-	Email                   string `pulumi:"email"`
-	Federated               bool   `pulumi:"federated"`
-	Role                    string `pulumi:"role"`
-	TeamMemberId            string `pulumi:"teamMemberId"`
-	TwoFactorAuthentication bool   `pulumi:"twoFactorAuthentication"`
-	UserId                  string `pulumi:"userId"`
+	// Email address of the team member.
+	Email string `pulumi:"email"`
+	// Whether the user is federated and belongs to an Identity Provider.
+	Federated bool `pulumi:"federated"`
+	// Role in the team.
+	Role string `pulumi:"role"`
+	// Unique identifier of the team member on the team.
+	TeamMemberId string `pulumi:"teamMemberId"`
+	// Whether the Enterprise team member has two-factor authentication enabled.
+	TwoFactorAuthentication bool `pulumi:"twoFactorAuthentication"`
+	// Unique identifier of the team member. This is the member's user ID in Heroku.
+	UserId string `pulumi:"userId"`
 }
 
 // GetMembersMemberInput is an input type that accepts GetMembersMemberArgs and GetMembersMemberOutput values.
@@ -34,12 +40,18 @@ type GetMembersMemberInput interface {
 }
 
 type GetMembersMemberArgs struct {
-	Email                   pulumi.StringInput `pulumi:"email"`
-	Federated               pulumi.BoolInput   `pulumi:"federated"`
-	Role                    pulumi.StringInput `pulumi:"role"`
-	TeamMemberId            pulumi.StringInput `pulumi:"teamMemberId"`
-	TwoFactorAuthentication pulumi.BoolInput   `pulumi:"twoFactorAuthentication"`
-	UserId                  pulumi.StringInput `pulumi:"userId"`
+	// Email address of the team member.
+	Email pulumi.StringInput `pulumi:"email"`
+	// Whether the user is federated and belongs to an Identity Provider.
+	Federated pulumi.BoolInput `pulumi:"federated"`
+	// Role in the team.
+	Role pulumi.StringInput `pulumi:"role"`
+	// Unique identifier of the team member on the team.
+	TeamMemberId pulumi.StringInput `pulumi:"teamMemberId"`
+	// Whether the Enterprise team member has two-factor authentication enabled.
+	TwoFactorAuthentication pulumi.BoolInput `pulumi:"twoFactorAuthentication"`
+	// Unique identifier of the team member. This is the member's user ID in Heroku.
+	UserId pulumi.StringInput `pulumi:"userId"`
 }
 
 func (GetMembersMemberArgs) ElementType() reflect.Type {
@@ -93,26 +105,32 @@ func (o GetMembersMemberOutput) ToGetMembersMemberOutputWithContext(ctx context.
 	return o
 }
 
+// Email address of the team member.
 func (o GetMembersMemberOutput) Email() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembersMember) string { return v.Email }).(pulumi.StringOutput)
 }
 
+// Whether the user is federated and belongs to an Identity Provider.
 func (o GetMembersMemberOutput) Federated() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetMembersMember) bool { return v.Federated }).(pulumi.BoolOutput)
 }
 
+// Role in the team.
 func (o GetMembersMemberOutput) Role() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembersMember) string { return v.Role }).(pulumi.StringOutput)
 }
 
+// Unique identifier of the team member on the team.
 func (o GetMembersMemberOutput) TeamMemberId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembersMember) string { return v.TeamMemberId }).(pulumi.StringOutput)
 }
 
+// Whether the Enterprise team member has two-factor authentication enabled.
 func (o GetMembersMemberOutput) TwoFactorAuthentication() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetMembersMember) bool { return v.TwoFactorAuthentication }).(pulumi.BoolOutput)
 }
 
+// Unique identifier of the team member. This is the member's user ID in Heroku.
 func (o GetMembersMemberOutput) UserId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetMembersMember) string { return v.UserId }).(pulumi.StringOutput)
 }

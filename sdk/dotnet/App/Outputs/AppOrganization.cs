@@ -14,8 +14,17 @@ namespace Pulumiverse.Heroku.App.Outputs
     [OutputType]
     public sealed class AppOrganization
     {
+        /// <summary>
+        /// Are other team members forbidden from joining this app.
+        /// </summary>
         public readonly bool? Locked;
+        /// <summary>
+        /// The name of the Heroku Team.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Force creation of the app in the user account even if a default team is set.
+        /// </summary>
         public readonly bool? Personal;
 
         [OutputConstructor]

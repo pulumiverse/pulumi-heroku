@@ -4,8 +4,12 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+ *
+ * ## Example Usage
+ */
 export function getSpace(args: GetSpaceArgs, opts?: pulumi.InvokeOptions): Promise<GetSpaceResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("heroku:space/getSpace:getSpace", {
         "cidr": args.cidr,
@@ -18,8 +22,17 @@ export function getSpace(args: GetSpaceArgs, opts?: pulumi.InvokeOptions): Promi
  * A collection of arguments for invoking getSpace.
  */
 export interface GetSpaceArgs {
+    /**
+     * The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+     */
     cidr?: string;
+    /**
+     * The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+     */
     dataCidr?: string;
+    /**
+     * The name of the Heroku Private Space.
+     */
     name: string;
 }
 
@@ -27,28 +40,71 @@ export interface GetSpaceArgs {
  * A collection of values returned by getSpace.
  */
 export interface GetSpaceResult {
+    /**
+     * The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+     */
     readonly cidr: string;
+    /**
+     * The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+     */
     readonly dataCidr: string;
     /**
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
+    /**
+     * (string) - The name of the Heroku Team.
+     */
     readonly name: string;
+    /**
+     * The Heroku Team that owns this space. The fields for this block are documented below.
+     */
     readonly organization: string;
+    /**
+     * The space's stable outbound [NAT IPs](https://devcenter.heroku.com/articles/platform-api-reference#space-network-address-translation).
+     */
     readonly outboundIps: string[];
+    /**
+     * The region in which the Heroku Private Space is deployed.
+     */
     readonly region: string;
+    /**
+     * Whether or not the space has [Shield](https://devcenter.heroku.com/articles/private-spaces#shield-private-spaces) turned on. One of `on` or `off`.
+     */
     readonly shield: boolean;
+    /**
+     * The state of the Heroku Private Space. Either `allocating` or `allocated`.
+     */
     readonly state: string;
 }
-export function getSpaceOutput(args: GetSpaceOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSpaceResult> {
-    return pulumi.output(args).apply((a: any) => getSpace(a, opts))
+/**
+ * Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+ *
+ * ## Example Usage
+ */
+export function getSpaceOutput(args: GetSpaceOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetSpaceResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("heroku:space/getSpace:getSpace", {
+        "cidr": args.cidr,
+        "dataCidr": args.dataCidr,
+        "name": args.name,
+    }, opts);
 }
 
 /**
  * A collection of arguments for invoking getSpace.
  */
 export interface GetSpaceOutputArgs {
+    /**
+     * The RFC-1918 CIDR the Private Space will use. It must be a /16 in 10.0.0.0/8, 172.16.0.0/12 or 192.168.0.0/16
+     */
     cidr?: pulumi.Input<string>;
+    /**
+     * The RFC-1918 CIDR that the Private Space will use for the Heroku-managed peering connection that’s automatically created when using Heroku Data add-ons. It must be between a /16 and a /20
+     */
     dataCidr?: pulumi.Input<string>;
+    /**
+     * The name of the Heroku Private Space.
+     */
     name: pulumi.Input<string>;
 }

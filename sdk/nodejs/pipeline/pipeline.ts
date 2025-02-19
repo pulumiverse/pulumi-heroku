@@ -6,6 +6,17 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Pipelines can be imported using the Pipeline `id`, e.g.
+ *
+ * ```sh
+ * $ pulumi import heroku:pipeline/pipeline:Pipeline foobar 12345678
+ * ```
+ */
 export class Pipeline extends pulumi.CustomResource {
     /**
      * Get an existing Pipeline resource's state with the given name, ID, and optional extra
@@ -34,7 +45,13 @@ export class Pipeline extends pulumi.CustomResource {
         return obj['__pulumiType'] === Pipeline.__pulumiType;
     }
 
+    /**
+     * The name of the pipeline.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * The owner of the pipeline. This block as the following required attributes:
+     */
     public readonly owner!: pulumi.Output<outputs.pipeline.PipelineOwner>;
 
     /**
@@ -66,7 +83,13 @@ export class Pipeline extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Pipeline resources.
  */
 export interface PipelineState {
+    /**
+     * The name of the pipeline.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The owner of the pipeline. This block as the following required attributes:
+     */
     owner?: pulumi.Input<inputs.pipeline.PipelineOwner>;
 }
 
@@ -74,6 +97,12 @@ export interface PipelineState {
  * The set of arguments for constructing a Pipeline resource.
  */
 export interface PipelineArgs {
+    /**
+     * The name of the pipeline.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The owner of the pipeline. This block as the following required attributes:
+     */
     owner?: pulumi.Input<inputs.pipeline.PipelineOwner>;
 }

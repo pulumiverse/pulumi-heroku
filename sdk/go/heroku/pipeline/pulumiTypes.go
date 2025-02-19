@@ -14,7 +14,9 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type PipelineOwner struct {
-	Id   string `pulumi:"id"`
+	// The unique identifier (UUID) of a pipeline owner.
+	Id string `pulumi:"id"`
+	// The type of pipeline owner. Can be either `user` or `team`.
 	Type string `pulumi:"type"`
 }
 
@@ -30,7 +32,9 @@ type PipelineOwnerInput interface {
 }
 
 type PipelineOwnerArgs struct {
-	Id   pulumi.StringInput `pulumi:"id"`
+	// The unique identifier (UUID) of a pipeline owner.
+	Id pulumi.StringInput `pulumi:"id"`
+	// The type of pipeline owner. Can be either `user` or `team`.
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
@@ -111,10 +115,12 @@ func (o PipelineOwnerOutput) ToPipelineOwnerPtrOutputWithContext(ctx context.Con
 	}).(PipelineOwnerPtrOutput)
 }
 
+// The unique identifier (UUID) of a pipeline owner.
 func (o PipelineOwnerOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v PipelineOwner) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// The type of pipeline owner. Can be either `user` or `team`.
 func (o PipelineOwnerOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v PipelineOwner) string { return v.Type }).(pulumi.StringOutput)
 }
@@ -143,6 +149,7 @@ func (o PipelineOwnerPtrOutput) Elem() PipelineOwnerOutput {
 	}).(PipelineOwnerOutput)
 }
 
+// The unique identifier (UUID) of a pipeline owner.
 func (o PipelineOwnerPtrOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PipelineOwner) *string {
 		if v == nil {
@@ -152,6 +159,7 @@ func (o PipelineOwnerPtrOutput) Id() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// The type of pipeline owner. Can be either `user` or `team`.
 func (o PipelineOwnerPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PipelineOwner) *string {
 		if v == nil {

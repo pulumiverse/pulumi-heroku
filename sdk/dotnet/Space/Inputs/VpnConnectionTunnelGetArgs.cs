@@ -13,9 +13,15 @@ namespace Pulumiverse.Heroku.Space.Inputs
 
     public sealed class VpnConnectionTunnelGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The public IP address of the tunnel.
+        /// </summary>
         [Input("ip")]
         public Input<string>? Ip { get; set; }
 
+        /// <summary>
+        /// The pre-shared IPSec secret for the tunnel.
+        /// </summary>
         [Input("preSharedKey")]
         public Input<string>? PreSharedKey { get; set; }
 

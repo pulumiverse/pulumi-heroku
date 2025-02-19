@@ -10,27 +10,53 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Space
 {
+    /// <summary>
+    /// Provides a resource for creating a VPN connection between a network and a Heroku Private Space. For more information, see [Private Spaces VPN Connection](https://devcenter.heroku.com/articles/private-space-vpn-connection?preview=1) in the Heroku DevCenter.
+    /// 
+    /// ## Example Usage
+    /// </summary>
     [HerokuResourceType("heroku:space/vpnConnection:VpnConnection")]
     public partial class VpnConnection : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The IKE version used to setup the IPsec tunnel.
+        /// </summary>
         [Output("ikeVersion")]
         public Output<int> IkeVersion { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the VPN connection.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        /// </summary>
         [Output("publicIp")]
         public Output<string> PublicIp { get; private set; } = null!;
 
+        /// <summary>
+        /// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        /// </summary>
         [Output("routableCidrs")]
         public Output<ImmutableArray<string>> RoutableCidrs { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the Heroku Private Space where the VPN connection will be established.
+        /// </summary>
         [Output("space")]
         public Output<string> Space { get; private set; } = null!;
 
+        /// <summary>
+        /// The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+        /// </summary>
         [Output("spaceCidrBlock")]
         public Output<string> SpaceCidrBlock { get; private set; } = null!;
 
+        /// <summary>
+        /// Details about each VPN tunnel endpoint.
+        /// </summary>
         [Output("tunnels")]
         public Output<ImmutableArray<Outputs.VpnConnectionTunnel>> Tunnels { get; private set; } = null!;
 
@@ -81,25 +107,42 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class VpnConnectionArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The name of the VPN connection.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        /// </summary>
         [Input("publicIp", required: true)]
         public Input<string> PublicIp { get; set; } = null!;
 
         [Input("routableCidrs", required: true)]
         private InputList<string>? _routableCidrs;
+
+        /// <summary>
+        /// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        /// </summary>
         public InputList<string> RoutableCidrs
         {
             get => _routableCidrs ?? (_routableCidrs = new InputList<string>());
             set => _routableCidrs = value;
         }
 
+        /// <summary>
+        /// The ID of the Heroku Private Space where the VPN connection will be established.
+        /// </summary>
         [Input("space", required: true)]
         public Input<string> Space { get; set; } = null!;
 
         [Input("tunnels")]
         private InputList<Inputs.VpnConnectionTunnelArgs>? _tunnels;
+
+        /// <summary>
+        /// Details about each VPN tunnel endpoint.
+        /// </summary>
         public InputList<Inputs.VpnConnectionTunnelArgs> Tunnels
         {
             get => _tunnels ?? (_tunnels = new InputList<Inputs.VpnConnectionTunnelArgs>());
@@ -114,31 +157,54 @@ namespace Pulumiverse.Heroku.Space
 
     public sealed class VpnConnectionState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The IKE version used to setup the IPsec tunnel.
+        /// </summary>
         [Input("ikeVersion")]
         public Input<int>? IkeVersion { get; set; }
 
+        /// <summary>
+        /// The name of the VPN connection.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        /// </summary>
         [Input("publicIp")]
         public Input<string>? PublicIp { get; set; }
 
         [Input("routableCidrs")]
         private InputList<string>? _routableCidrs;
+
+        /// <summary>
+        /// A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        /// </summary>
         public InputList<string> RoutableCidrs
         {
             get => _routableCidrs ?? (_routableCidrs = new InputList<string>());
             set => _routableCidrs = value;
         }
 
+        /// <summary>
+        /// The ID of the Heroku Private Space where the VPN connection will be established.
+        /// </summary>
         [Input("space")]
         public Input<string>? Space { get; set; }
 
+        /// <summary>
+        /// The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+        /// </summary>
         [Input("spaceCidrBlock")]
         public Input<string>? SpaceCidrBlock { get; set; }
 
         [Input("tunnels")]
         private InputList<Inputs.VpnConnectionTunnelGetArgs>? _tunnels;
+
+        /// <summary>
+        /// Details about each VPN tunnel endpoint.
+        /// </summary>
         public InputList<Inputs.VpnConnectionTunnelGetArgs> Tunnels
         {
             get => _tunnels ?? (_tunnels = new InputList<Inputs.VpnConnectionTunnelGetArgs>());

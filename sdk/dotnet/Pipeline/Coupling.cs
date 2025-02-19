@@ -10,15 +10,46 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Pipeline
 {
+    /// <summary>
+    /// Provides a [Heroku Pipeline Coupling](https://devcenter.heroku.com/articles/pipelines)
+    /// resource.
+    /// 
+    /// A pipeline is a group of Heroku apps that share the same codebase. Once a
+    /// pipeline is created using `heroku.pipeline.Pipeline`, and apps are added
+    /// to different stages using `heroku.pipeline.Coupling`, you can promote app slugs
+    /// to the downstream stages.
+    /// 
+    /// See `heroku.pipeline.Pipeline` for complete usage documentation.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Pipeline couplings can be imported using the Pipeline coupling `id`, e.g.
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:pipeline/coupling:Coupling foobar 12345678
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:pipeline/coupling:Coupling")]
     public partial class Coupling : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the pipeline to add this app to.
+        /// </summary>
         [Output("pipeline")]
         public Output<string> Pipeline { get; private set; } = null!;
 
+        /// <summary>
+        /// The stage to couple this app to. Must be one of
+        /// `review`, `development`, `staging`, or `production`.
+        /// </summary>
         [Output("stage")]
         public Output<string> Stage { get; private set; } = null!;
 
@@ -69,12 +100,22 @@ namespace Pulumiverse.Heroku.Pipeline
 
     public sealed class CouplingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// The ID of the pipeline to add this app to.
+        /// </summary>
         [Input("pipeline", required: true)]
         public Input<string> Pipeline { get; set; } = null!;
 
+        /// <summary>
+        /// The stage to couple this app to. Must be one of
+        /// `review`, `development`, `staging`, or `production`.
+        /// </summary>
         [Input("stage", required: true)]
         public Input<string> Stage { get; set; } = null!;
 
@@ -86,12 +127,22 @@ namespace Pulumiverse.Heroku.Pipeline
 
     public sealed class CouplingState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// The ID of the pipeline to add this app to.
+        /// </summary>
         [Input("pipeline")]
         public Input<string>? Pipeline { get; set; }
 
+        /// <summary>
+        /// The stage to couple this app to. Must be one of
+        /// `review`, `development`, `staging`, or `production`.
+        /// </summary>
         [Input("stage")]
         public Input<string>? Stage { get; set; }
 

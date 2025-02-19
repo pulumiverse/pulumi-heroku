@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -50,16 +55,25 @@ class GetPeeringInfoResult:
     @property
     @pulumi.getter(name="awsAccountId")
     def aws_account_id(self) -> str:
+        """
+        The AWS account ID that the Heroku Private Space runs in.
+        """
         return pulumi.get(self, "aws_account_id")
 
     @property
     @pulumi.getter(name="awsRegion")
     def aws_region(self) -> str:
+        """
+        The AWS region that the Heroku Private Space runs in.
+        """
         return pulumi.get(self, "aws_region")
 
     @property
     @pulumi.getter(name="dynoCidrBlocks")
     def dyno_cidr_blocks(self) -> Sequence[str]:
+        """
+        The CIDR blocks that the Dynos run on.
+        """
         return pulumi.get(self, "dyno_cidr_blocks")
 
     @property
@@ -78,16 +92,25 @@ class GetPeeringInfoResult:
     @property
     @pulumi.getter(name="unavailableCidrBlocks")
     def unavailable_cidr_blocks(self) -> Sequence[str]:
+        """
+        A list of unavailable CIDR blocks.
+        """
         return pulumi.get(self, "unavailable_cidr_blocks")
 
     @property
     @pulumi.getter(name="vpcCidr")
     def vpc_cidr(self) -> str:
+        """
+        The CIDR block of the VPC ID.
+        """
         return pulumi.get(self, "vpc_cidr")
 
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> str:
+        """
+        The VPC ID of the Heroku Private Space.
+        """
         return pulumi.get(self, "vpc_id")
 
 
@@ -110,7 +133,12 @@ class AwaitableGetPeeringInfoResult(GetPeeringInfoResult):
 def get_peering_info(name: Optional[str] = None,
                      opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetPeeringInfoResult:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+
+    ## Example Usage
+
+
+    :param str name: The name of the Heroku Private Space.
     """
     __args__ = dict()
     __args__['name'] = name
@@ -126,12 +154,26 @@ def get_peering_info(name: Optional[str] = None,
         unavailable_cidr_blocks=pulumi.get(__ret__, 'unavailable_cidr_blocks'),
         vpc_cidr=pulumi.get(__ret__, 'vpc_cidr'),
         vpc_id=pulumi.get(__ret__, 'vpc_id'))
-
-
-@_utilities.lift_output_func(get_peering_info)
 def get_peering_info_output(name: Optional[pulumi.Input[str]] = None,
-                            opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetPeeringInfoResult]:
+                            opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetPeeringInfoResult]:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+
+    ## Example Usage
+
+
+    :param str name: The name of the Heroku Private Space.
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('heroku:space/getPeeringInfo:getPeeringInfo', __args__, opts=opts, typ=GetPeeringInfoResult)
+    return __ret__.apply(lambda __response__: GetPeeringInfoResult(
+        aws_account_id=pulumi.get(__response__, 'aws_account_id'),
+        aws_region=pulumi.get(__response__, 'aws_region'),
+        dyno_cidr_blocks=pulumi.get(__response__, 'dyno_cidr_blocks'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        unavailable_cidr_blocks=pulumi.get(__response__, 'unavailable_cidr_blocks'),
+        vpc_cidr=pulumi.get(__response__, 'vpc_cidr'),
+        vpc_id=pulumi.get(__response__, 'vpc_id')))

@@ -10,27 +10,59 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Addon
 {
+    /// <summary>
+    /// Provides a Heroku Add-On resource. These can be attach
+    /// services to a Heroku app.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Import
+    /// 
+    /// Addons can be imported using the Addon `id`, e.g.
+    /// 
+    /// ```sh
+    /// $ pulumi import heroku:addon/addon:Addon foobar 12345678
+    /// ```
+    /// </summary>
     [HerokuResourceType("heroku:addon/addon:Addon")]
     public partial class Addon : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// Optional plan configuration.
+        /// </summary>
         [Output("config")]
-        public Output<ImmutableDictionary<string, object>?> Config { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Config { get; private set; } = null!;
 
         [Output("configVarValues")]
         public Output<ImmutableDictionary<string, string>> ConfigVarValues { get; private set; } = null!;
 
+        /// <summary>
+        /// The Configuration variables of the add-on
+        /// </summary>
         [Output("configVars")]
         public Output<ImmutableArray<string>> ConfigVars { get; private set; } = null!;
 
+        /// <summary>
+        /// Globally unique name of the add-on.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The addon to add.
+        /// </summary>
         [Output("plan")]
         public Output<string> Plan { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the plan provider
+        /// </summary>
         [Output("providerId")]
         public Output<string> ProviderId { get; private set; } = null!;
 
@@ -85,20 +117,33 @@ namespace Pulumiverse.Heroku.Addon
 
     public sealed class AddonArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
         [Input("config")]
-        private InputMap<object>? _config;
-        public InputMap<object> Config
+        private InputMap<string>? _config;
+
+        /// <summary>
+        /// Optional plan configuration.
+        /// </summary>
+        public InputMap<string> Config
         {
-            get => _config ?? (_config = new InputMap<object>());
+            get => _config ?? (_config = new InputMap<string>());
             set => _config = value;
         }
 
+        /// <summary>
+        /// Globally unique name of the add-on.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The addon to add.
+        /// </summary>
         [Input("plan", required: true)]
         public Input<string> Plan { get; set; } = null!;
 
@@ -110,14 +155,21 @@ namespace Pulumiverse.Heroku.Addon
 
     public sealed class AddonState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
         [Input("config")]
-        private InputMap<object>? _config;
-        public InputMap<object> Config
+        private InputMap<string>? _config;
+
+        /// <summary>
+        /// Optional plan configuration.
+        /// </summary>
+        public InputMap<string> Config
         {
-            get => _config ?? (_config = new InputMap<object>());
+            get => _config ?? (_config = new InputMap<string>());
             set => _config = value;
         }
 
@@ -135,18 +187,31 @@ namespace Pulumiverse.Heroku.Addon
 
         [Input("configVars")]
         private InputList<string>? _configVars;
+
+        /// <summary>
+        /// The Configuration variables of the add-on
+        /// </summary>
         public InputList<string> ConfigVars
         {
             get => _configVars ?? (_configVars = new InputList<string>());
             set => _configVars = value;
         }
 
+        /// <summary>
+        /// Globally unique name of the add-on.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The addon to add.
+        /// </summary>
         [Input("plan")]
         public Input<string>? Plan { get; set; }
 
+        /// <summary>
+        /// The ID of the plan provider
+        /// </summary>
         [Input("providerId")]
         public Input<string>? ProviderId { get; set; }
 

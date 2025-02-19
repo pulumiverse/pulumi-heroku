@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
 __all__ = [
@@ -44,31 +49,49 @@ class GetAddonResult:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> str:
+        """
+        Heroku app ID
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter(name="configVars")
     def config_vars(self) -> Sequence[str]:
+        """
+        The Configuration variables of the add-on
+        """
         return pulumi.get(self, "config_vars")
 
     @property
     @pulumi.getter
     def id(self) -> str:
+        """
+        The ID of the add-on
+        """
         return pulumi.get(self, "id")
 
     @property
     @pulumi.getter
     def name(self) -> str:
+        """
+        The add-on name
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def plan(self) -> str:
+        """
+        The plan name
+        """
         return pulumi.get(self, "plan")
 
     @property
     @pulumi.getter(name="providerId")
     def provider_id(self) -> str:
+        """
+        The ID of the plan provider
+        """
         return pulumi.get(self, "provider_id")
 
 
@@ -89,7 +112,12 @@ class AwaitableGetAddonResult(GetAddonResult):
 def get_addon(name: Optional[str] = None,
               opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAddonResult:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku Addon.
+
+    ## Example Usage
+
+
+    :param str name: The add-on name
     """
     __args__ = dict()
     __args__['name'] = name
@@ -103,12 +131,24 @@ def get_addon(name: Optional[str] = None,
         name=pulumi.get(__ret__, 'name'),
         plan=pulumi.get(__ret__, 'plan'),
         provider_id=pulumi.get(__ret__, 'provider_id'))
-
-
-@_utilities.lift_output_func(get_addon)
 def get_addon_output(name: Optional[pulumi.Input[str]] = None,
-                     opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAddonResult]:
+                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetAddonResult]:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku Addon.
+
+    ## Example Usage
+
+
+    :param str name: The add-on name
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('heroku:addon/getAddon:getAddon', __args__, opts=opts, typ=GetAddonResult)
+    return __ret__.apply(lambda __response__: GetAddonResult(
+        app_id=pulumi.get(__response__, 'app_id'),
+        config_vars=pulumi.get(__response__, 'config_vars'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        plan=pulumi.get(__response__, 'plan'),
+        provider_id=pulumi.get(__response__, 'provider_id')))

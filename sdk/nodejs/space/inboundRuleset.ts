@@ -6,6 +6,11 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 import * as utilities from "../utilities";
 
+/**
+ * Provides a resource for managing [inbound rulesets](https://devcenter.heroku.com/articles/platform-api-reference#inbound-ruleset) for Heroku Private Spaces.
+ *
+ * ## Example Usage
+ */
 export class InboundRuleset extends pulumi.CustomResource {
     /**
      * Get an existing InboundRuleset resource's state with the given name, ID, and optional extra
@@ -34,7 +39,13 @@ export class InboundRuleset extends pulumi.CustomResource {
         return obj['__pulumiType'] === InboundRuleset.__pulumiType;
     }
 
+    /**
+     * At least one `rule` block. Rules are documented below.
+     */
     public readonly rules!: pulumi.Output<outputs.space.InboundRulesetRule[]>;
+    /**
+     * The ID of the space.
+     */
     public readonly space!: pulumi.Output<string>;
 
     /**
@@ -72,7 +83,13 @@ export class InboundRuleset extends pulumi.CustomResource {
  * Input properties used for looking up and filtering InboundRuleset resources.
  */
 export interface InboundRulesetState {
+    /**
+     * At least one `rule` block. Rules are documented below.
+     */
     rules?: pulumi.Input<pulumi.Input<inputs.space.InboundRulesetRule>[]>;
+    /**
+     * The ID of the space.
+     */
     space?: pulumi.Input<string>;
 }
 
@@ -80,6 +97,12 @@ export interface InboundRulesetState {
  * The set of arguments for constructing a InboundRuleset resource.
  */
 export interface InboundRulesetArgs {
+    /**
+     * At least one `rule` block. Rules are documented below.
+     */
     rules: pulumi.Input<pulumi.Input<inputs.space.InboundRulesetRule>[]>;
+    /**
+     * The ID of the space.
+     */
     space: pulumi.Input<string>;
 }

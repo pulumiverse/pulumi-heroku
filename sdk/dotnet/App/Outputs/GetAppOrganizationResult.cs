@@ -14,7 +14,14 @@ namespace Pulumiverse.Heroku.App.Outputs
     [OutputType]
     public sealed class GetAppOrganizationResult
     {
+        /// <summary>
+        /// True if the app access is locked
+        /// </summary>
         public readonly bool Locked;
+        /// <summary>
+        /// The name of the application. In Heroku, this is also the
+        /// unique ID, so it must be unique and have a minimum of 3 characters.
+        /// </summary>
         public readonly string Name;
         public readonly bool Personal;
 

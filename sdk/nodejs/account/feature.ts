@@ -4,6 +4,32 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * This resource is used to create and manage [User Features](https://devcenter.heroku.com/articles/heroku-beta-features) on Heroku.
+ *
+ * > **NOTE:** If this resource's HCL is removed from a `.tf` file, the behavior is to disable account feature
+ * and remove resource from state.
+ *
+ * ## Available Features
+ *
+ * For a list of available features, use the [`heroku labs`](https://devcenter.heroku.com/articles/heroku-cli)
+ * command to fetch them for the current authenticated user.
+ *
+ * The output will contain **User Features** that may be managed with this resource.
+ *
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * Existing account features can be imported using a combination of the account email (the email address tied to the Heroku API key)
+ * and the feature name.
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:account/feature:Feature example_metrics name@example.com:metrics-request-volume
+ * ```
+ */
 export class Feature extends pulumi.CustomResource {
     /**
      * Get an existing Feature resource's state with the given name, ID, and optional extra
@@ -32,9 +58,21 @@ export class Feature extends pulumi.CustomResource {
         return obj['__pulumiType'] === Feature.__pulumiType;
     }
 
+    /**
+     * Description of account feature
+     */
     public /*out*/ readonly description!: pulumi.Output<string>;
+    /**
+     * Enable or disable the account feature
+     */
     public readonly enabled!: pulumi.Output<boolean>;
+    /**
+     * Name of the account feature
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * State of account feature
+     */
     public /*out*/ readonly state!: pulumi.Output<string>;
 
     /**
@@ -73,9 +111,21 @@ export class Feature extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Feature resources.
  */
 export interface FeatureState {
+    /**
+     * Description of account feature
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Enable or disable the account feature
+     */
     enabled?: pulumi.Input<boolean>;
+    /**
+     * Name of the account feature
+     */
     name?: pulumi.Input<string>;
+    /**
+     * State of account feature
+     */
     state?: pulumi.Input<string>;
 }
 
@@ -83,6 +133,12 @@ export interface FeatureState {
  * The set of arguments for constructing a Feature resource.
  */
 export interface FeatureArgs {
+    /**
+     * Enable or disable the account feature
+     */
     enabled: pulumi.Input<boolean>;
+    /**
+     * Name of the account feature
+     */
     name?: pulumi.Input<string>;
 }

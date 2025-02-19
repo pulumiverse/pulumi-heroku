@@ -4,6 +4,21 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * ## Import
+ *
+ * This resource defines two config var attributes with one of them used for masking any sensitive/secret variables
+ *
+ * during a `pulumi preview|apply` in a CI build, terminal, etc. This 'sensitive' distinction for config vars is unique to
+ *
+ * this provider and not a built-in feature of the Heroku Platform API. Therefore, it will not be possible to import
+ *
+ * this resource.
+ *
+ * However, it is safe to define the resource in your configuration file and execute a `pulumi up`
+ *
+ * as the end result is `noop` when the config vars already exist on the remote resource.
+ */
 export class ConfigAssociation extends pulumi.CustomResource {
     /**
      * Get an existing ConfigAssociation resource's state with the given name, ID, and optional extra
@@ -32,8 +47,14 @@ export class ConfigAssociation extends pulumi.CustomResource {
         return obj['__pulumiType'] === ConfigAssociation.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
     public readonly sensitiveVars!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Map of config vars that can be output in plaintext.
+     */
     public readonly vars!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -72,8 +93,14 @@ export class ConfigAssociation extends pulumi.CustomResource {
  * Input properties used for looking up and filtering ConfigAssociation resources.
  */
 export interface ConfigAssociationState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
     sensitiveVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Map of config vars that can be output in plaintext.
+     */
     vars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -81,7 +108,13 @@ export interface ConfigAssociationState {
  * The set of arguments for constructing a ConfigAssociation resource.
  */
 export interface ConfigAssociationArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
     sensitiveVars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Map of config vars that can be output in plaintext.
+     */
     vars?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

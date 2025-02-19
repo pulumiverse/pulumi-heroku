@@ -12,15 +12,28 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Provides a [Heroku App Webhook](https://devcenter.heroku.com/categories/app-webhooks).
+//
+// ## Example Usage
+//
+// ## Importing
+//
+// Existing webhooks can be imported using the combination of the application name or id, a colon, and the webhook name or id, e.g.
 type Webhook struct {
 	pulumi.CustomResourceState
 
-	AppId         pulumi.StringOutput      `pulumi:"appId"`
-	Authorization pulumi.StringPtrOutput   `pulumi:"authorization"`
-	Includes      pulumi.StringArrayOutput `pulumi:"includes"`
-	Level         pulumi.StringOutput      `pulumi:"level"`
-	Secret        pulumi.StringPtrOutput   `pulumi:"secret"`
-	Url           pulumi.StringOutput      `pulumi:"url"`
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Authorization pulumi.StringPtrOutput `pulumi:"authorization"`
+	// List of events to deliver to the webhook.
+	Includes pulumi.StringArrayOutput `pulumi:"includes"`
+	// The webhook level (either `notify` or `sync`)
+	Level pulumi.StringOutput `pulumi:"level"`
+	// Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Secret pulumi.StringPtrOutput `pulumi:"secret"`
+	// Optional plan configuration.
+	Url pulumi.StringOutput `pulumi:"url"`
 }
 
 // NewWebhook registers a new resource with the given unique name, arguments, and options.
@@ -76,21 +89,33 @@ func GetWebhook(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Webhook resources.
 type webhookState struct {
-	AppId         *string  `pulumi:"appId"`
-	Authorization *string  `pulumi:"authorization"`
-	Includes      []string `pulumi:"includes"`
-	Level         *string  `pulumi:"level"`
-	Secret        *string  `pulumi:"secret"`
-	Url           *string  `pulumi:"url"`
+	// Heroku app ID (do not use app name)
+	AppId *string `pulumi:"appId"`
+	// Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Authorization *string `pulumi:"authorization"`
+	// List of events to deliver to the webhook.
+	Includes []string `pulumi:"includes"`
+	// The webhook level (either `notify` or `sync`)
+	Level *string `pulumi:"level"`
+	// Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Secret *string `pulumi:"secret"`
+	// Optional plan configuration.
+	Url *string `pulumi:"url"`
 }
 
 type WebhookState struct {
-	AppId         pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringPtrInput
+	// Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
 	Authorization pulumi.StringPtrInput
-	Includes      pulumi.StringArrayInput
-	Level         pulumi.StringPtrInput
-	Secret        pulumi.StringPtrInput
-	Url           pulumi.StringPtrInput
+	// List of events to deliver to the webhook.
+	Includes pulumi.StringArrayInput
+	// The webhook level (either `notify` or `sync`)
+	Level pulumi.StringPtrInput
+	// Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Secret pulumi.StringPtrInput
+	// Optional plan configuration.
+	Url pulumi.StringPtrInput
 }
 
 func (WebhookState) ElementType() reflect.Type {
@@ -98,22 +123,34 @@ func (WebhookState) ElementType() reflect.Type {
 }
 
 type webhookArgs struct {
-	AppId         string   `pulumi:"appId"`
-	Authorization *string  `pulumi:"authorization"`
-	Includes      []string `pulumi:"includes"`
-	Level         string   `pulumi:"level"`
-	Secret        *string  `pulumi:"secret"`
-	Url           string   `pulumi:"url"`
+	// Heroku app ID (do not use app name)
+	AppId string `pulumi:"appId"`
+	// Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Authorization *string `pulumi:"authorization"`
+	// List of events to deliver to the webhook.
+	Includes []string `pulumi:"includes"`
+	// The webhook level (either `notify` or `sync`)
+	Level string `pulumi:"level"`
+	// Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Secret *string `pulumi:"secret"`
+	// Optional plan configuration.
+	Url string `pulumi:"url"`
 }
 
 // The set of arguments for constructing a Webhook resource.
 type WebhookArgs struct {
-	AppId         pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	AppId pulumi.StringInput
+	// Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
 	Authorization pulumi.StringPtrInput
-	Includes      pulumi.StringArrayInput
-	Level         pulumi.StringInput
-	Secret        pulumi.StringPtrInput
-	Url           pulumi.StringInput
+	// List of events to deliver to the webhook.
+	Includes pulumi.StringArrayInput
+	// The webhook level (either `notify` or `sync`)
+	Level pulumi.StringInput
+	// Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
+	Secret pulumi.StringPtrInput
+	// Optional plan configuration.
+	Url pulumi.StringInput
 }
 
 func (WebhookArgs) ElementType() reflect.Type {
@@ -203,26 +240,32 @@ func (o WebhookOutput) ToWebhookOutputWithContext(ctx context.Context) WebhookOu
 	return o
 }
 
+// Heroku app ID (do not use app name)
 func (o WebhookOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Webhook) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// Values used in `Authorization` header. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
 func (o WebhookOutput) Authorization() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Webhook) pulumi.StringPtrOutput { return v.Authorization }).(pulumi.StringPtrOutput)
 }
 
+// List of events to deliver to the webhook.
 func (o WebhookOutput) Includes() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Webhook) pulumi.StringArrayOutput { return v.Includes }).(pulumi.StringArrayOutput)
 }
 
+// The webhook level (either `notify` or `sync`)
 func (o WebhookOutput) Level() pulumi.StringOutput {
 	return o.ApplyT(func(v *Webhook) pulumi.StringOutput { return v.Level }).(pulumi.StringOutput)
 }
 
+// Value used to sign webhook payloads. Once set, this value cannot be fetched from the Heroku API, but it can be updated.
 func (o WebhookOutput) Secret() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Webhook) pulumi.StringPtrOutput { return v.Secret }).(pulumi.StringPtrOutput)
 }
 
+// Optional plan configuration.
 func (o WebhookOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *Webhook) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
 }

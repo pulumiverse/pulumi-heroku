@@ -12,10 +12,49 @@ namespace Pulumiverse.Heroku.Team
 {
     public static class GetMembers
     {
+        /// <summary>
+        /// Use this data source to get information about members for a Heroku Team.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// data "heroku_team_members" "foobar" {
+        ///   team = "name_of_my_heroku_team"
+        ///   roles = ["admin", "member", "viewer", "collaborator"]
+        /// }
+        /// ```
+        /// </summary>
         public static Task<GetMembersResult> InvokeAsync(GetMembersArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetMembersResult>("heroku:team/getMembers:getMembers", args ?? new GetMembersArgs(), options.WithDefaults());
 
+        /// <summary>
+        /// Use this data source to get information about members for a Heroku Team.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// data "heroku_team_members" "foobar" {
+        ///   team = "name_of_my_heroku_team"
+        ///   roles = ["admin", "member", "viewer", "collaborator"]
+        /// }
+        /// ```
+        /// </summary>
         public static Output<GetMembersResult> Invoke(GetMembersInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetMembersResult>("heroku:team/getMembers:getMembers", args ?? new GetMembersInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to get information about members for a Heroku Team.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```hcl-terraform
+        /// data "heroku_team_members" "foobar" {
+        ///   team = "name_of_my_heroku_team"
+        ///   roles = ["admin", "member", "viewer", "collaborator"]
+        /// }
+        /// ```
+        /// </summary>
+        public static Output<GetMembersResult> Invoke(GetMembersInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetMembersResult>("heroku:team/getMembers:getMembers", args ?? new GetMembersInvokeArgs(), options.WithDefaults());
     }
 
@@ -24,12 +63,20 @@ namespace Pulumiverse.Heroku.Team
     {
         [Input("roles", required: true)]
         private List<string>? _roles;
+
+        /// <summary>
+        /// List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+        /// At least one role must be specified.
+        /// </summary>
         public List<string> Roles
         {
             get => _roles ?? (_roles = new List<string>());
             set => _roles = value;
         }
 
+        /// <summary>
+        /// The team name.
+        /// </summary>
         [Input("team", required: true)]
         public string Team { get; set; } = null!;
 
@@ -43,12 +90,20 @@ namespace Pulumiverse.Heroku.Team
     {
         [Input("roles", required: true)]
         private InputList<string>? _roles;
+
+        /// <summary>
+        /// List of roles. Acceptable values are `admin`, `member`, `viewer`, `collaborator`, `owner`.
+        /// At least one role must be specified.
+        /// </summary>
         public InputList<string> Roles
         {
             get => _roles ?? (_roles = new InputList<string>());
             set => _roles = value;
         }
 
+        /// <summary>
+        /// The team name.
+        /// </summary>
         [Input("team", required: true)]
         public Input<string> Team { get; set; } = null!;
 
@@ -66,6 +121,9 @@ namespace Pulumiverse.Heroku.Team
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// All members of the team that have a specified role defined in the `roles` attribute above.
+        /// </summary>
         public readonly ImmutableArray<Outputs.GetMembersMemberResult> Members;
         public readonly ImmutableArray<string> Roles;
         public readonly string Team;

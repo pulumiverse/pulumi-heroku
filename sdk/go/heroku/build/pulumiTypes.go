@@ -14,10 +14,17 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type BuildSource struct {
+	// SHA256 hash of the tarball archive to verify its integrity, example:
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 	Checksum *string `pulumi:"checksum"`
-	Path     *string `pulumi:"path"`
-	Url      *string `pulumi:"url"`
-	Version  *string `pulumi:"version"`
+	// Local path to the source directory or tarball archive for the app
+	Path *string `pulumi:"path"`
+	// `https` location of the source archive for the app
+	Url *string `pulumi:"url"`
+	// Use to track what version of your source originated this build. If you are creating builds
+	// from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+	// version parameter.
+	Version *string `pulumi:"version"`
 }
 
 // BuildSourceInput is an input type that accepts BuildSourceArgs and BuildSourceOutput values.
@@ -32,10 +39,17 @@ type BuildSourceInput interface {
 }
 
 type BuildSourceArgs struct {
+	// SHA256 hash of the tarball archive to verify its integrity, example:
+	// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 	Checksum pulumi.StringPtrInput `pulumi:"checksum"`
-	Path     pulumi.StringPtrInput `pulumi:"path"`
-	Url      pulumi.StringPtrInput `pulumi:"url"`
-	Version  pulumi.StringPtrInput `pulumi:"version"`
+	// Local path to the source directory or tarball archive for the app
+	Path pulumi.StringPtrInput `pulumi:"path"`
+	// `https` location of the source archive for the app
+	Url pulumi.StringPtrInput `pulumi:"url"`
+	// Use to track what version of your source originated this build. If you are creating builds
+	// from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+	// version parameter.
+	Version pulumi.StringPtrInput `pulumi:"version"`
 }
 
 func (BuildSourceArgs) ElementType() reflect.Type {
@@ -115,18 +129,25 @@ func (o BuildSourceOutput) ToBuildSourcePtrOutputWithContext(ctx context.Context
 	}).(BuildSourcePtrOutput)
 }
 
+// SHA256 hash of the tarball archive to verify its integrity, example:
+// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 func (o BuildSourceOutput) Checksum() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildSource) *string { return v.Checksum }).(pulumi.StringPtrOutput)
 }
 
+// Local path to the source directory or tarball archive for the app
 func (o BuildSourceOutput) Path() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildSource) *string { return v.Path }).(pulumi.StringPtrOutput)
 }
 
+// `https` location of the source archive for the app
 func (o BuildSourceOutput) Url() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildSource) *string { return v.Url }).(pulumi.StringPtrOutput)
 }
 
+// Use to track what version of your source originated this build. If you are creating builds
+// from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+// version parameter.
 func (o BuildSourceOutput) Version() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BuildSource) *string { return v.Version }).(pulumi.StringPtrOutput)
 }
@@ -155,6 +176,8 @@ func (o BuildSourcePtrOutput) Elem() BuildSourceOutput {
 	}).(BuildSourceOutput)
 }
 
+// SHA256 hash of the tarball archive to verify its integrity, example:
+// `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 func (o BuildSourcePtrOutput) Checksum() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BuildSource) *string {
 		if v == nil {
@@ -164,6 +187,7 @@ func (o BuildSourcePtrOutput) Checksum() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Local path to the source directory or tarball archive for the app
 func (o BuildSourcePtrOutput) Path() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BuildSource) *string {
 		if v == nil {
@@ -173,6 +197,7 @@ func (o BuildSourcePtrOutput) Path() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// `https` location of the source archive for the app
 func (o BuildSourcePtrOutput) Url() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BuildSource) *string {
 		if v == nil {
@@ -182,6 +207,9 @@ func (o BuildSourcePtrOutput) Url() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+// Use to track what version of your source originated this build. If you are creating builds
+// from git-versioned source code, for example, the commit hash, or release tag would be a good value to use for the
+// version parameter.
 func (o BuildSourcePtrOutput) Version() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BuildSource) *string {
 		if v == nil {

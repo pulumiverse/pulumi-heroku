@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 
@@ -69,26 +74,43 @@ class GetAppResult:
     @property
     @pulumi.getter
     def acm(self) -> bool:
+        """
+        True if Heroku ACM is enabled for this app, false otherwise.
+        """
         return pulumi.get(self, "acm")
 
     @property
     @pulumi.getter
     def buildpacks(self) -> Sequence[str]:
+        """
+        A list of buildpacks that this app uses.
+        """
         return pulumi.get(self, "buildpacks")
 
     @property
     @pulumi.getter(name="configVars")
-    def config_vars(self) -> Mapping[str, Any]:
+    def config_vars(self) -> Mapping[str, str]:
+        """
+        A map of all configuration variables for the app.
+        """
         return pulumi.get(self, "config_vars")
 
     @property
     @pulumi.getter(name="gitUrl")
     def git_url(self) -> str:
+        """
+        The Git URL for the application. This is used for
+        deploying new versions of the app.
+        """
         return pulumi.get(self, "git_url")
 
     @property
     @pulumi.getter(name="herokuHostname")
     def heroku_hostname(self) -> str:
+        """
+        The hostname for the Heroku application, suitable
+        for pointing DNS records.
+        """
         return pulumi.get(self, "heroku_hostname")
 
     @property
@@ -107,36 +129,59 @@ class GetAppResult:
     @property
     @pulumi.getter
     def name(self) -> str:
+        """
+        The name of the Heroku Team (organization).
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def organizations(self) -> Sequence['outputs.GetAppOrganizationResult']:
+        """
+        The Heroku Team that owns this app.
+        """
         return pulumi.get(self, "organizations")
 
     @property
     @pulumi.getter
     def region(self) -> str:
+        """
+        The region in which the app is deployed.
+        """
         return pulumi.get(self, "region")
 
     @property
     @pulumi.getter
     def space(self) -> str:
+        """
+        The private space in which the app runs. Not present if this is a common runtime app.
+        """
         return pulumi.get(self, "space")
 
     @property
     @pulumi.getter
     def stack(self) -> str:
+        """
+        The application stack is what platform to run the application
+        in.
+        """
         return pulumi.get(self, "stack")
 
     @property
     @pulumi.getter
     def uuid(self) -> str:
+        """
+        The unique UUID of the Heroku app.
+        """
         return pulumi.get(self, "uuid")
 
     @property
     @pulumi.getter(name="webUrl")
     def web_url(self) -> str:
+        """
+        The web (HTTP) URL that the application can be accessed
+        at by default.
+        """
         return pulumi.get(self, "web_url")
 
 
@@ -165,7 +210,13 @@ class AwaitableGetAppResult(GetAppResult):
 def get_app(name: Optional[str] = None,
             opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAppResult:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku App.
+
+    ## Example Usage
+
+
+    :param str name: The name of the application. In Heroku, this is also the
+           unique ID, so it must be unique and have a minimum of 3 characters.
     """
     __args__ = dict()
     __args__['name'] = name
@@ -187,12 +238,33 @@ def get_app(name: Optional[str] = None,
         stack=pulumi.get(__ret__, 'stack'),
         uuid=pulumi.get(__ret__, 'uuid'),
         web_url=pulumi.get(__ret__, 'web_url'))
-
-
-@_utilities.lift_output_func(get_app)
 def get_app_output(name: Optional[pulumi.Input[str]] = None,
-                   opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAppResult]:
+                   opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetAppResult]:
     """
-    Use this data source to access information about an existing resource.
+    Use this data source to get information about a Heroku App.
+
+    ## Example Usage
+
+
+    :param str name: The name of the application. In Heroku, this is also the
+           unique ID, so it must be unique and have a minimum of 3 characters.
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('heroku:app/getApp:getApp', __args__, opts=opts, typ=GetAppResult)
+    return __ret__.apply(lambda __response__: GetAppResult(
+        acm=pulumi.get(__response__, 'acm'),
+        buildpacks=pulumi.get(__response__, 'buildpacks'),
+        config_vars=pulumi.get(__response__, 'config_vars'),
+        git_url=pulumi.get(__response__, 'git_url'),
+        heroku_hostname=pulumi.get(__response__, 'heroku_hostname'),
+        id=pulumi.get(__response__, 'id'),
+        internal_routing=pulumi.get(__response__, 'internal_routing'),
+        name=pulumi.get(__response__, 'name'),
+        organizations=pulumi.get(__response__, 'organizations'),
+        region=pulumi.get(__response__, 'region'),
+        space=pulumi.get(__response__, 'space'),
+        stack=pulumi.get(__response__, 'stack'),
+        uuid=pulumi.get(__response__, 'uuid'),
+        web_url=pulumi.get(__response__, 'web_url')))

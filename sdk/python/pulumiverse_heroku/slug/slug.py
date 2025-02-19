@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -17,7 +22,7 @@ __all__ = ['SlugArgs', 'Slug']
 class SlugArgs:
     def __init__(__self__, *,
                  app_id: pulumi.Input[str],
-                 process_types: pulumi.Input[Mapping[str, Any]],
+                 process_types: pulumi.Input[Mapping[str, pulumi.Input[str]]],
                  buildpack_provided_description: Optional[pulumi.Input[str]] = None,
                  checksum: Optional[pulumi.Input[str]] = None,
                  commit: Optional[pulumi.Input[str]] = None,
@@ -27,6 +32,17 @@ class SlugArgs:
                  stack: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a Slug resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] process_types: Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        :param pulumi.Input[str] buildpack_provided_description: Description of language or app framework, `"Ruby/Rack"`;
+               displayed as the app's language in the Heroku Dashboard
+        :param pulumi.Input[str] checksum: Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+               `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        :param pulumi.Input[str] commit: Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        :param pulumi.Input[str] commit_description: Description of the provided commit
+        :param pulumi.Input[str] file_path: Local path to a slug archive, `"slugs/current.tgz"`
+        :param pulumi.Input[str] file_url: **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        :param pulumi.Input[str] stack: Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
         """
         pulumi.set(__self__, "app_id", app_id)
         pulumi.set(__self__, "process_types", process_types)
@@ -48,6 +64,9 @@ class SlugArgs:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Input[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -56,16 +75,23 @@ class SlugArgs:
 
     @property
     @pulumi.getter(name="processTypes")
-    def process_types(self) -> pulumi.Input[Mapping[str, Any]]:
+    def process_types(self) -> pulumi.Input[Mapping[str, pulumi.Input[str]]]:
+        """
+        Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        """
         return pulumi.get(self, "process_types")
 
     @process_types.setter
-    def process_types(self, value: pulumi.Input[Mapping[str, Any]]):
+    def process_types(self, value: pulumi.Input[Mapping[str, pulumi.Input[str]]]):
         pulumi.set(self, "process_types", value)
 
     @property
     @pulumi.getter(name="buildpackProvidedDescription")
     def buildpack_provided_description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of language or app framework, `"Ruby/Rack"`;
+        displayed as the app's language in the Heroku Dashboard
+        """
         return pulumi.get(self, "buildpack_provided_description")
 
     @buildpack_provided_description.setter
@@ -75,6 +101,10 @@ class SlugArgs:
     @property
     @pulumi.getter
     def checksum(self) -> Optional[pulumi.Input[str]]:
+        """
+        Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+        `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        """
         return pulumi.get(self, "checksum")
 
     @checksum.setter
@@ -84,6 +114,9 @@ class SlugArgs:
     @property
     @pulumi.getter
     def commit(self) -> Optional[pulumi.Input[str]]:
+        """
+        Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        """
         return pulumi.get(self, "commit")
 
     @commit.setter
@@ -93,6 +126,9 @@ class SlugArgs:
     @property
     @pulumi.getter(name="commitDescription")
     def commit_description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the provided commit
+        """
         return pulumi.get(self, "commit_description")
 
     @commit_description.setter
@@ -102,6 +138,9 @@ class SlugArgs:
     @property
     @pulumi.getter(name="filePath")
     def file_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Local path to a slug archive, `"slugs/current.tgz"`
+        """
         return pulumi.get(self, "file_path")
 
     @file_path.setter
@@ -111,6 +150,9 @@ class SlugArgs:
     @property
     @pulumi.getter(name="fileUrl")
     def file_url(self) -> Optional[pulumi.Input[str]]:
+        """
+        **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        """
         return pulumi.get(self, "file_url")
 
     @file_url.setter
@@ -120,6 +162,9 @@ class SlugArgs:
     @property
     @pulumi.getter
     def stack(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        """
         return pulumi.get(self, "stack")
 
     @stack.setter
@@ -138,12 +183,26 @@ class _SlugState:
                  commit_description: Optional[pulumi.Input[str]] = None,
                  file_path: Optional[pulumi.Input[str]] = None,
                  file_url: Optional[pulumi.Input[str]] = None,
-                 process_types: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 process_types: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  size: Optional[pulumi.Input[int]] = None,
                  stack: Optional[pulumi.Input[str]] = None,
                  stack_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Slug resources.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Sequence[pulumi.Input['SlugBlobArgs']]] blobs: Slug archive (compressed tar of executable code)
+        :param pulumi.Input[str] buildpack_provided_description: Description of language or app framework, `"Ruby/Rack"`;
+               displayed as the app's language in the Heroku Dashboard
+        :param pulumi.Input[str] checksum: Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+               `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        :param pulumi.Input[str] commit: Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        :param pulumi.Input[str] commit_description: Description of the provided commit
+        :param pulumi.Input[str] file_path: Local path to a slug archive, `"slugs/current.tgz"`
+        :param pulumi.Input[str] file_url: **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] process_types: Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        :param pulumi.Input[int] size: Slug archive filesize in bytes
+        :param pulumi.Input[str] stack: Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        :param pulumi.Input[str] stack_id: [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -173,6 +232,9 @@ class _SlugState:
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @app_id.setter
@@ -182,6 +244,9 @@ class _SlugState:
     @property
     @pulumi.getter
     def blobs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SlugBlobArgs']]]]:
+        """
+        Slug archive (compressed tar of executable code)
+        """
         return pulumi.get(self, "blobs")
 
     @blobs.setter
@@ -191,6 +256,10 @@ class _SlugState:
     @property
     @pulumi.getter(name="buildpackProvidedDescription")
     def buildpack_provided_description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of language or app framework, `"Ruby/Rack"`;
+        displayed as the app's language in the Heroku Dashboard
+        """
         return pulumi.get(self, "buildpack_provided_description")
 
     @buildpack_provided_description.setter
@@ -200,6 +269,10 @@ class _SlugState:
     @property
     @pulumi.getter
     def checksum(self) -> Optional[pulumi.Input[str]]:
+        """
+        Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+        `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        """
         return pulumi.get(self, "checksum")
 
     @checksum.setter
@@ -209,6 +282,9 @@ class _SlugState:
     @property
     @pulumi.getter
     def commit(self) -> Optional[pulumi.Input[str]]:
+        """
+        Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        """
         return pulumi.get(self, "commit")
 
     @commit.setter
@@ -218,6 +294,9 @@ class _SlugState:
     @property
     @pulumi.getter(name="commitDescription")
     def commit_description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the provided commit
+        """
         return pulumi.get(self, "commit_description")
 
     @commit_description.setter
@@ -227,6 +306,9 @@ class _SlugState:
     @property
     @pulumi.getter(name="filePath")
     def file_path(self) -> Optional[pulumi.Input[str]]:
+        """
+        Local path to a slug archive, `"slugs/current.tgz"`
+        """
         return pulumi.get(self, "file_path")
 
     @file_path.setter
@@ -236,6 +318,9 @@ class _SlugState:
     @property
     @pulumi.getter(name="fileUrl")
     def file_url(self) -> Optional[pulumi.Input[str]]:
+        """
+        **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        """
         return pulumi.get(self, "file_url")
 
     @file_url.setter
@@ -244,16 +329,22 @@ class _SlugState:
 
     @property
     @pulumi.getter(name="processTypes")
-    def process_types(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def process_types(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        """
         return pulumi.get(self, "process_types")
 
     @process_types.setter
-    def process_types(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def process_types(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "process_types", value)
 
     @property
     @pulumi.getter
     def size(self) -> Optional[pulumi.Input[int]]:
+        """
+        Slug archive filesize in bytes
+        """
         return pulumi.get(self, "size")
 
     @size.setter
@@ -263,6 +354,9 @@ class _SlugState:
     @property
     @pulumi.getter
     def stack(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        """
         return pulumi.get(self, "stack")
 
     @stack.setter
@@ -272,6 +366,9 @@ class _SlugState:
     @property
     @pulumi.getter(name="stackId")
     def stack_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
+        """
         return pulumi.get(self, "stack_id")
 
     @stack_id.setter
@@ -291,13 +388,45 @@ class Slug(pulumi.CustomResource):
                  commit_description: Optional[pulumi.Input[str]] = None,
                  file_path: Optional[pulumi.Input[str]] = None,
                  file_url: Optional[pulumi.Input[str]] = None,
-                 process_types: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 process_types: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stack: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a Slug resource with the given unique name, props, and options.
+        ## Example Usage
+
+        Complete config to launch a Heroku app:
+
+        ## Import
+
+        Existing slugs can be imported using the combination of the application name, a colon, and the slug ID.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:slug/slug:Slug foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+        ```
+
+        * `foobar` is the **heroku_slug** resource's name
+
+        * `bazbux` is the Heroku app name (or ID) that the slug belongs to
+
+        * `:` separates the app identifier & the slug identifier
+
+        * `4f1db8ef…` is the slug ID
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[str] buildpack_provided_description: Description of language or app framework, `"Ruby/Rack"`;
+               displayed as the app's language in the Heroku Dashboard
+        :param pulumi.Input[str] checksum: Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+               `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        :param pulumi.Input[str] commit: Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        :param pulumi.Input[str] commit_description: Description of the provided commit
+        :param pulumi.Input[str] file_path: Local path to a slug archive, `"slugs/current.tgz"`
+        :param pulumi.Input[str] file_url: **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] process_types: Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        :param pulumi.Input[str] stack: Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
         """
         ...
     @overload
@@ -306,7 +435,28 @@ class Slug(pulumi.CustomResource):
                  args: SlugArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a Slug resource with the given unique name, props, and options.
+        ## Example Usage
+
+        Complete config to launch a Heroku app:
+
+        ## Import
+
+        Existing slugs can be imported using the combination of the application name, a colon, and the slug ID.
+
+        For example:
+
+        ```sh
+        $ pulumi import heroku:slug/slug:Slug foobar bazbux:4f1db8ef-ed5c-4c42-a3d6-3c28262d5abc
+        ```
+
+        * `foobar` is the **heroku_slug** resource's name
+
+        * `bazbux` is the Heroku app name (or ID) that the slug belongs to
+
+        * `:` separates the app identifier & the slug identifier
+
+        * `4f1db8ef…` is the slug ID
+
         :param str resource_name: The name of the resource.
         :param SlugArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -329,7 +479,7 @@ class Slug(pulumi.CustomResource):
                  commit_description: Optional[pulumi.Input[str]] = None,
                  file_path: Optional[pulumi.Input[str]] = None,
                  file_url: Optional[pulumi.Input[str]] = None,
-                 process_types: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 process_types: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  stack: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -367,14 +517,14 @@ class Slug(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             app_id: Optional[pulumi.Input[str]] = None,
-            blobs: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['SlugBlobArgs']]]]] = None,
+            blobs: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SlugBlobArgs', 'SlugBlobArgsDict']]]]] = None,
             buildpack_provided_description: Optional[pulumi.Input[str]] = None,
             checksum: Optional[pulumi.Input[str]] = None,
             commit: Optional[pulumi.Input[str]] = None,
             commit_description: Optional[pulumi.Input[str]] = None,
             file_path: Optional[pulumi.Input[str]] = None,
             file_url: Optional[pulumi.Input[str]] = None,
-            process_types: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            process_types: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             size: Optional[pulumi.Input[int]] = None,
             stack: Optional[pulumi.Input[str]] = None,
             stack_id: Optional[pulumi.Input[str]] = None) -> 'Slug':
@@ -385,6 +535,20 @@ class Slug(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] app_id: Heroku app ID (do not use app name)
+        :param pulumi.Input[Sequence[pulumi.Input[Union['SlugBlobArgs', 'SlugBlobArgsDict']]]] blobs: Slug archive (compressed tar of executable code)
+        :param pulumi.Input[str] buildpack_provided_description: Description of language or app framework, `"Ruby/Rack"`;
+               displayed as the app's language in the Heroku Dashboard
+        :param pulumi.Input[str] checksum: Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+               `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        :param pulumi.Input[str] commit: Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        :param pulumi.Input[str] commit_description: Description of the provided commit
+        :param pulumi.Input[str] file_path: Local path to a slug archive, `"slugs/current.tgz"`
+        :param pulumi.Input[str] file_url: **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] process_types: Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        :param pulumi.Input[int] size: Slug archive filesize in bytes
+        :param pulumi.Input[str] stack: Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        :param pulumi.Input[str] stack_id: [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -407,60 +571,98 @@ class Slug(pulumi.CustomResource):
     @property
     @pulumi.getter(name="appId")
     def app_id(self) -> pulumi.Output[str]:
+        """
+        Heroku app ID (do not use app name)
+        """
         return pulumi.get(self, "app_id")
 
     @property
     @pulumi.getter
     def blobs(self) -> pulumi.Output[Sequence['outputs.SlugBlob']]:
+        """
+        Slug archive (compressed tar of executable code)
+        """
         return pulumi.get(self, "blobs")
 
     @property
     @pulumi.getter(name="buildpackProvidedDescription")
     def buildpack_provided_description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of language or app framework, `"Ruby/Rack"`;
+        displayed as the app's language in the Heroku Dashboard
+        """
         return pulumi.get(self, "buildpack_provided_description")
 
     @property
     @pulumi.getter
     def checksum(self) -> pulumi.Output[str]:
+        """
+        Hash of the slug for verifying its integrity, auto-generated from contents of `file_path` or `file_url`,
+        `SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+        """
         return pulumi.get(self, "checksum")
 
     @property
     @pulumi.getter
     def commit(self) -> pulumi.Output[Optional[str]]:
+        """
+        Identification of the code with your version control system (eg: SHA of the git HEAD), `"60883d9e8947a57e04dc9124f25df004866a2051"`
+        """
         return pulumi.get(self, "commit")
 
     @property
     @pulumi.getter(name="commitDescription")
     def commit_description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of the provided commit
+        """
         return pulumi.get(self, "commit_description")
 
     @property
     @pulumi.getter(name="filePath")
     def file_path(self) -> pulumi.Output[Optional[str]]:
+        """
+        Local path to a slug archive, `"slugs/current.tgz"`
+        """
         return pulumi.get(self, "file_path")
 
     @property
     @pulumi.getter(name="fileUrl")
     def file_url(self) -> pulumi.Output[Optional[str]]:
+        """
+        **https** URL to a slug archive, `"https://example.com/slugs/app-v1.tgz"`
+        """
         return pulumi.get(self, "file_url")
 
     @property
     @pulumi.getter(name="processTypes")
-    def process_types(self) -> pulumi.Output[Mapping[str, Any]]:
+    def process_types(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Map of [processes to launch on Heroku Dynos](https://devcenter.heroku.com/articles/process-model)
+        """
         return pulumi.get(self, "process_types")
 
     @property
     @pulumi.getter
     def size(self) -> pulumi.Output[int]:
+        """
+        Slug archive filesize in bytes
+        """
         return pulumi.get(self, "size")
 
     @property
     @pulumi.getter
     def stack(self) -> pulumi.Output[str]:
+        """
+        Name or ID of the [Heroku stack](https://devcenter.heroku.com/articles/stack)
+        """
         return pulumi.get(self, "stack")
 
     @property
     @pulumi.getter(name="stackId")
     def stack_id(self) -> pulumi.Output[str]:
+        """
+        [Heroku stack](https://devcenter.heroku.com/articles/stack) ID
+        """
         return pulumi.get(self, "stack_id")
 

@@ -13,15 +13,29 @@ namespace Pulumiverse.Heroku.Domain
     [HerokuResourceType("heroku:domain/domain:Domain")]
     public partial class Domain : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// 
+        /// For apps with ACM enabled (automated certificate management):
+        /// </summary>
         [Output("appId")]
         public Output<string> AppId { get; private set; } = null!;
 
+        /// <summary>
+        /// The CNAME traffic should route to.
+        /// </summary>
         [Output("cname")]
         public Output<string> Cname { get; private set; } = null!;
 
+        /// <summary>
+        /// Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sni_endpoint_id`.
+        /// </summary>
         [Output("hostname")]
         public Output<string> Hostname { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the `heroku.ssl.Ssl` resource to associate the domain with.
+        /// </summary>
         [Output("sniEndpointId")]
         public Output<string?> SniEndpointId { get; private set; } = null!;
 
@@ -72,12 +86,23 @@ namespace Pulumiverse.Heroku.Domain
 
     public sealed class DomainArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// 
+        /// For apps with ACM enabled (automated certificate management):
+        /// </summary>
         [Input("appId", required: true)]
         public Input<string> AppId { get; set; } = null!;
 
+        /// <summary>
+        /// Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sni_endpoint_id`.
+        /// </summary>
         [Input("hostname", required: true)]
         public Input<string> Hostname { get; set; } = null!;
 
+        /// <summary>
+        /// The ID of the `heroku.ssl.Ssl` resource to associate the domain with.
+        /// </summary>
         [Input("sniEndpointId")]
         public Input<string>? SniEndpointId { get; set; }
 
@@ -89,15 +114,29 @@ namespace Pulumiverse.Heroku.Domain
 
     public sealed class DomainState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// 
+        /// For apps with ACM enabled (automated certificate management):
+        /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
 
+        /// <summary>
+        /// The CNAME traffic should route to.
+        /// </summary>
         [Input("cname")]
         public Input<string>? Cname { get; set; }
 
+        /// <summary>
+        /// Must match common name or a subject alternative name of certificate in the `heroku.ssl.Ssl` resource references by `sni_endpoint_id`.
+        /// </summary>
         [Input("hostname")]
         public Input<string>? Hostname { get; set; }
 
+        /// <summary>
+        /// The ID of the `heroku.ssl.Ssl` resource to associate the domain with.
+        /// </summary>
         [Input("sniEndpointId")]
         public Input<string>? SniEndpointId { get; set; }
 

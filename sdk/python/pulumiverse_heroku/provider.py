@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from ._inputs import *
 
@@ -110,11 +115,11 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_key: Optional[pulumi.Input[str]] = None,
-                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ProviderCustomizationArgs']]]]] = None,
-                 delays: Optional[pulumi.Input[pulumi.InputType['ProviderDelaysArgs']]] = None,
+                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['ProviderCustomizationArgs', 'ProviderCustomizationArgsDict']]]]] = None,
+                 delays: Optional[pulumi.Input[Union['ProviderDelaysArgs', 'ProviderDelaysArgsDict']]] = None,
                  email: Optional[pulumi.Input[str]] = None,
                  headers: Optional[pulumi.Input[str]] = None,
-                 timeouts: Optional[pulumi.Input[pulumi.InputType['ProviderTimeoutsArgs']]] = None,
+                 timeouts: Optional[pulumi.Input[Union['ProviderTimeoutsArgs', 'ProviderTimeoutsArgsDict']]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -154,11 +159,11 @@ class Provider(pulumi.ProviderResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  api_key: Optional[pulumi.Input[str]] = None,
-                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ProviderCustomizationArgs']]]]] = None,
-                 delays: Optional[pulumi.Input[pulumi.InputType['ProviderDelaysArgs']]] = None,
+                 customizations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['ProviderCustomizationArgs', 'ProviderCustomizationArgsDict']]]]] = None,
+                 delays: Optional[pulumi.Input[Union['ProviderDelaysArgs', 'ProviderDelaysArgsDict']]] = None,
                  email: Optional[pulumi.Input[str]] = None,
                  headers: Optional[pulumi.Input[str]] = None,
-                 timeouts: Optional[pulumi.Input[pulumi.InputType['ProviderTimeoutsArgs']]] = None,
+                 timeouts: Optional[pulumi.Input[Union['ProviderTimeoutsArgs', 'ProviderTimeoutsArgsDict']]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)

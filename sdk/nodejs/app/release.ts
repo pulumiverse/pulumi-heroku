@@ -4,6 +4,19 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
+/**
+ * ## Example Usage
+ *
+ * ## Import
+ *
+ * The most recent app release can be imported using the application name.
+ *
+ * For example:
+ *
+ * ```sh
+ * $ pulumi import heroku:app/release:Release foobar-release foobar
+ * ```
+ */
 export class Release extends pulumi.CustomResource {
     /**
      * Get an existing Release resource's state with the given name, ID, and optional extra
@@ -32,8 +45,17 @@ export class Release extends pulumi.CustomResource {
         return obj['__pulumiType'] === Release.__pulumiType;
     }
 
+    /**
+     * Heroku app ID (do not use app name)
+     */
     public readonly appId!: pulumi.Output<string>;
+    /**
+     * description of changes in this release
+     */
     public readonly description!: pulumi.Output<string>;
+    /**
+     * unique identifier of slug
+     */
     public readonly slugId!: pulumi.Output<string>;
 
     /**
@@ -73,8 +95,17 @@ export class Release extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Release resources.
  */
 export interface ReleaseState {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId?: pulumi.Input<string>;
+    /**
+     * description of changes in this release
+     */
     description?: pulumi.Input<string>;
+    /**
+     * unique identifier of slug
+     */
     slugId?: pulumi.Input<string>;
 }
 
@@ -82,7 +113,16 @@ export interface ReleaseState {
  * The set of arguments for constructing a Release resource.
  */
 export interface ReleaseArgs {
+    /**
+     * Heroku app ID (do not use app name)
+     */
     appId: pulumi.Input<string>;
+    /**
+     * description of changes in this release
+     */
     description?: pulumi.Input<string>;
+    /**
+     * unique identifier of slug
+     */
     slugId: pulumi.Input<string>;
 }

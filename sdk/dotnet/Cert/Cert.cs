@@ -10,21 +10,47 @@ using Pulumi;
 
 namespace Pulumiverse.Heroku.Cert
 {
+    /// <summary>
+    /// This resource manages an SSL certificate for a Heroku app.
+    /// 
+    /// !&gt; **WARNING:** This resource is deprecated in favor of `heroku.ssl.Ssl`.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// ## Importing
+    /// 
+    /// When importing a Heroku cert resource, the ID must be built using the app name colon the unique ID from the Heroku API. For an app named `production-api` with a certificate ID of `b85d9224-310b-409b-891e-c903f5a40568`, you would import it as:
+    /// </summary>
     [HerokuResourceType("heroku:cert/cert:Cert")]
     public partial class Cert : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Output("app")]
         public Output<string> App { get; private set; } = null!;
 
+        /// <summary>
+        /// The certificate chain to add
+        /// </summary>
         [Output("certificateChain")]
         public Output<string> CertificateChain { get; private set; } = null!;
 
+        /// <summary>
+        /// The CNAME for the SSL endpoint
+        /// </summary>
         [Output("cname")]
         public Output<string> Cname { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the SSL certificate
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The private key for a given certificate chain
+        /// </summary>
         [Output("privateKey")]
         public Output<string> PrivateKey { get; private set; } = null!;
 
@@ -79,14 +105,24 @@ namespace Pulumiverse.Heroku.Cert
 
     public sealed class CertArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("app", required: true)]
         public Input<string> App { get; set; } = null!;
 
+        /// <summary>
+        /// The certificate chain to add
+        /// </summary>
         [Input("certificateChain", required: true)]
         public Input<string> CertificateChain { get; set; } = null!;
 
         [Input("privateKey", required: true)]
         private Input<string>? _privateKey;
+
+        /// <summary>
+        /// The private key for a given certificate chain
+        /// </summary>
         public Input<string>? PrivateKey
         {
             get => _privateKey;
@@ -105,20 +141,36 @@ namespace Pulumiverse.Heroku.Cert
 
     public sealed class CertState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Heroku app ID (do not use app name)
+        /// </summary>
         [Input("app")]
         public Input<string>? App { get; set; }
 
+        /// <summary>
+        /// The certificate chain to add
+        /// </summary>
         [Input("certificateChain")]
         public Input<string>? CertificateChain { get; set; }
 
+        /// <summary>
+        /// The CNAME for the SSL endpoint
+        /// </summary>
         [Input("cname")]
         public Input<string>? Cname { get; set; }
 
+        /// <summary>
+        /// The name of the SSL certificate
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("privateKey")]
         private Input<string>? _privateKey;
+
+        /// <summary>
+        /// The private key for a given certificate chain
+        /// </summary>
         public Input<string>? PrivateKey
         {
             get => _privateKey;

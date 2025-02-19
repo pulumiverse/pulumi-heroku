@@ -11,6 +11,9 @@ import (
 	"github.com/pulumiverse/pulumi-heroku/sdk/go/heroku/internal"
 )
 
+// Use this data source to get peering information about a [Heroku Private Space](https://www.heroku.com/private-spaces).
+//
+// ## Example Usage
 func GetPeeringInfo(ctx *pulumi.Context, args *GetPeeringInfoArgs, opts ...pulumi.InvokeOption) (*GetPeeringInfoResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetPeeringInfoResult
@@ -23,37 +26,41 @@ func GetPeeringInfo(ctx *pulumi.Context, args *GetPeeringInfoArgs, opts ...pulum
 
 // A collection of arguments for invoking getPeeringInfo.
 type GetPeeringInfoArgs struct {
+	// The name of the Heroku Private Space.
 	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getPeeringInfo.
 type GetPeeringInfoResult struct {
-	AwsAccountId   string   `pulumi:"awsAccountId"`
-	AwsRegion      string   `pulumi:"awsRegion"`
+	// The AWS account ID that the Heroku Private Space runs in.
+	AwsAccountId string `pulumi:"awsAccountId"`
+	// The AWS region that the Heroku Private Space runs in.
+	AwsRegion string `pulumi:"awsRegion"`
+	// The CIDR blocks that the Dynos run on.
 	DynoCidrBlocks []string `pulumi:"dynoCidrBlocks"`
 	// The provider-assigned unique ID for this managed resource.
-	Id                    string   `pulumi:"id"`
-	Name                  string   `pulumi:"name"`
+	Id   string `pulumi:"id"`
+	Name string `pulumi:"name"`
+	// A list of unavailable CIDR blocks.
 	UnavailableCidrBlocks []string `pulumi:"unavailableCidrBlocks"`
-	VpcCidr               string   `pulumi:"vpcCidr"`
-	VpcId                 string   `pulumi:"vpcId"`
+	// The CIDR block of the VPC ID.
+	VpcCidr string `pulumi:"vpcCidr"`
+	// The VPC ID of the Heroku Private Space.
+	VpcId string `pulumi:"vpcId"`
 }
 
 func GetPeeringInfoOutput(ctx *pulumi.Context, args GetPeeringInfoOutputArgs, opts ...pulumi.InvokeOption) GetPeeringInfoResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetPeeringInfoResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetPeeringInfoResultOutput, error) {
 			args := v.(GetPeeringInfoArgs)
-			r, err := GetPeeringInfo(ctx, &args, opts...)
-			var s GetPeeringInfoResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("heroku:space/getPeeringInfo:getPeeringInfo", args, GetPeeringInfoResultOutput{}, options).(GetPeeringInfoResultOutput), nil
 		}).(GetPeeringInfoResultOutput)
 }
 
 // A collection of arguments for invoking getPeeringInfo.
 type GetPeeringInfoOutputArgs struct {
+	// The name of the Heroku Private Space.
 	Name pulumi.StringInput `pulumi:"name"`
 }
 
@@ -76,14 +83,17 @@ func (o GetPeeringInfoResultOutput) ToGetPeeringInfoResultOutputWithContext(ctx 
 	return o
 }
 
+// The AWS account ID that the Heroku Private Space runs in.
 func (o GetPeeringInfoResultOutput) AwsAccountId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) string { return v.AwsAccountId }).(pulumi.StringOutput)
 }
 
+// The AWS region that the Heroku Private Space runs in.
 func (o GetPeeringInfoResultOutput) AwsRegion() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) string { return v.AwsRegion }).(pulumi.StringOutput)
 }
 
+// The CIDR blocks that the Dynos run on.
 func (o GetPeeringInfoResultOutput) DynoCidrBlocks() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) []string { return v.DynoCidrBlocks }).(pulumi.StringArrayOutput)
 }
@@ -97,14 +107,17 @@ func (o GetPeeringInfoResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// A list of unavailable CIDR blocks.
 func (o GetPeeringInfoResultOutput) UnavailableCidrBlocks() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) []string { return v.UnavailableCidrBlocks }).(pulumi.StringArrayOutput)
 }
 
+// The CIDR block of the VPC ID.
 func (o GetPeeringInfoResultOutput) VpcCidr() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) string { return v.VpcCidr }).(pulumi.StringOutput)
 }
 
+// The VPC ID of the Heroku Private Space.
 func (o GetPeeringInfoResultOutput) VpcId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPeeringInfoResult) string { return v.VpcId }).(pulumi.StringOutput)
 }

@@ -15,9 +15,15 @@ import (
 type Domain struct {
 	pulumi.CustomResourceState
 
-	AppId         pulumi.StringOutput    `pulumi:"appId"`
-	Cname         pulumi.StringOutput    `pulumi:"cname"`
-	Hostname      pulumi.StringOutput    `pulumi:"hostname"`
+	// Heroku app ID (do not use app name)
+	//
+	// For apps with ACM enabled (automated certificate management):
+	AppId pulumi.StringOutput `pulumi:"appId"`
+	// The CNAME traffic should route to.
+	Cname pulumi.StringOutput `pulumi:"cname"`
+	// Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sniEndpointId`.
+	Hostname pulumi.StringOutput `pulumi:"hostname"`
+	// The ID of the `ssl.Ssl` resource to associate the domain with.
 	SniEndpointId pulumi.StringPtrOutput `pulumi:"sniEndpointId"`
 }
 
@@ -57,16 +63,28 @@ func GetDomain(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Domain resources.
 type domainState struct {
-	AppId         *string `pulumi:"appId"`
-	Cname         *string `pulumi:"cname"`
-	Hostname      *string `pulumi:"hostname"`
+	// Heroku app ID (do not use app name)
+	//
+	// For apps with ACM enabled (automated certificate management):
+	AppId *string `pulumi:"appId"`
+	// The CNAME traffic should route to.
+	Cname *string `pulumi:"cname"`
+	// Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sniEndpointId`.
+	Hostname *string `pulumi:"hostname"`
+	// The ID of the `ssl.Ssl` resource to associate the domain with.
 	SniEndpointId *string `pulumi:"sniEndpointId"`
 }
 
 type DomainState struct {
-	AppId         pulumi.StringPtrInput
-	Cname         pulumi.StringPtrInput
-	Hostname      pulumi.StringPtrInput
+	// Heroku app ID (do not use app name)
+	//
+	// For apps with ACM enabled (automated certificate management):
+	AppId pulumi.StringPtrInput
+	// The CNAME traffic should route to.
+	Cname pulumi.StringPtrInput
+	// Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sniEndpointId`.
+	Hostname pulumi.StringPtrInput
+	// The ID of the `ssl.Ssl` resource to associate the domain with.
 	SniEndpointId pulumi.StringPtrInput
 }
 
@@ -75,15 +93,25 @@ func (DomainState) ElementType() reflect.Type {
 }
 
 type domainArgs struct {
-	AppId         string  `pulumi:"appId"`
-	Hostname      string  `pulumi:"hostname"`
+	// Heroku app ID (do not use app name)
+	//
+	// For apps with ACM enabled (automated certificate management):
+	AppId string `pulumi:"appId"`
+	// Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sniEndpointId`.
+	Hostname string `pulumi:"hostname"`
+	// The ID of the `ssl.Ssl` resource to associate the domain with.
 	SniEndpointId *string `pulumi:"sniEndpointId"`
 }
 
 // The set of arguments for constructing a Domain resource.
 type DomainArgs struct {
-	AppId         pulumi.StringInput
-	Hostname      pulumi.StringInput
+	// Heroku app ID (do not use app name)
+	//
+	// For apps with ACM enabled (automated certificate management):
+	AppId pulumi.StringInput
+	// Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sniEndpointId`.
+	Hostname pulumi.StringInput
+	// The ID of the `ssl.Ssl` resource to associate the domain with.
 	SniEndpointId pulumi.StringPtrInput
 }
 
@@ -174,18 +202,24 @@ func (o DomainOutput) ToDomainOutputWithContext(ctx context.Context) DomainOutpu
 	return o
 }
 
+// Heroku app ID (do not use app name)
+//
+// For apps with ACM enabled (automated certificate management):
 func (o DomainOutput) AppId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.AppId }).(pulumi.StringOutput)
 }
 
+// The CNAME traffic should route to.
 func (o DomainOutput) Cname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.Cname }).(pulumi.StringOutput)
 }
 
+// Must match common name or a subject alternative name of certificate in the `ssl.Ssl` resource references by `sniEndpointId`.
 func (o DomainOutput) Hostname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.Hostname }).(pulumi.StringOutput)
 }
 
+// The ID of the `ssl.Ssl` resource to associate the domain with.
 func (o DomainOutput) SniEndpointId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringPtrOutput { return v.SniEndpointId }).(pulumi.StringPtrOutput)
 }

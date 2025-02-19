@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,6 +28,11 @@ class VpnConnectionArgs:
                  tunnels: Optional[pulumi.Input[Sequence[pulumi.Input['VpnConnectionTunnelArgs']]]] = None):
         """
         The set of arguments for constructing a VpnConnection resource.
+        :param pulumi.Input[str] public_ip: The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] routable_cidrs: A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        :param pulumi.Input[str] space: The ID of the Heroku Private Space where the VPN connection will be established.
+        :param pulumi.Input[str] name: The name of the VPN connection.
+        :param pulumi.Input[Sequence[pulumi.Input['VpnConnectionTunnelArgs']]] tunnels: Details about each VPN tunnel endpoint.
         """
         pulumi.set(__self__, "public_ip", public_ip)
         pulumi.set(__self__, "routable_cidrs", routable_cidrs)
@@ -35,6 +45,9 @@ class VpnConnectionArgs:
     @property
     @pulumi.getter(name="publicIp")
     def public_ip(self) -> pulumi.Input[str]:
+        """
+        The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        """
         return pulumi.get(self, "public_ip")
 
     @public_ip.setter
@@ -44,6 +57,9 @@ class VpnConnectionArgs:
     @property
     @pulumi.getter(name="routableCidrs")
     def routable_cidrs(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        """
         return pulumi.get(self, "routable_cidrs")
 
     @routable_cidrs.setter
@@ -53,6 +69,9 @@ class VpnConnectionArgs:
     @property
     @pulumi.getter
     def space(self) -> pulumi.Input[str]:
+        """
+        The ID of the Heroku Private Space where the VPN connection will be established.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -62,6 +81,9 @@ class VpnConnectionArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the VPN connection.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -71,6 +93,9 @@ class VpnConnectionArgs:
     @property
     @pulumi.getter
     def tunnels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['VpnConnectionTunnelArgs']]]]:
+        """
+        Details about each VPN tunnel endpoint.
+        """
         return pulumi.get(self, "tunnels")
 
     @tunnels.setter
@@ -90,6 +115,13 @@ class _VpnConnectionState:
                  tunnels: Optional[pulumi.Input[Sequence[pulumi.Input['VpnConnectionTunnelArgs']]]] = None):
         """
         Input properties used for looking up and filtering VpnConnection resources.
+        :param pulumi.Input[int] ike_version: The IKE version used to setup the IPsec tunnel.
+        :param pulumi.Input[str] name: The name of the VPN connection.
+        :param pulumi.Input[str] public_ip: The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] routable_cidrs: A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        :param pulumi.Input[str] space: The ID of the Heroku Private Space where the VPN connection will be established.
+        :param pulumi.Input[str] space_cidr_block: The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+        :param pulumi.Input[Sequence[pulumi.Input['VpnConnectionTunnelArgs']]] tunnels: Details about each VPN tunnel endpoint.
         """
         if ike_version is not None:
             pulumi.set(__self__, "ike_version", ike_version)
@@ -109,6 +141,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter(name="ikeVersion")
     def ike_version(self) -> Optional[pulumi.Input[int]]:
+        """
+        The IKE version used to setup the IPsec tunnel.
+        """
         return pulumi.get(self, "ike_version")
 
     @ike_version.setter
@@ -118,6 +153,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the VPN connection.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -127,6 +165,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter(name="publicIp")
     def public_ip(self) -> Optional[pulumi.Input[str]]:
+        """
+        The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        """
         return pulumi.get(self, "public_ip")
 
     @public_ip.setter
@@ -136,6 +177,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter(name="routableCidrs")
     def routable_cidrs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        """
         return pulumi.get(self, "routable_cidrs")
 
     @routable_cidrs.setter
@@ -145,6 +189,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter
     def space(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the Heroku Private Space where the VPN connection will be established.
+        """
         return pulumi.get(self, "space")
 
     @space.setter
@@ -154,6 +201,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter(name="spaceCidrBlock")
     def space_cidr_block(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+        """
         return pulumi.get(self, "space_cidr_block")
 
     @space_cidr_block.setter
@@ -163,6 +213,9 @@ class _VpnConnectionState:
     @property
     @pulumi.getter
     def tunnels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['VpnConnectionTunnelArgs']]]]:
+        """
+        Details about each VPN tunnel endpoint.
+        """
         return pulumi.get(self, "tunnels")
 
     @tunnels.setter
@@ -179,12 +232,20 @@ class VpnConnection(pulumi.CustomResource):
                  public_ip: Optional[pulumi.Input[str]] = None,
                  routable_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  space: Optional[pulumi.Input[str]] = None,
-                 tunnels: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['VpnConnectionTunnelArgs']]]]] = None,
+                 tunnels: Optional[pulumi.Input[Sequence[pulumi.Input[Union['VpnConnectionTunnelArgs', 'VpnConnectionTunnelArgsDict']]]]] = None,
                  __props__=None):
         """
-        Create a VpnConnection resource with the given unique name, props, and options.
+        Provides a resource for creating a VPN connection between a network and a Heroku Private Space. For more information, see [Private Spaces VPN Connection](https://devcenter.heroku.com/articles/private-space-vpn-connection?preview=1) in the Heroku DevCenter.
+
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] name: The name of the VPN connection.
+        :param pulumi.Input[str] public_ip: The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] routable_cidrs: A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        :param pulumi.Input[str] space: The ID of the Heroku Private Space where the VPN connection will be established.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VpnConnectionTunnelArgs', 'VpnConnectionTunnelArgsDict']]]] tunnels: Details about each VPN tunnel endpoint.
         """
         ...
     @overload
@@ -193,7 +254,10 @@ class VpnConnection(pulumi.CustomResource):
                  args: VpnConnectionArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a VpnConnection resource with the given unique name, props, and options.
+        Provides a resource for creating a VPN connection between a network and a Heroku Private Space. For more information, see [Private Spaces VPN Connection](https://devcenter.heroku.com/articles/private-space-vpn-connection?preview=1) in the Heroku DevCenter.
+
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param VpnConnectionArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -213,7 +277,7 @@ class VpnConnection(pulumi.CustomResource):
                  public_ip: Optional[pulumi.Input[str]] = None,
                  routable_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  space: Optional[pulumi.Input[str]] = None,
-                 tunnels: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['VpnConnectionTunnelArgs']]]]] = None,
+                 tunnels: Optional[pulumi.Input[Sequence[pulumi.Input[Union['VpnConnectionTunnelArgs', 'VpnConnectionTunnelArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -252,7 +316,7 @@ class VpnConnection(pulumi.CustomResource):
             routable_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             space: Optional[pulumi.Input[str]] = None,
             space_cidr_block: Optional[pulumi.Input[str]] = None,
-            tunnels: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['VpnConnectionTunnelArgs']]]]] = None) -> 'VpnConnection':
+            tunnels: Optional[pulumi.Input[Sequence[pulumi.Input[Union['VpnConnectionTunnelArgs', 'VpnConnectionTunnelArgsDict']]]]] = None) -> 'VpnConnection':
         """
         Get an existing VpnConnection resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -260,6 +324,13 @@ class VpnConnection(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[int] ike_version: The IKE version used to setup the IPsec tunnel.
+        :param pulumi.Input[str] name: The name of the VPN connection.
+        :param pulumi.Input[str] public_ip: The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] routable_cidrs: A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        :param pulumi.Input[str] space: The ID of the Heroku Private Space where the VPN connection will be established.
+        :param pulumi.Input[str] space_cidr_block: The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VpnConnectionTunnelArgs', 'VpnConnectionTunnelArgsDict']]]] tunnels: Details about each VPN tunnel endpoint.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -277,35 +348,56 @@ class VpnConnection(pulumi.CustomResource):
     @property
     @pulumi.getter(name="ikeVersion")
     def ike_version(self) -> pulumi.Output[int]:
+        """
+        The IKE version used to setup the IPsec tunnel.
+        """
         return pulumi.get(self, "ike_version")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the VPN connection.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="publicIp")
     def public_ip(self) -> pulumi.Output[str]:
+        """
+        The public IP address of the VPN endpoint on the network where the VPN connection will be established.
+        """
         return pulumi.get(self, "public_ip")
 
     @property
     @pulumi.getter(name="routableCidrs")
     def routable_cidrs(self) -> pulumi.Output[Sequence[str]]:
+        """
+        A list of IPv4 CIDR blocks used by the network where the VPN connection will be established.
+        """
         return pulumi.get(self, "routable_cidrs")
 
     @property
     @pulumi.getter
     def space(self) -> pulumi.Output[str]:
+        """
+        The ID of the Heroku Private Space where the VPN connection will be established.
+        """
         return pulumi.get(self, "space")
 
     @property
     @pulumi.getter(name="spaceCidrBlock")
     def space_cidr_block(self) -> pulumi.Output[str]:
+        """
+        The CIDR block for the Heroku Private Space. The network where the VPN will be established should be configured to route traffic destined for this CIDR block over the VPN link.
+        """
         return pulumi.get(self, "space_cidr_block")
 
     @property
     @pulumi.getter
     def tunnels(self) -> pulumi.Output[Sequence['outputs.VpnConnectionTunnel']]:
+        """
+        Details about each VPN tunnel endpoint.
+        """
         return pulumi.get(self, "tunnels")
 
