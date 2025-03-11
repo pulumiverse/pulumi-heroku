@@ -76,6 +76,10 @@ export interface GetSpaceResult {
      * The state of the Heroku Private Space. Either `allocating` or `allocated`.
      */
     readonly state: string;
+    /**
+     * The space's unique ID.
+     */
+    readonly uuid: string;
 }
 /**
  * Use this data source to get information about a [Heroku Private Space](https://www.heroku.com/private-spaces).

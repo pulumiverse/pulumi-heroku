@@ -54,6 +54,8 @@ type LookupSpaceResult struct {
 	Shield bool `pulumi:"shield"`
 	// The state of the Heroku Private Space. Either `allocating` or `allocated`.
 	State string `pulumi:"state"`
+	// The space's unique ID.
+	Uuid string `pulumi:"uuid"`
 }
 
 func LookupSpaceOutput(ctx *pulumi.Context, args LookupSpaceOutputArgs, opts ...pulumi.InvokeOption) LookupSpaceResultOutput {
@@ -137,6 +139,11 @@ func (o LookupSpaceResultOutput) Shield() pulumi.BoolOutput {
 // The state of the Heroku Private Space. Either `allocating` or `allocated`.
 func (o LookupSpaceResultOutput) State() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSpaceResult) string { return v.State }).(pulumi.StringOutput)
+}
+
+// The space's unique ID.
+func (o LookupSpaceResultOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupSpaceResult) string { return v.Uuid }).(pulumi.StringOutput)
 }
 
 func init() {
