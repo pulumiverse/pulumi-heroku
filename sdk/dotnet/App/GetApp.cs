@@ -121,6 +121,14 @@ namespace Pulumiverse.Heroku.App
         public readonly string Id;
         public readonly bool InternalRouting;
         /// <summary>
+        /// The last successful Release ID for the app. May be empty.
+        /// </summary>
+        public readonly string LastReleaseId;
+        /// <summary>
+        /// The Slug ID from the last successful release. May be empty.
+        /// </summary>
+        public readonly string LastSlugId;
+        /// <summary>
         /// The name of the Heroku Team (organization).
         /// </summary>
         public readonly string Name;
@@ -167,6 +175,10 @@ namespace Pulumiverse.Heroku.App
 
             bool internalRouting,
 
+            string lastReleaseId,
+
+            string lastSlugId,
+
             string name,
 
             ImmutableArray<Outputs.GetAppOrganizationResult> organizations,
@@ -188,6 +200,8 @@ namespace Pulumiverse.Heroku.App
             HerokuHostname = herokuHostname;
             Id = id;
             InternalRouting = internalRouting;
+            LastReleaseId = lastReleaseId;
+            LastSlugId = lastSlugId;
             Name = name;
             Organizations = organizations;
             Region = region;
