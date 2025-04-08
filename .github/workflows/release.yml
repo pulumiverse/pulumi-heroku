@@ -50,8 +50,8 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
-          args: -p 3 release --clean
-          version: latest
+          args: release --clean
+          version: '~> v2'
 
   publish_sdk:
     name: Publish SDKs
