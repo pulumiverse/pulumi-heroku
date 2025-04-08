@@ -27,7 +27,7 @@ class GetAppResult:
     """
     A collection of values returned by getApp.
     """
-    def __init__(__self__, acm=None, buildpacks=None, config_vars=None, git_url=None, heroku_hostname=None, id=None, internal_routing=None, name=None, organizations=None, region=None, space=None, stack=None, uuid=None, web_url=None):
+    def __init__(__self__, acm=None, buildpacks=None, config_vars=None, git_url=None, heroku_hostname=None, id=None, internal_routing=None, last_release_id=None, last_slug_id=None, name=None, organizations=None, region=None, space=None, stack=None, uuid=None, web_url=None):
         if acm and not isinstance(acm, bool):
             raise TypeError("Expected argument 'acm' to be a bool")
         pulumi.set(__self__, "acm", acm)
@@ -49,6 +49,12 @@ class GetAppResult:
         if internal_routing and not isinstance(internal_routing, bool):
             raise TypeError("Expected argument 'internal_routing' to be a bool")
         pulumi.set(__self__, "internal_routing", internal_routing)
+        if last_release_id and not isinstance(last_release_id, str):
+            raise TypeError("Expected argument 'last_release_id' to be a str")
+        pulumi.set(__self__, "last_release_id", last_release_id)
+        if last_slug_id and not isinstance(last_slug_id, str):
+            raise TypeError("Expected argument 'last_slug_id' to be a str")
+        pulumi.set(__self__, "last_slug_id", last_slug_id)
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
@@ -127,6 +133,22 @@ class GetAppResult:
         return pulumi.get(self, "internal_routing")
 
     @property
+    @pulumi.getter(name="lastReleaseId")
+    def last_release_id(self) -> str:
+        """
+        The last successful Release ID for the app. May be empty.
+        """
+        return pulumi.get(self, "last_release_id")
+
+    @property
+    @pulumi.getter(name="lastSlugId")
+    def last_slug_id(self) -> str:
+        """
+        The Slug ID from the last successful release. May be empty.
+        """
+        return pulumi.get(self, "last_slug_id")
+
+    @property
     @pulumi.getter
     def name(self) -> str:
         """
@@ -198,6 +220,8 @@ class AwaitableGetAppResult(GetAppResult):
             heroku_hostname=self.heroku_hostname,
             id=self.id,
             internal_routing=self.internal_routing,
+            last_release_id=self.last_release_id,
+            last_slug_id=self.last_slug_id,
             name=self.name,
             organizations=self.organizations,
             region=self.region,
@@ -231,6 +255,8 @@ def get_app(name: Optional[str] = None,
         heroku_hostname=pulumi.get(__ret__, 'heroku_hostname'),
         id=pulumi.get(__ret__, 'id'),
         internal_routing=pulumi.get(__ret__, 'internal_routing'),
+        last_release_id=pulumi.get(__ret__, 'last_release_id'),
+        last_slug_id=pulumi.get(__ret__, 'last_slug_id'),
         name=pulumi.get(__ret__, 'name'),
         organizations=pulumi.get(__ret__, 'organizations'),
         region=pulumi.get(__ret__, 'region'),
@@ -261,6 +287,8 @@ def get_app_output(name: Optional[pulumi.Input[str]] = None,
         heroku_hostname=pulumi.get(__response__, 'heroku_hostname'),
         id=pulumi.get(__response__, 'id'),
         internal_routing=pulumi.get(__response__, 'internal_routing'),
+        last_release_id=pulumi.get(__response__, 'last_release_id'),
+        last_slug_id=pulumi.get(__response__, 'last_slug_id'),
         name=pulumi.get(__response__, 'name'),
         organizations=pulumi.get(__response__, 'organizations'),
         region=pulumi.get(__response__, 'region'),

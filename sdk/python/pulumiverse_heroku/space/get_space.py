@@ -26,7 +26,7 @@ class GetSpaceResult:
     """
     A collection of values returned by getSpace.
     """
-    def __init__(__self__, cidr=None, data_cidr=None, id=None, name=None, organization=None, outbound_ips=None, region=None, shield=None, state=None):
+    def __init__(__self__, cidr=None, data_cidr=None, id=None, name=None, organization=None, outbound_ips=None, region=None, shield=None, state=None, uuid=None):
         if cidr and not isinstance(cidr, str):
             raise TypeError("Expected argument 'cidr' to be a str")
         pulumi.set(__self__, "cidr", cidr)
@@ -54,6 +54,9 @@ class GetSpaceResult:
         if state and not isinstance(state, str):
             raise TypeError("Expected argument 'state' to be a str")
         pulumi.set(__self__, "state", state)
+        if uuid and not isinstance(uuid, str):
+            raise TypeError("Expected argument 'uuid' to be a str")
+        pulumi.set(__self__, "uuid", uuid)
 
     @property
     @pulumi.getter
@@ -127,6 +130,14 @@ class GetSpaceResult:
         """
         return pulumi.get(self, "state")
 
+    @property
+    @pulumi.getter
+    def uuid(self) -> str:
+        """
+        The space's unique ID.
+        """
+        return pulumi.get(self, "uuid")
+
 
 class AwaitableGetSpaceResult(GetSpaceResult):
     # pylint: disable=using-constant-test
@@ -142,7 +153,8 @@ class AwaitableGetSpaceResult(GetSpaceResult):
             outbound_ips=self.outbound_ips,
             region=self.region,
             shield=self.shield,
-            state=self.state)
+            state=self.state,
+            uuid=self.uuid)
 
 
 def get_space(cidr: Optional[str] = None,
@@ -175,7 +187,8 @@ def get_space(cidr: Optional[str] = None,
         outbound_ips=pulumi.get(__ret__, 'outbound_ips'),
         region=pulumi.get(__ret__, 'region'),
         shield=pulumi.get(__ret__, 'shield'),
-        state=pulumi.get(__ret__, 'state'))
+        state=pulumi.get(__ret__, 'state'),
+        uuid=pulumi.get(__ret__, 'uuid'))
 def get_space_output(cidr: Optional[pulumi.Input[Optional[str]]] = None,
                      data_cidr: Optional[pulumi.Input[Optional[str]]] = None,
                      name: Optional[pulumi.Input[str]] = None,
@@ -205,4 +218,5 @@ def get_space_output(cidr: Optional[pulumi.Input[Optional[str]]] = None,
         outbound_ips=pulumi.get(__response__, 'outbound_ips'),
         region=pulumi.get(__response__, 'region'),
         shield=pulumi.get(__response__, 'shield'),
-        state=pulumi.get(__response__, 'state')))
+        state=pulumi.get(__response__, 'state'),
+        uuid=pulumi.get(__response__, 'uuid')))

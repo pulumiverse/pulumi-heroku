@@ -48,6 +48,10 @@ type LookupAppResult struct {
 	// The provider-assigned unique ID for this managed resource.
 	Id              string `pulumi:"id"`
 	InternalRouting bool   `pulumi:"internalRouting"`
+	// The last successful Release ID for the app. May be empty.
+	LastReleaseId string `pulumi:"lastReleaseId"`
+	// The Slug ID from the last successful release. May be empty.
+	LastSlugId string `pulumi:"lastSlugId"`
 	// The name of the Heroku Team (organization).
 	Name string `pulumi:"name"`
 	// The Heroku Team that owns this app.
@@ -135,6 +139,16 @@ func (o LookupAppResultOutput) Id() pulumi.StringOutput {
 
 func (o LookupAppResultOutput) InternalRouting() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupAppResult) bool { return v.InternalRouting }).(pulumi.BoolOutput)
+}
+
+// The last successful Release ID for the app. May be empty.
+func (o LookupAppResultOutput) LastReleaseId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupAppResult) string { return v.LastReleaseId }).(pulumi.StringOutput)
+}
+
+// The Slug ID from the last successful release. May be empty.
+func (o LookupAppResultOutput) LastSlugId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupAppResult) string { return v.LastSlugId }).(pulumi.StringOutput)
 }
 
 // The name of the Heroku Team (organization).
