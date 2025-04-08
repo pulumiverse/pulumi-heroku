@@ -515,7 +515,7 @@
             }
         },
         "heroku:addon/addon:Addon": {
-            "description": "Provides a Heroku Add-On resource. These can be attach\nservices to a Heroku app.\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku app\nresource \"heroku_app\" \"default\" {\n  name = \"test-app\"\n}\n\n# Create a database, and configure the app to use it\nresource \"heroku_addon\" \"database\" {\n  app_id = heroku_app.default.id\n  plan   = \"heroku-postgresql:mini\"\n}\n```\n\n## Import\n\nAddons can be imported using the Addon `id`, e.g.\n\n```sh\n$ pulumi import heroku:addon/addon:Addon foobar 12345678\n```\n",
+            "description": "Provides a Heroku Add-On resource. These can be attach\nservices to a Heroku app.\n\n## Example Usage\n\n```hcl-terraform\n# Create a new Heroku app\nresource \"heroku_app\" \"default\" {\n  name = \"test-app\"\n}\n\n# Create a database, and configure the app to use it\nresource \"heroku_addon\" \"database\" {\n  app_id = heroku_app.default.id\n  plan   = \"heroku-postgresql:standard-0\"\n}\n```\n\n## Import\n\nAddons can be imported using the Addon `id`, e.g.\n\n```sh\n$ pulumi import heroku:addon/addon:Addon foobar 12345678\n```\n",
             "properties": {
                 "appId": {
                     "type": "string",
@@ -637,7 +637,7 @@
             }
         },
         "heroku:addon/attachment:Attachment": {
-            "description": "Attaches a Heroku Addon Resource to an additional Heroku App.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_addon_attachment\" \"database\" {\n  app_id  = heroku_app.default.id\n  addon_id = heroku_addon.database.id\n}\n\n// attach postgres credentials\nresource \"heroku_addon_attachment\" \"database_credentials\" {\n  app_id  = heroku_app.default.id\n  addon_id = heroku_addon.database.id\n  namespace = \"credential: ${var.credential_name}\"\n}\n\n```\n\n## Import\n\nAddons can be imported using the unique Addon Attachment `id`, e.g.\n\n```sh\n$ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef\n```\n",
+            "description": "Attaches a Heroku Addon Resource to an additional Heroku App.\n\n## Example Usage\n\n```hcl-terraform\nresource \"heroku_addon_attachment\" \"database\" {\n  app_id  = heroku_app.default.id\n  addon_id = heroku_addon.database.id\n}\n\n// attach postgres credentials\nresource \"heroku_addon_attachment\" \"database_credentials\" {\n  app_id  = heroku_app.default.id\n  addon_id = heroku_addon.database.id\n  namespace = \"credential:${var.credential_name}\"\n}\n\n```\n\n## Import\n\nAddons can be imported using the unique Addon Attachment `id`, e.g.\n\n```sh\n$ pulumi import heroku:addon/attachment:Attachment foobar 01234567-89ab-cdef-0123-456789abcdef\n```\n",
             "properties": {
                 "addonId": {
                     "type": "string",
@@ -3104,6 +3104,14 @@
                     "internalRouting": {
                         "type": "boolean"
                     },
+                    "lastReleaseId": {
+                        "type": "string",
+                        "description": "The last successful Release ID for the app. May be empty.\n"
+                    },
+                    "lastSlugId": {
+                        "type": "string",
+                        "description": "The Slug ID from the last successful release. May be empty.\n"
+                    },
                     "name": {
                         "type": "string",
                         "description": "The name of the Heroku Team (organization).\n"
@@ -3144,6 +3152,8 @@
                     "gitUrl",
                     "herokuHostname",
                     "internalRouting",
+                    "lastReleaseId",
+                    "lastSlugId",
                     "name",
                     "organizations",
                     "region",
@@ -3331,6 +3341,10 @@
                     "state": {
                         "type": "string",
                         "description": "The state of the Heroku Private Space. Either `allocating` or `allocated`.\n"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "description": "The space's unique ID.\n"
                     }
                 },
                 "type": "object",
@@ -3343,6 +3357,7 @@
                     "region",
                     "shield",
                     "state",
+                    "uuid",
                     "id"
                 ]
             }

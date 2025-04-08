@@ -61,6 +61,14 @@ export interface GetAppResult {
     readonly id: string;
     readonly internalRouting: boolean;
     /**
+     * The last successful Release ID for the app. May be empty.
+     */
+    readonly lastReleaseId: string;
+    /**
+     * The Slug ID from the last successful release. May be empty.
+     */
+    readonly lastSlugId: string;
+    /**
      * The name of the Heroku Team (organization).
      */
     readonly name: string;

@@ -151,6 +151,10 @@ namespace Pulumiverse.Heroku.Space
         /// The state of the Heroku Private Space. Either `allocating` or `allocated`.
         /// </summary>
         public readonly string State;
+        /// <summary>
+        /// The space's unique ID.
+        /// </summary>
+        public readonly string Uuid;
 
         [OutputConstructor]
         private GetSpaceResult(
@@ -170,7 +174,9 @@ namespace Pulumiverse.Heroku.Space
 
             bool shield,
 
-            string state)
+            string state,
+
+            string uuid)
         {
             Cidr = cidr;
             DataCidr = dataCidr;
@@ -181,6 +187,7 @@ namespace Pulumiverse.Heroku.Space
             Region = region;
             Shield = shield;
             State = state;
+            Uuid = uuid;
         }
     }
 }
