@@ -22,7 +22,7 @@ builds:
       - -X github.com/pulumiverse/pulumi-heroku/provider/pkg/version.Version={{.Tag }}
     main: ./cmd/pulumi-resource-heroku/
 changelog:
-  skip: true
+  disable: true
 release:
   disable: false
   prerelease: auto
