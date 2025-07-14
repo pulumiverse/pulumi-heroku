@@ -6,13 +6,9 @@ updates:
       interval: weekly
       time: "13:00"
     open-pull-requests-limit: 3
-    reviewers:
-      - marns93
   - package-ecosystem: gomod
     directory: "/sdk"
     schedule:
       interval: weekly
       time: "13:00"
     open-pull-requests-limit: 3
-    reviewers:
-      - marns93

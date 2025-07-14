@@ -23,5 +23,5 @@ jobs:
       provider: heroku
       goversion: 1.23.x
       dotnetversion: 6.0.120
-      nodeversion: 18.x
+      nodeversion: 20.x
       pythonversion: 3.11
