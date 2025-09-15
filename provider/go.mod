@@ -1,13 +1,13 @@
 module github.com/pulumiverse/pulumi-heroku/provider
 
-go 1.23.0
+go 1.24
 
 toolchain go1.24.1
 
 replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/pulumi/terraform-plugin-sdk/v2 v2.0.0-20240520223432-0c0bf0d65f10
 
 require (
-	github.com/heroku/terraform-provider-heroku/v5 v5.2.10
+	github.com/heroku/terraform-provider-heroku/v5 v5.2.12
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.101.0
 	github.com/pulumi/pulumi/sdk/v3 v3.145.0
 )
@@ -93,7 +93,7 @@ require (
 	github.com/hashicorp/terraform-registry-address v0.2.4 // indirect
 	github.com/hashicorp/terraform-svchost v0.1.1 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
-	github.com/heroku/heroku-go/v5 v5.4.1 // indirect
+	github.com/heroku/heroku-go/v6 v6.0.0 // indirect
 	github.com/huandu/xstrings v1.3.3 // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/imdario/mergo v0.3.15 // indirect
